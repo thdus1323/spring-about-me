@@ -1,4 +1,4 @@
-{{> layout/header}}
+{{> layout/client-header}}
 <body>
 <div class="container mt-5 user-mypage">
     <h1 class="text-center mb-5">마이페이지</h1>
@@ -11,7 +11,7 @@
         <div class="card-body">
             <div id="profile-view" class="profile-container">
                 <div class="profile-image-wrapper">
-                    <img src="/images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageView">
+                    <img src="./images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageView">
                 </div>
                 <div class="profile-details ">
                     <div class="row">
@@ -51,7 +51,7 @@
             <div id="profile-edit" class="profile-edit-container">
                 <div class="profile-image-wrapper">
                     <input type="file" id="profileImageInput" class="d-none">
-                    <img src="/images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageEdit">
+                    <img src="./images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageEdit">
                     <span class="edit-icon"><i class="fas fa-pen"></i></span>
                 </div>
                 <div class="profile-details border">
@@ -267,13 +267,13 @@
         const username = $('#edit-username').val();
         const birthYear = $('#edit-birth-year').val();
         const gender = $('input[name="gender"]:checked').val();
-        const profileImageSrc = $('#profileImageEdit').attr('src');
+        const profile./imagesrc = $('#profileImageEdit').attr('src');
 
         // 보기 모드에 값 반영
         $('#username').text(username);
         $('#birth-year').text(birthYear);
         $('#gender').text(gender);
-        $('#profileImageView').attr('src', profileImageSrc);
+        $('#profileImageView').attr('src', profile./imagesrc);
 
         // 폼 전환
         $('#profile-edit-card').addClass('d-none');
@@ -289,7 +289,7 @@
                 username: username,
                 birthYear: birthYear,
                 gender: gender,
-                profileImage: profileImageSrc // 이미지 URL
+                profileImage: profile./imagesrc // 이미지 URL
             }),
             success: function (response) {
                 alert('프로필이 저장되었습니다.');
