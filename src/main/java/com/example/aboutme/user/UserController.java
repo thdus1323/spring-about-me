@@ -35,6 +35,8 @@ public class UserController {
 //    }
 
 
-
-
+    @GetMapping("/")
+    public String expert() {
+        return "client/main";
+    }
 }
