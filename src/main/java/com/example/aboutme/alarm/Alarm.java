@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -22,10 +25,13 @@ public class Alarm {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Builder
-    public Alarm(Integer id, String message, User user) {
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    public Alarm(Integer id, String message, User user, Timestamp createdAt) {
         this.id = id;
         this.message = message;
         this.user = user;
+        this.createdAt = createdAt;
     }
 }
