@@ -1,0 +1,551 @@
+{{> layout/client-header}}
+
+<body>
+<main>
+    <section id="section01">
+        <div class="container">
+            <div class="page-wrapper">
+                <h3 class="page-title mb-20">
+                    맞춤 전문가 찾기
+                </h3>
+                <div class="page-content">
+                    <div class="divide-wrapper">
+                        <div class="expert-side">
+                            <div class="search-wrapper mb-20">
+                                <form action="#" method="#">
+                                    <div class="input-wrapper search">
+                                        <button class="search-submit-btn black-color"><i class="fa-regular fa-magnifying-glass"></i></button>
+                                        <input type="text" placeholder="이름,증상을 검색해주세요">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="option-wrapper">
+                                <form action="#" method="#">
+                                    <div class="date mb-30">
+                                        <p class="mb-10">가능일시</p>
+                                        <div class="calendar option-list">
+                                            <div class="month">
+                                                <button id="prevMonth"><i class="fa-regular fa-chevron-left"></i></button>
+                                                <h3>6월 2024년</h3>
+                                                <button id="nextMonth"><i class="fa-regular fa-chevron-right"></i></button>
+                                            </div>
+                                            <div class="days" id="days">
+                                                <!-- Days will be dynamically generated here -->
+                                            </div>
+                                            <div class="times" id="times">
+                                                <!-- Times will be dynamically generated here -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="situation mb-30">
+                                        <p class="mb-10">나의 상황</p>
+                                        <ul class="option-list btn">
+                                            <li data-value="결혼/육아">결혼/육아</li>
+                                            <li data-value="대인관계">대인관계</li>
+                                            <li data-value="직장">직장</li>
+                                            <li data-value="이별/이혼">이별/이혼</li>
+                                            <li data-value="가족">가족</li>
+                                            <li data-value="자아/성격">자아/성격</li>
+                                            <li data-value="정신건강">정신건강</li>
+                                            <li data-value="취업/진로">취업/진로</li>
+                                            <li data-value="신체건강">신체건강</li>
+                                            <li data-value="성추행">성추행</li>
+                                            <li data-value="중독/집착">중독/집착</li>
+                                            <li data-value="금전/사업">금전/사업</li>
+                                            <li data-value="학업/고시">학업/고시</li>
+                                            <li data-value="외모">외모</li>
+                                            <li data-value="연애">연애</li>
+                                            <li data-value="LGBT">LGBT</li>
+                                        </ul>
+                                    </div>
+                                    <div class="state mb-30">
+                                        <p class="mb-10">나의 증상</p>
+                                        <ul class="option-list btn">
+                                            <li data-value="우울">우울</li>
+                                            <li data-value="스트레스">스트레스</li>
+                                            <li data-value="화병">화병</li>
+                                            <li data-value="불안">불안</li>
+                                            <li data-value="섭식">섭식</li>
+                                            <li data-value="공황">공황</li>
+                                            <li data-value="조울증">조울증</li>
+                                            <li data-value="불면">불면</li>
+                                            <li data-value="트라우마">트라우마</li>
+                                            <li data-value="강박">강박</li>
+                                            <li data-value="콤플렉스">콤플렉스</li>
+                                            <li data-value="자존감">자존감</li>
+                                            <li data-value="자살">자살</li>
+                                            <li data-value="충동/폭력">충동/폭력</li>
+                                            <li data-value="조현병">조현병</li>
+                                            <li data-value="신체화">신체화</li>
+                                        </ul>
+                                    </div>
+                                    <div class="counseling-method mb-30">
+                                        <p class="mb-10">상담 방식</p>
+                                        <ul class="option-list check">
+                                            <li>
+                                                <label for="counseling01">30분상담</label>
+                                                <input type="checkbox" id="counseling01" name="counseling" value="partTime">
+                                            </li>
+                                            <li>
+                                                <label for="counseling02">보이스 테라피(전화 상담)</label>
+                                                <input type="checkbox" id="counseling02" name="counseling" value="voice">
+                                            </li>
+                                            <li>
+                                                <label for="counseling03">텍스트 테라피(채팅 상담)</label>
+                                                <input type="checkbox" id="counseling03" name="counseling" value="text">
+                                            </li>
+                                            <li>
+                                                <label for="counseling04">페이스 테라피(화상 상담)</label>
+                                                <input type="checkbox" id="counseling04" name="counseling" value="face">
+                                            </li>
+                                            <li>
+                                                <label for="counseling05">대면 상담(심리케어센터)</label>
+                                                <input type="checkbox" id="counseling05" name="counseling" value="meet">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="gender mb-30">
+                                        <p class="mb-10">성별</p>
+                                        <ul class="option-list check">
+                                            <li>
+                                                <label for="man">남</label>
+                                                <input type="radio" id="man" name="gender" value="man">
+                                            </li>
+                                            <li>
+                                                <label for="girl">여</label>
+                                                <input type="radio" id="girl" name="gender" value="girl">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="rating mb-30">
+                                        <p class="mb-10">급수</p>
+                                        <ul class="option-list check">
+                                            <li>
+                                                <label for="level01">1급</label>
+                                                <input type="radio" id="level01" name="rating" value="level01">
+                                            </li>
+                                            <li>
+                                                <label for="level02">2급</label>
+                                                <input type="radio" id="level02" name="rating" value="level02">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="grade">
+                                        <p class="mb-10">등급</p>
+                                        <ul class="option-list check">
+                                            <li>
+                                                <label for="grade">우수</label>
+                                                <input type="checkbox" name="grade" value="excellent">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <ul class="expert-list">
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="expert-info">
+                                    <div class="info-head mb-10">
+                                        <span class="head-name">류지원</span>
+                                        <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                    </div>
+                                    <div class="expert-body">
+                                        <p class="body-title mb-10">괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있게습니다.</p>
+                                        <ul class="type-consultation mb-10">
+                                            <li><a href="#"><img src="/images/call.png" alt="전화상담"></a></li>
+                                            <li><a href="#"><img src="/images/chat.png" alt="채팅상담"></a></li>
+                                            <li><a href="#"><img src="/images/video.png" alt="화상전화상담"></a></li>
+                                        </ul>
+                                        <a class="link active-color" href="/client/findExpert/detail">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></a>
+                                    </div>
+                                </div>
+                                <div class="expert-image">
+                                    <figure>
+                                        <img src="/images/user.png" alt="전문가 사진이 나올장소">
+                                    </figure>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+<script>
+    $(document).ready(function() {
+
+        //옵션 열고 닫기
+        $('.option-wrapper > form > div > p').click(function() {
+            $(this).toggleClass('active');
+            $(this).next('.option-list').slideToggle('slow', function() {
+                $(this).toggleClass('active');
+            });
+        });
+
+
+        // 옵션 클릭 시 .active 클래스 추가 및 제거
+        $('.situation .option-list.btn li').on('click', function() {
+            $('.situation .option-list.btn li').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $('.state .option-list.btn li').on('click', function() {
+            $('.state .option-list.btn li').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        const availableTimes = {
+            1: ["10:00", "11:00", "12:00"],
+            2: ["13:00", "14:00", "15:00"],
+            3: ["16:00", "17:00", "18:00"],
+            4: ["19:00", "20:00", "21:00"],
+            5: ["10:00", "11:00", "12:00"],
+            6: ["13:00", "14:00", "15:00"],
+            7: ["16:00", "17:00", "18:00"],
+            8: ["19:00", "20:00", "21:00"],
+            9: ["10:00", "11:00", "12:00"],
+            10: ["13:00", "14:00", "15:00"],
+            11: ["16:00", "17:00", "18:00"],
+            12: ["19:00", "20:00", "21:00"],
+            13: ["10:00", "11:00", "12:00"],
+            14: ["13:00", "14:00", "15:00"],
+            15: ["16:00", "17:00", "18:00"],
+            16: ["19:00", "20:00", "21:00"],
+            17: ["10:00", "11:00", "12:00"],
+            18: ["13:00", "14:00", "15:00"],
+            19: ["16:00", "17:00", "18:00"],
+            20: ["19:00", "20:00", "21:00"],
+            21: ["10:00", "11:00", "12:00"],
+            22: ["13:00", "14:00", "15:00"],
+            23: ["16:00", "17:00", "18:00"],
+            24: ["19:00", "20:00", "21:00"],
+            25: ["10:00", "11:00", "12:00"],
+            26: ["13:00", "14:00", "15:00"],
+            27: ["16:00", "17:00", "18:00"],
+            28: ["19:00", "20:00", "21:00"],
+            29: ["10:00", "11:00", "12:00"],
+            30: ["13:00", "14:00", "15:00"]
+        };
+
+        const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+        let currentMonth = new Date().getMonth(); // 현재 월
+        let currentDate = new Date().getDate(); // 현재 날짜
+
+        function renderCalendar(month) {
+            const year = 2024;
+            const firstDay = new Date(year, month).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            $('.month h3').text(`${monthNames[month]} ${year}년`);
+            $('.days').html(`
+                    <div class="main-color disabled day">일</div>
+                    <div class="main-color disabled day">월</div>
+                    <div class="main-color disabled day">화</div>
+                    <div class="main-color disabled day">수</div>
+                    <div class="main-color disabled day">목</div>
+                    <div class="main-color disabled day">금</div>
+                    <div class="main-color disabled day">토</div>
+                `);
+
+            for (let i = 0; i < firstDay; i++) {
+                $('.days').append('<div></div>');
+            }
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                $('.days').append(`<div data-date="${i}">${i}</div>`);
+            }
+
+            disablePastDates();
+            setActiveDate();
+        }
+
+        function disablePastDates() {
+            const today = new Date();
+
+            $('.days > div[data-date]').each(function() {
+                const date = new Date(2024, currentMonth, $(this).data('date'));
+                if (date < today) {
+                    $(this).addClass('past').off('click');
+                }
+            });
+        }
+
+        function setActiveDate() {
+            const today = new Date();
+            if (today.getFullYear() === 2024 && today.getMonth() === currentMonth) {
+                $(`.days > div[data-date="${currentDate}"]`).addClass('selected');
+                const times = availableTimes[currentDate] || [];
+                $('#times').html(times.map(time => `<button class="time-btn">${time}</button>`).join(''));
+            }
+        }
+
+        renderCalendar(currentMonth);
+
+        $('.days').on('click', 'div[data-date]', function() {
+            if ($(this).hasClass('past')) return;
+
+            $('.days > div').removeClass('selected');
+            $(this).addClass('selected');
+
+            const date = $(this).data('date');
+            const times = availableTimes[date] || [];
+            $('#times').html(times.map(time => `<button class="time-btn">${time}</button>`).join(''));
+        });
+
+        $('#times').on('click', '.time-btn', function() {
+            $('.time-btn').removeClass('active');
+            $(this).addClass('active');
+            $('#payButton').addClass('active').prop('disabled', false);
+        });
+
+        $('#prevMonth').on('click', function() {
+            if (currentMonth > 0) {
+                currentMonth--;
+                renderCalendar(currentMonth);
+            }
+        });
+
+        $('#nextMonth').on('click', function() {
+            if (currentMonth < 11) {
+                currentMonth++;
+                renderCalendar(currentMonth);
+            }
+        });
+        // Set the current date as active on page load
+        setActiveDate();
+
+
+
+        // 폼데이터 보내기
+        // 폼 데이터 전송 시 선택된 옵션의 value 값을 포함
+        $('form').on('submit', function(e) {
+            e.preventDefault(); // 폼 전송 막기 (디버깅용)
+
+            const selectedSituations = [];
+            const selectedSymptoms = [];
+
+            $('.situation .option-list.btn li.active').each(function() {
+                selectedSituations.push($(this).data('value'));
+            });
+
+            $('.state .option-list.btn li.active').each(function() {
+                selectedSymptoms.push($(this).data('value'));
+            });
+
+            const formData = {
+                situations: selectedSituations,
+                symptoms: selectedSymptoms
+            };
+
+            console.log(formData); // 폼 데이터 확인 (디버깅용)
+
+            // 실제 폼 전송 로직 추가
+            // 예: $.post('your-endpoint-url', formData);
+        });
+    });
+</script>
+</body>
+{{> layout/footer}}
