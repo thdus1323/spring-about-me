@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -31,12 +33,16 @@ public class Comm {
     @OneToMany(mappedBy = "comm", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reply> replies;
 
+    @CreationTimestamp
+    private Timestamp createdAt;
+
     @Builder
-    public Comm(Integer id, String title, String content, User user, List<Reply> replies) {
+    public Comm(Integer id, String title, String content, User user, List<Reply> replies, Timestamp createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.user = user;
         this.replies = replies;
+        this.createdAt = createdAt;
     }
 }
