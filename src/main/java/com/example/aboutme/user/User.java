@@ -1,11 +1,5 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.alarm.Alarm;
-import com.example.aboutme.book.Book;
-import com.example.aboutme.comm.Comm;
-import com.example.aboutme.counsel.Counsel;
-import com.example.aboutme.reply.Reply;
-import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,8 +18,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role; // CLIENT, EXPERT
+    private UserRole userRole; // CLIENT, EXPERT
 
     @Column(nullable = false)
     private String username;
@@ -45,24 +39,6 @@ public class User {
 
     private String profileImage;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comm> communities;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Reply> replies;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Alarm> alarms;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Voucher> vouchers;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Book> books;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Counsel> counsels;
-
     @CreationTimestamp
     private Timestamp createdAt;
 
@@ -70,21 +46,15 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, Role role, String username, String email, String password, Integer birthYear, String gender, String profileImage, List<Comm> communities, List<Reply> replies, List<Alarm> alarms, List<Voucher> vouchers, List<Book> books, List<Counsel> counsels, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String username, String email, String password, Integer birthYear, String gender, String profileImage, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.role = role;
+        this.userRole = userRole;
         this.username = username;
         this.email = email;
         this.password = password;
         this.birthYear = birthYear;
         this.gender = gender;
         this.profileImage = profileImage;
-        this.communities = communities;
-        this.replies = replies;
-        this.alarms = alarms;
-        this.vouchers = vouchers;
-        this.books = books;
-        this.counsels = counsels;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

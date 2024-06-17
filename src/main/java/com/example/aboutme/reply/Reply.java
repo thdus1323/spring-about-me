@@ -27,7 +27,7 @@ public class Reply {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reply_id", nullable = false)
+    @JoinColumn(name = "comm_id", nullable = false)
     private Comm comm;
 
     @CreationTimestamp
