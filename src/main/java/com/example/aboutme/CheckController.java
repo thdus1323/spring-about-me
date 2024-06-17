@@ -6,82 +6,92 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CheckController {
 
-    // oauth
-    @GetMapping("/oauth/join")
-    public String join() {
-        return "oauth/join";
-    }
+    //TODO: health check
+//    @GetMapping("/")
+//    public String index() {
+////        여기에서 클라이언트와 익스퍼트 if로 구분해서 리턴합니다.
+//        return "client/main";
+//    }
 
-    @GetMapping("/oauth/login")
-    public String login() {
-        return "oauth/login";
-    }
-
-    // expert
-    @GetMapping("/expert/detail")
-    public String expertDetail() {
-        return "expert/detail";
-    }
-
-    @GetMapping("/expert/main")
-    public String expertMain() {
+    //TODO: 지울거임
+    @GetMapping("/")
+    public String expert() {
         return "expert/main";
     }
 
-    @GetMapping("/expert/mypage")
-    public String expertMypage() {
-        return "expert/mypage";
+
+
+    //TODO:클라이언트용 페이지
+    //전문가 찾기 - 메인
+    @GetMapping("/client/findExpert")
+    public String findExpert() {
+        return "client/findExpert/main";
     }
 
-    @GetMapping("/expert/payment")
-    public String expertPayment() {
-        return "expert/payment";
+    //전문가 찾기 - 상세보기
+    @GetMapping("/client/findExpert/detail")
+    public String findExpertDetail() {
+        return "client/findExpert/detail";
     }
 
-    @GetMapping("/expert/reservation")
-    public String expertReservation() {
-        return "expert/reservation";
+    //전문가 칮기 - 이용권
+    @GetMapping("/client/findExpert/voucher")
+    public String findExpertVoucher() {
+        return "client/findExpert/voucher";
     }
 
-    @GetMapping("/expert/voucher")
-    public String expertVoucher() {
-        return "expert/voucher";
+    //전문가 칮기 - 예약하기
+    @GetMapping("/client/findExpert/reservation")
+    public String findExpertReservation() {
+        return "client/findExpert/reservation";
     }
 
-    @GetMapping("/expert/voucher-form")
-    public String expertVoucherForm() {
-        return "expert/voucher-form";
+    //전문가 칮기 - 결제하기
+    @GetMapping("/client/findExpert/payment")
+    public String findExpertPayment() {
+        return "client/findExpert/payment";
     }
 
-    @GetMapping("/expert/voucher-list")
-    public String expertVoucherList() {
+    //클라이언트 - 마이페이지
+    @GetMapping("/client/mypage")
+    public String clientMypage() {
+        return "client/mypage";
+    }
+
+    //TODO: 커뮤니티 페이지
+    //커뮤니티 - 메인
+    @GetMapping("/comm")
+    public String community() {
+        return "comm/comm-main";
+    }
+
+    //TODO: 전문가용 페이지
+    //후기
+    @GetMapping("/review")
+    public String review() {
+        return "expert/review";
+    }
+
+    //이용권목록
+    @GetMapping("/voucher-list")
+    public String voucherList() {
         return "expert/voucher-list";
     }
 
-    // user
-    @GetMapping("/user/main")
-    public String userMain() {
-        return "user/main";
+    //상담일정
+    @GetMapping("/schedule")
+    public String schedule() {
+        return "expert/schedule";
     }
 
-    @GetMapping("/user/mypage")
-    public String userMypage() {
-        return "user/mypage";
-    }
 
-    @GetMapping("/user/community")
-    public String userCommunity() {
-        return "user/community";
-    }
 
-    // 연습장?
-    @GetMapping("/card")
-    public String card() {
-        return "card";
-    }
 
-    @GetMapping("/linear-gradient")
-    public String linearGradient() {
-        return "linear-gradient";
-    }
+
+
+
+
+
+
+
 }

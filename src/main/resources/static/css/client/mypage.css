@@ -1,3 +1,5 @@
+
+/* 기존 CSS */
 .user-mypage .profile-container {
     display: flex;
     align-items: center;
@@ -44,26 +46,26 @@
     border-radius: 5px;
 }
 
-.user-mypage .profile-container .row > div,
-.user-mypage .profile-edit-container .row > div {
+.user-mypage .profile-container .row>div,
+.user-mypage .profile-edit-container .row>div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.user-mypage .profile-container .row > div .font-weight-bold,
-.user-mypage .profile-edit-container .row > div .font-weight-bold {
+.user-mypage .profile-container .row>div .font-weight-bold,
+.user-mypage .profile-edit-container .row>div .font-weight-bold {
     width: 30%;
     text-align: right;
     padding-right: 10px;
 }
 
-.user-mypage .profile-container .row > div > div,
-.user-mypage .profile-edit-container .row > div input,
-.user-mypage .profile-edit-container .row > div p,
-.user-mypage .profile-edit-container .row > div select,
-.user-mypage .profile-edit-container .row > div .form-check {
+.user-mypage .profile-container .row>div>div,
+.user-mypage .profile-edit-container .row>div input,
+.user-mypage .profile-edit-container .row>div p,
+.user-mypage .profile-edit-container .row>div select,
+.user-mypage .profile-edit-container .row>div .form-check {
     width: 70%;
     margin: 0;
 }
@@ -78,8 +80,6 @@
 }
 
 .user-mypage .tabs-container {
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
     background: white;
     padding: 15px;
     margin-bottom: 20px;
@@ -106,6 +106,9 @@
 
 .user-mypage .tab-content {
     display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px;
 }
 
 .user-mypage .tab-content.active {
@@ -141,8 +144,92 @@
     font-size: 12px;
 }
 
-
 .user-mypage .btn-container .btn-secondary,
 .user-mypage .btn-container .btn-primary {
     margin-right: 5px;
 }
+/* 커뮤니티 나의 사연 CSS */
+.user-mypage .post {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    text-align: left; /* 텍스트를 왼쪽 정렬 */
+}
+
+.user-mypage .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-mypage .post-header .post-category {
+    font-size: 14px;
+    color: #6c757d;
+    margin-right: 10px;
+}
+
+.user-mypage .post-header .username {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* 프로필 이미지를 스타일링 */
+.user-mypage .post .post-header .post-profile-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.user-mypage .post-body {
+    margin-bottom: 10px;
+    text-align: left; /* 게시물 내용 부분 왼쪽 정렬 */
+}
+
+
+.user-mypage .post-body .post-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.user-mypage .post-body .post-content {
+    font-size: 16px;
+    color: #495057;
+}
+
+.user-mypage .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-mypage .post-footer .post-meta {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.user-mypage .post-footer .post-meta i {
+    margin-left: 5px;
+    color: #ff6b6b;
+}
+
+.user-mypage .post-footer .post-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-mypage .post-footer .post-actions i {
+    cursor: pointer;
+    color: #6c757d;
+    margin-right: 15px;
+}
+
+.user-mypage .post-footer .post-actions i:hover {
+    color: #495057;
+}
+    
