@@ -1,0 +1,357 @@
+@charset "UTF-8";
+@import url(reset.css);
+
+body {
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1164px;
+}
+
+/* 헤더 */
+.header-ex {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 140px;
+}
+
+.logo img {
+    width: 100%;
+}
+
+.menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.menu ul li {
+    margin-left: 20px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: #333;
+    font-size: 20px;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+ /* 리뷰 */
+.review-ex{
+  padding: 30px 0;
+}
+
+.review-ex a{
+    text-decoration: none;
+  }
+.review-container .card{
+  flex: 0 0 calc(25% - 10px); 
+  box-sizing: border-box;
+  margin-right: 14px;
+  margin: 0 5px;
+  border-radius: 10px;
+  position: relative;
+  padding: 20px;
+}
+
+.review-container .card-top{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+
+.review-container .card-top .profile{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.review-container .card-top .profile img{
+    width: 100%;
+    border-radius: 50%;
+  }
+
+  .review-container .card-bottom{
+   /* border: 1px solid #e6e6e6; */
+   padding: 10px;
+   box-sizing: border-box;
+   position: relative;
+  }
+
+  .review-container .card-bottom .more-btn{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #666;
+   }
+  /* 리뷰 화살표 */
+  .review-container.swiper .swiper-wrapper .swiper-slide .swiper-slide-visible .swiper-slide-next {
+    transform: translate3d(-55px, -10px, -290px) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  .review-container.swiper .swiper-wrapper .swiper-slide .swiper-slide-visible .swiper-slide-prev {
+    transform: translate3d(55px, -10px, -290px) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  .review-container.swiper .swiper-wrapper .swiper-slide a img {
+    width: 360px;
+  }
+  .review-container.swiper .swiper-wrapper .swiper-slide a div {
+    position: absolute;
+    bottom: 0;
+    opacity: 0.6;
+    padding: 20px 25px;
+    width: 360px;
+    height: 75px;
+    background-color: #e6e6e6;
+    box-sizing: border-box;
+  }
+  .review-container.swiper .swiper-wrapper .swiper-slide a div p {
+    font-size: 12px;
+  }
+  .review-container.swiper .swiper-wrapper .swiper-slide a div b {
+    font-size: 13px;
+  }
+  .review-container.swiper .swiper-button-next,
+  .review-container.swiper .swiper-rtl .swiper-button-prev,
+  .review-container.swiper .swiper-button-prev,
+  .review-container.swiper .swiper-rtl .swiper-button-next {
+    color: #e6e6e6;
+    width: 60px;
+    height: 80px;
+  }
+  .review-container.swiper .swiper-button-prev,
+  .review-container.swiper .swiper-rtl .swiper-button-next {
+    left: -15px;
+  }
+  .review-container.swiper .swiper-button-next,
+  .review-container.swiper .swiper-rtl .swiper-button-prev {
+    right: -15px;
+  }
+  .review-container.swiper .swiper-scrollbar-drag {
+    background-color: #fd8234;
+  }
+  .review-container.swiper .horizontal > .swiper-scrollbar,
+  .review-container.swiper .swiper-scrollbar.swiper-scrollbar-horizontal {
+    height: 12px;
+  }
+
+/* 상담일정 */
+.schedule table{
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* 푸터 */
+.footer-ex {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.footer-ex .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-left, .footer-right {
+    width: 48%;
+}
+
+.footer-left-top, .footer-left-middle, .footer-left-bottom {
+    margin-bottom: 10px;
+}
+
+.footer-left-bottom{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+footer li {
+    font-size: 10px;
+}
+
+.bar {
+    width: 1.5px;
+    height: 17px;
+    /* margin-top: 4px; */
+    background-color: #e0e0e0;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #333;
+}
+
+.company-info {
+    list-style: none;
+    padding: 0;
+    color: #666;
+    font-size: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.company-info li {
+    display: inline;
+    /* margin-right: 10px; */
+}
+
+.company-info li.bar {
+    margin-right: 0;
+    color: #ddd;
+}
+
+.footer-left-logo {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-right: 20px;
+}
+
+.footer-left-logo > div {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.footer-left-logo > div img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.footer-left-logo p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    font-weight: bold;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    color: #666;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #333;
+}
+
+.footer-right-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-right-logo .logo-text {
+    display: flex;
+    align-items: center;
+}
+
+.footer-right-logo .logo-text .logo-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.footer-right-logo .logo-text .logo-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.footer-right-logo .logo-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.app-links {
+    display: flex;
+    gap: 10px;
+}
+
+.app-links a{
+   width: 100px;
+}
+
+.app-links img {
+width: 100%;
+}
