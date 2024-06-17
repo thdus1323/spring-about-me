@@ -1,5 +1,5 @@
 {{> layout/client-header}}
-<body>
+
 <section id="section01">
     <div class="container">
         <div class="page-wrapper">
@@ -67,12 +67,14 @@
                     </div>
                 </div>
                 <div class="next-wrapper">
+                    <!--                    일단 보류-->
                     <button id="skipButton">건너뛰기</button>
-                    <button id="payButton" disabled>결제하기</button>
+                    <!--                    일단 보류-->
+                    <button id="payButton" disabled onClick="location.href='/client/findExpert/payment'">결제하기</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
-</body>
+
 {{> layout/footer}}
