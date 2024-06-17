@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<header class="header_ex">
+    <div class="container">
+        <div class="header">
+            <div class="header_left">
+                <div class="logo">
+                    <a href="#!">
+                        <img src="/images/main_logo.svg" alt="Main Logo">
+                    </a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#!">커뮤니티</a></li>
+                        <li><a href="#!">전문가 찾기</a></li>
+                        <li><a href="#!">상담하기</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header_right">
+                <a href="#!" class="icon"><i class="fas fa-search"></i></a>
+                <a href="#!" class="icon"><i class="far fa-user"></i></a>
+            </div>
+        </div>
+    </div>
+    <hr>
+</header>
+
+<body>
+<div class="container mt-5 user-mypage">
+    <h1 class="text-center mb-5">마이페이지</h1>
+
+    <!-- 프로필 보기 -->
+    <div class="card mb-4" id="profile-view-card">
+        <div class="card-header">
+            프로필
+        </div>
+        <div class="card-body">
+            <div id="profile-view" class="profile-container">
+                <div class="profile-image-wrapper">
+                    <img src="/images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageView">
+                </div>
+                <div class="profile-details ">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">닉네임 :</div>
+                            <div id="username">kjh5848</div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">이메일 :</div>
+                            <div><i class="fas fa-envelope"></i> <span id="email">kjh5848@kakao.com</span></div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">출생 연도 :</div>
+                            <div id="birth-year">0</div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">성별 :</div>
+                            <div id="gender">기타</div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-secondary" id="editProfile"><i class="fas fa-edit"></i>
+                            수정
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 프로필 수정 -->
+    <div class="card mb-4 d-none" id="profile-edit-card">
+        <div class="card-header">
+            프로필 수정
+        </div>
+        <div class="card-body">
+            <div id="profile-edit" class="profile-edit-container">
+                <div class="profile-image-wrapper">
+                    <input type="file" id="profileImageInput" class="d-none">
+                    <img src="/images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageEdit">
+                    <span class="edit-icon"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="profile-details border">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">닉네임 :</div>
+                            <input type="text" id="edit-username" class="form-control" value="kjh5848">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">이메일 :</div>
+                            <p class="card-text"><i class="fas fa-envelope"></i> kjh5848@kakao.com</p>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">출생 연도 :</div>
+                            <select id="edit-birth-year" class="form-control">
+                                <!-- JavaScript를 통해 옵션 추가 -->
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">성별 :</div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="gender" id="male" value="남성">
+                                <label class="form-check-label" for="male">남성</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="gender" id="female"
+                                       value="여성">
+                                <label class="form-check-label" for="female">여성</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="gender" id="other" value="기타"
+                                       checked>
+                                <label class="form-check-label" for="other">기타</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-secondary" id="cancelEdit">취소</button>
+                        <button class="btn btn-outline-primary" id="saveProfile">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 내 이용권 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            내 이용권
+        </div>
+        <div class="card-body tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="progress-ticket">진행</div>
+                <div class="tab" data-tab="completed-ticket">종료</div>
+            </div>
+            <div class="tab-content active" id="progress-ticket">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>사용횟수</th>
+                            <th>남은횟수</th>
+                            <th>시작날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>보이스테라피</td>
+                            <td>1회</td>
+                            <td>8회</td>
+                            <td>2024-06-16</td>
+                        </tr>
+                        <!-- 더 많은 행을 추가할 수 있습니다 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-content" id="completed-ticket">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>사용횟수</th>
+                            <th>남은횟수</th>
+                            <th>종료날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>보이스테라피</td>
+                            <td>8회</td>
+                            <td>8회</td>
+                            <td>2024-07-16</td>
+                        </tr>
+                        <!-- 더 많은 행을 추가할 수 있습니다 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 예약관리 -->
+    <div class="card">
+        <div class="card-header">
+            예약관리
+        </div>
+        <div class="card-body tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="progress-reservation">일정</div>
+                <div class="tab" data-tab="completed-reservation">내역</div>
+            </div>
+            <div class="tab-content active" id="progress-reservation">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>횟수</th>
+                            <th>시작시간</th>
+                            <th>상담날짜</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>보이스테라피</td>
+                            <td>1회차/8회권</td>
+                            <td>14:00</td>
+                            <td>2024-06-16(일)</td>
+                            <td>
+                                <button class="btn btn-outline-warning btn-small">변경</button>
+                                <button class="btn btn-outline-danger btn-small"
+                                        onclick="cancelReservation()">취소
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- 더 많은 행을 추가할 수 있습니다 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-content" id="completed-reservation">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>횟수</th>
+                            <th>시작시간</th>
+                            <th>상담날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>보이스테라피</td>
+                            <td>1회차/8회권</td>
+                            <td>14:00</td>
+                            <td>2024-06-16(일)</td>
+                        </tr>
+                        <!-- 더 많은 행을 추가할 수 있습니다 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>$(document).ready(function () {
+    // 출생 연도 셀렉트 박스에 옵션 추가
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= 1900; year--) {
+        $('#edit-birth-year').append(new Option(year, year));
+    }
+
+    // 프로필 이미지 클릭 시 파일 입력 열기
+    $('#profileImageEdit').on('click', function () {
+        $('#profileImageInput').click();
+    });
+
+    // 프로필 이미지 파일 선택 시
+    $('#profileImageInput').on('change', function (event) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            $('#profileImageEdit').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+
+    // 프로필 수정 버튼 클릭 시
+    $('#editProfile').on('click', function () {
+        // 현재 표시된 연도를 셀렉트 박스에서 선택
+        const birthYear = $('#birth-year').text();
+        $('#edit-birth-year').val(birthYear);
+
+        $('#profile-view-card').addClass('d-none');
+        $('#profile-edit-card').removeClass('d-none');
+    });
+
+    // 취소 버튼 클릭 시
+    $('#cancelEdit').on('click', function () {
+        $('#profile-edit-card').addClass('d-none');
+        $('#profile-view-card').removeClass('d-none');
+    });
+
+    // 저장 버튼 클릭 시
+    $('#saveProfile').on('click', function () {
+        // 수정된 값 가져오기
+        const username = $('#edit-username').val();
+        const birthYear = $('#edit-birth-year').val();
+        const gender = $('input[name="gender"]:checked').val();
+        const profileImageSrc = $('#profileImageEdit').attr('src');
+
+        // 보기 모드에 값 반영
+        $('#username').text(username);
+        $('#birth-year').text(birthYear);
+        $('#gender').text(gender);
+        $('#profileImageView').attr('src', profileImageSrc);
+
+        // 폼 전환
+        $('#profile-edit-card').addClass('d-none');
+        $('#profile-view-card').removeClass('d-none');
+
+        // 실제 저장 로직은 여기에 추가
+        // 예: 서버로 데이터 전송
+        $.ajax({
+            url: '/submit',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                username: username,
+                birthYear: birthYear,
+                gender: gender,
+                profileImage: profileImageSrc // 이미지 URL
+            }),
+            success: function (response) {
+                alert('프로필이 저장되었습니다.');
+            },
+            error: function (error) {
+                alert('저장에 실패했습니다.');
+            }
+        });
+    });
+
+    // 내 이용권 탭 클릭 시 콘텐츠 전환
+    $('.tab[data-tab^="progress-ticket"], .tab[data-tab^="completed-ticket"]').on('click', function () {
+        const target = $(this).data('tab');
+        $('.tab[data-tab^="progress-ticket"], .tab[data-tab^="completed-ticket"]').removeClass('active');
+        $(this).addClass('active');
+        $('.tab-content[id^="progress-ticket"], .tab-content[id^="completed-ticket"]').removeClass('active');
+        $('#' + target).addClass('active');
+    });
+
+    // 예약관리 탭 클릭 시 콘텐츠 전환
+    $('.tab[data-tab^="progress-reservation"], .tab[data-tab^="completed-reservation"]').on('click', function () {
+        const target = $(this).data('tab');
+        $('.tab[data-tab^="progress-reservation"], .tab[data-tab^="completed-reservation"]').removeClass('active');
+        $(this).addClass('active');
+        $('.tab-content[id^="progress-reservation"], .tab-content[id^="completed-reservation"]').removeClass('active');
+        $('#' + target).addClass('active');
+    });
+});
+
+function editReservation() {
+    // 상담 예약 변경 로직을 여기에 추가
+    alert('상담 일정을 변경합니다.');
+}
+
+function cancelReservation() {
+    // 상담 예약 취소 로직을 여기에 추가
+    alert('상담 일정을 취소합니다.');
+}
+</script>
+</body>
+
+</html>

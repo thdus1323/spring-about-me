@@ -1,0 +1,43 @@
+.experience .review-item {
+    margin-bottom: 2rem;
+}
+
+.experience .card-body {
+    padding: 0.75rem 1rem;
+}
+
+.experience .card {
+    margin-bottom: 1rem;
+}
+
+.experience .content-container {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* 보여질 줄 수 */
+    -webkit-box-orient: vertical;
+    max-height: 6em; /* 기본 높이 설정 */
+    position: relative;
+}
+
+.experience .toggle-text {
+    cursor: pointer;
+    color: #6c757d; /* 흐릿한 컬러 */
+    text-decoration: none; /* 하이퍼링크 없음 */
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.experience .content-container.expanded {
+    -webkit-line-clamp: initial; /* 모든 줄 보이게 */
+    max-height: none; /* 높이 제한 해제 */
+}
+
+.experience .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5em; /* Overlay height */
+    background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+    display: none; /* 기본적으로 감춤 */
+}

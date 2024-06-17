@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <title>로그인</title>
+    <!-- 부트스트랩 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 제이쿼리 cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 폰트어썸 cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+
+<body>
+<!-- 헤더 시작 -->
+<header class="header_ex">
+    <div class="container">
+        <div class="header">
+            <div class="header_left">
+                <div class="logo">
+                    <a href="#!">
+                        <img src="./images/main_logo.svg" alt="Main Logo">
+                    </a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#!">커뮤니티</a></li>
+                        <li><a href="#!">전문가 찾기</a></li>
+                        <li><a href="#!">상담하기</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header_right">
+                <a href="#!" class="icon"><i class="fas fa-search"></i></a>
+                <a href="#!" class="icon"><i class="far fa-user"></i></a>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- 헤더 끝 -->
+<div class="login-wrap">
+    <h1 class="login-title">로그인</h1>
+    <div class="login-toggle mb-4">
+        <button class="login-active btn btn-outline-success me-2" onclick="toggleTab('personal')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-check-circle" viewBox="0 0 16 16">
+                <path
+                        d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
+            </svg>
+            개인 회원
+        </button>
+        <button class="btn btn-outline-secondary" onclick="toggleTab('advisor')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-check-circle" viewBox="0 0 16 16">
+                <path
+                        d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
+            </svg>
+            상담사
+        </button>
+    </div>
+    <form id="loginForm">
+        <div class="login-group mb-3">
+            <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>
+            <input type="text" id="inputUsername" name="username" class="form-control"
+                   placeholder="아이디(이메일)을 입력해 주세요" required>
+        </div>
+        <div class="login-group mb-3">
+            <label for="inputPassword" class="form-label">비밀번호 <span class="text-danger">*</span></label>
+            <input type="password" id="inputPassword" name="password" class="form-control"
+                   placeholder="비밀번호를 입력해 주세요" required>
+        </div>
+        <button type="submit" class="login-btn">로그인</button>
+        <div class="login-links mt-3 d-flex justify-content-between">
+            <a href="#" class="text-success">아이디 찾기</a>
+            <a href="#" class="text-success">비밀번호 찾기</a>
+            <a href="#" class="text-success">회원가입</a>
+        </div>
+        <hr class="join-divider ">
+        <div class="join-social">
+            <a href="#"><img src="/images/naver_oauth.png" alt="Naver Signup"></a>
+            <a href="#"><img src="/images/kakao_oauth.png" alt="Kakao Signup"></a>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.login-toggle button').click(function () {
+            $('.login-toggle button').removeClass('login-active btn-outline-success').addClass('btn-outline-secondary');
+            $(this).removeClass('btn-outline-secondary').addClass('login-active btn-outline-success');
+        });
+    });
+</script>
+</body>
+
+</html>

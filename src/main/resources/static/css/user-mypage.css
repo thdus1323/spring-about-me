@@ -1,0 +1,148 @@
+.user-mypage .profile-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.user-mypage .profile-edit-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.user-mypage .profile-image-wrapper {
+    position: relative;
+    margin-right: 20px;
+}
+
+.user-mypage .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.user-mypage .edit-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.user-mypage .profile-details {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.user-mypage .profile-container .row > div,
+.user-mypage .profile-edit-container .row > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.user-mypage .profile-container .row > div .font-weight-bold,
+.user-mypage .profile-edit-container .row > div .font-weight-bold {
+    width: 30%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.user-mypage .profile-container .row > div > div,
+.user-mypage .profile-edit-container .row > div input,
+.user-mypage .profile-edit-container .row > div p,
+.user-mypage .profile-edit-container .row > div select,
+.user-mypage .profile-edit-container .row > div .form-check {
+    width: 70%;
+    margin: 0;
+}
+
+.user-mypage .btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.user-mypage .form-control {
+    width: 100%;
+}
+
+.user-mypage .tabs-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.user-mypage .tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.user-mypage .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+}
+
+.user-mypage .tab.active {
+    border-bottom: 2px solid black;
+}
+
+.user-mypage .tab-content {
+    display: none;
+}
+
+.user-mypage .tab-content.active {
+    display: block;
+}
+
+.user-mypage .table-container {
+    overflow-x: auto;
+}
+
+.user-mypage .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-collapse: collapse;
+}
+
+.user-mypage .table th,
+.user-mypage .table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+    vertical-align: top;
+}
+
+.user-mypage .table th {
+    background-color: #f8f9fa;
+}
+
+.user-mypage .btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+
+.user-mypage .btn-container .btn-secondary,
+.user-mypage .btn-container .btn-primary {
+    margin-right: 5px;
+}

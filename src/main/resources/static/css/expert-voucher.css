@@ -1,0 +1,94 @@
+
+.voucher-session-card {
+    margin-bottom: 1rem;
+}
+
+.voucher-session-card .card-header {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.voucher-session-card .card-header:hover {
+    background-color: #e9ecef;
+    border-color: #ccc;
+}
+
+.voucher-session-card .card-header h4,
+.voucher-session-card .card-header h6 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.voucher-session-card .card-header h4 i,
+.voucher-session-card .card-header h6 i {
+    margin-right: 0.5rem;
+
+}
+
+.voucher-session-card .card-body {
+    padding: 1rem;
+}
+
+.voucher-price-card {
+    padding: 1rem;
+    border: 1px solid #e2e2e2;
+    border-radius: 0.375rem;
+    text-align: center;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.voucher-price-card strong {
+    font-size: 1.2rem;
+    color: #008989;
+}
+
+.voucher-price-card small {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* .voucher-toggle-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.collapse:not(.show) .voucher-toggle-icon {
+    transform: rotate(180deg);
+} */
+
+.therapist-info {
+    border-radius: 15px;
+    /* 전체 컨테이너에 둥근 모서리 */
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.therapist-info img {
+    border-radius: 50%;
+    /* 프로필 사진 둥글게 */
+}
+
+.therapist-info .name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.therapist-info .rating {
+    font-size: 1rem;
+    color: #ffcc00;
+}
+
+.therapist-info .text-muted {
+    font-size: 0.9rem;
+}

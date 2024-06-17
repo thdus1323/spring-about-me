@@ -1,0 +1,71 @@
+.header_ex .icon {
+    color: #333;
+    font-size: 16px; /* Further reduced font size */
+    margin-left: 10px; /* Further reduced margin */
+    text-decoration: none;
+}
+
+.voucher-list {
+    padding: 10px; /* Further reduced padding */
+    background-color: #f9f9f9;
+    max-width: 1000px; /* Further reduced width */
+    margin: 0 auto; /* Center align */
+}
+
+.voucher-list h1 {
+    font-size: 20px; /* Further reduced font size */
+    margin-bottom: 10px; /* Further reduced margin */
+}
+
+.voucher-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Further reduced margin */
+}
+
+.voucher-header span {
+    font-size: 14px; /* Further reduced font size */
+}
+
+.voucher-header button {
+    padding: 6px 16px; /* Further reduced padding */
+    background-color: rgb(59, 172, 174);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.voucher-header button:hover {
+    background-color: #006f6b;
+}
+
+.voucher-item {
+    background-color: #fff;
+    padding: 10px; /* Further reduced padding */
+    margin-bottom: 10px; /* Further reduced margin */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.voucher-item h2 {
+    font-size: 16px; /* Further reduced font size */
+    margin-bottom: 6px; /* Further reduced margin */
+}
+
+.voucher-item table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.voucher-item table th,
+.voucher-item table td {
+    border: 1px solid #ddd;
+    padding: 15px; /* Increased padding for height */
+    text-align: center;
+}
+
+.voucher-item table th {
+    background-color: #f1f1f1;
+}

@@ -1,0 +1,189 @@
+
+.card-expert {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    height: 550px;
+    position: sticky;
+    top: 100px;
+    right: 20px;
+}
+
+.card-expert img {
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body h2 {
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+
+.card-body p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.card-body .rating {
+    color: #f39c12;
+    font-size: 1.2em;
+}
+
+.card-body .price {
+    color: #27ae60;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.button-container {
+    padding: 20px;
+    background-color: #008584;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+
+.review-card {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc; /* 경계 추가 */
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.review-score {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007D7C;
+    margin-right: 0.5rem;
+}
+
+.review-best {
+    background-color: #008584;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    margin-left: auto;
+}
+
+.review-text {
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.review-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #888;
+}
+
+.review-footer i {
+    margin-right: 0.5rem;
+}
+
+.review-footer span {
+    font-size: 0.875rem;
+}
+
+.review-details {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+
+}
+
+.review-detail-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem;
+    border-radius: 10px;
+    background: linear-gradient(to right, #7EC6C8 calc(var(--score) / 5 * 100%), #e6f4f1 calc(var(--score) / 5 * 100%));
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 10px;
+    height: 20px; /* Progress bar height */
+}
+
+.review-detail-item:hover {
+    background: linear-gradient(to right, #007D7C calc(var(--score) / 5 * 100%), #d0e4e2 calc(var(--score) / 5 * 100%));
+    color: #fff;
+}
+
+.review-detail-item .item-info {
+    display: flex;
+    align-items: center;
+}
+
+.review-detail-item .item-info i {
+    font-size: 1rem; /* Adjust icon size */
+    margin-right: 0.5rem;
+}
+
+.review-detail-item .rating {
+    font-size: 1rem; /* Adjust rating text size */
+    font-weight: bold;
+    z-index: 1;
+}
+
+.review-rating {
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.score-rating {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-right: 0.25rem;
+}
+
+/* 아이콘 색상 설정 */
+.icon-heart {
+    color: #ff5a5a;
+}
+
+.icon-solution {
+    color: #007bff;
+}
+
+.icon-lightbulb {
+    color: #ffc107;
+}
+
+.icon-book {
+    color: #28a745;
+}
+
+.icon-lightning {
+    color: #fd7e14;
+}
+
+.icon-smile {
+    color: #ff4081;
+}
+

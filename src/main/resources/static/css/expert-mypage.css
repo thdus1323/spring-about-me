@@ -1,0 +1,185 @@
+.expert-mypage .profile-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.expert-mypage .profile-edit-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.expert-mypage .profile-image-wrapper {
+    position: relative;
+    margin-right: 20px;
+}
+
+.expert-mypage .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.expert-mypage .edit-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.expert-mypage .profile-details {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.expert-mypage .profile-container .row > div,
+.expert-mypage .profile-edit-container .row > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.expert-mypage .profile-container .row > div .font-weight-bold,
+.expert-mypage .profile-edit-container .row > div .font-weight-bold {
+    width: 30%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.expert-mypage .profile-container .row > div > div,
+.expert-mypage .profile-edit-container .row > div input,
+.expert-mypage .profile-edit-container .row > div p,
+.expert-mypage .profile-edit-container .row > div select,
+.expert-mypage .profile-edit-container .row > div .form-check {
+    width: 70%;
+    margin: 0;
+}
+
+.expert-mypage .btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.expert-mypage .form-control {
+    width: 100%;
+}
+
+.expert-mypage .tabs-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.expert-mypage .tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.expert-mypage .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+}
+
+.expert-mypage .tab.active {
+    border-bottom: 2px solid black;
+}
+
+.expert-mypage .tab-content {
+    display: none;
+}
+
+.expert-mypage .tab-content.active {
+    display: block;
+}
+
+.expert-mypage .table-container {
+    overflow-x: auto;
+}
+
+.expert-mypage .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-collapse: collapse;
+}
+
+.expert-mypage .table th,
+.expert-mypage .table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+    vertical-align: top;
+}
+
+.expert-mypage .table th {
+    background-color: #f8f9fa;
+}
+
+.expert-mypage .btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.expert-mypage .btn-container .btn-secondary,
+.expert-mypage .btn-container .btn-primary {
+    margin-right: 5px;
+}
+
+.expert-mypage .card-header {
+    font-weight: bold;
+}
+
+.expert-mypage .card-body .input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.expert-mypage .card-body .input-group .form-control {
+    flex: 1; /* 너비를 자동으로 조정하여 동일한 크기로 */
+    margin-right: 10px;
+}
+
+.expert-mypage .card-body .input-group .input-group-append {
+    display: flex;
+    align-items: center;
+}
+
+.expert-mypage .card-body .input-group .remove {
+    color: red;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.expert-mypage .card-body .input-group .remove:hover {
+    color: darkred;
+}
+
+.expert-mypage .card-body hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
