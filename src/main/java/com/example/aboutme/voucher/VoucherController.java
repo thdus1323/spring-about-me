@@ -8,5 +8,4 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class VoucherController {
     private final VoucherService voucherService;
-    private final HttpSession session;
 }

@@ -10,13 +10,14 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/api/**")
-                .excludePathPatterns();
-    }
-
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+////        registry.addInterceptor(new LoginInterceptor())
+////                .addPathPatterns("/**")
+////                .excludePathPatterns();
+//
+//
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -24,16 +25,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         registry
                 // 파일 다운로드 URL 패턴
-                .addResourceHandler("/upload/**")
+                .addResourceHandler("/images/**")
                 // 실제 파일이 저장된 경로
-                .addResourceLocations("file:./upload/")
+                .addResourceLocations("file:./images/")
                 .setCachePeriod(60 * 60) // 초 단위 => 한시간
-                .resourceChain(true)
-                .addResolver(new PathResourceResolver());
-
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("classpath:/images/")
-                .setCachePeriod(60 * 60)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
     }

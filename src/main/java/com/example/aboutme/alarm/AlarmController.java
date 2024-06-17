@@ -8,5 +8,4 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class AlarmController {
     private final AlarmService alarmService;
-    private final HttpSession session;
 }

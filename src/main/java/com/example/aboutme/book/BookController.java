@@ -8,5 +8,4 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class BookController {
     private final BookService bookService;
-    private final HttpSession session;
 }

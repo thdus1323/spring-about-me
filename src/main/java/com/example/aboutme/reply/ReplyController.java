@@ -8,5 +8,4 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ReplyController {
     private final ReplyService replyService;
-    private final HttpSession session;
 }
