@@ -8,5 +8,4 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class CommController {
     private final CommService commService;
-    private final HttpSession session;
 }
