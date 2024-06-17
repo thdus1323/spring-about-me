@@ -2,6 +2,7 @@
 @import url(reset.css);
 @import url(common.css);
 @import url(header.css);
+@import url(footer.css);
 @import url(login.css);
 @import url(join.css);
 @import url(expert-detail.css);
@@ -13,6 +14,7 @@
 @import url(voucher-list.css);
 @import url(user-mypage.css);
 @import url(user-main.css);
+@import url(community.css);
 
 body {
     margin: 0 auto;

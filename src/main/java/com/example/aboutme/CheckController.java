@@ -69,6 +69,11 @@ public class CheckController {
         return "user/mypage";
     }
 
+    @GetMapping("/user/community")
+    public String userCommunity() {
+        return "user/community";
+    }
+
     // 연습장?
     @GetMapping("/card")
     public String card() {

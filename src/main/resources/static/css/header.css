@@ -1,0 +1,56 @@
+/* 헤더 */
+.header-ex {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 140px;
+}
+
+.logo img {
+    width: 100%;
+}
+
+.menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.menu ul li {
+    margin-left: 20px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: #333;
+    font-size: 20px;
+    margin-left: 20px;
+    text-decoration: none;
+}
