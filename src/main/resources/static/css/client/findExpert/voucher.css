@@ -46,6 +46,13 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 호버 시 변경 사항 */
+.voucher-price-card:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
 .voucher-price-card strong {
     font-size: 1.2rem;
     color: #008989;
@@ -56,6 +63,12 @@
     color: #6c757d;
 }
 
+/* 카드에 호버 효과를 주기 위한 커스텀 CSS */
+/*.voucher-price-card .card-hover:hover {*/
+/*    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);*/
+/*    transform: translateY(-5px);*/
+/*    transition: all 0.3s ease-in-out;*/
+/*}*/
 /* .voucher-toggle-icon {
     font-size: 1.2rem;
     transition: transform 0.3s ease;

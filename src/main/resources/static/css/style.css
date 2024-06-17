@@ -1,20 +1,20 @@
 @charset "UTF-8";
 @import url(reset.css);
 @import url(common.css);
-@import url(header.css);
-@import url(footer.css);
-@import url(login.css);
-@import url(join.css);
-@import url(expert-detail.css);
-@import url(experience.css);
-@import url(expert-voucher.css);
-@import url(expert-mypage.css);
-@import url(expert-main.css);
-@import url(expert-voucher-form.css);
-@import url(voucher-list.css);
-@import url(user-mypage.css);
-@import url(user-main.css);
-@import url(community.css);
+@import url(layout/header.css);
+@import url(layout/footer.css);
+@import url(oauth/login.css);
+@import url(oauth/join.css);
+@import url(client/findExpert/detail.css);
+@import url(client/findExpert/experience.css);
+@import url(client/findExpert/voucher.css);
+@import url(expert/mypage.css);
+@import url(client/findExpert/main.css);
+@import url(expert/voucher-form.css);
+@import url(expert/voucher-list.css);
+@import url(client/mypage.css);
+@import url(client/main.css);
+@import url(client/comm/comm.css);
 
 body {
     margin: 0 auto;
@@ -51,7 +51,6 @@ body {
 }
 
 /* 페이지 내용 */
-
 .page-content {
 
 }
