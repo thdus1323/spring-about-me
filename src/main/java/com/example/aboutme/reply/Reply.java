@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -27,11 +30,15 @@ public class Reply {
     @JoinColumn(name = "reply_id", nullable = false)
     private Comm comm;
 
+    @CreationTimestamp
+    private Timestamp createdAt;
+
     @Builder
-    public Reply(Integer id, String content, User user, Comm comm) {
+    public Reply(Integer id, String content, User user, Comm comm, Timestamp createdAt) {
         this.id = id;
         this.content = content;
         this.user = user;
         this.comm = comm;
+        this.createdAt = createdAt;
     }
 }

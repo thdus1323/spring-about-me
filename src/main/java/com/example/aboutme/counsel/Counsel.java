@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "counseling_tb")
+@Table(name = "counsel_tb")
 public class Counsel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +26,11 @@ public class Counsel {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usage_right_id", nullable = false)
+    @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
     @Column(nullable = false)
-    private LocalDateTime counselingDate;
+    private LocalDateTime counselDate;
 
     @Column(nullable = false)
     private String result;
@@ -42,11 +42,11 @@ public class Counsel {
     private Timestamp updatedAt;
 
     @Builder
-    public Counsel(Integer id, User user, Voucher voucher, LocalDateTime counselingDate, String result, Timestamp createdAt, Timestamp updatedAt) {
+    public Counsel(Integer id, User user, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.user = user;
         this.voucher = voucher;
-        this.counselingDate = counselingDate;
+        this.counselDate = counselDate;
         this.result = result;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

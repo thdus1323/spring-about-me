@@ -30,9 +30,6 @@ public class Book {
     private Voucher voucher;
 
     @Column(nullable = false)
-    private String bookCount;
-
-    @Column(nullable = false)
     private String startTime;
 
     @Column(nullable = false)
@@ -45,11 +42,10 @@ public class Book {
     private Timestamp updatedAt;
 
     @Builder
-    public Book(Integer id, User user, Voucher voucher, String bookCount, String startTime, LocalDateTime bookDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Book(Integer id, User user, Voucher voucher, String startTime, LocalDateTime bookDate, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.user = user;
         this.voucher = voucher;
-        this.bookCount = bookCount;
         this.startTime = startTime;
         this.bookDate = bookDate;
         this.createdAt = createdAt;
