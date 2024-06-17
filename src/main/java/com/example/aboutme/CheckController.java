@@ -6,6 +6,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CheckController {
 
+    // oauth
+    @GetMapping("/oauth/join")
+    public String join() {
+        return "oauth/join";
+    }
+
+    @GetMapping("/oauth/login")
+    public String login() {
+        return "oauth/login";
+    }
+
     // expert
     @GetMapping("/expert/detail")
     public String expertDetail() {
@@ -56,5 +67,16 @@ public class CheckController {
     @GetMapping("/user/mypage")
     public String userMypage() {
         return "user/mypage";
+    }
+
+    // 연습장?
+    @GetMapping("/card")
+    public String card() {
+        return "card";
+    }
+
+    @GetMapping("/linear-gradient")
+    public String linearGradient() {
+        return "linear-gradient";
     }
 }

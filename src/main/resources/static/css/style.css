@@ -12,6 +12,7 @@
 @import url(expert-voucher-form.css);
 @import url(voucher-list.css);
 @import url(user-mypage.css);
+@import url(user-main.css);
 
 body {
     margin: 0 auto;
