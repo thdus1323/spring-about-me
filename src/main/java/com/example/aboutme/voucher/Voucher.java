@@ -25,10 +25,10 @@ public class Voucher {
     private User user;
 
     @Column(nullable = false)
-    private String usageType;
+    private String voucherType;
 
     @Column(nullable = false)
-    private Integer usageCount;
+    private Integer voucherCount;
 
     @Column(nullable = false)
     private Integer remainingCount;
@@ -45,11 +45,11 @@ public class Voucher {
     private Timestamp updatedAt;
 
     @Builder
-    public Voucher(Integer id, User user, String usageType, Integer usageCount, Integer remainingCount, LocalDateTime startDate, LocalDateTime endDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, User user, String voucherType, Integer voucherCount, Integer remainingCount, LocalDateTime startDate, LocalDateTime endDate, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.user = user;
-        this.usageType = usageType;
-        this.usageCount = usageCount;
+        this.voucherType = voucherType;
+        this.voucherCount = voucherCount;
         this.remainingCount = remainingCount;
         this.startDate = startDate;
         this.endDate = endDate;

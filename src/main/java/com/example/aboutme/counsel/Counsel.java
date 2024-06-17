@@ -22,8 +22,12 @@ public class Counsel {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "client_id", nullable = false)
+    private User client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_id", nullable = false)
+    private User expert;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", nullable = false)
@@ -42,9 +46,10 @@ public class Counsel {
     private Timestamp updatedAt;
 
     @Builder
-    public Counsel(Integer id, User user, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt) {
+    public Counsel(Integer id, User client, User expert, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.user = user;
+        this.client = client;
+        this.expert = expert;
         this.voucher = voucher;
         this.counselDate = counselDate;
         this.result = result;
