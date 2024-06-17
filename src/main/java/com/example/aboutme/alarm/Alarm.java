@@ -28,6 +28,7 @@ public class Alarm {
     @CreationTimestamp
     private Timestamp createdAt;
 
+    @Builder
     public Alarm(Integer id, String message, User user, Timestamp createdAt) {
         this.id = id;
         this.message = message;
