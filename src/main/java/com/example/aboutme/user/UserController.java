@@ -45,10 +45,10 @@ public class UserController {
 
     // 👻👻👻공통👻👻👻
     // 메인페이지
-    @GetMapping("/")
-    public String expert() {
-        return "client/main";
-    }
+//    @GetMapping("/")
+//    public String expert() {
+//        return "client/main";
+//    }
 
     //TODO: 커뮤니티 페이지
     //커뮤니티 - 메인
