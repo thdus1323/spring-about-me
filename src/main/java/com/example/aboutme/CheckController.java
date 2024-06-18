@@ -14,10 +14,10 @@ public class CheckController {
 //    }
 
     //TODO: 지울거임
-//    @GetMapping("/")
-//    public String expert() {
-//        return "expert/main";
-//    }
+    @GetMapping("/")
+    public String expert() {
+        return "expert/main";
+    }
 //
 
 
