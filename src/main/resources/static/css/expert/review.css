@@ -1,0 +1,94 @@
+/* *************************** 전문가 후기 관련 CSS 시작 ***************************** */
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.review-header figure{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0;
+    margin-right: 5px;
+}
+.review-header figure img{
+    width: 100%;
+    object-fit: cover;
+}
+.review-header span{
+    font-size: 14px;
+    font-weight: 700;
+}
+.review-header h2 {
+    margin: 0;
+}
+.review-list {
+    list-style: none;
+    padding: 0;
+}
+.review-item {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 20px;
+    position: relative;
+    border-radius: 5px;
+}
+.review-item .review-content {
+    height: 100px;
+    overflow: hidden;
+    transition: height 0.3s ease;
+    background: #f8f8f8;
+    padding: 20px 20px 40px 20px;
+    border-radius: 5px;
+    position: relative;
+}
+.review-item .review-content span{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 두 줄까지만 표시 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2;
+}
+.review-item.expanded .review-content span{
+    display: block;
+}
+
+.review-item.expanded .review-content {
+    height: fit-content;
+}
+
+.review-item.expanded .review-content::after {
+    opacity: 0;
+}
+
+.review-item .more-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 55px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.review-item .more-btn span{
+    position: relative;
+}
+
+.review-item .more-btn span::after{
+    content: "\f078";
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -15px;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.review-item .more-btn span.on::after{
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* *************************** 전문가 후기 관련 CSS 끝 ***************************** */
