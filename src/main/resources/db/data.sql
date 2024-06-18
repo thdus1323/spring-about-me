@@ -32,89 +32,86 @@ VALUES
     ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', 'expert9.jpg', '1992-07-07', 'MAN', NOW(), NOW()),
     ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert10.jpg', '1994-08-08', 'WOMAN', NOW(), NOW());
 
-
 -- voucher_tb
 INSERT INTO voucher_tb (issued_by, owned_by, reservation_id, voucher_type, price, count, duration, discount, start_date, end_date, is_active, created_at, updated_at)
 VALUES
     -- Expert 1
-    (6, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (6, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (6, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (21, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (21, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 2
-    (7, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (7, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (7, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (22, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (22, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (22, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 3
-    (8, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (8, 8, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (8, 9, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (23, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (23, 8, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (23, 9, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 4
-    (9, 10, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (9, 11, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (9, 12, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (24, 10, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (24, 11, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (24, 12, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 5
-    (10, 13, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (10, 14, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (10, 15, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (25, 13, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (25, 14, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (25, 15, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 6
-    (11, 16, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (11, 17, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (11, 18, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (26, 16, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (26, 17, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (26, 18, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 7
-    (12, 19, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (12, 20, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (12, 21, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (27, 19, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (27, 20, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (27, 1, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 8
-    (13, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (13, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (13, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (28, 2, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (28, 3, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (28, 4, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 9
-    (14, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (14, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (14, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (29, 5, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (29, 6, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (29, 7, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
     -- Expert 10
-    (15, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (15, 8, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (15, 9, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW());
-
+    (30, 8, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
+    (30, 9, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
+    (30, 10, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW());
 
 -- reservation_tb
 INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, created_at, updated_at)
 VALUES
     -- Expert 1's Vouchers
-    (6, 1, 1, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (6, 2, 2, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    (6, 3, 3, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
+    (21, 1, 1, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (21, 2, 2, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (21, 3, 3, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
     -- Expert 2's Vouchers
-    (7, 4, 4, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (7, 5, 5, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    (7, 6, 6, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
+    (22, 4, 4, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (22, 5, 5, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (22, 6, 6, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
     -- Expert 3's Vouchers
-    (8, 7, 7, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (8, 8, 8, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    (8, 9, 9, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
+    (23, 7, 7, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (23, 8, 8, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (23, 9, 9, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
     -- Expert 4's Vouchers
-    (9, 10, 10, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (9, 11, 11, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (24, 10, 10, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (24, 11, 11, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
     -- Expert 5's Vouchers
-    (10, 13, 13, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (10, 14, 14, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (25, 13, 13, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (25, 14, 14, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
     -- Expert 6's Vouchers
-    (11, 16, 16, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (11, 17, 17, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (26, 16, 16, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (26, 17, 17, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
     -- Expert 7's Vouchers
-    (12, 19, 19, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (12, 20, 20, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (27, 19, 19, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (27, 20, 20, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
     -- Expert 8's Vouchers
-    (13, 1, 22, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (13, 2, 23, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (28, 1, 22, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (28, 2, 23, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
     -- Expert 9's Vouchers
-    (14, 4, 25, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (14, 5, 26, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
+    (29, 4, 25, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (29, 5, 26, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
     -- Expert 10's Vouchers
-    (15, 7, 28, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (15, 8, 29, 'SCHEDULED', '11:00', NOW(), NOW(), NOW());
-
+    (30, 7, 28, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
+    (30, 8, 29, 'SCHEDULED', '11:00', NOW(), NOW(), NOW());
 
 -- comm_tb
 INSERT INTO comm_tb (user_id, content, title, created_at)
@@ -140,37 +137,35 @@ VALUES
     (10, '집에서 취미 생활 하기 좋은 게 뭐가 있을까요?', '취미 생활', NOW()),
     (10, '심리학 책 추천 좀 해주세요', '마음을 책으로 배울 수 있을까요?', NOW());
 
-
 -- reply_tb
 INSERT INTO reply_tb (user_id, comm_id, summary, cause_analysis, solution, created_at)
 VALUES
     -- 글 1의 댓글
     (1, 1, '집에 가고 싶은 이유는...', '스트레스가 원인입니다', '휴식을 취하세요', NOW()),
-    (6, 1, '상담사 의견', '생활 속 스트레스가 주요 원인입니다.', '정기적인 휴식과 상담을 추천합니다.', NOW()),
+    (21, 1, '상담사 의견', '생활 속 스트레스가 주요 원인입니다.', '정기적인 휴식과 상담을 추천합니다.', NOW()),
     -- 글 2의 댓글
     (2, 2, '회사에서 스트레스 받는 이유는...', '업무 부담이 원인입니다', '업무 분담을 요청해보세요', NOW()),
     -- 글 3의 댓글
     (3, 3, '저녁 메뉴 고민', '다양한 옵션이 많아 결정이 어렵습니다', '가볍게 샐러드나 요거트를 추천합니다', NOW()),
-    (7, 3, '상담사 의견', '건강한 다이어트를 위해 균형 잡힌 식사를 추천합니다.', '영양소가 균형 잡힌 식단을 고려해보세요.', NOW()),
+    (22, 3, '상담사 의견', '건강한 다이어트를 위해 균형 잡힌 식사를 추천합니다.', '영양소가 균형 잡힌 식단을 고려해보세요.', NOW()),
     -- 글 5의 댓글
     (5, 5, '수업시간 졸음 원인', '수면 부족이 원인입니다', '충분한 수면을 취하세요', NOW()),
     -- 글 6의 댓글
     (4, 6, '시험 공부 힘든 이유', '과도한 학습량이 원인입니다', '적절한 학습 계획을 세우세요', NOW()),
-    (8, 6, '상담사 의견', '효과적인 학습 방법을 찾는 것이 중요합니다.', '짧은 휴식과 함께 계획적인 학습을 추천합니다.', NOW()),
+    (23, 6, '상담사 의견', '효과적인 학습 방법을 찾는 것이 중요합니다.', '짧은 휴식과 함께 계획적인 학습을 추천합니다.', NOW()),
     -- 글 7의 댓글
     (5, 7, '친구와의 갈등 원인', '의사소통 부족이 원인입니다', '서로 솔직하게 대화해보세요', NOW()),
     -- 글 9의 댓글
-    (7, 9, '취미 찾기 고민', '취미가 다양해 결정이 어렵습니다', '여러 가지 시도해보세요', NOW()),
+    (27, 9, '취미 찾기 고민', '취미가 다양해 결정이 어렵습니다', '여러 가지 시도해보세요', NOW()),
     -- 글 12의 댓글
-    (8, 12, '혼자 밥 먹기 싫은 이유', '외로움이 원인입니다', '가벼운 외출을 해보세요', NOW()),
-    (10, 12, '상담사 의견', '혼자 있는 시간도 소중하게 생각하세요.', '작은 취미를 가져보세요.', NOW()),
+    (28, 12, '혼자 밥 먹기 싫은 이유', '외로움이 원인입니다', '가벼운 외출을 해보세요', NOW()),
+    (30, 12, '상담사 의견', '혼자 있는 시간도 소중하게 생각하세요.', '작은 취미를 가져보세요.', NOW()),
     -- 글 14의 댓글
-    (9, 14, '프로젝트 어려운 이유', '프로젝트 범위가 큽니다', '작게 나눠서 진행하세요', NOW()),
-    (6, 14, '상담사 의견', '프로젝트 관리가 중요합니다.', '체계적인 계획을 세워보세요.', NOW()),
+    (29, 14, '프로젝트 어려운 이유', '프로젝트 범위가 큽니다', '작게 나눠서 진행하세요', NOW()),
+    (26, 14, '상담사 의견', '프로젝트 관리가 중요합니다.', '체계적인 계획을 세워보세요.', NOW()),
     -- 글 18의 댓글
-    (10, 18, '연애가 어려운 이유', '서로의 이해가 부족합니다', '서로에게 솔직해지세요', NOW()),
-    (7, 18, '상담사 의견', '서로의 감정을 잘 이해하세요.', '솔직한 대화를 나누세요.', NOW());
-
+    (30, 18, '연애가 어려운 이유', '서로의 이해가 부족합니다', '서로에게 솔직해지세요', NOW()),
+    (27, 18, '상담사 의견', '서로의 감정을 잘 이해하세요.', '솔직한 대화를 나누세요.', NOW());
 
 -- pr_tb
 INSERT INTO pr_tb (expert_id, intro, effects, methods)
@@ -210,7 +205,7 @@ VALUES
 INSERT INTO spec_tb (spec_type, details, user_id)
 VALUES
     -- Expert 1 (홍길동)
-    ('CAREER', '마인드카페 선정, 10월의 전문가', 21),
+    ('CAREER', '어바웃미 선정, 10월의 전문가', 21),
     ('CAREER', '사회복지사 2급 (보건복지부)', 21),
     ('CAREER', '미술치료사 2급 (국제민간자격증문협회)', 21),
     ('CAREER', '자살예방교육전문강사 (한국자살예방센터)', 21),
@@ -226,7 +221,7 @@ VALUES
     ('CAREER', '교정상담사 2급 (교정상담학회)', 22),
     ('CAREER', '기업상담전문가 2급 (한국가족문화상담협회)', 22),
     ('CAREER', 'PTSD심리상담사 2급 (한국심리훈련연구소)', 22),
-    ('CAREER', '현 마인드카페 심리상담사', 22),
+    ('CAREER', '현 어바웃미 심리상담사', 22),
     ('CAREER', '현 경북대학교병원 사내상담사', 22),
     ('CAREER', '현 한국철도청 MOU 및 전문상담사', 22),
     ('CAREER', '전 동대구초등학교 워크클래스 상담사', 22),
@@ -287,4 +282,3 @@ VALUES
     ('CAREER', '현 놀이치료센터 소장', 30),
     ('CAREER', '전 이화여자대학교병원 놀이치료사', 30),
     ('EDUCATION', '이화여자대학교 놀이치료학 석사 졸업', 30);
-
