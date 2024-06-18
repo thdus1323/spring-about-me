@@ -33,19 +33,19 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
-    public String login(String email, String password) {
-        System.out.println("email = " + email);
-        System.out.println("password = " + password);
-        return "redirect:/";
-    }
-//    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userService.loginByName(reqDTO);
-//        System.out.println("sessionUser = " + sessionUser);
-//        session.setAttribute("sessionUser", sessionUser);
+    //    @PostMapping("/login")
+//    public String login(String email, String password) {
+//        System.out.println("email = " + email);
+//        System.out.println("password = " + password);
 //        return "redirect:/";
 //    }
+    @PostMapping("/login")
+    public String login(UserRequest.LoginDTO reqDTO) {
+        User sessionUser = userService.loginByName(reqDTO);
+        System.out.println("sessionUser = " + sessionUser);
+        session.setAttribute("sessionUser", sessionUser);
+        return "redirect:/";
+    }
 
 //    @GetMapping("/")
 //    public String index() {
