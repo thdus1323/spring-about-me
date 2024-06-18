@@ -42,32 +42,36 @@ public class User {
     private String phone; // 전화번호
 
     // 아래부터는 필수가 아님
+    @Column(nullable = true)
     private String profileImage; // 프로필 이미지
 
+    @Column(nullable = true)
     private String birth; // 출생연도
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Gender gender; // MAN, WOMAN, OTHER
 
     // 전문가만 입력
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pr_id")
-    private PR pr; // 소개(망설임), 효과, 방식
+    private PR pr; // 소개, 효과, 방식
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private ExpertLevel level; // 1급: LEVEL1, 2급: LEVEL2
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Spec> specs; // 스펙 목록
 
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp createdAt; // 가입일
 
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private Timestamp updatedAt; // 업데이트일
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, ExpertLevel level, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, ExpertLevel level, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
@@ -79,6 +83,7 @@ public class User {
         this.gender = gender;
         this.pr = pr;
         this.level = level;
+        this.specs = specs;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
