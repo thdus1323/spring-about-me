@@ -10,10 +10,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserNativeRepository userNativeRepository;
 
-    @Transactional
-    public void joinByEmail(UserRequest.JoinDTO reqDTO){
-        userNativeRepository.join(reqDTO);
-    }
+//    @Transactional
+//    public void joinByEmail(UserRequest.JoinDTO reqDTO){
+//        userNativeRepository.join(reqDTO);
+//    }
 
     //로그인
     public User loginByName(UserRequest.LoginDTO reqDTO){

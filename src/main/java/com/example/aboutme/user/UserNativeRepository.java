@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 public class UserNativeRepository {
     public final EntityManager em;
 
-    //회원가입
-    public void join(UserRequest.JoinDTO reqDTO){
-        Query query = em.createNativeQuery("insert into user_tb(email, password, password, name, created_at) values (?,?,?,?,now()");
-        query.setParameter(1, reqDTO.getEmail());
-        query.setParameter(2, reqDTO.getPassword());
-        query.setParameter(3, reqDTO.getPassword());
-        query.setParameter(4, reqDTO.getName());
-        query.executeUpdate();
-    }
+//    //회원가입
+//    public void join(UserRequest.JoinDTO reqDTO){
+//        Query query = em.createNativeQuery("insert into user_tb(email, password, password, name, created_at) values (?,?,?,?,now()");
+//        query.setParameter(1, reqDTO.getEmail());
+//        query.setParameter(2, reqDTO.getPassword());
+//        query.setParameter(3, reqDTO.getPassword());
+//        query.setParameter(4, reqDTO.getName());
+//        query.executeUpdate();
+//    }
 
     //로그인
     public User login(UserRequest.LoginDTO reqDTO){
