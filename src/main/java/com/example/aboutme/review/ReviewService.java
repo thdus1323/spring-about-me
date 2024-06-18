@@ -1,10 +1,10 @@
-package com.example.aboutme.reply;
+package com.example.aboutme.review;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class ReplyService {
-    private final ReplyRepository replyRepository;
+public class ReviewService {
+    private final ReviewRepository reviewRepository;
 }

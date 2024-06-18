@@ -1,0 +1,253 @@
+
+    /* *************************** 전문가 커뮤니티 관련 CSS 시작 ***************************** */
+.comm-navbar{}
+.comm-navbar .container-fluid{}
+
+.comm-navbar .container-fluid .navebar-brand{}
+.comm-navbar .container-fluid .navebar-toggler{}
+.navbar{
+    padding: 0;
+}
+.container-fluid{
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+.comm-filter{
+    margin-top: 20px;
+}
+.comm-filter button{
+    height: 40px;
+    border: none;
+    width: 90px;
+    border-radius: 50px;
+    margin-right: 5px;
+}
+.comm-filter button.active{
+    color: #fff;
+}
+.c-card{
+    border: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 1000px;
+    align-content: flex-start;
+}
+.c-card .c-card-body{
+    width: calc((100% - 40px) / 3);
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: -webkit-fill-available;
+    margin-bottom: 20px;
+    height: fit-content;
+    padding: 20px;
+    background: #fff;
+}
+.c-card .c-card-body.comdetail{
+    width: 100%;
+    border: none;
+}
+.c-card .c-card-body:nth-child(3n){
+    margin-right: 0;
+}
+.c-card .c-card-body .card-title{
+    font-weight: 700;
+    font-size: 18px;
+}
+.c-card .c-card-body button{}
+.c-card .c-card-body .card-text{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+.c-card .c-card-body .card-link{
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+
+.c-card-body > a {
+    display: block;
+    width: 100%;
+}
+.c-card-body > a:hover p{
+    text-decoration: underline;
+}
+.category {
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.user-info {
+
+}
+
+.user-info figure {
+
+}
+
+.user-info img {
+
+}
+
+.user-info span {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #999;
+}
+
+.card-text {
+
+}
+
+.link-wrapper {
+
+}
+
+.card-link {
+
+}
+
+.card-link.like {
+
+}
+
+.card-link.reply {
+
+}
+
+.card-link em.count {
+    margin-left: 5px;
+}
+
+.community-cartegory{
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.community-cartegory.detail{
+    justify-content: space-between;
+}
+.community-cartegory .user-info{
+    display: flex;
+    align-items: center;
+}
+.community-cartegory figure{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.community-cartegory figure img{
+    width: 100%;
+    object-fit: cover;
+}
+.community-cartegory .actions{}
+.community-cartegory .actions .right-actions{
+    display: flex;
+}
+.community-cartegory .actions .right-actions button{}
+.community-cartegory .actions .right-actions .dropdown{
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 5px;
+    position: relative;
+
+}
+.community-cartegory .actions .right-actions .dropdown > button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #f8f8f8;
+    border-radius: 5px;
+    outline: none;
+}
+.community-cartegory .actions .right-actions .dropdown > button.show
+.community-cartegory .actions .right-actions .dropdown > button:hover{
+    background: #f2f2f2;
+}
+.community-cartegory .actions .right-actions .dropdown > button i{
+    font-weight: 600;
+}
+.dropdown-menu{
+
+}
+.community-cartegory .actions .right-actions .dropdown .dropdown-menu{
+    position: absolute;
+    top: 140%;
+    right: 0;
+    left: inherit;
+    width: 90px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.community-cartegory .actions .right-actions .dropdown .dropdown-menu .dropdown-item{
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    background: none;
+}
+.community-cartegory .actions .right-actions .dropdown .dropdown-menu .dropdown-item:hover{
+    background: #f8f8f8;
+}
+.community-cartegory .actions .right-actions .dropdown .dorpdown-menu.show{}
+.community-cartegory .actions .right-actions .dropdown .dorpdown-menu button.dropdown-item{}
+.expert-reply{
+    padding: 20px;
+    background: #f8f8f8;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.expert-reply .expert-reply-info{
+    display: flex;
+    align-items: center;
+}
+.expert-reply .expert-reply-info figure{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+}
+.expert-reply .expert-reply-info figure img{
+    width: 100%;
+}
+.expert-reply .expert-reply-info .expert-reply-name{
+    margin-left: 5px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.expert-reply .reply-content{
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2;
+}
+
+.community-cartegory .actions .right-actions a{}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
