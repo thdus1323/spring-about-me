@@ -1,4 +1,4 @@
-package com.example.aboutme.book;
+package com.example.aboutme.reservation;
 
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "book_tb")
-public class Book {
+@Table(name = "reservation_tb")
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,7 +25,7 @@ public class Book {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
@@ -33,7 +33,7 @@ public class Book {
     private String startTime;
 
     @Column(nullable = false)
-    private LocalDateTime bookDate;
+    private LocalDateTime reservationDate;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -42,12 +42,12 @@ public class Book {
     private Timestamp updatedAt;
 
     @Builder
-    public Book(Integer id, User user, Voucher voucher, String startTime, LocalDateTime bookDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Reservation(Integer id, User user, Voucher voucher, String startTime, LocalDateTime reservationDate, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.user = user;
         this.voucher = voucher;
         this.startTime = startTime;
-        this.bookDate = bookDate;
+        this.reservationDate = reservationDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
