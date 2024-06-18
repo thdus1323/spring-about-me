@@ -77,6 +77,11 @@ public class UserController {
         return "comm/comm-main";
     }
 
+    @GetMapping("comm/detail")
+    public String communityDetail() {
+        return "comm/comm-detail";
+    }
+
 
     // 🐯🐯🐯Client🐯🐯🐯
     //전문가 찾기 - 메인
