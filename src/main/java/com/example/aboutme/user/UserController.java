@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +17,14 @@ public class UserController {
     public String index() {
         return "oauth/join";
     }
-
-    //회원가입
-    @PostMapping("/join")
-    public String Join(UserRequest.JoinDTO reqDTO) {
-        System.out.println("reqDTO = " + reqDTO);
-    userService.joinByEmail(reqDTO);
-    return "redirect:/login";
-    }
+//
+//    //회원가입
+//    @PostMapping("/join")
+//    public String Join(UserRequest.JoinDTO reqDTO) {
+//        System.out.println("reqDTO = " + reqDTO);
+//    userService.joinByEmail(reqDTO);
+//    return "redirect:/login";
+//    }
 
     @GetMapping("/login")
     public String login() {
@@ -33,8 +34,9 @@ public class UserController {
     @PostMapping("/login")
     public String Login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
+        System.out.println("sessionUser = " + sessionUser);
         session.setAttribute("sessionUser", sessionUser);
-        return "oauth/login";
+        return "redirect:/main";
     }
 
 //    @GetMapping("/")
@@ -63,10 +65,10 @@ public class UserController {
 
     // 👻👻👻공통👻👻👻
     // 메인페이지
-//    @GetMapping("/")
-//    public String expert() {
-//        return "client/main";
-//    }
+    @GetMapping("/")
+    public String expert() {
+        return "client/main";
+    }
 
     //TODO: 커뮤니티 페이지
     //커뮤니티 - 메인
