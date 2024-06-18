@@ -19,7 +19,7 @@
 @import url(expert/community.css);
 @import url(expert/review.css);
 @import url(expert/schedule.css);
-
+@import url(expert/community-detail.css);
 
 body {
     margin: 0 auto;
