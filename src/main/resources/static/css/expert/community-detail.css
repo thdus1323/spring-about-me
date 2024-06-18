@@ -28,6 +28,7 @@
     border-radius: 5px;
     font-size: 14px;
     margin-right: 5px;
+    color: #000;
 }
 .click-wrapper button:hover{
     background:#f8f8f8;
@@ -120,6 +121,7 @@ hr{
     height: 40px;
     padding: 0 10px;
 }
+
 .comment-section button{
     width: calc(20% - 20px);
 }
@@ -131,6 +133,7 @@ hr{
     color: #fff;
     border: none;
     cursor: pointer;
+    padding: 0;
 }
 
 .c-card .c-card-body.detail{

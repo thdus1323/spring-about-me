@@ -153,7 +153,14 @@
 .community-cartegory .actions .right-actions{
     display: flex;
 }
-.actions .right-actions button{}
+.actions .right-actions button{
+    padding: 0;
+    background: #f8f8f8;
+    font-size: 14px;
+}
+.actions .right-actions button span{
+    margin-left: 5px;
+}
 .actions .right-actions .dropdown{
     width: 40px;
     height: 40px;
