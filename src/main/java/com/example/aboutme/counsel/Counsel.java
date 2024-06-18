@@ -1,5 +1,6 @@
 package com.example.aboutme.counsel;
 
+import com.example.aboutme.review.Review;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
@@ -32,6 +33,10 @@ public class Counsel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id", nullable = false)
+    private Review review;
 
     @Column(nullable = false)
     private LocalDateTime counselDate;
