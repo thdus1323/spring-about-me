@@ -2,7 +2,6 @@ package com.example.aboutme.user;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +12,13 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+
     @GetMapping("/join")
     public String index() {
         return "oauth/join";
     }
-//
+
+
 //    //회원가입
 //    @PostMapping("/join")
 //    public String Join(UserRequest.JoinDTO reqDTO) {
@@ -31,13 +32,20 @@ public class UserController {
         return "oauth/login";
     }
 
+
     @PostMapping("/login")
-    public String Login(UserRequest.LoginDTO reqDTO) {
-        User sessionUser = userService.loginByName(reqDTO);
-        System.out.println("sessionUser = " + sessionUser);
-        session.setAttribute("sessionUser", sessionUser);
-        return "redirect:/main";
+    public String login(String email, String password) {
+        System.out.println("email = " + email);
+        System.out.println("password = " + password);
+        return "redirect:/";
     }
+//    @PostMapping("/login")
+//    public String login(UserRequest.LoginDTO reqDTO) {
+//        User sessionUser = userService.loginByName(reqDTO);
+//        System.out.println("sessionUser = " + sessionUser);
+//        session.setAttribute("sessionUser", sessionUser);
+//        return "redirect:/";
+//    }
 
 //    @GetMapping("/")
 //    public String index() {
