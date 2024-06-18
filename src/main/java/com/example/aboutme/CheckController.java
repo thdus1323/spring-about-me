@@ -22,29 +22,29 @@ public class CheckController {
 
 
     //TODO:클라이언트용 페이지
-    //전문가 찾기 - 메인
-    @GetMapping("/client/findExpert")
-    public String findExpert() {
-        return "client/findExpert/main";
-    }
+//    //전문가 찾기 - 메인
+//    @GetMapping("/client/findExpert")
+//    public String findExpert() {
+//        return "client/findExpert/main";
+//    }
 
-    //전문가 찾기 - 상세보기
-    @GetMapping("/client/findExpert/detail")
-    public String findExpertDetail() {
-        return "client/findExpert/detail";
-    }
+//    //전문가 찾기 - 상세보기
+//    @GetMapping("/client/findExpert/detail")
+//    public String findExpertDetail() {
+//        return "client/findExpert/detail";
+//    }
 
-    //전문가 칮기 - 이용권
-    @GetMapping("/client/findExpert/voucher")
-    public String findExpertVoucher() {
-        return "client/findExpert/voucher";
-    }
+//    //전문가 칮기 - 이용권
+//    @GetMapping("/client/findExpert/voucher")
+//    public String findExpertVoucher() {
+//        return "client/findExpert/voucher";
+//    }
 
-    //전문가 칮기 - 예약하기
-    @GetMapping("/client/findExpert/reservation")
-    public String findExpertReservation() {
-        return "client/findExpert/reservation";
-    }
+//    //전문가 칮기 - 예약하기
+//    @GetMapping("/client/findExpert/reservation")
+//    public String findExpertReservation() {
+//        return "client/findExpert/reservation";
+//    }
 
     //전문가 칮기 - 결제하기
     @GetMapping("/client/findExpert/payment")
@@ -83,15 +83,6 @@ public class CheckController {
     public String schedule() {
         return "expert/schedule";
     }
-
-
-
-
-
-
-
-
-
 
 
 }
