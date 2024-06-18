@@ -1,5 +1,6 @@
 package com.example.aboutme.voucher;
 
+import com.example.aboutme.reservation.Reservation;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -23,6 +24,10 @@ public class Voucher {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", nullable = false)
+    private Reservation reservation;
 
     @Column(nullable = false)
     private String voucherType;

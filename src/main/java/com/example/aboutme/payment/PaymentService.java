@@ -1,9 +1,10 @@
-package com.example.aboutme.book;
+package com.example.aboutme.payment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class BookService {
+public class PaymentService {
+    private final PaymentRepository paymentRepository;
 }

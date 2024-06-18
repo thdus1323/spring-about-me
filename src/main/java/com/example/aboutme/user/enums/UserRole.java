@@ -1,4 +1,4 @@
-package com.example.aboutme.user;
+package com.example.aboutme.user.enums;
 
 public enum UserRole {
     CLIENT,
