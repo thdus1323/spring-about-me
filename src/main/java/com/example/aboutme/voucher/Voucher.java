@@ -39,7 +39,7 @@ public class Voucher {
     private VoucherType voucherType; // TEXT_THERAPY, VOICE_THERAPY, VIDEO_THERAPY
 
     @Column(nullable = false)
-    private Double price; // 가격
+    private Integer price; // 가격
 
     @Column(nullable = false)
     private Integer count; // 횟수
@@ -65,7 +65,7 @@ public class Voucher {
     private Timestamp updatedAt; // 수정일
 
     @Builder
-    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Double price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.issuedBy = issuedBy;
         this.ownedBy = ownedBy;
