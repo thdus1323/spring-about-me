@@ -19,26 +19,34 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String content;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user; // 글쓴이
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comm_id", nullable = false)
-    private Comm comm;
+    private Comm comm; // 커뮤니티
+
+    @Column(nullable = false)
+    private String summary; // 내용요약
+
+    @Column(nullable = false)
+    private String causeAnalysis; // 원인분석
+
+    @Column(nullable = false)
+    private String solution; // 대처방향제시
 
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp createdAt; // 작성일
 
     @Builder
-    public Reply(Integer id, String content, User user, Comm comm, Timestamp createdAt) {
+    public Reply(Integer id, User user, Comm comm, String summary, String causeAnalysis, String solution, Timestamp createdAt) {
         this.id = id;
-        this.content = content;
         this.user = user;
         this.comm = comm;
+        this.summary = summary;
+        this.causeAnalysis = causeAnalysis;
+        this.solution = solution;
         this.createdAt = createdAt;
     }
 }
