@@ -30,7 +30,8 @@ public class Reservation {
     @JoinColumn(name = "client_id", nullable = false)
     private User client; // 내담자
 
-    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher; // 바우처
 
     @Enumerated(EnumType.STRING)

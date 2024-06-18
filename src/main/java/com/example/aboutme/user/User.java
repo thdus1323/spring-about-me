@@ -61,7 +61,7 @@ public class User {
     @Column(nullable = true)
     private ExpertLevel level; // 1급: LEVEL1, 2급: LEVEL2
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Spec> specs; // 스펙 목록
 
     @CreationTimestamp
