@@ -1,6 +1,5 @@
 package com.example.aboutme.user;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +43,40 @@ public class UserController {
 //        return "client/findExpert/voucher";
 //    }
 
-
+    // 👻👻👻공통👻👻👻
+    // 메인페이지
     @GetMapping("/")
     public String expert() {
         return "client/main";
     }
+
+    //TODO: 커뮤니티 페이지
+    //커뮤니티 - 메인
+    @GetMapping("/comm")
+    public String community() {
+        return "comm/comm-main";
+    }
+
+
+    // 🐯🐯🐯Client🐯🐯🐯
+    //전문가 찾기 - 메인
+    @GetMapping("/client/findExpert")
+    public String findExpert() {
+        return "client/findExpert/main";
+    }
+
+    //전문가 찾기 - 상세보기
+    @GetMapping("/client/findExpert/detail")
+    public String findExpertDetail() {
+        return "client/findExpert/detail";
+    }
+
+    //클라이언트 - 마이페이지
+    @GetMapping("/client/mypage")
+    public String clientMypage() {
+        return "client/mypage";
+    }
+
+
+    // 🩺🩺🩺expert🩺🩺🩺
 }
