@@ -12,12 +12,12 @@ public class CheckController {
 //        return "client/main";
 //    }
 
-//    //TODO: 지울거임
+    //TODO: 지울거임
 //    @GetMapping("/")
 //    public String expert() {
 //        return "expert/main";
 //    }
-////
+//
 
 
     //TODO:클라이언트용 페이지

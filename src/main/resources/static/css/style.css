@@ -16,6 +16,9 @@
 @import url(client/main.css);
 @import url(client/comm/comm.css);
 @import url(expert/community.css);
+@import url(expert/review.css);
+@import url(expert/schedule.css);
+
 
 body {
     margin: 0 auto;
