@@ -1,4 +1,5 @@
 {{> layout/client-header}}
+
 <div class="login-wrap">
     <h1 class="login-title">로그인</h1>
     <div class="login-toggle mb-4">
@@ -19,16 +20,16 @@
             상담사
         </button>
     </div>
-    <form action="/login" method="post" id="loginForm" >
+    <form action="/login" method="post" id="loginForm">
         <div class="login-group mb-3">
             <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>
-            <input type="text" id="inputUsername" name="username" class="form-control"
-                   placeholder="아이디(이메일)을 입력해 주세요" required>
+            <input type="email" id="inputUsername" name="email" class="form-control"
+                   placeholder="아이디(이메일)을 입력해 주세요" value="mimi@nate.com" required>
         </div>
         <div class="login-group mb-3">
             <label for="inputPassword" class="form-label">비밀번호 <span class="text-danger">*</span></label>
             <input type="password" id="inputPassword" name="password" class="form-control"
-                   placeholder="비밀번호를 입력해 주세요" required>
+                   placeholder="비밀번호를 입력해 주세요" value="1234" required>
         </div>
         <button type="submit" class="login-btn">로그인</button>
         <div class="login-links mt-3 d-flex justify-content-between">
@@ -43,5 +44,6 @@
         </div>
     </form>
 </div>
+
 
 {{> layout/footer}}
