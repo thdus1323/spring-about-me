@@ -1,9 +1,9 @@
-package com.example.aboutme.book;
+package com.example.aboutme.reservation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class BookService {
+public class ReservationService {
 }
