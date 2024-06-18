@@ -25,7 +25,7 @@ public class Reservation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 

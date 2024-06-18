@@ -1,11 +1,13 @@
 package com.example.aboutme.payment;
 
-import com.example.aboutme.reservation.Reservation;
+import com.example.aboutme.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private double amount;
@@ -26,10 +28,6 @@ public class Payment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", nullable = false)
-    private Reservation reservation;
-
     @CreationTimestamp
     private Timestamp paymentDate;
 
@@ -38,12 +36,11 @@ public class Payment {
     private PaymentStatus status;
 
     @Builder
-    public Payment(Long id, double amount, String paymentMethod, User user, Reservation reservation, Timestamp paymentDate, PaymentStatus status) {
+    public Payment(Integer id, double amount, String paymentMethod, User user, Timestamp paymentDate, PaymentStatus status) {
         this.id = id;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
         this.user = user;
-        this.reservation = reservation;
         this.paymentDate = paymentDate;
         this.status = status;
     }
