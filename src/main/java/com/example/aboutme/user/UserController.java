@@ -10,6 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/join")
+    public String index() {
+        return "oauth/join";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "oauth/login";
+    }
+
 //    @GetMapping("/")
 //    public String index() {
 //        return "client/main";
