@@ -1,0 +1,85 @@
+/* *************************** 전문가 스케줄 관련 CSS 시작 ***************************** */
+
+.schedule {
+    /* 스케줄 컨테이너 전체 스타일 */
+}
+
+.schedule-title {
+    /* 스케줄 타이틀 영역 스타일 */
+    display: flex;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.schedule-title span {
+    /* 각 타이틀 항목 스타일 */
+    font-weight: bold;
+    color: #fff;
+    width: 25%;
+    text-align: center;
+}
+.schedule-title span:nth-child(1){
+
+}
+.schedule-title span:nth-child(2){
+
+}
+.schedule-title span:nth-child(3){
+
+}
+.schedule-title span:nth-child(4){
+
+}
+
+.schedule-list {
+    /* 스케줄 리스트 영역 스타일 */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.schedule-list li {
+    /* 각 리스트 항목 스타일 */
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.schedule-item {
+    /* 스케줄 아이템 스타일 */
+    display: flex;
+    align-items: center;
+    width: 25%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.schedule-item figure {
+    width: 80px;
+    height: 80px;
+    background-image: url(/images/unknown_user.png);
+    background-size: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.schedule-item figure img {
+    /* 프로필 이미지 스타일 */
+
+}
+
+.schedule-item p{
+
+}
+
+.line-up{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.line-up button{
+
+}
+
+/* *************************** 전문가 스케줄 관련 CSS 끝 ***************************** */
