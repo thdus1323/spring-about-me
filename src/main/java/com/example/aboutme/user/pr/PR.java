@@ -13,24 +13,24 @@ import lombok.NoArgsConstructor;
 public class PR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; // pr 아이디
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String introduction; // 소개
+    @Column(nullable = false)
+    private String intro; // 소개
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false)
     private String effects; // 효과
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false)
     private String methods; // 방식
 
     @OneToOne(mappedBy = "pr", fetch = FetchType.LAZY)
     private User user;
 
     @Builder
-    public PR(Integer id, String introduction, String effects, String methods, User user) {
+    public PR(Integer id, String intro, String effects, String methods, User user) {
         this.id = id;
-        this.introduction = introduction;
+        this.intro = intro;
         this.effects = effects;
         this.methods = methods;
         this.user = user;
