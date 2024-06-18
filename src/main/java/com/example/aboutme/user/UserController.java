@@ -33,12 +33,22 @@ public class UserController {
 //        return "client/findExpert/voucher";
 //    }
 
+    // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")
     public String expert() {
         return "client/main";
     }
 
+    //TODO: 커뮤니티 페이지
+    //커뮤니티 - 메인
+    @GetMapping("/comm")
+    public String community() {
+        return "comm/comm-main";
+    }
+
+
+    // 🐯🐯🐯Client🐯🐯🐯
     //전문가 찾기 - 메인
     @GetMapping("/client/findExpert")
     public String findExpert() {
@@ -51,5 +61,12 @@ public class UserController {
         return "client/findExpert/detail";
     }
 
+    //클라이언트 - 마이페이지
+    @GetMapping("/client/mypage")
+    public String clientMypage() {
+        return "client/mypage";
+    }
 
+
+    // 🩺🩺🩺expert🩺🩺🩺
 }

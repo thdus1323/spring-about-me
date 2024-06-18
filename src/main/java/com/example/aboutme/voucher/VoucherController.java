@@ -14,4 +14,10 @@ public class VoucherController {
     public String findExpertVoucher() {
         return "client/findExpert/voucher";
     }
+
+    //이용권목록
+    @GetMapping("/voucher-list")
+    public String voucherList() {
+        return "expert/voucher-list";
+    }
 }

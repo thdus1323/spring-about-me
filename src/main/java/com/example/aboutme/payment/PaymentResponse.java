@@ -1,4 +1,4 @@
 package com.example.aboutme.payment;
 
-public class CounselResponse {
+public class PaymentResponse {
 }
