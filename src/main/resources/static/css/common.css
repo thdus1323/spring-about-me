@@ -25,6 +25,11 @@
     font-weight: 700;
     font-size: 20px;
 }
+/*a: hover*/
+a:hover{
+    text-decoration: none;
+    color: inherit;
+}
 
 /* past */
 .past {

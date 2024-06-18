@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AlarmService {
+    private final AlarmRepository alarmRepository;
 }
