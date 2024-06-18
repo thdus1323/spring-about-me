@@ -1,0 +1,61 @@
+/* 전체 페이지 스타일링 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* 컨테이너 스타일링 */
+.container.mt-5 {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* 제목 스타일링 */
+h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+/* 드롭다운 및 체크박스 그룹 스타일링 */
+.form-group {
+    margin-top: 20px;
+}
+
+.dropdown, .form-check {
+    margin-bottom: 10px;
+}
+
+/* 드롭다운 버튼 스타일링 */
+.dropdown-toggle {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    color: #495057;
+}
+
+/* 텍스트 입력 필드 스타일링 */
+textarea, input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* 버튼 스타일링 */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

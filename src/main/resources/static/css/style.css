@@ -15,6 +15,7 @@
 @import url(client/mypage.css);
 @import url(client/main.css);
 @import url(client/comm/comm.css);
+@import url(client/comm/comm-write.css);
 @import url(expert/community.css);
 @import url(expert/review.css);
 @import url(expert/schedule.css);
