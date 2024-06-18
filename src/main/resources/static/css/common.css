@@ -217,6 +217,11 @@ a:hover{
     outline: none;
     height: 100%;
     background: none;
+    margin-bottom: 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 0 10px;
+    width: calc(100% - 40px);
 }
 
 .input-wrapper.search input::placeholder {
