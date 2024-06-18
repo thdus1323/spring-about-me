@@ -9,18 +9,15 @@
     text-align: center;
     margin: 50px auto;
 }
-
 .join-title {
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
-
 .join-toggle {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
 }
-
 .join-toggle button {
     background: none;
     border: none;
@@ -33,13 +30,11 @@
     display: flex;
     align-items: center;
 }
-
 .join-toggle button.join-active {
     background-color: #e6f4f1;
     border: 1px solid #008584;
     color: #008584;
 }
-
 .join-btn {
     width: 100%;
     padding: 0.75rem;
@@ -50,27 +45,95 @@
     font-size: 1rem;
     cursor: pointer;
 }
-
-.join-button:hover {
-    background-color: #008584;
+.join-btn:hover {
+    background-color: #006b6b;
 }
-
 .join-divider {
     border-top: 1px solid #ccc;
     margin: 1rem 0;
 }
-
 .join-social {
     display: flex;
     justify-content: center;
     margin-top: 1.5rem;
 }
-
 .join-social a {
     margin: 0 0.5rem;
 }
-
 .join-social img {
     width: 50px;
     height: 50px;
+}
+/* 회원가입 모달 스타일 */
+.join-modal-content {
+    border-radius: 10px;
+    padding: 2rem;
+}
+.join-modal-header {
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0;
+}
+.join-modal-header .close {
+    font-size: 1.5rem;
+    outline: none;
+    border: none;
+    background: none;
+}
+.join-modal-body {
+    padding: 2rem 1rem;
+    text-align: left;
+}
+.join-modal-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+/* 비밀번호 입력 필드의 아이콘과 인풋 그룹 스타일 */
+.join-form-group .input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.join-form-group .form-control {
+    padding-right: 40px; /* 아이콘 위치를 위한 여백 */
+}
+
+.join-form-group .input-group-text {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+
+.join-form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.join-modal-footer {
+    border-top: none;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0;
+}
+.join-modal-footer button {
+    margin-left: 0.5rem;
+}
+.join-modal-footer .btn-primary {
+    background-color: #008584;
+    border: none;
+    color: #fff;
+}
+.join-modal-footer .btn-primary:hover {
+    background-color: #006b6b;
 }
