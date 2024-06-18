@@ -31,7 +31,7 @@ public class Voucher {
     private User ownedBy; // 바우처를 구입한 내담자
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", nullable = false)
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation; // 예약
 
     @Enumerated(EnumType.STRING)
@@ -55,6 +55,9 @@ public class Voucher {
 
     private LocalDateTime endDate; // 종료 날짜
 
+    @Column(nullable = false)
+    private Boolean isActive; // 바우처 활성 상태
+
     @CreationTimestamp
     private Timestamp createdAt; // 생성일
 
@@ -62,7 +65,7 @@ public class Voucher {
     private Timestamp updatedAt; // 수정일
 
     @Builder
-    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Double price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Double price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.issuedBy = issuedBy;
         this.ownedBy = ownedBy;
@@ -74,6 +77,7 @@ public class Voucher {
         this.discount = discount;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.isActive = isActive;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
