@@ -72,6 +72,23 @@
             </div>
         </div>
     </div>
-
 </section>
+<script>
+    $(document).ready(function() {
+        $('.more-btn').on('click', function() {
+            const txt = $(this).find('.txt');
+            var reviewItem = $(this).closest('.review-item');
+            reviewItem.toggleClass('expanded');
+            if (reviewItem.hasClass('expanded')) {
+                txt.addClass('on');
+                txt.text('접기');
+            } else {
+                txt.removeClass('on');
+                txt.text('더보기');
+            }
+
+        });
+    });
+
+</script>
 {{> layout/footer}}
