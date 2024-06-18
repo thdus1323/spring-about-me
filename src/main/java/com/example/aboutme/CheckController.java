@@ -1,6 +1,7 @@
 package com.example.aboutme;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class CheckController {
@@ -13,11 +14,11 @@ public class CheckController {
 //    }
 
     //TODO: 지울거임
-//    @GetMapping("/")
-//    public String expert() {
-//        return "expert/main";
-//    }
-//
+    @GetMapping("/")
+    public String expert() {
+        return "expert/main";
+    }
+
 
 
     //TODO:클라이언트용 페이지

@@ -1,8 +1,3 @@
-/* 틀 */
-.container {
-    width: 1600px;
-    margin: 0 auto;
-}
 
 /* disabled */
 .disabled {
@@ -276,11 +271,19 @@ nav ul li a::before {
     right: 0;
     background-color: #333;
 }
+nav ul.pagination li a::before{
+    width: 0;
+    height: 0;
+}
 
 nav ul li:last-child a {
     padding: 0 0 0 10px;
 }
-
+nav ul.pagination li:last-child a{
+    width: 87px;
+    padding: 6px;
+    text-align: center;
+}
 nav ul li:last-child a::before {
     width: 0;
 }
