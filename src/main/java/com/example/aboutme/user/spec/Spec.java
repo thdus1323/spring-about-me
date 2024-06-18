@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 public class Spec {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; // 스펙 아이디
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private SpecType specType;
+    private SpecType specType; // CAREER: 경력, EDUCATION: 학력
 
     @Column(nullable = false)
-    private String details;
+    private String details; // 상세 내용
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
