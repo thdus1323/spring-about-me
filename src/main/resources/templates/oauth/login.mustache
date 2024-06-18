@@ -34,7 +34,7 @@
         <div class="login-links mt-3 d-flex justify-content-between">
             <a href="#" class="text-success">아이디 찾기</a>
             <a href="#" class="text-success">비밀번호 찾기</a>
-            <a href="#" class="text-success">회원가입</a>
+            <a href="/join" class="text-success">회원가입</a>
         </div>
         <hr class="join-divider ">
         <div class="join-social">
@@ -44,12 +44,4 @@
     </form>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $('.login-toggle button').click(function () {
-            $('.login-toggle button').removeClass('login-active btn-outline-success').addClass('btn-outline-secondary');
-            $(this).removeClass('btn-outline-secondary').addClass('login-active btn-outline-success');
-        });
-    });
-</script>
 {{> layout/footer}}
