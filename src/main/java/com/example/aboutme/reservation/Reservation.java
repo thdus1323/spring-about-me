@@ -5,50 +5,54 @@ import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "reservation_tb")
+@ToString(exclude = {"expert", "client", "voucher"})
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 예약 아이디
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id", nullable = false)
-    private User expert; // 전문가
+    private User expert;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
-    private User client; // 내담자
+    private User client;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "voucher_id", nullable = false)
-    private Voucher voucher; // 바우처
+    private Voucher voucher;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ReservationStatus status; // 예약 상태
+    private ReservationStatus status;
 
     @Column(nullable = false)
-    private String startTime; // 시작 시간
+    private String startTime;
 
     @Column(nullable = false)
-    private LocalDateTime reservationDate; // 예약 날짜
+    private LocalDateTime reservationDate;
 
     @CreationTimestamp
-    private Timestamp createdAt; // 생성일
+    private Timestamp createdAt;
 
     @UpdateTimestamp
-    private Timestamp updatedAt; // 수정일
+    private Timestamp updatedAt;
 
     @Builder
     public Reservation(Integer id, User expert, User client, Voucher voucher, ReservationStatus status, String startTime, LocalDateTime reservationDate, Timestamp createdAt, Timestamp updatedAt) {
@@ -62,13 +66,4 @@ public class Reservation {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
-//    // 예약 취소
-//    public void cancelReservation() {
-//        this.status = ReservationStatus.CANCELLED;
-//        if (this.voucher != null) {
-//            this.voucher.setIsActive(true);
-//            this.voucher.setReservation(null);
-//        }
-//    }
 }
