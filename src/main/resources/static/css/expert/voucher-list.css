@@ -7,7 +7,7 @@
 
 .voucher-list {
     padding: 10px; /* Further reduced padding */
-    background-color: #f9f9f9;
+    background-color: white;
     max-width: 1000px; /* Further reduced width */
     margin: 0 auto; /* Center align */
 }
@@ -57,14 +57,18 @@
 .voucher-item table {
     width: 100%;
     border-collapse: collapse;
+    height: auto; /* Set table height to auto */
 }
 
 .voucher-item table th,
 .voucher-item table td {
     border: 1px solid #ddd;
-    padding: 15px; /* Increased padding for height */
+    padding: 7px; /* Maintain padding for height */
     text-align: center;
+    vertical-align: middle; /* Align text vertically in the middle of the cell */
+    width: 33.33%;
 }
+
 
 .voucher-item table th {
     background-color: #f1f1f1;
