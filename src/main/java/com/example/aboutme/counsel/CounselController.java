@@ -1,12 +1,17 @@
 package com.example.aboutme.counsel;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RequiredArgsConstructor
 @Controller
 public class CounselController {
     private final CounselService counselService;
-    private final HttpSession session;
+
+    //상담일정
+    @GetMapping("/schedule")
+    public String schedule() {
+        return "expert/schedule";
+    }
 }

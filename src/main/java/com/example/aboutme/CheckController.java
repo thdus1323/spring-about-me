@@ -1,7 +1,6 @@
 package com.example.aboutme;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class CheckController {
@@ -46,43 +45,41 @@ public class CheckController {
 //        return "client/findExpert/reservation";
 //    }
 
-    //전문가 칮기 - 결제하기
-    @GetMapping("/client/findExpert/payment")
-    public String findExpertPayment() {
-        return "client/findExpert/payment";
-    }
+//    //전문가 칮기 - 결제하기
+//    @GetMapping("/client/findExpert/payment")
+//    public String findExpertPayment() {
+//        return "client/findExpert/payment";
+//    }
 
-    //클라이언트 - 마이페이지
-    @GetMapping("/client/mypage")
-    public String clientMypage() {
-        return "client/mypage";
-    }
+//    //클라이언트 - 마이페이지
+//    @GetMapping("/client/mypage")
+//    public String clientMypage() {
+//        return "client/mypage";
+//    }
 
-    //TODO: 커뮤니티 페이지
-    //커뮤니티 - 메인
-    @GetMapping("/comm")
-    public String community() {
-        return "comm/comm-main";
-    }
+//    //커뮤니티 - 메인
+//    @GetMapping("/comm")
+//    public String community() {
+//        return "comm/comm-main";
+//    }
 
-    //TODO: 전문가용 페이지
-    //후기
-    @GetMapping("/review")
-    public String review() {
-        return "expert/review";
-    }
+//    //후기
+//    @GetMapping("/review")
+//    public String review() {
+//        return "expert/review";
+//    }
 
-    //이용권목록
-    @GetMapping("/voucher-list")
-    public String voucherList() {
-        return "expert/voucher-list";
-    }
+//    //이용권목록
+//    @GetMapping("/voucher-list")
+//    public String voucherList() {
+//        return "expert/voucher-list";
+//    }
 
-    //상담일정
-    @GetMapping("/schedule")
-    public String schedule() {
-        return "expert/schedule";
-    }
+//    //상담일정
+//    @GetMapping("/schedule")
+//    public String schedule() {
+//        return "expert/schedule";
+//    }
 
 
 }
