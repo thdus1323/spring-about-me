@@ -77,6 +77,7 @@ public class UserController {
     //커뮤니티 - 메인
     @GetMapping("/comm")
     public String community() {
+        
         return "comm/comm-main";
     }
 

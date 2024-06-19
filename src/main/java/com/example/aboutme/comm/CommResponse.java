@@ -1,7 +1,10 @@
 package com.example.aboutme.comm;
 
 import com.example.aboutme.comm.enums.CommCategory;
+import com.example.aboutme.user.User;
 import lombok.Data;
+
+import java.sql.Timestamp;
 
 public class CommResponse {
 
@@ -26,6 +29,25 @@ public class CommResponse {
             this.writerName = writerName;
             this.expertImage = expertImage;
             this.expertName = expertName;
+        }
+    }
+
+    @Data
+    public static class CommDetailDTO {
+        private Integer commId;
+        private User user; // 조인해야 할 듯.
+        private String content;
+        private String title;
+        private CommCategory category;
+        private Timestamp createdAt;
+
+        public CommDetailDTO(Comm comm) {
+            this.commId = comm.getId();
+            this.user = comm.getUser();
+            this.content = comm.getContent();
+            this.title = comm.getTitle();
+            this.category = comm.getCategory();
+            this.createdAt = comm.getCreatedAt();
         }
     }
 }
