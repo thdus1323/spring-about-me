@@ -1,0 +1,214 @@
+/*결제 CSS*/
+
+.payment-section {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.payment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    text-decoration: none;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.payment-header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.payment-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-panel {
+    width: 550px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.right-panel {
+    width: calc(100% - 600px);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    height: fit-content;
+}
+
+.description {
+    display: flex;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #f8f8f8;
+    flex-direction: column;
+}
+
+.description span {
+    font-size: 30px;
+    opacity: 0.1;
+    color: #00bbba
+}
+
+.notice {
+    margin-bottom: 40px;
+}
+
+.notice p:first-child {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.notice p:nth-child(2) {
+    margin-bottom: 10px;
+    color: #999;
+    font-size: 14px;
+}
+
+.notice p:nth-child(3) {
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.notice p:nth-child(3) em {
+    color: #00bbba;
+}
+
+.discount {
+    margin-bottom: 20px;
+}
+
+.discount p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.coupon .body, .coffee .body {
+    width: 100%;
+}
+
+.coupon, .coffee {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+.coupon label, .coffee label {
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+.coupon select, .coffee input {
+    padding: 5px;
+    margin-right: 10px;
+    height: 40px;
+    border-radius: 5px;
+    width: calc((70%));
+    font-size: 14px;
+}
+
+.coupon select {
+    border: 1px solid #ddd;
+}
+
+.coffee input {
+    background: hsl(180, 5%, 95%);
+    padding: 0 10px;
+}
+
+.coupon-button, .coffee-button {
+    padding: 5px 10px;
+    background-color: #00bbba;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+    width: calc(30% - 15px);
+}
+
+.final-amount {
+    margin-bottom: 20px;
+}
+
+.final-amount p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.amount-details p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+.amount-details .total {
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.amount-details .total span {
+    color: #00bbba;
+}
+
+.payment-method p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.payment-method select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.amount-details .coupon-discount {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ddd;
+    border-bottom: 2px solid #000;
+    padding: 10px 0;
+}
+
+.amount-details {
+    padding: 20px;
+    border-radius: 5px;
+    background: #f8f8f8;
+}
+
+.payment-button {
+    width: 100%;
+    /* padding: 15px; */
+    background-color: #00bbba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    height: 40px;
+}
+
+.payment-button:hover {
+    background-color: #009695;
+}
