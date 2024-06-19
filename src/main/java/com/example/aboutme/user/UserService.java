@@ -23,7 +23,7 @@ public class UserService {
 //        userNativeRepository.join(reqDTO);
 //    }
 
-//    //로그인
+    //    //로그인
 //    public User loginByName(UserRequest.LoginDTO reqDTO) {
 //        User sessionUser = userNativeRepository.login(reqDTO);
 //        return sessionUser;
@@ -31,7 +31,9 @@ public class UserService {
 
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
-        return userNativeRepository.login(reqDTO);
+        User user = userNativeRepository.login(reqDTO);
+        user.getSpecs().size();
+        return user;
     }
 
 
