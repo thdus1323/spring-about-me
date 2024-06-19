@@ -1,13 +1,10 @@
 package com.example.aboutme.comm;
 
+import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
@@ -24,6 +21,10 @@ public class Comm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CommCategory category;
+    
     @Column(nullable = false)
     private String title;
 
