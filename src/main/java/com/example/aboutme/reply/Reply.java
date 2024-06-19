@@ -4,16 +4,20 @@ import com.example.aboutme.comm.Comm;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "reply_tb")
+@ToString(exclude = {"user", "comm"})
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,23 +25,23 @@ public class Reply {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // 글쓴이
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comm_id", nullable = false)
-    private Comm comm; // 커뮤니티
+    private Comm comm;
 
     @Column(nullable = false)
-    private String summary; // 내용요약
+    private String summary;
 
     @Column(nullable = false)
-    private String causeAnalysis; // 원인분석
+    private String causeAnalysis;
 
     @Column(nullable = false)
-    private String solution; // 대처방향제시
+    private String solution;
 
     @CreationTimestamp
-    private Timestamp createdAt; // 작성일
+    private Timestamp createdAt;
 
     @Builder
     public Reply(Integer id, User user, Comm comm, String summary, String causeAnalysis, String solution, Timestamp createdAt) {
