@@ -15,6 +15,7 @@ public class PR {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // pr 아이디
 
+
     @Column(nullable = false)
     private String intro; // 소개
 

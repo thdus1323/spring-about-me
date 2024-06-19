@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class UserController {
@@ -100,6 +102,10 @@ public class UserController {
     //전문가 찾기 - 메인
     @GetMapping("/client/findExpert")
     public String findExpert() {
+
+        List<UserResponse.ExpertUserDTO> expertUserList =  userService.getAllExpertUsers();
+        session.setAttribute("expertUserList", expertUserList);
+
         return "client/findExpert/main";
     }
 
