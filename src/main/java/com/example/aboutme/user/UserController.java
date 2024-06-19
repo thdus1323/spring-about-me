@@ -3,8 +3,10 @@ package com.example.aboutme.user;
 import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
 import jakarta.servlet.http.HttpServletRequest;
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ public class UserController {
     private final UserService userService;
     private final CommService commService;
     private final HttpSession session;
+    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
 
 
     @GetMapping("/join")
@@ -44,6 +47,19 @@ public class UserController {
         User sessionUser = userService.loginByName(reqDTO);
         System.out.println("sessionUser = " + sessionUser);
         session.setAttribute("sessionUser", sessionUser);
+        if (sessionUser.getUserRole() == UserRole.CLIENT) {
+            return "redirect:/";
+        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
+            return "expert/main";
+        } else {
+            return "oauth/login";
+        }
+    }
+
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
         return "redirect:/";
     }
 //    @PostMapping("/login")
