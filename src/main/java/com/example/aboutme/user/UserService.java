@@ -22,10 +22,15 @@ public class UserService {
 //        userNativeRepository.join(reqDTO);
 //    }
 
-    //로그인
-    public User loginByName(UserRequest.LoginDTO reqDTO){
-        User sessionUser = userNativeRepository.login(reqDTO);
-        return sessionUser;
+//    //로그인
+//    public User loginByName(UserRequest.LoginDTO reqDTO) {
+//        User sessionUser = userNativeRepository.login(reqDTO);
+//        return sessionUser;
+//    }
+
+    @Transactional
+    public User loginByName(UserRequest.LoginDTO reqDTO) {
+        return userNativeRepository.login(reqDTO);
     }
 
 
