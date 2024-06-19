@@ -22,7 +22,7 @@ VALUES ('CLIENT', 'mimi@nate.com', '1234', '최미정', '0101112222', 'client1.j
        ('CLIENT', 'soyoung@nate.com', '1234', '김소영', '0102227777', 'client20.jpg', '2004-08-01', 'WOMAN', NOW(), NOW());
 
 
---user_tb (상담사)
+
 INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, created_at, updated_at,
                      expert_title)
 VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert21.jpg', '1985-06-06', 'MAN', NOW(), NOW(),
@@ -45,7 +45,6 @@ VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'exper
         '당신에게 소금 같은 사람이 되어 드리고 싶습니다.'),
        ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert30.jpg', '1994-08-08', 'WOMAN', NOW(), NOW(),
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.');
-
 
 -- voucher_tb
 INSERT INTO voucher_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
