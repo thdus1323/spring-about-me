@@ -7,4 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommService {
     private final CommRepository commRepository;
+
+//    public List<CommResponse.ClientMainCommListDTO> getMainComms() {
+//
+//        return commRepository.findCommsWithReply();
+//    }
 }

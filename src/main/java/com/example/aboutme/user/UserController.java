@@ -1,5 +1,7 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.comm.CommService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,11 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final CommService commService;
     private final HttpSession session;
 
 
     @GetMapping("/join")
-    public String index() {
+    public String joinForm() {
         return "oauth/join";
     }
 
@@ -28,7 +31,7 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String login() {
+    public String loginForm() {
         return "oauth/login";
     }
 
@@ -41,36 +44,22 @@ public class UserController {
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
-
-
-//    @GetMapping("/")
-//    public String index() {
-//        return "client/main";
-//    }
-//
-//    @GetMapping("/client/findExpert/detail")
-//    public String findExpertDetail() {
-//        return "client/findExpert/detail";
-//    }
-//
-//    @GetMapping("/client/findExpert")
-//    public String findExpert() {
-//        return "client/findExpert/main";
-//    }
-//
-//    @GetMapping("/client/comm")
-//    public String community() {
-//        return "client/comm/comm-main";
-//    }
-//    @GetMapping("/client/findExpert/voucher")
-//    public String findExpertVoucher() {
-//        return "client/findExpert/voucher";
+//    @PostMapping("/login")
+//    public String login(UserRequest.LoginDTO reqDTO) {
+//        User sessionUser = userService.loginByName(reqDTO);
+//        System.out.println("sessionUser = " + sessionUser);
+//        session.setAttribute("sessionUser", sessionUser);
+//        return "redirect:/";
 //    }
 
     // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")
-    public String expert() {
+    public String index(HttpServletRequest request) {
+//        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
+//        request.setAttribute("mainCommList", mainCommListDTOS);
+//        System.out.println("이거 맞나? 기억ㄷ ㅗ안 ㅁㄹ어ㅣ남;ㅇ");
+//        System.out.println(mainCommListDTOS);
         return "client/main";
     }
 
@@ -79,6 +68,11 @@ public class UserController {
     @GetMapping("/comm")
     public String community() {
         return "comm/comm-main";
+    }
+
+    @GetMapping("comm/detail")
+    public String communityDetail() {
+        return "comm/comm-detail";
     }
 
 
