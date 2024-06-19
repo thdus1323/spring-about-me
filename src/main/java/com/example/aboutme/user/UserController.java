@@ -2,12 +2,14 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
+import com.example.aboutme.user.ResponseDTO.ExpertDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +29,6 @@ public class UserController {
     public String joinForm() {
         return "oauth/join";
     }
-
 
 //    //회원가입
 //    @PostMapping("/join")
@@ -63,6 +64,14 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
+
+//    @PostMapping("/login")
+//    public String login(UserRequest.LoginDTO reqDTO) {
+//        User sessionUser = userService.loginByName(reqDTO);
+//        System.out.println("sessionUser = " + sessionUser);
+//        session.setAttribute("sessionUser", sessionUser);
+//        return "redirect:/";
+//    }
 
     // 👻👻👻공통👻👻👻
     // 메인페이지
@@ -100,9 +109,10 @@ public class UserController {
 
 
     //전문가 찾기 - 상세보기
-    @GetMapping("/client/findExpert/detail")
-    public String findExpertDetail() {
-//        userService.전문가상세보기(1);
+    @GetMapping("/client/findExpert/detail/21")
+    public String findExpertDetail(Model model) {
+        DetailDTORecord detailDTORecord = userService.getExpertDetails(21);
+        model.addAttribute("model", detailDTORecord);
         return "client/findExpert/detail";
     }
 
