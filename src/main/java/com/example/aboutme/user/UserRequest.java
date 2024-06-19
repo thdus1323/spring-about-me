@@ -17,7 +17,7 @@ public class UserRequest {
         private String password;
         private UserRole userRole;
 
-        public LoginDTO(String email, String password, UserRole userRole) {
+        public LoginDTO(String email, String password) {
             this.email = email;
             this.password = password;
 //            this.userRole = userRole;
