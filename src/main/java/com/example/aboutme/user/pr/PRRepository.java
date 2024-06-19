@@ -1,7 +1,5 @@
 package com.example.aboutme.user.pr;
 
-import com.example.aboutme.user.User;
-import com.example.aboutme.user.spec.Spec;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
