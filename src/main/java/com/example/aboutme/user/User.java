@@ -1,16 +1,9 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.alarm.Alarm;
-import com.example.aboutme.comm.Comm;
-import com.example.aboutme.payment.Payment;
-import com.example.aboutme.refund.Refund;
-import com.example.aboutme.reply.Reply;
-import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
-import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

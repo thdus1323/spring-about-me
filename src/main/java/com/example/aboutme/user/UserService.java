@@ -23,9 +23,6 @@ public class UserService {
 
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
-        User user = userNativeRepository.login(reqDTO);
-        // specs 컬렉션을 초기화
-        user.getSpecs().size(); // 컬렉션을 접근하여 초기화
-        return user;
+        return userNativeRepository.login(reqDTO);
     }
 }
