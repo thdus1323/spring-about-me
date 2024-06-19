@@ -38,10 +38,6 @@ public class Counsel {
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id", nullable = true)
-    private Review review;
-
     @Column(nullable = false)
     private LocalDateTime counselDate;
 

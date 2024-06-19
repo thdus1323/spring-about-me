@@ -33,7 +33,7 @@ VALUES
     ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert10.jpg', '1994-08-08', 'WOMAN', NOW(), NOW());
 
 -- voucher_tb
-INSERT INTO voucher_tb (issued_by, owned_by, reservation_id, voucher_type, price, count, duration, discount, start_date, end_date, is_active, created_at, updated_at)
+INSERT INTO voucher_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount, start_date, end_date, is_active, created_at, updated_at)
 VALUES
     -- Expert 1
     (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
@@ -75,6 +75,7 @@ VALUES
     (30, 8, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
     (30, 9, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
     (30, 10, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW());
+
 
 -- reservation_tb
 INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, created_at, updated_at)
@@ -283,3 +284,102 @@ VALUES
     ('CAREER', '현 놀이치료센터 소장', 30),
     ('CAREER', '전 이화여자대학교병원 놀이치료사', 30),
     ('EDUCATION', '이화여자대학교 놀이치료학 석사 졸업', 30);
+--
+--
+-- 시나리오 1
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (12, 21, 7, '상담을 통해 문제의 원인을 분석했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (12, 1, '상담사와의 대화가 많은 도움이 되었고, 문제의 원인을 알 수 있었습니다.', NOW(), NOW());
+
+-- 시나리오 2
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (3, 22, 9, '내담자의 감정 조절 방법을 논의했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (3, 2, '감정 조절 방법에 대해 상담사에게 배울 수 있어 유익했습니다.', NOW(), NOW());
+
+-- 시나리오 3
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (4, 23, 10, '상담을 통해 스트레스 관리 전략을 제안했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (4, 3, '스트레스 관리에 대한 좋은 전략을 얻었습니다.', NOW(), NOW());
+
+-- 시나리오 4
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (5, 24, 11, '내담자의 목표 설정에 대한 조언을 제공했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (5, 4, '목표 설정에 대한 상담사의 조언이 매우 도움이 되었습니다.', NOW(), NOW());
+
+-- 시나리오 5
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (6, 25, 12, '상담을 통해 문제 해결의 접근 방법을 논의했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (6, 5, '문제 해결 방법에 대해 유용한 정보를 얻었습니다.', NOW(), NOW());
+
+-- 시나리오 6
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (7, 26, 13, '내담자의 자존감 향상 방안을 제안했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (7, 6, '자존감 향상에 대한 좋은 방법을 배웠습니다.', NOW(), NOW());
+
+-- 시나리오 7
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (8, 27, 14, '내담자의 불안 완화 기법을 설명했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (8, 7, '불안을 다루는 기법에 대해 많은 도움이 되었습니다.', NOW(), NOW());
+
+-- 시나리오 8
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (9, 28, 15, '상담을 통해 의사소통 기술을 향상시켰습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (9, 8, '의사소통 기술을 향상시키는 데 유익한 상담이었습니다.', NOW(), NOW());
+
+-- 시나리오 9
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (10, 29, 16, '내담자의 동기 부여를 위한 전략을 논의했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (10, 9, '동기 부여를 위한 좋은 전략을 제안받았습니다.', NOW(), NOW());
+
+-- 시나리오 10
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (11, 30, 17, '내담자의 경력 개발 방안을 제안했습니다.', NOW(), NOW(), NOW());
+
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (11, 10, '경력 개발에 대한 유용한 조언을 얻었습니다.', NOW(), NOW());
+
+
+-- --
+-- -- -- 여기 상담시간을 중복으로 넣어도 될듯
+-- INSERT INTO counsel_tb (id, client_id, expert_id, voucher_id, review_id, result, counsel_date, created_at, updated_at)
+-- VALUES
+--     (1, 12, 21, 7, NULL, '상담을 통해 긍정적인 변화를 느꼈습니다.', NOW(), NOW(), NOW());
+
