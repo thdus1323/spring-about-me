@@ -3,11 +3,7 @@ package com.example.aboutme.reply;
 import com.example.aboutme.comm.Comm;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
@@ -25,7 +21,7 @@ public class Reply {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user; // 댓글 단 사람
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comm_id", nullable = false)

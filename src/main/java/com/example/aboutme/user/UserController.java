@@ -1,7 +1,9 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final HttpSession session;
+    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
 
 
     @GetMapping("/join")
@@ -34,19 +37,50 @@ public class UserController {
         return "oauth/login";
     }
 
+    @PostMapping("/login")
+    public String login(UserRequest.LoginDTO reqDTO) {
+        User sessionUser = userService.loginByName(reqDTO);
+        System.out.println("sessionUser = " + sessionUser);
+        session.setAttribute("sessionUser", sessionUser);
+        if (sessionUser.getUserRole() == UserRole.CLIENT) {
+            return "redirect:/";
+        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
+            return "expert/main";
+        } else {
+            return "oauth/login";
+        }
+    }
 
-    @PostMapping("/user-login")
-    public String login(String email, String password) {
-        System.out.println("email = " + email);
-        System.out.println("password = " + password);
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
         return "redirect:/";
     }
-//    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userService.loginByName(reqDTO);
-//        System.out.println("sessionUser = " + sessionUser);
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
+
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "client/main";
+//    }
+//
+//    @GetMapping("/client/findExpert/detail")
+//    public String findExpertDetail() {
+//        return "client/findExpert/detail";
+//    }
+//
+//    @GetMapping("/client/findExpert")
+//    public String findExpert() {
+//        return "client/findExpert/main";
+//    }
+//
+//    @GetMapping("/client/comm")
+//    public String community() {
+//        return "client/comm/comm-main";
+//    }
+//    @GetMapping("/client/findExpert/voucher")
+//    public String findExpertVoucher() {
+//        return "client/findExpert/voucher";
 //    }
 
     // 👻👻👻공통👻👻👻
@@ -61,11 +95,6 @@ public class UserController {
     @GetMapping("/comm")
     public String community() {
         return "comm/comm-main";
-    }
-
-    @GetMapping("comm/detail")
-    public String communityDetail() {
-        return "comm/comm-detail";
     }
 
 
