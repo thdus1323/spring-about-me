@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,12 +34,23 @@ public class UserController {
     }
 
 
-
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
+
         System.out.println("sessionUser = " + sessionUser);
+
         session.setAttribute("sessionUser", sessionUser);
+        if (sessionUser.getUserRole() == UserRole.CLIENT) {
+            return "redirect:/";
+        } else {
+            return "redirect:/expert";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
         return "redirect:/";
     }
 
@@ -70,8 +82,14 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")
-    public String expert() {
+    public String client() {
         return "client/main";
+    }
+
+
+    @GetMapping("/expert")
+    public String expert() {
+        return "expert/main";
     }
 
     //TODO: 커뮤니티 페이지
