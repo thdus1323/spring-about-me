@@ -18,7 +18,7 @@ public class UserService {
     private final UserNativeRepository userNativeRepository;
     private final VoucherRepository voucherRepository;
 
-
+//회원가입
 //    @Transactional
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
 //        userNativeRepository.join(reqDTO);
@@ -29,7 +29,6 @@ public class UserService {
 //        User sessionUser = userNativeRepository.login(reqDTO);
 //        return sessionUser;
 //    }
-
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userNativeRepository.login(reqDTO);
