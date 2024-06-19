@@ -49,6 +49,9 @@ public class User {
     private String phone; // 전화번호
 
     // 아래부터는 필수가 아님
+
+    private String expertTitle; // 상담사 타이틀
+
     @Column(nullable = true)
     private String profileImage;
 
@@ -70,7 +73,7 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt, String expertTitle) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
@@ -84,5 +87,6 @@ public class User {
         this.specs = specs;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.expertTitle = expertTitle;
     }
 }

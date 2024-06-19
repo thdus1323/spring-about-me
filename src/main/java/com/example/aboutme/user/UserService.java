@@ -1,9 +1,10 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.voucher.Voucher;
+import com.example.aboutme.voucher.VoucherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,8 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserNativeRepository userNativeRepository;
+    private final VoucherRepository voucherRepository;
+
 
 //    @Transactional
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
@@ -28,6 +31,7 @@ public class UserService {
 
     // 전문가(상담사 리스트)
     public List<UserResponse.ExpertUserDTO> getAllExpertUsers(){
+
         // 1. 모든 유저 찾기
         List<User> users = userRepository.findAll();
 
@@ -36,9 +40,20 @@ public class UserService {
                 .filter(user -> user.getUserRole() == UserRole.EXPERT)
                 .collect(Collectors.toList());
 
-        // 3. 전문가 타이틀가져오기
 
-        return null;
+        // 3. ExpertUserDTO 리스트 생성
+        List<UserResponse.ExpertUserDTO> result = expertUsers.stream().map(user -> {
+
+            List<Voucher> voucherList = voucherRepository.findByExpertId(user.getId());
+
+            List<UserResponse.ExpertUserDTO.VoucherImageDTO> voucherImages = voucherList.stream()
+                    .map(voucher -> new UserResponse.ExpertUserDTO.VoucherImageDTO(voucher.getImagePath()))
+                    .collect(Collectors.toList());
+
+            return new UserResponse.ExpertUserDTO(user,voucherImages);
+        }).collect(Collectors.toList());
+
+        return result;
     }
 
 }

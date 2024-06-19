@@ -1,4 +1,4 @@
--- user_tb
+-- user_tb (유저)
 INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, created_at, updated_at)
 VALUES
     ('CLIENT', 'mimi@nate.com', '1234', '최미정', '0101112222', 'client1.jpg', '1990-01-01', 'WOMAN', NOW(), NOW()),
@@ -20,61 +20,67 @@ VALUES
     ('CLIENT', 'woojin@nate.com', '1234', '이우진', '0102224444', 'client17.jpg', '2001-05-01', 'MAN', NOW(), NOW()),
     ('CLIENT', 'jiwon@nate.com', '1234', '최지원', '0102225555', 'client18.jpg', '2002-06-01', 'WOMAN', NOW(), NOW()),
     ('CLIENT', 'taeyoung@nate.com', '1234', '박태영', '0102226666', 'client19.jpg', '2003-07-01', 'MAN', NOW(), NOW()),
-    ('CLIENT', 'soyoung@nate.com', '1234', '김소영', '0102227777', 'client20.jpg', '2004-08-01', 'WOMAN', NOW(), NOW()),
-    ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert1.jpg', '1985-06-06', 'MAN', NOW(), NOW()),
-    ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', 'expert2.jpg', '1987-07-07', 'WOMAN', NOW(), NOW()),
-    ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', 'expert3.jpg', '1980-01-01', 'MAN', NOW(), NOW()),
-    ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', 'expert4.jpg', '1982-02-02', 'WOMAN', NOW(), NOW()),
-    ('EXPERT', 'expert5@nate.com', '1234', '이종현', '0103336666', 'expert5.jpg', '1984-03-03', 'MAN', NOW(), NOW()),
-    ('EXPERT', 'expert6@nate.com', '1234', '윤정희', '0103337777', 'expert6.jpg', '1986-04-04', 'WOMAN', NOW(), NOW()),
-    ('EXPERT', 'expert7@nate.com', '1234', '최현우', '0103338888', 'expert7.jpg', '1988-05-05', 'MAN', NOW(), NOW()),
-    ('EXPERT', 'expert8@nate.com', '1234', '김소정', '0103339999', 'expert8.jpg', '1990-06-06', 'WOMAN', NOW(), NOW()),
-    ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', 'expert9.jpg', '1992-07-07', 'MAN', NOW(), NOW()),
-    ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert10.jpg', '1994-08-08', 'WOMAN', NOW(), NOW());
+    ('CLIENT', 'soyoung@nate.com', '1234', '김소영', '0102227777', 'client20.jpg', '2004-08-01', 'WOMAN', NOW(), NOW());
+
+
+--user_tb (상담사)
+INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, created_at, updated_at, expert_title)
+VALUES
+    ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert1.jpg', '1985-06-06', 'MAN', NOW(), NOW(),'혼자 걷다 보면 외롭고 지칠 때가 있습니다. 당신의 길에 함께하는 동반자가 되고 싶습니다.'),
+    ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', 'expert2.jpg', '1987-07-07', 'WOMAN', NOW(), NOW(),'저는 당신의 이야기가 궁금하네요. 조금 더 자세하게 말씀해주실 수 있을까요?'),
+    ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', 'expert3.jpg', '1980-01-01', 'MAN', NOW(), NOW(),'어떤 마음이어도, 어떤 모습이어도 다 괜찮습니다.'),
+    ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', 'expert4.jpg', '1982-02-02', 'WOMAN', NOW(), NOW(),'자신을 비춰보며 따뜻하게 어루만져 줄 수 있는 시간을 만들어드리고 싶은 상담사 백소림입니다.'),
+    ('EXPERT', 'expert5@nate.com', '1234', '이종현', '0103336666', 'expert5.jpg', '1984-03-03', 'MAN', NOW(), NOW(),'말의 힘을 믿기에 한 마디 한 마디에 진심을 담아 당신의 이야기를 듣고 더하겠습니다.'),
+    ('EXPERT', 'expert6@nate.com', '1234', '윤정희', '0103337777', 'expert6.jpg', '1986-04-04', 'WOMAN', NOW(), NOW(),'어떤 문제로 고민하세요?  함께 해요 ! 용기가 생겨요! 미래가 보여요!'),
+    ('EXPERT', 'expert7@nate.com', '1234', '최현우', '0103338888', 'expert7.jpg', '1988-05-05', 'MAN', NOW(), NOW(),'그럼에도 불구하고 우리가 우리인 채로 잘 살아갈 수 있어요.'),
+    ('EXPERT', 'expert8@nate.com', '1234', '김소정', '0103339999', 'expert8.jpg', '1990-06-06', 'WOMAN', NOW(), NOW(),'당신 안의 온전함을 다시 찾을 수 있게, 지친 마음이 쉬었다 갈 수 있게 함께 할게요. '),
+    ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', 'expert9.jpg', '1992-07-07', 'MAN', NOW(), NOW(),'당신에게 소금 같은 사람이 되어 드리고 싶습니다.'),
+    ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert10.jpg', '1994-08-08', 'WOMAN', NOW(), NOW(),'괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.');
+
 
 -- voucher_tb
-INSERT INTO voucher_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount, start_date, end_date, is_active, created_at, updated_at)
+INSERT INTO voucher_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount, start_date, end_date, is_active,image_path, created_at, updated_at)
 VALUES
     -- Expert 1
-    (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (21, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (21, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (21, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png' ,NOW(), NOW()),
+    (21, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png' ,NOW(), NOW()),
     -- Expert 2
-    (22, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (22, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (22, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (22, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (22, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (22, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW()),
     -- Expert 3
-    (23, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (23, 8, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (23, 9, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (23, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (23, 8, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (23, 9, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW()),
     -- Expert 4
-    (24, 10, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (24, 11, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (24, 12, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (24, 10, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (24, 11, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (24, 12, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW()),
     -- Expert 5
-    (25, 13, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (25, 14, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (25, 15, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (25, 13, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (25, 14, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (25, 15, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png', NOW(), NOW()),
     -- Expert 6
-    (26, 16, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (26, 17, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (26, 18, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (26, 16, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (26, 17, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (26, 18, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW()),
     -- Expert 7
-    (27, 19, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (27, 20, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (27, 1, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (27, 19, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (27, 20, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (27, 1, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png', NOW(), NOW()),
     -- Expert 8
-    (28, 2, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (28, 3, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (28, 4, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (28, 2, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (28, 3, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (28, 4, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW()),
     -- Expert 9
-    (29, 5, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (29, 6, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (29, 7, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW()),
+    (29, 5, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (29, 6, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (29, 7, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW()),
     -- Expert 10
-    (30, 8, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, NOW(), NOW()),
-    (30, 9, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
-    (30, 10, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW());
+    (30, 8, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE,'/images/chat.png',NOW(), NOW()),
+    (30, 9, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE,'/images/call.png',NOW(), NOW()),
+    (30, 10, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE,'/images/video.png',NOW(), NOW());
 
 
 -- reservation_tb
@@ -170,48 +176,38 @@ VALUES
     (27, 18, '상담사 의견', '서로의 감정을 잘 이해하세요.', '솔직한 대화를 나누세요.', NOW());
 
 -- pr_tb
-INSERT INTO pr_tb (expert_id, intro, effects, methods,title)
+INSERT INTO pr_tb (expert_id, intro, effects, methods)
 VALUES
     (21, '심리상담을 망설이는 분에게: 혼자 고민하지 마세요. 용기가 당신을 행복하게 만들 것입니다. 숨겨진 보물을 찾아내는 기쁨을 함께 경험하세요.',
      '상담사님과의 심리상담 효과: 문제의 원인은 모두 다릅니다. 사람마다 환경과 감정도 다르죠. 개개인의 상담 목표와 달성 방법, 효과에는 차이가 있습니다.',
-     '상담사님의 심리상담 방식: 상담 초기 단계에서는 상담신청 동기와 욕구, 문제파악과 목표를 설정합니다. 중기 단계에서는 억압된 감정표출과 문제 해결을 위한 심리적 여정을 돕습니다.',
-     '혼자 걷다보면 외롭고 지칠 때가 있습니다. 당신의 길에 함께하는 동반자가 되고 싶습니다.'),
+     '상담사님의 심리상담 방식: 상담 초기 단계에서는 상담신청 동기와 욕구, 문제파악과 목표를 설정합니다. 중기 단계에서는 억압된 감정표출과 문제 해결을 위한 심리적 여정을 돕습니다.'),
     (22, '심리상담을 망설이는 분들에게: 혼자서 힘들어하지 마세요. 상담을 통해 새로운 시각을 얻고 행복을 찾으세요.',
      '상담사님과의 심리상담 효과: 각 개인의 문제와 상황에 맞춘 상담을 통해 더 나은 해결책을 찾을 수 있습니다.',
-     '상담사님의 심리상담 방식: 상담 초기에 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 해결책을 모색합니다.',
-     '전문심리상담으로 마음성장에 동행합니다.'),
+     '상담사님의 심리상담 방식: 상담 초기에 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 해결책을 모색합니다.'),
     (23, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 짐을 덜어내세요. 함께 해결책을 찾아 나갑시다.',
      '상담사님과의 심리상담 효과: 다양한 문제 상황에 맞춘 맞춤형 상담을 제공합니다. 개인의 특성을 고려한 상담을 통해 효과적인 해결을 돕습니다.',
-     '상담사님의 심리상담 방식: 초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 심리적 접근을 시도합니다.',
-     '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.'),
+     '상담사님의 심리상담 방식: 초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 심리적 접근을 시도합니다.'),
     (24, '심리상담을 망설이는 분들에게: 상담을 통해 새로운 시작을 만들어 보세요. 함께 성장할 수 있습니다.',
      '상담사님과의 심리상담 효과: 각 개인의 문제와 상황에 맞춘 개별 상담을 통해 최선의 해결책을 찾습니다.',
-     '상담사님의 심리상담 방식: 상담 초기에는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.',
-     '당신 안의 온전함을 다시 찾을 수 있게, 지친 마음이 쉬었다 갈 수 있게 함께 할게요'),
+     '상담사님의 심리상담 방식: 상담 초기에는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.'),
     (25, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 평안을 찾으세요. 함께 더 나은 내일을 준비합시다.',
      '상담사님과의 심리상담 효과: 각기 다른 문제와 상황에 맞춘 상담을 통해 효과적인 해결책을 제공합니다.',
-     '상담사님의 심리상담 방식: 초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.',
-     '자신을 비춰보며 따듯하게 어루만져 줄 수 있는 시간을 만들어드리고 싶은 상다사 백소림입니다.'),
+     '상담사님의 심리상담 방식: 초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.'),
     (26, '심리상담을 망설이는 분들에게: 혼자 고민하지 마세요. 상담을 통해 마음의 짐을 덜어내세요.',
      '상담사님과의 심리상담 효과: 개개인의 문제에 맞춘 상담을 통해 최적의 해결책을 찾습니다.',
-     '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.',
-     '어떤 문제로 고민하세요? 함께해요! 용기가 생겨요! 미래가 보여요!'),
+     '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.'),
     (27, '심리상담을 망설이는 분들에게: 상담을 통해 새로운 길을 찾아보세요. 함께 더 나은 미래를 준비합시다.',
      '상담사님과의 심리상담 효과: 문제와 상황에 맞춘 개별 상담을 통해 최선의 해결책을 찾습니다.',
-     '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 접근을 시도합니다.',
-     '그럼에도 불구하고 우리가 우리인 채로 잘 살아갈 수 있어요'),
+     '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 접근을 시도합니다.'),
     (28, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 짐을 덜어내세요. 새로운 시작을 함께 만들어갑시다.',
      '상담사님과의 심리상담 효과: 각 개인의 문제에 맞춘 맞춤형 상담을 통해 최적의 해결책을 찾습니다.',
-     '상담사님의 심리상담 방식: 초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 접근을 시도합니다.',
-     '말의 힘을 믿기에 한마디 한마디에 진심을 담아 당신의 이야기를 듣고 더하겠습니다.'),
+     '상담사님의 심리상담 방식: 초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 접근을 시도합니다.'),
     (29, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 평안을 찾으세요. 함께 더 나은 내일을 준비합시다.',
      '상담사님과의 심리상담 효과: 각기 다른 문제와 상황에 맞춘 상담을 통해 효과적인 해결책을 제공합니다.',
-     '상담사님의 심리상담 방식: 초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.',
-     '당신에게 소금 같은 사람이 되어드리고 싶습니다.'),
+     '상담사님의 심리상담 방식: 초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.'),
     (30, '심리상담을 망설이는 분들에게: 혼자 고민하지 마세요. 상담을 통해 마음의 짐을 덜어내세요.',
      '상담사님과의 심리상담 효과: 개개인의 문제에 맞춘 상담을 통해 최적의 해결책을 찾습니다.',
-     '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.',
-     '당신이 혼자 힘들어하지 않도록 함께 하겠습니다.');
+     '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.');
 
 -- spec_tb
 INSERT INTO spec_tb (spec_type, details, user_id)
