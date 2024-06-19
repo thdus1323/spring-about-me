@@ -76,7 +76,6 @@ VALUES
     (30, 9, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, NOW(), NOW()),
     (30, 10, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, NOW(), NOW());
 
-
 -- reservation_tb
 INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, created_at, updated_at)
 VALUES
@@ -116,28 +115,27 @@ VALUES
 
 
 -- comm_tb
-INSERT INTO comm_tb (user_id, content, title, created_at)
-VALUES
-    (1, '집에 가고 싶어서 고민 적습니다', '집에 가고 싶어요', NOW()),
-    (1, '회사에서 스트레스 받아요', '회사 고민', NOW()),
-    (2, '저녁 메뉴를 못 정하겠어요. 추천받고 싶습니다', '배고파요', NOW()),
-    (2, '다이어트 중인데 뭐 먹죠?', '다이어트 고민', NOW()),
-    (3, '수업시간에 잠이 오면 어떻게 해야 할까요?', '매일매일 졸아요', NOW()),
-    (3, '시험 공부가 너무 힘들어요', '시험이 다가오는 것이 무서워요', NOW()),
-    (4, '친구와 싸웠어요', '친구 고민', NOW()),
-    (4, '여행 가고 싶은데 어디가 좋을까요?', '여행 고민', NOW()),
-    (5, '취미를 찾고 싶어요', '취미 고민', NOW()),
-    (5, '운동을 시작해보려고 하는데...', '나가기 싫어요', NOW()),
-    (6, '혼자 밥 먹기 너무 싫어요', '혼밥 고민', NOW()),
-    (6, '영화 추천 좀 해주세요', '영화 고민', NOW()),
-    (7, '새로운 프로젝트가 너무 어려워요', '프로젝트 고민', NOW()),
-    (7, '팀원과의 갈등이 있어요', '팀원 고민', NOW()),
-    (8, '자기계발을 어떻게 해야 할까요?', '자기계발 고민', NOW()),
-    (8, '취업 준비가 막막해요', '취업ㅠㅠ', NOW()),
-    (9, '연애가 너무 어려워요', '연애.................. 어려움', NOW()),
-    (9, '혼자서도 잘 할 수 있을까요?', '혼자 고민', NOW()),
-    (10, '집에서 취미 생활 하기 좋은 게 뭐가 있을까요?', '취미 생활', NOW()),
-    (10, '심리학 책 추천 좀 해주세요', '마음을 책으로 배울 수 있을까요?', NOW());
+INSERT INTO comm_tb (user_id, content, title, category, created_at)
+VALUES (1, '집에 가고 싶어서 고민 적습니다', '집에 가고 싶어요', 'GENERAL_CONCERNS', NOW()),
+       (1, '회사에서 스트레스 받아요', '회사 고민', 'WORK_LIFE', NOW()),
+       (2, '저녁 메뉴를 못 정하겠어요. 추천받고 싶습니다', '배고파요', 'GENERAL_CONCERNS', NOW()),
+       (2, '다이어트 중인데 뭐 먹죠?', '다이어트 고민', 'GENERAL_CONCERNS', NOW()),
+       (3, '수업시간에 잠이 오면 어떻게 해야 할까요?', '매일매일 졸아요', 'GENERAL_CONCERNS', NOW()),
+       (3, '시험 공부가 너무 힘들어요', '시험이 다가오는 것이 무서워요', 'GENERAL_CONCERNS', NOW()),
+       (4, '친구와 싸웠어요', '친구 고민', 'SOCIAL_INTERACTIONS', NOW()),
+       (4, '여행 가고 싶은데 어디가 좋을까요?', '여행 고민', 'GENERAL_CONCERNS', NOW()),
+       (5, '취미를 찾고 싶어요', '취미 고민', 'GENERAL_CONCERNS', NOW()),
+       (5, '운동을 시작해보려고 하는데...', '나가기 싫어요', 'GENERAL_CONCERNS', NOW()),
+       (6, '혼자 밥 먹기 너무 싫어요', '혼밥 고민', 'SOCIAL_INTERACTIONS', NOW()),
+       (6, '영화 추천 좀 해주세요', '영화 고민', 'GENERAL_CONCERNS', NOW()),
+       (7, '새로운 프로젝트가 너무 어려워요', '프로젝트 고민', 'WORK_LIFE', NOW()),
+       (7, '팀원과의 갈등이 있어요', '팀원 고민', 'WORK_LIFE', NOW()),
+       (8, '자기계발을 어떻게 해야 할까요?', '자기계발 고민', 'CAREER_JOBS', NOW()),
+       (8, '취업 준비가 막막해요', '취업ㅠㅠ', 'CAREER_JOBS', NOW()),
+       (9, '연애가 너무 어려워요', '연애.................. 어려움', 'RELATIONSHIPS', NOW()),
+       (9, '혼자서도 잘 할 수 있을까요?', '혼자 고민', 'GENERAL_CONCERNS', NOW()),
+       (10, '집에서 취미 생활 하기 좋은 게 뭐가 있을까요?', '취미 생활', 'GENERAL_CONCERNS', NOW()),
+       (10, '심리학 책 추천 좀 해주세요', '마음을 책으로 배울 수 있을까요?', 'GENERAL_CONCERNS', NOW());
 
 -- reply_tb
 INSERT INTO reply_tb (user_id, comm_id, summary, cause_analysis, solution, created_at)
