@@ -33,18 +33,38 @@ public class UserController {
     }
 
 
-    @PostMapping("/user-login")
-    public String login(String email, String password) {
-        System.out.println("email = " + email);
-        System.out.println("password = " + password);
+
+    @PostMapping("/login")
+    public String login(UserRequest.LoginDTO reqDTO) {
+        User sessionUser = userService.loginByName(reqDTO);
+        System.out.println("sessionUser = " + sessionUser);
+        session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
-//    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userService.loginByName(reqDTO);
-//        System.out.println("sessionUser = " + sessionUser);
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
+
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "client/main";
+//    }
+//
+//    @GetMapping("/client/findExpert/detail")
+//    public String findExpertDetail() {
+//        return "client/findExpert/detail";
+//    }
+//
+//    @GetMapping("/client/findExpert")
+//    public String findExpert() {
+//        return "client/findExpert/main";
+//    }
+//
+//    @GetMapping("/client/comm")
+//    public String community() {
+//        return "client/comm/comm-main";
+//    }
+//    @GetMapping("/client/findExpert/voucher")
+//    public String findExpertVoucher() {
+//        return "client/findExpert/voucher";
 //    }
 
     // 👻👻👻공통👻👻👻
@@ -59,11 +79,6 @@ public class UserController {
     @GetMapping("/comm")
     public String community() {
         return "comm/comm-main";
-    }
-
-    @GetMapping("comm/detail")
-    public String communityDetail() {
-        return "comm/comm-detail";
     }
 
 
