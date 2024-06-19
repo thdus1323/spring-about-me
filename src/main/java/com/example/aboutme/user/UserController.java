@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -36,7 +39,6 @@ public class UserController {
     }
 
 
-
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
@@ -56,10 +58,9 @@ public class UserController {
     // 메인페이지
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-//        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
-//        request.setAttribute("mainCommList", mainCommListDTOS);
-//        System.out.println("이거 맞나? 기억ㄷ ㅗ안 ㅁㄹ어ㅣ남;ㅇ");
-//        System.out.println(mainCommListDTOS);
+        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
+        request.setAttribute("mainCommList", mainCommListDTOS);
+        System.out.println(mainCommListDTOS);
         return "client/main";
     }
 
