@@ -63,27 +63,6 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Spec> specs;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Payment> payments;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Refund> refunds;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Alarm> alarms;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Comm> comms;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Reply> replies;
-
-    @OneToMany(mappedBy = "issuedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Voucher> issuedVouchers;
-
-    @OneToMany(mappedBy = "ownedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Voucher> ownedVouchers;
-
     @CreationTimestamp
     private Timestamp createdAt;
 
@@ -91,7 +70,7 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, ExpertLevel level, List<Spec> specs, List<Payment> payments, List<Refund> refunds, List<Alarm> alarms, List<Comm> comms, List<Reply> replies, List<Voucher> issuedVouchers, List<Voucher> ownedVouchers, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
@@ -103,13 +82,6 @@ public class User {
         this.gender = gender;
         this.pr = pr;
         this.specs = specs;
-        this.payments = payments;
-        this.refunds = refunds;
-        this.alarms = alarms;
-        this.comms = comms;
-        this.replies = replies;
-        this.issuedVouchers = issuedVouchers;
-        this.ownedVouchers = ownedVouchers;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
