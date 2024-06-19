@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.voucher.Voucher;
@@ -34,6 +35,35 @@ public class UserResponse {
             public VoucherImageDTO(String url) {
                 this.url = url;
             }
+        }
+    }
+
+    // 클라이언트 메인
+    @Data
+    public static class ExpertDTO {
+        private Integer expertId;
+        private String profileImage;
+        private String name;
+        private String expertTitle;
+        private List<VoucherDTO> vouchers;
+
+        public ExpertDTO(Integer expertId, String profileImage, String name, String expertTitle, List<VoucherDTO> vouchers) {
+            this.expertId = expertId;
+            this.profileImage = profileImage;
+            this.name = name;
+            this.expertTitle = expertTitle;
+            this.vouchers = vouchers;
+        }
+    }
+
+    @Data
+    public static class VoucherDTO {
+        private Integer voucherId;
+        private String voucherType;
+
+        public VoucherDTO(Integer voucherId, String voucherType) {
+            this.voucherId = voucherId;
+            this.voucherType = voucherType;
         }
     }
 }

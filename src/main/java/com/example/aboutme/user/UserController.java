@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -67,9 +68,9 @@ public class UserController {
     // 메인페이지
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
-        request.setAttribute("mainCommList", mainCommListDTOS);
-        System.out.println(mainCommListDTOS);
+        HashMap<String, Object> clientMain = userService.getMainComms();
+        request.setAttribute("clientMain", clientMain);
+        System.out.println(clientMain);
         return "client/main";
     }
 

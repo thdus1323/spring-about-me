@@ -1,5 +1,7 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.comm.CommRepository;
+import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final CommRepository commRepository;
     private final UserNativeRepository userNativeRepository;
     private final VoucherRepository voucherRepository;
 
@@ -64,4 +68,12 @@ public class UserService {
         return result;
     }
 
+    public HashMap<String, Object> getMainComms() {
+        List<CommResponse.ClientMainCommListDTO> comms = commRepository.findCommsWithReply();
+//        List<UserResponse.ExpertDTO> experts = userRepository.findExpertWithVoucher();
+
+        HashMap<String, Object> clientMain = new HashMap<>();
+        clientMain.put("comms", comms);
+        return clientMain;
+    }
 }
