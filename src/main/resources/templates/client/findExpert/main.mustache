@@ -145,32 +145,32 @@
                             </div>
                         </div>
                         <ul class="expert-list">
-                            {{#expertUserList}}
-                            <li>
-                                <a class="link" href="/client/findExpert/detail/{{expertId}}">
-                                    <div class="expert-info">
-                                        <div class="info-head mb-10">
-                                            <span class="head-name">{{name}}</span>
-                                            <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                            {{#expertList.experts}}
+                                <li>
+                                    <a class="link" href="/client/findExpert/detail/{{expertId}}">
+                                        <div class="expert-info">
+                                            <div class="info-head mb-10">
+                                                <span class="head-name">{{name}}</span>
+                                                <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                            </div>
+                                            <div class="expert-body">
+                                                <p class="body-title mb-10">{{title}}</p>
+                                                <ul class="type-consultation mb-10">
+                                                    {{#images}}
+                                                        <li><img src="{{url}}" alt="상담 방식"></li>
+                                                    {{/images}}
+                                                </ul>
+                                                <span class="active-color">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></span>
+                                            </div>
                                         </div>
-                                        <div class="expert-body">
-                                            <p class="body-title mb-10">{{title}}</p>
-                                            <ul class="type-consultation mb-10">
-                                                {{#voucherImage}}
-                                                    <li><img src="{{url}}" alt="전화상담"></li>
-                                                {{/voucherImage}}
-                                            </ul>
-                                            <span class="active-color">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></span>
+                                        <div class="expert-image">
+                                            <figure>
+                                                <img src="/images/{{profileImage}}" alt="전문가 사진">
+                                            </figure>
                                         </div>
-                                    </div>
-                                    <div class="expert-image">
-                                        <figure>
-                                            <img src="/images/{{profileImage}}" alt="전문가 사진이 나올장소">
-                                        </figure>
-                                    </div>
-                                </a>
-                            </li>
-                            {{/expertUserList}}
+                                    </a>
+                                </li>
+                            {{/expertList.experts}}
                         </ul>
                     </div>
                 </div>
