@@ -20,7 +20,7 @@
             상담사
         </button>
     </div>
-    <form action="/login" method="post" id="loginForm">
+    <form action="/user-login" method="post" id="loginForm">
         <div class="login-group mb-3">
             <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>
             <input type="email" id="inputUsername" name="email" class="form-control"
@@ -31,13 +31,13 @@
             <input type="password" id="inputPassword" name="password" class="form-control"
                    placeholder="비밀번호를 입력해 주세요" value="1234" required>
         </div>
-        <button type="submit" class="login-btn">로그인</button>
+        <button class="login-btn">로그인</button>
         <div class="login-links mt-3 d-flex justify-content-between">
             <a href="#" class="text-success">아이디 찾기</a>
             <a href="#" class="text-success">비밀번호 찾기</a>
             <a href="/join" class="text-success">회원가입</a>
         </div>
-        <hr class="join-divider ">
+        <hr class="join-divider">
         <div class="join-social">
             <a href="#"><img src="./images/naver_oauth.png" alt="Naver Signup"></a>
             <a href="#"><img src="./images/kakao_oauth.png" alt="Kakao Signup"></a>
