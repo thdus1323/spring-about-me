@@ -15,6 +15,8 @@ public class PR {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; // pr 아이디
 
+    private String title;
+
     @Column(nullable = false)
     private String intro; // 소개
 
@@ -29,11 +31,12 @@ public class PR {
     private User user;
 
     @Builder
-    public PR(Integer id, String intro, String effects, String methods, User user) {
+    public PR(Integer id, String intro, String effects, String methods, User user, String title) {
         this.id = id;
         this.intro = intro;
         this.effects = effects;
         this.methods = methods;
         this.user = user;
+        this.title = title;
     }
 }

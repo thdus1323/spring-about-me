@@ -41,13 +41,16 @@ public class Review {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    private String score; // 추가
+
     @Builder
-    public Review(Integer id, User user, Counsel counsel, LocalDateTime counselDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Review(Integer id, User user, Counsel counsel, LocalDateTime counselDate, Timestamp createdAt, Timestamp updatedAt, String score) {
         this.id = id;
         this.user = user;
         this.counsel = counsel;
         this.counselDate = counselDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.score = score;
     }
 }
