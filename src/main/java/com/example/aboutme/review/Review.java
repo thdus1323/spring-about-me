@@ -42,8 +42,11 @@ public class Review {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+
     @Builder
+
     public Review(Integer id, User user, Counsel counsel, Timestamp createdAt, Timestamp updatedAt) {
+
         this.id = id;
         this.user = user;
         this.counsel = counsel;

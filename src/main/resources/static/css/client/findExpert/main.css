@@ -142,3 +142,407 @@
     color: #212529;
     background-color: rgba(0, 0, 0, 0.075);
 }
+
+
+
+.expert-side {
+    width: 250px;
+    margin-right: 50px;
+    position: sticky;
+    top: 20px;
+    height: 100%;
+}
+
+.divide-wrapper {
+    display: flex;
+}
+
+.option-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.time-list {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.time-list::-webkit-scrollbar {
+    display: none;
+}
+
+.time-list li {
+    padding: 10px;
+    border-radius: 5px;
+    height: 35px;
+    background: #bfe7e7;
+    display: flex;
+    align-items: center;
+    width: 70px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* 옵션 섹션 */
+.option-wrapper p {
+    position: relative;
+    cursor: pointer;
+}
+
+.option-wrapper p:before {
+    transition: 0.5s ease;
+    content: "\f077";
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+    color: #666;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    font-family: "Font Awesome 6 free";
+    display: block;
+    font-weight: 600;
+}
+
+.option-wrapper p.active::before {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.option-list {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.option-list.btn li {
+    padding: 5px 10px;
+    background: #ededed;
+    border-radius: 50px;
+    margin-right: 10px;
+    font-size: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.option-list.btn li.active {
+    background: #00bbba;
+    color: #fff;
+}
+
+.option-list.check li {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    font-size: 14px;
+}
+
+.option-list li label {
+
+}
+
+.option-list li input {
+
+}
+
+/* 각 옵션 섹션 */
+.counseling-method,
+.gender,
+.rating,
+.grade,
+.situation,
+.state {
+
+}
+
+/* 전문가 리스트 */
+.expert-list {
+    margin-top: 60px;
+    width: calc(100% - 300px);
+    border-top: 1px solid #ddd;
+}
+
+.expert-list > li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.expert-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 전문가 정보 */
+.info-head {
+
+}
+
+.head-name {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.head-star {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.head-star i {
+    color: #ffd400;
+}
+
+.evaluate-count {
+    font-size: 16px;
+    color: #ddd;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+/* 전문가 본문 */
+.expert-body {
+
+}
+
+.body-title {
+    color: #999;
+}
+
+.type-consultation {
+    display: flex;
+}
+
+.type-consultation li {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.type-consultation img {
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+}
+
+/* 전문가 이미지 */
+.expert-image {
+
+}
+
+.expert-image figure {
+    width: 120px;
+    max-height: 160px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.expert-image img {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* 전문가 프로필 링크 */
+.expert-info a {
+    display: block;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+a.link {
+    width: 100%;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+a.link:hover .expert-info .expert-body span{
+    border-bottom: 1px solid #009695;
+}
+a.link span{}
+a.link span i{}
+
+.date .day {
+    font-size: 16px;
+}
+
+.calendar .days div {
+    font-size: 12px;
+}
+
+/* 캘린더 */
+.date .calendar .times {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.date .calendar .times button {
+    font-size: 14px;
+    width: 80px;
+}
+
+.date .calendar .month button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.date .calendar .month button i {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.date .calendar {
+    flex-direction: column;
+}
+
+.date .calendar .month {
+    width: 100%;
+    border: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date .calendar .month h3 {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.calendar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar .month {
+    text-align: center;
+    width: 700px;
+    border: 1px solid #ddd;
+    padding: 50px;
+    border-radius: 5px;
+}
+
+.calendar .month h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.calendar .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.calendar .days div {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.calendar .days .selected {
+    color: #fff;
+}
+
+.date .calendar .days .selected:before {
+    width: 20px;
+    height: 20px;
+}
+
+.calendar .days .selected:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #00bbba;
+    color: white;
+    z-index: -1;
+}
+
+.times {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: calc((100% - 750px));
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 50px;
+    padding: 50px 20px;
+}
+
+.times h3 {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.times button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #bfe7e7;
+    cursor: pointer;
+    height: 40px;
+    width: calc((100% - 15px) / 4);
+    margin-right: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.times button:last-child {
+    margin-right: 0;
+}
+
+.times button:hover {
+    background-color: #00bbba;
+    color: white;
+}
+
+.times button.active {
+    background-color: #00bbba;
+    color: white;
+}
+
+.next-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 700px;
+    margin-top: 20px;
+}
+
+.next-wrapper button {
+    width: calc(50% - 10px);
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.next-wrapper button#payButton.active {
+    background-color: #00bbba;
+    color: white;
+}
+

@@ -25,6 +25,7 @@
     margin-right: 5px;
     color: #000;
     background: #fff;
+    padding: 0;
 }
 .comm-filter button.active{
     color: #fff;
