@@ -20,4 +20,12 @@ public class UserService {
         User sessionUser = userNativeRepository.login(reqDTO);
         return sessionUser;
     }
+
+
+
+    public User 전문가상세보기(Integer expertId) {
+        // 전문가 정보를 데이터베이스에서 가져옵니다.
+        return userRepository.findById(expertId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid expert Id:" + expertId));
+    }
 }

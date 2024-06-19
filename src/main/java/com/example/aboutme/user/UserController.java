@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
@@ -74,11 +75,14 @@ public class UserController {
         return "client/findExpert/main";
     }
 
+
     //전문가 찾기 - 상세보기
     @GetMapping("/client/findExpert/detail")
     public String findExpertDetail() {
+//        userService.전문가상세보기(1);
         return "client/findExpert/detail";
     }
+
 
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
