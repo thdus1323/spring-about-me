@@ -1,6 +1,5 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,11 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final CommService commService;
     private final HttpSession session;
 
 
     @GetMapping("/join")
-    public String index() {
+    public String joinForm() {
         return "oauth/join";
     }
 
@@ -29,28 +29,17 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String login() {
+    public String loginForm() {
         return "oauth/login";
     }
+
 
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
-
         System.out.println("sessionUser = " + sessionUser);
-
         session.setAttribute("sessionUser", sessionUser);
-        if (sessionUser.getUserRole() == UserRole.CLIENT) {
-            return "redirect:/";
-        } else {
-            return "redirect:/expert";
-        }
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        session.invalidate();
         return "redirect:/";
     }
 
@@ -82,14 +71,8 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")
-    public String client() {
-        return "client/main";
-    }
-
-
-    @GetMapping("/expert")
     public String expert() {
-        return "expert/main";
+        return "client/main";
     }
 
     //TODO: 커뮤니티 페이지
@@ -97,6 +80,11 @@ public class UserController {
     @GetMapping("/comm")
     public String community() {
         return "comm/comm-main";
+    }
+
+    @GetMapping("comm/detail")
+    public String communityDetail() {
+        return "comm/comm-detail";
     }
 
 
