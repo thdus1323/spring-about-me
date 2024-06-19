@@ -26,7 +26,7 @@ VALUES
 --user_tb (상담사)
 INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, created_at, updated_at, expert_title)
 VALUES
-    ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert1.jpg', '1985-06-06', 'MAN', NOW(), NOW(),'혼자 걷다 보면 외롭고 지칠 때가 있습니다. 당신의 길에 함께하는 동반자가 되고 싶습니다.'),
+    ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert21.jpg', '1985-06-06', 'MAN', NOW(), NOW(),'혼자 걷다 보면 외롭고 지칠 때가 있습니다. 당신의 길에 함께하는 동반자가 되고 싶습니다.'),
     ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', 'expert2.jpg', '1987-07-07', 'WOMAN', NOW(), NOW(),'저는 당신의 이야기가 궁금하네요. 조금 더 자세하게 말씀해주실 수 있을까요?'),
     ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', 'expert3.jpg', '1980-01-01', 'MAN', NOW(), NOW(),'어떤 마음이어도, 어떤 모습이어도 다 괜찮습니다.'),
     ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', 'expert4.jpg', '1982-02-02', 'WOMAN', NOW(), NOW(),'자신을 비춰보며 따뜻하게 어루만져 줄 수 있는 시간을 만들어드리고 싶은 상담사 백소림입니다.'),

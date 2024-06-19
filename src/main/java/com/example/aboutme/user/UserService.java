@@ -3,6 +3,7 @@ package com.example.aboutme.user;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
