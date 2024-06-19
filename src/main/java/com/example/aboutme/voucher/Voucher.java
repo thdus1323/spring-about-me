@@ -29,12 +29,12 @@ public class Voucher {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "issued_by", nullable = false)
-    private User issuedBy;
+    @JoinColumn(name = "expert_id", nullable = false)
+    private User expert;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owned_by", nullable = false)
-    private User ownedBy;
+    @JoinColumn(name = "client_id", nullable = false)
+    private User client;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
@@ -74,10 +74,10 @@ public class Voucher {
     private Timestamp updatedAt;
 
     @Builder
-    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, User expert, User client, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.issuedBy = issuedBy;
-        this.ownedBy = ownedBy;
+        this.expert = expert;
+        this.client = client;
         this.reservation = reservation;
         this.voucherType = voucherType;
         this.price = price;
