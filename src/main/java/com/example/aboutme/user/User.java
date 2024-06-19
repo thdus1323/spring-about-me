@@ -1,16 +1,9 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.alarm.Alarm;
-import com.example.aboutme.comm.Comm;
-import com.example.aboutme.payment.Payment;
-import com.example.aboutme.refund.Refund;
-import com.example.aboutme.reply.Reply;
-import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
-import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,6 +42,9 @@ public class User {
     private String phone; // 전화번호
 
     // 아래부터는 필수가 아님
+
+    private String expertTitle; // 상담사 타이틀
+
     @Column(nullable = true)
     private String profileImage;
 
@@ -70,7 +66,7 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt, String expertTitle) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
@@ -84,5 +80,6 @@ public class User {
         this.specs = specs;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.expertTitle = expertTitle;
     }
 }

@@ -1,39 +1,67 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.voucher.Voucher;
+import com.example.aboutme.voucher.VoucherRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final UserNativeRepository userNativeRepository;
+    private final VoucherRepository voucherRepository;
 
+//회원가입
 //    @Transactional
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
 //        userNativeRepository.join(reqDTO);
 //    }
 
-//    //로그인
+    //    //로그인
 //    public User loginByName(UserRequest.LoginDTO reqDTO) {
 //        User sessionUser = userNativeRepository.login(reqDTO);
 //        return sessionUser;
 //    }
-
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userNativeRepository.login(reqDTO);
-        // specs 컬렉션을 초기화
-        user.getSpecs().size(); // 컬렉션을 접근하여 초기화
+        user.getSpecs().size();
         return user;
     }
 
 
+    // 전문가(상담사 리스트)
+    public List<UserResponse.ExpertUserDTO> getAllExpertUsers() {
 
-    public User 전문가상세보기(Integer expertId) {
-        // 전문가 정보를 데이터베이스에서 가져옵니다.
-        return userRepository.findById(expertId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid expert Id:" + expertId));
+        // 1. 모든 유저 찾기
+        List<User> users = userRepository.findAll();
+
+        // 2. userRole이 EXPERT인 유저만 필터링
+        List<User> expertUsers = users.stream()
+                .filter(user -> user.getUserRole() == UserRole.EXPERT)
+                .collect(Collectors.toList());
+
+
+        // 3. ExpertUserDTO 리스트 생성
+        List<UserResponse.ExpertUserDTO> result = expertUsers.stream().map(user -> {
+
+            List<Voucher> voucherList = voucherRepository.findByExpertId(user.getId());
+
+            List<UserResponse.ExpertUserDTO.VoucherImageDTO> voucherImages = voucherList.stream()
+                    .map(voucher -> new UserResponse.ExpertUserDTO.VoucherImageDTO(voucher.getImagePath()))
+                    .collect(Collectors.toList());
+
+            return new UserResponse.ExpertUserDTO(user, voucherImages);
+        }).collect(Collectors.toList());
+
+        return result;
     }
+
 }
