@@ -42,10 +42,22 @@
                 </div>
             </div>
             <div class="header-right">
-                <a href="#!" class="icon"><i class="fas fa-search"></i></a>
-                <a href="#!" class="icon"><i class="far fa-user"></i></a>
+                {{#sessionUser}}
+                    <ul>
+                        <li><a href="/logout">로그아웃</a></li>
+                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                        <li><a href="#!" class="icon"><i class="far fa-user"></i></a></li>
+                    </ul>
+                {{/sessionUser}}
+                {{^sessionUser}}
+                <ul>
+                    <li><a href="/login">로그인</a></li>
+                    <li><a href="/join">회원가입</a></li>
+                    <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                    <li><a href="#!" class="icon"><i class="far fa-user"></i></a></li>
+                {{/sessionUser}}
             </div>
-
+            </ul>
 
         </div>
     </div>
