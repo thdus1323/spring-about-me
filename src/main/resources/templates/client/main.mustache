@@ -152,104 +152,28 @@
         <h2>나에게 딱 맞는 전문가</h2>
         <p>공인 자격을 갖춘 검증된 전문가들이 여러분을 기다리고 있어요.</p>
         <div class="card-container swiper-wrapper">
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
+            {{#clientMain.experts}}
+                <a href="#!" class="card swiper-slide">
+                    <div class="card-top">
+                        <div class="expert-img">
+                            <img src="./images/{{expert.profileImage}}" alt="expert img">
+                        </div>
+                        <div class="expert-name">{{expert.name}}</div>
+                        <div>{{expert.expertTitle}}</div>
                     </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
+                    <div class="card-bottom contact">
+                        <div class="map"><i class="fas fa-map-marker-alt"></i></div>
+                        {{#hasTextTherapy}}
+                            <div class="review"><i class="fas fa-comment-alt"></i></div>
+                        {{/hasTextTherapy}}
+                        {{#hasVoiceTherapy}}
+                            <div class="phone"><i class="fas fa-phone-alt"></i></div>
+                        {{/hasVoiceTherapy}}
                     </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
-                    </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
-                    </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
-                    </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
-                    </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <div class="card-top">
-                    <div class="expert-img">
-                        <img src="./images/expert.png" alt="expert img">
-                    </div>
-                    <div class="expert-name">최주호</div>
-                    <div>당신의 행복한 변화와 성장을 피드백, 드림코치 최주호입니다.</div>
-                </div>
-                <div class="card-bottom contact">
-                    <div class="map"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="review"><i class="fas fa-comment-alt"></i></div>
-                    <div class="phone"><i class="fas fa-phone-alt"></i></div>
-                </div>
-            </a>
+                </a>
+            {{/clientMain.experts}}
+
+
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
