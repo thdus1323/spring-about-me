@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "reservation_tb")
-@ToString(exclude = {"expert", "client", "voucher"})
+@ToString(exclude = {"voucher"})
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
