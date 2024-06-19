@@ -1,5 +1,6 @@
-package com.example.aboutme.alarm;
+package com.example.aboutme.refund;
 
+import com.example.aboutme.payment.Payment;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -15,28 +16,33 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "alarm_tb")
-@ToString(exclude = "user")
-public class Alarm {
+@Table(name = "refund_tb")
+@ToString(exclude = {"user", "payment"})
+public class Refund {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String message;
+    private double amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id", nullable = false)
+    private Payment payment;
+
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp refundDate;
 
     @Builder
-    public Alarm(Integer id, String message, User user, Timestamp createdAt) {
+    public Refund(Integer id, double amount, User user, Payment payment, Timestamp refundDate) {
         this.id = id;
-        this.message = message;
+        this.amount = amount;
         this.user = user;
-        this.createdAt = createdAt;
+        this.payment = payment;
+        this.refundDate = refundDate;
     }
 }

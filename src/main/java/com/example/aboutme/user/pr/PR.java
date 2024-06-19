@@ -24,7 +24,8 @@ public class PR {
     @Column(nullable = false)
     private String methods; // 방식
 
-    @OneToOne(mappedBy = "pr", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_id")
     private User user;
 
     @Builder

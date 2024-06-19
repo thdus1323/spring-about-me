@@ -47,30 +47,6 @@ public class UserController {
 //        return "redirect:/";
 //    }
 
-//    @GetMapping("/")
-//    public String index() {
-//        return "client/main";
-//    }
-//
-//    @GetMapping("/client/findExpert/detail")
-//    public String findExpertDetail() {
-//        return "client/findExpert/detail";
-//    }
-//
-//    @GetMapping("/client/findExpert")
-//    public String findExpert() {
-//        return "client/findExpert/main";
-//    }
-//
-//    @GetMapping("/client/comm")
-//    public String community() {
-//        return "client/comm/comm-main";
-//    }
-//    @GetMapping("/client/findExpert/voucher")
-//    public String findExpertVoucher() {
-//        return "client/findExpert/voucher";
-//    }
-
     // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")

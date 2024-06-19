@@ -5,18 +5,22 @@ import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "counsel_tb")
+@ToString(exclude = {"client", "expert", "voucher", "review"})
 public class Counsel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +39,7 @@ public class Counsel {
     private Voucher voucher;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id", nullable = false)
+    @JoinColumn(name = "review_id", nullable = true)
     private Review review;
 
     @Column(nullable = false)
