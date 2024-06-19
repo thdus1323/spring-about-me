@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.comm.CommResponse;
+import com.example.aboutme.voucher.enums.VoucherType;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -68,12 +70,34 @@ public class UserService {
         return result;
     }
 
-    public HashMap<String, Object> getMainComms() {
-        List<CommResponse.ClientMainCommListDTO> comms = commRepository.findCommsWithReply();
-//        List<UserResponse.ExpertDTO> experts = userRepository.findExpertWithVoucher();
+    public HashMap<String, Object> getClientMain() {
+        List<UserResponse.ClientMainDTO.CommDTO> comms = commRepository.findCommsWithReply();
+        List<UserResponse.ClientMainDTO.ExpertDTO> experts = userRepository.findExpert();
+        List<UserResponse.ClientMainDTO.VoucherDTO> vouchers = voucherRepository.findAllVouchers();
+
+        List<Map<String, Object>> expertWithVouchers = experts.stream().map(expert -> {
+            Map<String, Object> expertMap = new HashMap<>();
+            expertMap.put("expert", expert);
+
+            List<String> voucherTypes = vouchers.stream()
+                    .filter(voucher -> voucher.getExpertId().equals(expert.getExpertId()))
+                    .map(UserResponse.ClientMainDTO.VoucherDTO::getVoucherType)
+                    .map(VoucherType::name)
+                    .collect(Collectors.toList());
+
+            // 특정 바우처 타입을 가진지 여부를 판단하는 boolean 값 추가
+            expertMap.put("hasTextTherapy", voucherTypes.contains("TEXT_THERAPY"));
+            expertMap.put("hasVoiceTherapy", voucherTypes.contains("VOICE_THERAPY"));
+            expertMap.put("hasVideoTherapy", voucherTypes.contains("VIDEO_THERAPY"));
+
+            expertMap.put("voucherTypes", voucherTypes);
+            return expertMap;
+        }).toList();
 
         HashMap<String, Object> clientMain = new HashMap<>();
         clientMain.put("comms", comms);
+        clientMain.put("experts", expertWithVouchers);
+        // clientMain.put("vouchers", vouchers);
         return clientMain;
     }
 }

@@ -68,7 +68,7 @@ public class UserController {
     // 메인페이지
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-        HashMap<String, Object> clientMain = userService.getMainComms();
+        HashMap<String, Object> clientMain = userService.getClientMain();
         request.setAttribute("clientMain", clientMain);
         System.out.println(clientMain);
         return "client/main";
