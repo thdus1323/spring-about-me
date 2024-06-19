@@ -73,8 +73,10 @@ public class Voucher {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    private String imagePath;
+
     @Builder
-    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, User issuedBy, User ownedBy, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt, String imagePath) {
         this.id = id;
         this.issuedBy = issuedBy;
         this.ownedBy = ownedBy;
@@ -90,5 +92,6 @@ public class Voucher {
         this.payments = payments;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.imagePath = imagePath; // 추가
     }
 }

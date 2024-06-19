@@ -1,4 +1,15 @@
 
+
+/* 페이지 내용 */
+.page-content {
+
+}
+
+/* 상세보기 */
+#section01 {
+    margin-bottom: 100px;
+}
+
 /* disabled */
 .disabled {
     position: relative;
@@ -174,11 +185,11 @@ a:hover{
 }
 
 .main-color {
-    color: #00bbba;
+    color: #FFA45B;
 }
 
 .active-color {
-    color: #009695;
+    color: #FD780F;
 }
 
 .black-color {
@@ -190,18 +201,25 @@ a:hover{
     height: 100%;
     width: 40px;
     background: none;
+    padding: 0;
 }
 
 .search-submit-btn i {
     font-weight: 700;
 }
-
-.page-title {
+h5.page-title{
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+h3.page-title {
     font-size: 22px;
     font-weight: 700;
     margin-top: 50px;
 }
+.detail-answer-reply{
 
+}
 .input-wrapper.search {
     position: relative;
     height: 40px;
@@ -219,7 +237,7 @@ a:hover{
     background: none;
     margin-bottom: 0;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: none;
     padding: 0 10px;
     width: calc(100% - 40px);
 }
