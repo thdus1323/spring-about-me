@@ -1,12 +1,21 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme.review.ReviewRepository;
+import com.example.aboutme.user.ResponseDTO.ExpertDetailDTO.*;
 import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.user.pr.PRRepository;
+import com.example.aboutme.user.spec.SpecRepository;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,10 +24,14 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final UserNativeRepository userNativeRepository;
+    private final ReviewRepository reviewRepository;
     private final VoucherRepository voucherRepository;
+    private final SpecRepository specRepository;
+    private final PRRepository prRepository;
+    private final Formatter formatter;
+    private final UserNativeRepository userNativeRepository;
 
-//회원가입
+
 //    @Transactional
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
 //        userNativeRepository.join(reqDTO);
@@ -36,6 +49,27 @@ public class UserService {
         return user;
     }
 
+    public DetailDTORecord getExpertDetails(Integer expertId) {
+        User user = userRepository.findById(expertId).orElseThrow(() -> new RuntimeException("User not found"));
+        UserRecord userRecord = new UserRecord(user.getId(), user.getName(), user.getProfileImage());
+
+        double price = voucherRepository.findLowestPriceByExpertId(expertId);
+        String lowestPrice = formatter.number((int) price); // 포맷터에서 가격을 포맷팅
+
+        List<ReviewRecord> reviewRecords = reviewRepository.findByExpertId(expertId).stream()
+                .map(review -> new ReviewRecord(review.getId(), review.getContent()))
+                .collect(Collectors.toList());
+
+        List<PRRecord> prRecords = prRepository.findByExpertId(expertId).stream()
+                .map(pr -> new PRRecord(pr.getUser().getId(), pr.getIntro(), pr.getEffects(), pr.getMethods()))
+                .collect(Collectors.toList());
+
+        List<SpecRecord> specRecords = specRepository.findByExpertId(expertId).stream()
+                .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getDetails()))
+                .collect(Collectors.toList());
+
+        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, specRecords);
+    }
 
     // 전문가(상담사 리스트)
     public List<UserResponse.ExpertUserDTO> getAllExpertUsers() {
@@ -63,5 +97,4 @@ public class UserService {
 
         return result;
     }
-
 }

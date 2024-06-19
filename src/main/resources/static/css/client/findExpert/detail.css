@@ -1,4 +1,4 @@
-
+/* Expert Card */
 .card-expert {
     width: 100%;
     background-color: white;
@@ -52,8 +52,8 @@
     display: block;
 }
 
-
-.review-card {
+/* Review Cards */
+.review-item {
     background-color: #fff;
     padding: 1rem;
     border-radius: 10px;
@@ -111,7 +111,6 @@
     display: flex;
     gap: 0.5rem;
     justify-content: space-between;
-
 }
 
 .review-detail-item {
@@ -187,3 +186,22 @@
     color: #ff4081;
 }
 
+/* Buttons */
+.review-toggle {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.btn-toggle {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: black;
+
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-toggle.less {
+    color: #6c757d;
+}
