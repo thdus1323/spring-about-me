@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class UserService {
 
 
     // 전문가(상담사 리스트)
-    public List<UserResponse.ExpertUserDTO> getAllExpertUsers(){
+    public List<UserResponse.ExpertUserDTO> getAllExpertUsers() {
 
         // 1. 모든 유저 찾기
         List<User> users = userRepository.findAll();
@@ -56,7 +57,7 @@ public class UserService {
                     .map(voucher -> new UserResponse.ExpertUserDTO.VoucherImageDTO(voucher.getImagePath()))
                     .collect(Collectors.toList());
 
-            return new UserResponse.ExpertUserDTO(user,voucherImages);
+            return new UserResponse.ExpertUserDTO(user, voucherImages);
         }).collect(Collectors.toList());
 
         return result;
