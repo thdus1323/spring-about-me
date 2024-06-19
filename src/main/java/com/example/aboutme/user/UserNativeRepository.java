@@ -21,6 +21,7 @@ public class UserNativeRepository {
 //    }
 
     //로그인
+
     public User login(UserRequest.LoginDTO reqDTO) {
         Query query = em.createNativeQuery("select * from user_tb where email=? and password=? ", User.class);
         query.setParameter(1, reqDTO.getEmail());
