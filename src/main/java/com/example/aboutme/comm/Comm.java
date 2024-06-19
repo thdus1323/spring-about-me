@@ -4,17 +4,21 @@ import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "comm_tb")
+@ToString(exclude = {"user", "replies"})
 public class Comm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
