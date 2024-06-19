@@ -1,6 +1,9 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.user.record.expertFindRecord.ExpertInfoRecord;
+import com.example.aboutme.user.record.expertFindRecord.FindWrapperRecord;
+import com.example.aboutme.user.record.expertFindRecord.VoucherImageRecord;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import jakarta.transaction.Transactional;
@@ -64,4 +67,32 @@ public class UserService {
         return result;
     }
 
+
+    // 상담가리스트 (record)
+    public FindWrapperRecord getExpertFind(){
+
+        // 1. 모든 유저 찾기
+        List<User> users = userRepository.findAll();
+
+        // 2. userRole이 EXPERT인 유저만 필터링
+        List<User> expertUsers = users.stream()
+                .filter(user -> user.getUserRole() == UserRole.EXPERT)
+                .toList();
+
+        // 3.ExpertinfoDTO 생성
+        List<ExpertInfoRecord> expertInfos =  expertUsers.stream().map(user -> {
+
+          //4. voucher 이미지 찾기
+          List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
+
+          List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
+              return new VoucherImageRecord(voucher.getImagePath());
+          }).toList();
+
+          return new ExpertInfoRecord(user.getId(),user.getName(),user.getExpertTitle(),user.getProfileImage(),voucherImageDTOs);
+        }).toList();
+
+        return new FindWrapperRecord(expertInfos);
+
+    }
 }
