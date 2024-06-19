@@ -1,22 +1,18 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.alarm.Alarm;
+import com.example.aboutme.comm.Comm;
 import com.example.aboutme.payment.Payment;
 import com.example.aboutme.refund.Refund;
+import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
-import com.example.aboutme.alarm.Alarm;
-import com.example.aboutme.comm.Comm;
-import com.example.aboutme.reply.Reply;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -30,26 +26,30 @@ import java.util.List;
 @Table(name = "user_tb")
 @ToString(exclude = {"pr", "specs", "payments", "refunds", "alarms", "comms", "replies", "vouchers"})
 public class User {
+
+    // 필수 입력
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; // 유저 아이디
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserRole userRole;
+    private UserRole userRole; // CLIENT, EXPERT
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String email; // 이메일을 아이디로 씀
 
     @Column(nullable = false)
-    private String password;
+    private String password; // 비밀번호
 
     @Column(nullable = false)
-    private String name;
+    private String name; // client는 닉네임, expert는 이름으로 씀
 
     @Column(nullable = false)
-    private String phone;
+    private String phone; // 전화번호
 
+    // 아래부터는 필수가 아님
+    @Column(nullable = true)
     private String profileImage;
 
     private String birth;
