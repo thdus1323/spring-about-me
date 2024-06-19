@@ -113,6 +113,7 @@ VALUES
     (30, 7, 28, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
     (30, 8, 29, 'SCHEDULED', '11:00', NOW(), NOW(), NOW());
 
+
 -- comm_tb
 INSERT INTO comm_tb (user_id, content, title, created_at)
 VALUES

@@ -16,15 +16,19 @@
 .comm-filter{
     margin-top: 20px;
 }
+
 .comm-filter button{
     height: 40px;
     border: none;
     width: 90px;
     border-radius: 50px;
     margin-right: 5px;
+    color: #000;
+    background: #fff;
 }
 .comm-filter button.active{
     color: #fff;
+    background: #000;
 }
 .c-card{
     border: none;

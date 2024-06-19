@@ -141,31 +141,31 @@ $(document).ready(function() {
     setActiveDate();
 
 
-
+    //
     // 폼데이터 보내기
     // 폼 데이터 전송 시 선택된 옵션의 value 값을 포함
-    $('form').on('submit', function(e) {
-        e.preventDefault(); // 폼 전송 막기 (디버깅용)
-
-        const selectedSituations = [];
-        const selectedSymptoms = [];
-
-        $('.situation .option-list.btn li.active').each(function() {
-            selectedSituations.push($(this).data('value'));
-        });
-
-        $('.state .option-list.btn li.active').each(function() {
-            selectedSymptoms.push($(this).data('value'));
-        });
-
-        const formData = {
-            situations: selectedSituations,
-            symptoms: selectedSymptoms
-        };
-
-        console.log(formData); // 폼 데이터 확인 (디버깅용)
-
-        // 실제 폼 전송 로직 추가
-        // 예: $.post('your-endpoint-url', formData);
-    });
+    // $('form').on('submit', function(e) {
+    //     e.preventDefault(); // 폼 전송 막기 (디버깅용)
+    //
+    //     const selectedSituations = [];
+    //     const selectedSymptoms = [];
+    //
+    //     $('.situation .option-list.btn li.active').each(function() {
+    //         selectedSituations.push($(this).data('value'));
+    //     });
+    //
+    //     $('.state .option-list.btn li.active').each(function() {
+    //         selectedSymptoms.push($(this).data('value'));
+    //     });
+    //
+    //     const formData = {
+    //         situations: selectedSituations,
+    //         symptoms: selectedSymptoms
+    //     };
+    //
+    //     console.log(formData); // 폼 데이터 확인 (디버깅용)
+    //
+    //     // 실제 폼 전송 로직 추가
+    //     // 예: $.post('your-endpoint-url', formData);
+    // });
 });

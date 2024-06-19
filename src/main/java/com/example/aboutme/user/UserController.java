@@ -33,7 +33,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
+    @PostMapping("/user-login")
     public String login(String email, String password) {
         System.out.println("email = " + email);
         System.out.println("password = " + password);
