@@ -21,10 +21,12 @@ public class UserNativeRepository {
 //    }
 
     //로그인
-    public User login(UserRequest.LoginDTO reqDTO){
-        Query query = em.createNativeQuery("select * from user_tb where name=? and password=?", User.class);
-        query.setParameter(1, reqDTO.getName());
-        query.setParameter(2,reqDTO.getPassword());
+
+    public User login(UserRequest.LoginDTO reqDTO) {
+        Query query = em.createNativeQuery("select * from user_tb where email=? and password=? ", User.class);
+        query.setParameter(1, reqDTO.getEmail());
+        query.setParameter(2, reqDTO.getPassword());
+//        query.setParameter(3, reqDTO.getUserRole());
         User sessionUser = (User) query.getSingleResult();
         return sessionUser;
     }

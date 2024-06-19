@@ -1,5 +1,7 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.comm.CommService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final CommService commService;
     private final HttpSession session;
 
 
     @GetMapping("/join")
-    public String index() {
+    public String joinForm() {
         return "oauth/join";
     }
 
@@ -29,15 +32,17 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String login() {
+    public String loginForm() {
         return "oauth/login";
     }
 
 
-    @PostMapping("/user-login")
-    public String login(String email, String password) {
-        System.out.println("email = " + email);
-        System.out.println("password = " + password);
+
+    @PostMapping("/login")
+    public String login(UserRequest.LoginDTO reqDTO) {
+        User sessionUser = userService.loginByName(reqDTO);
+        System.out.println("sessionUser = " + sessionUser);
+        session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
 //    @PostMapping("/login")
@@ -51,7 +56,11 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")
-    public String expert() {
+    public String index(HttpServletRequest request) {
+//        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
+//        request.setAttribute("mainCommList", mainCommListDTOS);
+//        System.out.println("이거 맞나? 기억ㄷ ㅗ안 ㅁㄹ어ㅣ남;ㅇ");
+//        System.out.println(mainCommListDTOS);
         return "client/main";
     }
 
