@@ -2,8 +2,8 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
-import jakarta.servlet.http.HttpServletRequest;
 import com.example.aboutme.user.enums.UserRole;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
@@ -62,13 +62,6 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
-//    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userService.loginByName(reqDTO);
-//        System.out.println("sessionUser = " + sessionUser);
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
-//    }
 
     // 👻👻👻공통👻👻👻
     // 메인페이지
@@ -98,7 +91,7 @@ public class UserController {
     @GetMapping("/client/findExpert")
     public String findExpert() {
 
-        List<UserResponse.ExpertUserDTO> expertUserList =  userService.getAllExpertUsers();
+        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
         session.setAttribute("expertUserList", expertUserList);
 
         return "client/findExpert/main";
