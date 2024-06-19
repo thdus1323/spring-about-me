@@ -1,9 +1,9 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.comm.CommService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
     private final UserService userService;
-    private final CommService commService;
     private final HttpSession session;
+    private final DataSourceTransactionManagerAutoConfiguration dataSourceTransactionManagerAutoConfiguration;
 
 
     @GetMapping("/join")
-    public String joinForm() {
+    public String index() {
         return "oauth/join";
     }
 
@@ -31,35 +31,60 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String login() {
         return "oauth/login";
     }
-
-
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
         System.out.println("sessionUser = " + sessionUser);
         session.setAttribute("sessionUser", sessionUser);
+        if (sessionUser.getUserRole() == UserRole.CLIENT) {
+            return "redirect:/";
+        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
+            return "expert/main";
+        } else {
+            return "oauth/login";
+        }
+    }
+
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
         return "redirect:/";
     }
-//    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userService.loginByName(reqDTO);
-//        System.out.println("sessionUser = " + sessionUser);
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
+
+
+//    @GetMapping("/")
+//    public String index() {
+//        return "client/main";
+//    }
+//
+//    @GetMapping("/client/findExpert/detail")
+//    public String findExpertDetail() {
+//        return "client/findExpert/detail";
+//    }
+//
+//    @GetMapping("/client/findExpert")
+//    public String findExpert() {
+//        return "client/findExpert/main";
+//    }
+//
+//    @GetMapping("/client/comm")
+//    public String community() {
+//        return "client/comm/comm-main";
+//    }
+//    @GetMapping("/client/findExpert/voucher")
+//    public String findExpertVoucher() {
+//        return "client/findExpert/voucher";
 //    }
 
     // 👻👻👻공통👻👻👻
     // 메인페이지
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
-//        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
-//        request.setAttribute("mainCommList", mainCommListDTOS);
-//        System.out.println("이거 맞나? 기억ㄷ ㅗ안 ㅁㄹ어ㅣ남;ㅇ");
-//        System.out.println(mainCommListDTOS);
+    public String expert() {
         return "client/main";
     }
 
@@ -68,11 +93,6 @@ public class UserController {
     @GetMapping("/comm")
     public String community() {
         return "comm/comm-main";
-    }
-
-    @GetMapping("comm/detail")
-    public String communityDetail() {
-        return "comm/comm-detail";
     }
 
 
