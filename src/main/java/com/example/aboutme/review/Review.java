@@ -29,11 +29,12 @@ public class Review {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Counsel counsel;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "counsel_id", nullable = false)
+    private Counsel counsel;  // 외래 키로 상담 정보를 참조
 
     @Column(nullable = false)
-    private LocalDateTime counselDate;
+    private String content;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -41,16 +42,15 @@ public class Review {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    private String score; // 추가
 
     @Builder
-    public Review(Integer id, User user, Counsel counsel, LocalDateTime counselDate, Timestamp createdAt, Timestamp updatedAt, String score) {
+
+    public Review(Integer id, User user, Counsel counsel, Timestamp createdAt, Timestamp updatedAt) {
+
         this.id = id;
         this.user = user;
         this.counsel = counsel;
-        this.counselDate = counselDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.score = score;
     }
 }
