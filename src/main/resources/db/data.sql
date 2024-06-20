@@ -22,7 +22,7 @@ VALUES ('CLIENT', 'mimi@nate.com', '1234', '최미정', '0101112222', 'client1.j
        ('CLIENT', 'soyoung@nate.com', '1234', '김소영', '0102227777', 'client20.jpg', '2004-08-01', 'WOMAN', NOW(), NOW());
 
 
-
+--user_tb (상담사)
 INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, created_at, updated_at,
                      expert_title)
 VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert21.jpg', '1985-06-06', 'MAN', NOW(), NOW(),
@@ -46,9 +46,84 @@ VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'exper
        ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert30.jpg', '1994-08-08', 'WOMAN', NOW(), NOW(),
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.');
 
--- voucher_tb
-INSERT INTO voucher_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
-                        start_date, end_date, is_active, image_path, created_at, updated_at)
+-- voucher_tb 테이블에 데이터 추가
+INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_path, start_date, created_at, updated_at)
+VALUES
+    -- Expert 1 has 3 voucher types
+    ('TEXT_THERAPY', 21, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 21, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 21, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 2 has 2 voucher types
+    ('TEXT_THERAPY', 22, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 22, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+
+    -- Expert 3 has 1 voucher type
+    ('VIDEO_THERAPY', 23, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 4 has 2 voucher types
+    ('TEXT_THERAPY', 24, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 24, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 5 has 3 voucher types
+    ('TEXT_THERAPY', 25, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 25, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 25, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 6 has 1 voucher type
+    ('TEXT_THERAPY', 26, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+
+    -- Expert 7 has 2 voucher types
+    ('VOICE_THERAPY', 27, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 27, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 8 has 3 voucher types
+    ('TEXT_THERAPY', 28, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 28, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 28, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 9 has 2 voucher types
+    ('TEXT_THERAPY', 29, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 29, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+
+    -- Expert 10 has 1 voucher type
+    ('VIDEO_THERAPY', 30, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW());
+
+-- voucher_tb 테이블에 데이터 추가
+INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_path, start_date, created_at, updated_at)
+VALUES ('TEXT_THERAPY', 21, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 21, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 21, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 22, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 22, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 22, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 23, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 23, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 23, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 24, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 24, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 24, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 25, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 25, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 25, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 26, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 26, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 26, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 27, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 27, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 27, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 28, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 28, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 28, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 29, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 29, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 29, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 30, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 30, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 30, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW());
+-- voucher_history_tb
+INSERT INTO voucher_history_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
+                                start_date, end_date, is_active, image_path, created_at, updated_at)
 VALUES
     -- Expert 1
     (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
@@ -185,36 +260,36 @@ VALUES
 
 -- pr_tb
 INSERT INTO pr_tb (expert_id, intro, effects, methods)
-VALUES (21, '심리상담을 망설이는 분에게: 혼자 고민하지 마세요. 용기가 당신을 행복하게 만들 것입니다. 숨겨진 보물을 찾아내는 기쁨을 함께 경험하세요.',
-        '상담사님과의 심리상담 효과: 문제의 원인은 모두 다릅니다. 사람마다 환경과 감정도 다르죠. 개개인의 상담 목표와 달성 방법, 효과에는 차이가 있습니다.',
-        '상담사님의 심리상담 방식: 상담 초기 단계에서는 상담신청 동기와 욕구, 문제파악과 목표를 설정합니다. 중기 단계에서는 억압된 감정표출과 문제 해결을 위한 심리적 여정을 돕습니다.'),
-       (22, '심리상담을 망설이는 분들에게: 혼자서 힘들어하지 마세요. 상담을 통해 새로운 시각을 얻고 행복을 찾으세요.',
-        '상담사님과의 심리상담 효과: 각 개인의 문제와 상황에 맞춘 상담을 통해 더 나은 해결책을 찾을 수 있습니다.',
-        '상담사님의 심리상담 방식: 상담 초기에 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 해결책을 모색합니다.'),
-       (23, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 짐을 덜어내세요. 함께 해결책을 찾아 나갑시다.',
-        '상담사님과의 심리상담 효과: 다양한 문제 상황에 맞춘 맞춤형 상담을 제공합니다. 개인의 특성을 고려한 상담을 통해 효과적인 해결을 돕습니다.',
-        '상담사님의 심리상담 방식: 초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 심리적 접근을 시도합니다.'),
-       (24, '심리상담을 망설이는 분들에게: 상담을 통해 새로운 시작을 만들어 보세요. 함께 성장할 수 있습니다.',
-        '상담사님과의 심리상담 효과: 각 개인의 문제와 상황에 맞춘 개별 상담을 통해 최선의 해결책을 찾습니다.',
-        '상담사님의 심리상담 방식: 상담 초기에는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.'),
-       (25, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 평안을 찾으세요. 함께 더 나은 내일을 준비합시다.',
-        '상담사님과의 심리상담 효과: 각기 다른 문제와 상황에 맞춘 상담을 통해 효과적인 해결책을 제공합니다.',
-        '상담사님의 심리상담 방식: 초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.'),
-       (26, '심리상담을 망설이는 분들에게: 혼자 고민하지 마세요. 상담을 통해 마음의 짐을 덜어내세요.',
-        '상담사님과의 심리상담 효과: 개개인의 문제에 맞춘 상담을 통해 최적의 해결책을 찾습니다.',
-        '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.'),
-       (27, '심리상담을 망설이는 분들에게: 상담을 통해 새로운 길을 찾아보세요. 함께 더 나은 미래를 준비합시다.',
-        '상담사님과의 심리상담 효과: 문제와 상황에 맞춘 개별 상담을 통해 최선의 해결책을 찾습니다.',
-        '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 접근을 시도합니다.'),
-       (28, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 짐을 덜어내세요. 새로운 시작을 함께 만들어갑시다.',
-        '상담사님과의 심리상담 효과: 각 개인의 문제에 맞춘 맞춤형 상담을 통해 최적의 해결책을 찾습니다.',
-        '상담사님의 심리상담 방식: 초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 접근을 시도합니다.'),
-       (29, '심리상담을 망설이는 분들에게: 상담을 통해 마음의 평안을 찾으세요. 함께 더 나은 내일을 준비합시다.',
-        '상담사님과의 심리상담 효과: 각기 다른 문제와 상황에 맞춘 상담을 통해 효과적인 해결책을 제공합니다.',
-        '상담사님의 심리상담 방식: 초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.'),
-       (30, '심리상담을 망설이는 분들에게: 혼자 고민하지 마세요. 상담을 통해 마음의 짐을 덜어내세요.',
-        '상담사님과의 심리상담 효과: 개개인의 문제에 맞춘 상담을 통해 최적의 해결책을 찾습니다.',
-        '상담사님의 심리상담 방식: 상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.');
+VALUES (21, '혼자 고민하지 마세요. 용기가 당신을 행복하게 만들 것입니다. 숨겨진 보물을 찾아내는 기쁨을 함께 경험하세요.',
+        '문제의 원인은 모두 다릅니다. 사람마다 환경과 감정도 다르죠. 개개인의 상담 목표와 달성 방법, 효과에는 차이가 있습니다.',
+        '상담 초기 단계에서는 상담신청 동기와 욕구, 문제파악과 목표를 설정합니다. 중기 단계에서는 억압된 감정표출과 문제 해결을 위한 심리적 여정을 돕습니다.'),
+       (22, '혼자서 힘들어하지 마세요. 상담을 통해 새로운 시각을 얻고 행복을 찾으세요.',
+        '각 개인의 문제와 상황에 맞춘 상담을 통해 더 나은 해결책을 찾을 수 있습니다.',
+        '상담 초기에 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 해결책을 모색합니다.'),
+       (23, '상담을 통해 마음의 짐을 덜어내세요. 함께 해결책을 찾아 나갑시다.',
+        '다양한 문제 상황에 맞춘 맞춤형 상담을 제공합니다. 개인의 특성을 고려한 상담을 통해 효과적인 해결을 돕습니다.',
+        '초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 심리적 접근을 시도합니다.'),
+       (24, '상담을 통해 새로운 시작을 만들어 보세요. 함께 성장할 수 있습니다.',
+        '각 개인의 문제와 상황에 맞춘 개별 상담을 통해 최선의 해결책을 찾습니다.',
+        '상담 초기에는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.'),
+       (25, '상담을 통해 마음의 평안을 찾으세요. 함께 더 나은 내일을 준비합시다.',
+        '각기 다른 문제와 상황에 맞춘 상담을 통해 효과적인 해결책을 제공합니다.',
+        '초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.'),
+       (26, '혼자 고민하지 마세요. 상담을 통해 마음의 짐을 덜어내세요.',
+        '개개인의 문제에 맞춘 상담을 통해 최적의 해결책을 찾습니다.',
+        '상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.'),
+       (27, '상담을 통해 새로운 길을 찾아보세요. 함께 더 나은 미래를 준비합시다.',
+        '문제와 상황에 맞춘 개별 상담을 통해 최선의 해결책을 찾습니다.',
+        '상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 억눌린 감정을 해소하고 문제 해결을 위한 접근을 시도합니다.'),
+       (28, '상담을 통해 마음의 짐을 덜어내세요. 새로운 시작을 함께 만들어갑시다.',
+        '각 개인의 문제에 맞춘 맞춤형 상담을 통해 최적의 해결책을 찾습니다.',
+        '초기 상담 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 접근을 시도합니다.'),
+       (29, '상담을 통해 마음의 평안을 찾으세요. 함께 더 나은 내일을 준비합시다.',
+        '각기 다른 문제와 상황에 맞춘 상담을 통해 효과적인 해결책을 제공합니다.',
+        '초기 단계에서는 상담신청 동기와 문제를 파악하고 목표를 설정합니다. 중기에는 감정을 표출하고 문제 해결을 위한 심리적 접근을 합니다.'),
+       (30, '혼자 고민하지 마세요. 상담을 통해 마음의 짐을 덜어내세요.',
+        '개개인의 문제에 맞춘 상담을 통해 최적의 해결책을 찾습니다.',
+        '상담 초기 단계에서는 문제를 파악하고 목표를 설정합니다. 중기에는 감정표출과 문제 해결을 위한 접근을 시도합니다.');
 
 -- spec_tb
 INSERT INTO spec_tb (spec_type, details, user_id)
@@ -297,3 +372,39 @@ VALUES
     ('CAREER', '현 놀이치료센터 소장', 30),
     ('CAREER', '전 이화여자대학교병원 놀이치료사', 30),
     ('EDUCATION', '이화여자대학교 놀이치료학 석사 졸업', 30);
+
+--
+-- 상담 데이터
+INSERT INTO counsel_tb (client_id, expert_id, voucher_id, result, counsel_date, created_at, updated_at)
+VALUES
+    (12, 21, 1, '상담을 통해 문제의 원인을 분석했습니다.', NOW(), NOW(), NOW()),
+    (13, 21, 2, '상담을 통해 문제의 원인을 분석했습니다.', NOW(), NOW(), NOW()),
+    (14, 21, 3, '상담을 통해 문제의 원인을 분석했습니다.', NOW(), NOW(), NOW()),
+    (3, 22, 4, '내담자의 감정 조절 방법을 논의했습니다.', NOW(), NOW(), NOW()),
+    (4, 23, 5, '상담을 통해 스트레스 관리 전략을 제안했습니다.', NOW(), NOW(), NOW()),
+    (5, 24, 6, '내담자의 목표 설정에 대한 조언을 제공했습니다.', NOW(), NOW(), NOW()),
+    (6, 25, 7, '상담을 통해 문제 해결의 접근 방법을 논의했습니다.', NOW(), NOW(), NOW()),
+    (7, 26, 8, '내담자의 자존감 향상 방안을 제안했습니다.', NOW(), NOW(), NOW()),
+    (8, 27, 9, '내담자의 불안 완화 기법을 설명했습니다.', NOW(), NOW(), NOW()),
+    (9, 28, 10, '상담을 통해 의사소통 기술을 향상시켰습니다.', NOW(), NOW(), NOW()),
+    (10, 29, 11, '내담자의 동기 부여를 위한 전략을 논의했습니다.', NOW(), NOW(), NOW()),
+    (11, 30, 12, '내담자의 경력 개발 방안을 제안했습니다.', NOW(), NOW(), NOW());
+
+-- 리뷰 데이터
+INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
+VALUES
+    (12, 1, '상담사와의 대화가 많은 도움이 되었고, 문제의 원인을 알 수 있었습니다.나나나나나', NOW(), NOW()),
+    (13, 2, '상담사와의 대화가 많은 도움이 되었고, 문제의 원인을 알 수 있었습니다.다다다다다', NOW(), NOW()),
+    (14, 3, '상담사와의 대화가 많은 도움이 되었고, 문제의 원인을 알 수 있었습니다.가가가가가', NOW(), NOW()),
+    (3, 4, '감정 조절 방법에 대해 상담사에게 배울 수 있어 유익했습니다.', NOW(), NOW()),
+    (4, 5, '스트레스 관리에 대한 좋은 전략을 얻었습니다.', NOW(), NOW()),
+    (5, 6, '목표 설정에 대한 상담사의 조언이 매우 도움이 되었습니다.', NOW(), NOW()),
+    (6, 7, '문제 해결 방법에 대해 유용한 정보를 얻었습니다.', NOW(), NOW()),
+    (7, 8, '자존감 향상에 대한 좋은 방법을 배웠습니다.', NOW(), NOW()),
+    (8, 9, '불안을 다루는 기법에 대해 많은 도움이 되었습니다.', NOW(), NOW()),
+    (9, 10, '의사소통 기술을 향상시키는 데 유익한 상담이었습니다.', NOW(), NOW()),
+    (10, 11, '동기 부여를 위한 좋은 전략을 제안받았습니다.', NOW(), NOW()),
+    (11, 12, '경력 개발에 대한 유용한 조언을 얻었습니다.', NOW(), NOW());
+
+
+
