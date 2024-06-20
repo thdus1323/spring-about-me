@@ -6,6 +6,10 @@ import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.review.ReviewRepository;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.CommDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ExpertDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.VoucherDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.*;
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
@@ -24,6 +28,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,35 +152,48 @@ public class UserService {
     }
 
     // 클라이언트 메인
-    public HashMap<String, Object> getClientMain() {
-        List<UserResponse.ClientMainDTO.CommDTO> comms = commRepository.findCommsWithReply();
-        List<UserResponse.ClientMainDTO.ExpertDTO> experts = userRepository.findExpert();
-        List<UserResponse.ClientMainDTO.VoucherDTO> vouchers = voucherRepository.findAllVouchers();
+    public ClientMainDTORecord getClientMain() {
+        List<CommDTORecord> comms = commRepository.findCommsWithReply().stream()
+                .map(comm -> new CommDTORecord(
+                        comm.getCommunityId(),
+                        comm.getWriterName(),
+                        comm.getWriterImage(),
+                        comm.getExpertName(),
+                        comm.getExpertImage(),
+                        comm.getTitle(),
+                        comm.getContent(),
+                        comm.getCategory()))
+                .toList();
 
-        List<Map<String, Object>> expertWithVouchers = experts.stream().map(expert -> {
-            Map<String, Object> expertMap = new HashMap<>();
-            expertMap.put("expert", expert);
+        List<ExpertDTORecord> experts = userRepository.findExpert().stream()
+                .map(expert -> {
+                    List<VoucherDTORecord> vouchers = voucherRepository.findByExpertId(expert.getExpertId()).stream()
+                            .map(voucher -> new VoucherDTORecord(
+                                    voucher.getVoucherType(),
+                                    voucher.getPrice(),
+                                    voucher.getDuration()))
+                            .toList();
 
-            List<String> voucherTypes = vouchers.stream()
-                    .filter(voucher -> voucher.getExpertId().equals(expert.getExpertId()))
-                    .map(UserResponse.ClientMainDTO.VoucherDTO::getVoucherType)
-                    .map(VoucherType::name)
-                    .collect(Collectors.toList());
+                    boolean hasTextTherapy = vouchers.stream()
+                            .anyMatch(voucher -> voucher.voucherType() == VoucherType.TEXT_THERAPY);
+                    boolean hasVoiceTherapy = vouchers.stream()
+                            .anyMatch(voucher -> voucher.voucherType() == VoucherType.VOICE_THERAPY);
+                    boolean hasVideoTherapy = vouchers.stream()
+                            .anyMatch(voucher -> voucher.voucherType() == VoucherType.VIDEO_THERAPY);
 
-            // 특정 바우처 타입을 가진지 여부를 판단하는 boolean 값 추가
-            expertMap.put("hasTextTherapy", voucherTypes.contains("TEXT_THERAPY"));
-            expertMap.put("hasVoiceTherapy", voucherTypes.contains("VOICE_THERAPY"));
-            expertMap.put("hasVideoTherapy", voucherTypes.contains("VIDEO_THERAPY"));
+                    return new ExpertDTORecord(
+                            expert.getExpertId(),
+                            expert.getName(),
+                            expert.getProfileImage(),
+                            expert.getExpertTitle(),
+                            vouchers,
+                            hasTextTherapy,
+                            hasVoiceTherapy,
+                            hasVideoTherapy);
+                })
+                .toList();
 
-            expertMap.put("voucherTypes", voucherTypes);
-            return expertMap;
-        }).toList();
-
-        HashMap<String, Object> clientMain = new HashMap<>();
-        clientMain.put("comms", comms);
-        clientMain.put("experts", expertWithVouchers);
-        // clientMain.put("vouchers", vouchers);
-        return clientMain;
+        return new ClientMainDTORecord(comms, experts);
     }
 
     // 익스퍼트 메인
