@@ -1,16 +1,13 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommRepository;
-import com.example.aboutme.comm.CommResponse;
-import com.example.aboutme.voucher.enums.VoucherType;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
+import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +68,7 @@ public class UserService {
         return result;
     }
 
+    // 클라이언트 메인
     public HashMap<String, Object> getClientMain() {
         List<UserResponse.ClientMainDTO.CommDTO> comms = commRepository.findCommsWithReply();
         List<UserResponse.ClientMainDTO.ExpertDTO> experts = userRepository.findExpert();
