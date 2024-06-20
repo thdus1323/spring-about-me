@@ -75,10 +75,13 @@ public class UserController {
 
     //TODO: 커뮤니티 페이지
     //커뮤니티 - 메인
-    @GetMapping("/comm")
-    public String community() {
-        return "comm/comm-main";
-    }
+//    @GetMapping("/comm")
+//    public String community(HttpServletRequest request) {
+//        List<CommResponse.CommAndReplyDTO> commList = commService.findAllCommsWithReply();
+//        request.setAttribute("commList", commList);
+//
+//        return "comm/comm-main";
+//    }
 
     @GetMapping("comm/detail")
     public String communityDetail() {
