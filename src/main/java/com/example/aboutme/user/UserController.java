@@ -29,13 +29,6 @@ public class UserController {
         return "oauth/join";
     }
 
-//    //회원가입
-//    @PostMapping("/join")
-//    public String Join(UserRequest.JoinDTO reqDTO) {
-//        System.out.println("reqDTO = " + reqDTO);
-//    userService.joinByEmail(reqDTO);
-//    return "redirect:/login";
-//    }
 
     @GetMapping("/login")
     public String loginForm() {
@@ -46,7 +39,6 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
-        System.out.println("sessionUser = " + sessionUser);
         session.setAttribute("sessionUser", sessionUser);
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
@@ -64,13 +56,6 @@ public class UserController {
         return "redirect:/";
     }
 
-//    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userService.loginByName(reqDTO);
-//        System.out.println("sessionUser = " + sessionUser);
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
-//    }
 
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
@@ -92,18 +77,6 @@ public class UserController {
     }
 
 
-    //TODO: 커뮤니티 페이지
-    //커뮤니티 - 메인
-    @GetMapping("/comm")
-    public String community() {
-        return "comm/comm-main";
-    }
-
-    @GetMapping("comm/detail")
-    public String communityDetail() {
-        return "comm/comm-detail";
-    }
-
 
     // 🐯🐯🐯Client🐯🐯🐯
     //전문가 찾기 - 메인
@@ -122,18 +95,26 @@ public class UserController {
     // 전문가 찾기 - 상세보기
     @GetMapping("/client/findExpert/detail/{expertId}")
     public String findExpertDetail(Model model, @PathVariable("expertId") Integer expertId) {
-        DetailDTORecord detailDTORecord = userService.getExpertDetails(expertId);
+        DetailDTORecord detailDTORecord = userService.getFindExpertDetails(expertId);
         model.addAttribute("model", detailDTORecord);
         return "client/findExpert/detail";
     }
 
-
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
     public String clientMypage() {
-        return "client/mypage";
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            return "oauth/login";
+        } else {
+            return "client/mypage";
+        }
     }
 
-
+    //익스퍼트 - 마이페이지
+    @GetMapping("/expert/mypage")
+    public String expertMypage() {
+        return "expert/mypage";
+    }
     // 🩺🩺🩺expert🩺🩺🩺
 }

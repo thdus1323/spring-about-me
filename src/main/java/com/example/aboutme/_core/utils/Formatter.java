@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 
 @Component // @Controller 대신 @Component 사용
 public class Formatter {
+
     public String number(int number) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###원");
         return decimalFormat.format(number);
