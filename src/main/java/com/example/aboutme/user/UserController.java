@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -108,10 +110,10 @@ public class UserController {
     }
 
 
-    //전문가 찾기 - 상세보기
-    @GetMapping("/client/findExpert/detail/21")
-    public String findExpertDetail(Model model) {
-        DetailDTORecord detailDTORecord = userService.getExpertDetails(21);
+    // 전문가 찾기 - 상세보기
+    @GetMapping("/client/findExpert/detail/{expertId}")
+    public String findExpertDetail(Model model, @PathVariable("expertId") Integer expertId) {
+        DetailDTORecord detailDTORecord = userService.getExpertDetails(expertId);
         model.addAttribute("model", detailDTORecord);
         return "client/findExpert/detail";
     }
