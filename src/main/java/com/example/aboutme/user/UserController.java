@@ -1,6 +1,7 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommService;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
@@ -61,9 +62,9 @@ public class UserController {
     // 클라이언트 메인페이지
     @GetMapping("/")
     public String index(Model model) {
-        HashMap<String, Object> clientMain = userService.getClientMain();
+        ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
-
+        System.out.println(clientMain);
         return "client/main";
     }
 
@@ -72,7 +73,7 @@ public class UserController {
     public String expertMain(Model model, @PathVariable Integer expertId) {
         ExpertMainDTORecord expertMain = userService.getExpertMain(expertId);
         model.addAttribute("expertMain", expertMain);
-        System.out.println("expertMain = " + expertMain);
+
         return "expert/main";
     }
 

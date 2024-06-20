@@ -9,11 +9,16 @@ import java.util.List;
 
 public interface CounselRepository extends JpaRepository<Counsel, Integer> {
     @Query("""
-            SELECT new com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord(c.id, c.client.name, c.counselDate, v.voucherType, v.duration) 
+            SELECT new com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord(
+                c.id, 
+                c.client.name, 
+                c.counselDate, 
+                v.voucherType, 
+                v.duration
+            ) 
             FROM Counsel c 
             JOIN c.voucher v  
             WHERE c.expert.id = :expertId
             """)
     List<CounselScheduleRecord> findCounselScheduleRecordsByExpertId(@Param("expertId") Integer expertId);
-
 }
