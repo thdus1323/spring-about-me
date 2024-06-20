@@ -162,7 +162,9 @@ a:hover{
     content: "기기(현지) 시간대 기준";
 
 }
-
+.page-wrapper{
+    position: relative;
+}
 /* 색상*/
 .main-background {
     background: #FFA45B;

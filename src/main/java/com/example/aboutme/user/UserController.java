@@ -4,7 +4,7 @@ import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.enums.UserRole;
-import com.example.aboutme.user.record.expertFindRecord.FindWrapperRecord;
+import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
