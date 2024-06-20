@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,22 +60,21 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    public String index(Model model) {
         HashMap<String, Object> clientMain = userService.getClientMain();
-        request.setAttribute("clientMain", clientMain);
-        System.out.println(clientMain);
+        model.addAttribute("clientMain", clientMain);
+
         return "client/main";
     }
 
     // 익스퍼트 메인페이지
-    @GetMapping("/expert/main")
-    public String expertMain(HttpServletRequest request) {
-        HashMap<String, Object> clientMain = userService.getClientMain();
-        request.setAttribute("clientMain", clientMain);
-        System.out.println(clientMain);
+    @GetMapping("/experts/{expertId}")
+    public String expertMain(Model model, @PathVariable Integer expertId) {
+        ExpertMainDTORecord expertMain = userService.getExpertMain(expertId);
+        model.addAttribute("expertMain", expertMain);
+        System.out.println("expertMain = " + expertMain);
         return "expert/main";
     }
-
 
 
     // 🐯🐯🐯Client🐯🐯🐯

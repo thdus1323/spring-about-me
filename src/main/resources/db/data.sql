@@ -65,50 +65,6 @@ VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'exper
        ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert30.jpg', '1994-08-08', 'WOMAN', 'LEVEL2',
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.', NOW(), NOW());
 
-
--- -- voucher_tb 테이블에 데이터 추가
--- INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_path, start_date, created_at, updated_at)
--- VALUES
---     -- Expert 1 has 3 voucher types
---     ('TEXT_THERAPY', 21, 12000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---     ('VOICE_THERAPY', 21, 45000, 4, 60, '/images/call.png', NOW(), NOW(), NOW()),
---     ('VIDEO_THERAPY', 21, 80000, 8, 60, '/images/video.png', NOW(), NOW(), NOW()),
---
---     -- Expert 2 has 2 voucher types
---     ('TEXT_THERAPY', 22, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---     ('VOICE_THERAPY', 22, 15000, 4, 30, '/images/call.png', NOW(), NOW(), NOW()),
---
---     -- Expert 3 has 1 voucher type
---     ('VIDEO_THERAPY', 23, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
---
---     -- Expert 4 has 2 voucher types
---     ('TEXT_THERAPY', 24, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---     ('VIDEO_THERAPY', 24, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
---
---     -- Expert 5 has 3 voucher types
---     ('TEXT_THERAPY', 25, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---     ('VOICE_THERAPY', 25, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
---     ('VIDEO_THERAPY', 25, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
---
---     -- Expert 6 has 1 voucher type
---     ('TEXT_THERAPY', 26, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---
---     -- Expert 7 has 2 voucher types
---     ('VOICE_THERAPY', 27, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
---     ('VIDEO_THERAPY', 27, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
---
---     -- Expert 8 has 3 voucher types
---     ('TEXT_THERAPY', 28, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---     ('VOICE_THERAPY', 28, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
---     ('VIDEO_THERAPY', 28, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
---
---     -- Expert 9 has 2 voucher types
---     ('TEXT_THERAPY', 29, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
---     ('VOICE_THERAPY', 29, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
---
---     -- Expert 10 has 1 voucher type
---     ('VIDEO_THERAPY', 30, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW());
-
 -- voucher_tb 테이블에 데이터 추가
 INSERT INTO voucher_tb (id, voucher_type, expert_id, price, count, duration, image_path, start_date, created_at,
                         updated_at)
@@ -425,34 +381,34 @@ VALUES (1, 1, 21, 1, '2024-06-20 10:00:00', 'COMPLETED', NOW(), NOW()),
        (30, 30, 30, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW());
 
 -- review_tb
-INSERT INTO review_tb (user_id, counsel_id, content, created_at, updated_at)
-VALUES (1, 1, '상담사가 매우 친절하고 도움이 많이 되었습니다.', NOW(), NOW()),
-       (2, 2, '상담 내용이 정말 유익했고, 큰 도움이 되었습니다.', NOW(), NOW()),
-       (3, 3, '친절하고 세심하게 상담해주셔서 감사했습니다.', NOW(), NOW()),
-       (4, 4, '상담사가 문제를 잘 이해해주고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (5, 5, '상담 후 마음이 많이 편안해졌습니다. 감사합니다.', NOW(), NOW()),
-       (6, 6, '상담 시간이 짧아서 아쉬웠지만, 유익했습니다.', NOW(), NOW()),
-       (7, 7, '상담사가 제 고민을 잘 들어주었고, 조언도 좋았습니다.', NOW(), NOW()),
-       (8, 8, '상담이 매우 도움이 되었고, 다음에도 이용하고 싶습니다.', NOW(), NOW()),
-       (9, 9, '상담사가 전문적이고 친절해서 좋았습니다.', NOW(), NOW()),
-       (10, 10, '상담이 끝난 후 많은 도움이 되었습니다.', NOW(), NOW()),
-       (11, 11, '상담을 통해 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
-       (12, 12, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
-       (13, 13, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
-       (14, 14, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (15, 15, '상담 후 마음이 많이 편안해졌습니다.', NOW(), NOW()),
-       (16, 16, '상담 시간 동안 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
-       (17, 17, '상담사가 제 고민을 잘 들어주고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (18, 18, '상담이 매우 유익했고, 큰 도움이 되었습니다.', NOW(), NOW()),
-       (19, 19, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
-       (20, 20, '상담사가 문제를 잘 이해하고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (21, 21, '상담 후 마음이 많이 편안해졌습니다.', NOW(), NOW()),
-       (22, 22, '상담 시간이 짧아서 아쉬웠지만, 유익했습니다.', NOW(), NOW()),
-       (23, 23, '상담사가 제 고민을 잘 들어주었고, 조언도 좋았습니다.', NOW(), NOW()),
-       (24, 24, '상담이 매우 도움이 되었고, 다음에도 이용하고 싶습니다.', NOW(), NOW()),
-       (25, 25, '상담사가 전문적이고 친절해서 좋았습니다.', NOW(), NOW()),
-       (26, 26, '상담이 끝난 후 많은 도움이 되었습니다.', NOW(), NOW()),
-       (27, 27, '상담을 통해 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
-       (28, 28, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
-       (29, 29, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
-       (30, 30, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW());
+INSERT INTO review_tb (user_id, counsel_id, score, content, created_at, updated_at)
+VALUES (1, 1, 4.5, '상담사가 매우 친절하고 도움이 많이 되었습니다.', NOW(), NOW()),
+       (2, 2, 4.5, '상담 내용이 정말 유익했고, 큰 도움이 되었습니다.', NOW(), NOW()),
+       (3, 3, 4.5, '친절하고 세심하게 상담해주셔서 감사했습니다.', NOW(), NOW()),
+       (4, 4, 5.0, '상담사가 문제를 잘 이해해주고 해결책을 제시해주었습니다.', NOW(), NOW()),
+       (5, 5, 4.0, '상담 후 마음이 많이 편안해졌습니다. 감사합니다.', NOW(), NOW()),
+       (6, 6, 4.0, '상담 시간이 짧아서 아쉬웠지만, 유익했습니다.', NOW(), NOW()),
+       (7, 7, 5.0, '상담사가 제 고민을 잘 들어주었고, 조언도 좋았습니다.', NOW(), NOW()),
+       (8, 8, 4.5, '상담이 매우 도움이 되었고, 다음에도 이용하고 싶습니다.', NOW(), NOW()),
+       (9, 9, 4.0, '상담사가 전문적이고 친절해서 좋았습니다.', NOW(), NOW()),
+       (10, 10, 4.5, '상담이 끝난 후 많은 도움이 되었습니다.', NOW(), NOW()),
+       (11, 11, 5.0, '상담을 통해 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
+       (12, 12, 4.0, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
+       (13, 13, 4.0, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
+       (14, 14, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW()),
+       (15, 15, 5.0, '상담 후 마음이 많이 편안해졌습니다.', NOW(), NOW()),
+       (16, 16, 4.5, '상담 시간 동안 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
+       (17, 17, 4.5, '상담사가 제 고민을 잘 들어주고 해결책을 제시해주었습니다.', NOW(), NOW()),
+       (18, 18, 4.0, '상담이 매우 유익했고, 큰 도움이 되었습니다.', NOW(), NOW()),
+       (19, 19, 4.0, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
+       (20, 20, 4.5, '상담사가 문제를 잘 이해하고 해결책을 제시해주었습니다.', NOW(), NOW()),
+       (21, 21, 4.0, '상담 후 마음이 많이 편안해졌습니다.', NOW(), NOW()),
+       (22, 22, 5.0, '상담 시간이 짧아서 아쉬웠지만, 유익했습니다.', NOW(), NOW()),
+       (23, 23, 4.5, '상담사가 제 고민을 잘 들어주었고, 조언도 좋았습니다.', NOW(), NOW()),
+       (24, 24, 5.0, '상담이 매우 도움이 되었고, 다음에도 이용하고 싶습니다.', NOW(), NOW()),
+       (25, 25, 4.0, '상담사가 전문적이고 친절해서 좋았습니다.', NOW(), NOW()),
+       (26, 26, 4.5, '상담이 끝난 후 많은 도움이 되었습니다.', NOW(), NOW()),
+       (27, 27, 4.0, '상담을 통해 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
+       (28, 28, 4.5, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
+       (29, 29, 5.0, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
+       (30, 30, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW());
