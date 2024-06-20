@@ -30,7 +30,7 @@ public class Voucher {
     private User expert;
 
     @Column(nullable = false)
-    private Integer price;
+    private double price;
 
     @Column(nullable = false)
     private Integer count;
@@ -50,7 +50,7 @@ public class Voucher {
     private Timestamp updatedAt;
 
     @Builder
-    public Voucher(Integer id, VoucherType voucherType, User expert, Integer price, Integer count, Integer duration, String imagePath, LocalDateTime startDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, VoucherType voucherType, User expert, Double price, Integer count, Integer duration, String imagePath, LocalDateTime startDate, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.voucherType = voucherType;
         this.expert = expert;
