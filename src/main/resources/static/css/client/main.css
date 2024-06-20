@@ -131,6 +131,7 @@
 
 .pick-container .card-top .category-area .badge img {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
 }
 
@@ -146,7 +147,65 @@
 
 .pick-container .card-bottom .expert-img img {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
+}
+
+/* 센터 */
+.center-ex {
+    padding: 30px 0;
+}
+
+.center-container .view-all {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+    color: #359798;
+}
+
+.center-container .view-all:hover {
+    font-weight: bold;
+}
+
+.center-container .card {
+    flex: 0 0 calc(25% - 10px);
+    /* flex: 0 0 calc(33.33% - 14px);  */
+
+    box-sizing: border-box;
+    margin-right: 14px;
+    /* margin-right: 20px; */
+    margin: 0 5px;
+
+    border: none;
+    position: relative;
+}
+
+.center-container .card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.center-container .card .location {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+}
+
+.center-container .card .location > div,
+.center-container .card .location > div b {
+    color: white;
+}
+
+.center-container .card .location > div:first-child {
+    display: inline-block;
+    padding: 4px 6px;
+    background-color: #000000;
+    opacity: 0.5;
+    border-radius: 5px;
+    font-size: 11px;
+
 }
 
 /* 나에게 맞는 전문가 */
@@ -181,6 +240,7 @@
 
 .expert-container .card-top .expert-img img {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
 }
 
@@ -188,65 +248,27 @@
     font-weight: bold;
 }
 
+.expert-container .card-top .expert-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .expert-container .card-bottom.contact {
     display: flex;
     gap: 10px;
 }
 
-/* 센터 */
-.center-ex {
-    padding: 30px 0;
+.expert-container .card-bottom.contact > div {
+    width: 20px;
+    height: 20px;
 }
 
-.center-container .view-all {
-    font-size: 16px;
-    color: #007bff;
-    text-decoration: none;
-    color: #359798;
-}
-
-.center-container .view-all:hover {
-    font-weight: bold;
-}
-
-.center-container .card {
-    flex: 0 0 calc(25% - 10px);
-    /* flex: 0 0 calc(33.33% - 14px);  */
-
-    box-sizing: border-box;
-    margin-right: 14px;
-    /* margin-right: 20px; */
-    margin: 0 5px;
-
-    border: none;
-    position: relative;
-}
-
-.center-container .card img {
+.expert-container .card-bottom.contact > div img{
     width: 100%;
-    border-radius: 10px;
-}
-
-.center-container .card .location {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 15px;
-}
-
-.center-container .card .location > div,
-.center-container .card .location > div b {
-    color: white;
-}
-
-.center-container .card .location > div:first-child {
-    display: inline-block;
-    padding: 4px 6px;
-    background-color: #000000;
-    opacity: 0.5;
-    border-radius: 5px;
-    font-size: 11px;
-
+    height: 100%;
 }
 
 /* 화살표 버튼 */

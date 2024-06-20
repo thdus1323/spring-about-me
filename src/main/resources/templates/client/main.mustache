@@ -65,7 +65,7 @@
                     </div>
                     <div class="card-bottom">
                         <div class="expert-img">
-                            <img src="./images/{{expertImage}}" alt="expert img">
+                            <img src=".{{expertImage}}" alt="expert img">
                         </div>
                         <div>{{expertName}}님의 전문가답변</div>
                     </div>
@@ -159,17 +159,17 @@
                             <img src=".{{profileImage}}" alt="expert img">
                         </div>
                         <div class="expert-name">{{name}}</div>
-                        <div>{{expertTitle}}</div>
+                        <div class="expert-title">{{expertTitle}}</div>
                     </div>
                     <div class="card-bottom contact">
                         {{#hasTextTherapy}}
-                            <div class="review"><img src="/images/chat.png"></div>
+                            <div class="chat"><img src="/images/chat.png"></div>
                         {{/hasTextTherapy}}
                         {{#hasVoiceTherapy}}
-                            <div class="phone"><img src="/images/call.png"></div>
+                            <div class="call"><img src="/images/call.png"></div>
                         {{/hasVoiceTherapy}}
                         {{#hasVideoTherapy}}
-                            <div class="map"><img src="/images/video.png"></div>
+                            <div class="video"><img src="/images/video.png"></div>
                         {{/hasVideoTherapy}}
                     </div>
                 </a>
