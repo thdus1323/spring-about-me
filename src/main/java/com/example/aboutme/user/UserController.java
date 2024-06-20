@@ -4,6 +4,7 @@ import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.user.record.expertFindRecord.FindWrapperRecord;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -96,10 +97,12 @@ public class UserController {
     // 🐯🐯🐯Client🐯🐯🐯
     //전문가 찾기 - 메인
     @GetMapping("/client/findExpert")
-    public String findExpert() {
-
-        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
-        session.setAttribute("expertUserList", expertUserList);
+    public String findExpert(Model model) {
+          FindWrapperRecord findWrapperRecord = userService.getExpertFind();
+          model.addAttribute("expertList", findWrapperRecord);
+          System.out.println(findWrapperRecord);
+//        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
+//        session.setAttribute("expertUserList", expertUserList);
 
         return "client/findExpert/main";
     }
