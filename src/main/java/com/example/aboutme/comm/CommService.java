@@ -3,6 +3,7 @@ package com.example.aboutme.comm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -10,8 +11,5 @@ import java.util.List;
 public class CommService {
     private final CommRepository commRepository;
 
-    public List<CommResponse.ClientMainCommListDTO> getMainComms() {
 
-        return commRepository.findCommsWithReply();
-    }
 }
