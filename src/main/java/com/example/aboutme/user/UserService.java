@@ -4,8 +4,12 @@ import com.example.aboutme._core.error.exception.Exception401;
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.comm.CommRepository;
+import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.*;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.RecentReviewRecord;
 import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PRRepository;
@@ -35,6 +39,7 @@ public class UserService {
     private final VoucherRepository voucherRepository;
     private final SpecRepository specRepository;
     private final PRRepository prRepository;
+    private final CounselRepository counselRepository;
     private final Formatter formatter;
 
 //회원가입
@@ -82,7 +87,7 @@ public class UserService {
                 .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
-        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords,educationRecords);
+        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords, educationRecords);
     }
 
     // 전문가(상담사 리스트)
@@ -114,7 +119,7 @@ public class UserService {
 
 
     // 상담가리스트 (record)
-    public FindWrapperRecord getExpertFind(){
+    public FindWrapperRecord getExpertFind() {
 
         // 1. 모든 유저 찾기
         List<User> users = userRepository.findAll();
@@ -125,21 +130,22 @@ public class UserService {
                 .toList();
 
         // 3.ExpertinfoDTO 생성
-        List<ExpertInfoRecord> expertInfos =  expertUsers.stream().map(user -> {
+        List<ExpertInfoRecord> expertInfos = expertUsers.stream().map(user -> {
 
-          //4. voucher 이미지 찾기
-          List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
+            //4. voucher 이미지 찾기
+            List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
 
-          List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
-              return new VoucherImageRecord(voucher.getImagePath());
-          }).toList();
+            List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
+                return new VoucherImageRecord(voucher.getImagePath());
+            }).toList();
 
-          return new ExpertInfoRecord(user.getId(),user.getName(),user.getExpertTitle(),user.getProfileImage(),voucherImageDTOs);
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), voucherImageDTOs);
         }).toList();
 
         return new FindWrapperRecord(expertInfos);
 
     }
+
     // 클라이언트 메인
     public HashMap<String, Object> getClientMain() {
         List<UserResponse.ClientMainDTO.CommDTO> comms = commRepository.findCommsWithReply();
@@ -170,5 +176,14 @@ public class UserService {
         clientMain.put("experts", expertWithVouchers);
         // clientMain.put("vouchers", vouchers);
         return clientMain;
+    }
+
+    // 익스퍼트 메인
+    @Transactional
+    public ExpertMainDTORecord getExpertMain(Integer expertId) {
+        List<RecentReviewRecord> recentReviewRecords = reviewRepository.findReviewRecordsByExpertId(expertId);
+        List<CounselScheduleRecord> counselScheduleRecords = counselRepository.findCounselScheduleRecordsByExpertId(expertId);
+
+        return new ExpertMainDTORecord(recentReviewRecords, counselScheduleRecords);
     }
 }
