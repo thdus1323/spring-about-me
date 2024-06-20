@@ -187,6 +187,20 @@
     cursor: pointer;
 }
 
+/*달력 시간*/
+#times {
+    display: flex;
+    overflow-x: hidden;
+    cursor: grab;
+    white-space: nowrap;
+}
+
+.time-btn {
+    flex: 0 0 auto;
+    margin-right: 5px; /* 버튼 사이 간격 */
+    cursor: pointer;
+}
+
 /* 옵션 섹션 */
 .option-wrapper p {
     position: relative;

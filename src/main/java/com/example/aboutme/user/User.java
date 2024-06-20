@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
@@ -44,6 +45,9 @@ public class User {
     // 아래부터는 필수가 아님
 
     private String expertTitle; // 상담사 타이틀
+
+    @Enumerated(EnumType.STRING)
+    private ExpertLevel level; // 상담사 레벨
 
     @Column(nullable = true)
     private String profileImage;

@@ -8,54 +8,23 @@ $(document).ready(function() {
         });
     });
 
-
-    // 옵션 클릭 시 .active 클래스 추가 및 제거
-    $('.situation .option-list.btn li').on('click', function() {
-        $('.situation .option-list.btn li').removeClass('active');
-        $(this).addClass('active');
-    });
-
-    $('.state .option-list.btn li').on('click', function() {
-        $('.state .option-list.btn li').removeClass('active');
-        $(this).addClass('active');
-    });
-
     const availableTimes = {
-        1: ["10:00", "11:00", "12:00"],
-        2: ["13:00", "14:00", "15:00"],
-        3: ["16:00", "17:00", "18:00"],
-        4: ["19:00", "20:00", "21:00"],
-        5: ["10:00", "11:00", "12:00"],
-        6: ["13:00", "14:00", "15:00"],
-        7: ["16:00", "17:00", "18:00"],
-        8: ["19:00", "20:00", "21:00"],
-        9: ["10:00", "11:00", "12:00"],
-        10: ["13:00", "14:00", "15:00"],
-        11: ["16:00", "17:00", "18:00"],
-        12: ["19:00", "20:00", "21:00"],
-        13: ["10:00", "11:00", "12:00"],
-        14: ["13:00", "14:00", "15:00"],
-        15: ["16:00", "17:00", "18:00"],
-        16: ["19:00", "20:00", "21:00"],
-        17: ["10:00", "11:00", "12:00"],
-        18: ["13:00", "14:00", "15:00"],
-        19: ["16:00", "17:00", "18:00"],
-        20: ["19:00", "20:00", "21:00"],
-        21: ["10:00", "11:00", "12:00"],
-        22: ["13:00", "14:00", "15:00"],
-        23: ["16:00", "17:00", "18:00"],
-        24: ["19:00", "20:00", "21:00"],
-        25: ["10:00", "11:00", "12:00"],
-        26: ["13:00", "14:00", "15:00"],
-        27: ["16:00", "17:00", "18:00"],
-        28: ["19:00", "20:00", "21:00"],
-        29: ["10:00", "11:00", "12:00"],
-        30: ["13:00", "14:00", "15:00"]
+        weekdays: {
+            1: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+            2: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+            3: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+            4: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
+            5: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
+        },
+        weekends: {
+            6: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
+            7: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"]
+        }
     };
 
     const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
-    let currentMonth = new Date().getMonth(); // 현재 월
-    let currentDate = new Date().getDate(); // 현재 날짜
+    let currentMonth = new Date().getMonth();
+    let currentDate = new Date().getDate();
 
     function renderCalendar(month) {
         const year = 2024;
@@ -78,7 +47,14 @@ $(document).ready(function() {
         }
 
         for (let i = 1; i <= daysInMonth; i++) {
-            $('.days').append(`<div data-date="${i}">${i}</div>`);
+            const date = new Date(year, month, i);
+            const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+
+            $('.days').append(`
+                        <div class="day" data-date="${i}" data-is-weekend="${isWeekend}">
+                            ${i}
+                        </div>
+                    `);
         }
 
         disablePastDates();
@@ -98,11 +74,27 @@ $(document).ready(function() {
 
     function setActiveDate() {
         const today = new Date();
+        const $selectedDay = $(`.days > div[data-date="${currentDate}"]`);
+
         if (today.getFullYear() === 2024 && today.getMonth() === currentMonth) {
-            $(`.days > div[data-date="${currentDate}"]`).addClass('selected');
-            const times = availableTimes[currentDate] || [];
-            $('#times').html(times.map(time => `<button class="time-btn">${time}</button>`).join(''));
+            $selectedDay.addClass('selected');
+            displayTimes($selectedDay);
         }
+    }
+
+    function displayTimes(dayElement) {
+        const date = dayElement.data('date');
+        const isWeekend = dayElement.data('is-weekend') === 'true';
+        let times;
+
+        if (isWeekend) {
+            times = availableTimes.weekends[date] || ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+        } else {
+            times = availableTimes.weekdays[date] || ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+        }
+
+        $('#times').html(times.map(time => `<button class="time-btn" data-time="${time}">${time}</button>`).join(''));
+
     }
 
     renderCalendar(currentMonth);
@@ -112,16 +104,7 @@ $(document).ready(function() {
 
         $('.days > div').removeClass('selected');
         $(this).addClass('selected');
-
-        const date = $(this).data('date');
-        const times = availableTimes[date] || [];
-        $('#times').html(times.map(time => `<button class="time-btn">${time}</button>`).join(''));
-    });
-
-    $('#times').on('click', '.time-btn', function() {
-        $('.time-btn').removeClass('active');
-        $(this).addClass('active');
-        $('#payButton').addClass('active').prop('disabled', false);
+        displayTimes($(this));
     });
 
     $('#prevMonth').on('click', function() {
@@ -137,35 +120,38 @@ $(document).ready(function() {
             renderCalendar(currentMonth);
         }
     });
-    // Set the current date as active on page load
+
+    $('#times').on('click',function (){
+        console.log("hi");
+    })
+
+
     setActiveDate();
 
+    // 마우스 핸들링 이벤트
+    const times = $('#times');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
 
-    //
-    // 폼데이터 보내기
-    // 폼 데이터 전송 시 선택된 옵션의 value 값을 포함
-    // $('form').on('submit', function(e) {
-    //     e.preventDefault(); // 폼 전송 막기 (디버깅용)
-    //
-    //     const selectedSituations = [];
-    //     const selectedSymptoms = [];
-    //
-    //     $('.situation .option-list.btn li.active').each(function() {
-    //         selectedSituations.push($(this).data('value'));
-    //     });
-    //
-    //     $('.state .option-list.btn li.active').each(function() {
-    //         selectedSymptoms.push($(this).data('value'));
-    //     });
-    //
-    //     const formData = {
-    //         situations: selectedSituations,
-    //         symptoms: selectedSymptoms
-    //     };
-    //
-    //     console.log(formData); // 폼 데이터 확인 (디버깅용)
-    //
-    //     // 실제 폼 전송 로직 추가
-    //     // 예: $.post('your-endpoint-url', formData);
-    // });
+    times.mousedown(function(e) {
+        isDown = true;
+        times.css('cursor', 'grabbing');
+        startX = e.pageX;
+        scrollLeft = times.scrollLeft();
+    });
+
+    $(document).mousemove(function(e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX;
+        const walk = (x - startX);
+        times.scrollLeft(scrollLeft - walk);
+    });
+
+    $(document).mouseup(function() {
+        isDown = false;
+        times.css('cursor', 'grab');
+    });
+
 });

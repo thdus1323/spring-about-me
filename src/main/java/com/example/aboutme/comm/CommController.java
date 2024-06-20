@@ -14,8 +14,13 @@ public class CommController {
     private final CommService commService;
 
     @GetMapping("/comm/write")
-    public String community() {
+    public String communityWrite() {
         return "comm/comm-write";
+    }
+
+    @GetMapping("comm/detail")
+    public String communityDetail() {
+        return "comm/comm-detail";
     }
 
     @GetMapping("/comm")
