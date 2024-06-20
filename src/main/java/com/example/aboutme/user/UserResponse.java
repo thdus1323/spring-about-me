@@ -1,9 +1,6 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme.comm.enums.CommCategory;
-import com.example.aboutme.counsel.Counsel;
-import com.example.aboutme.user.pr.PR;
-import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.enums.VoucherType;
 import lombok.Data;
 
@@ -30,7 +27,7 @@ public class UserResponse {
         }
 
         @Data
-        public static class VoucherImageDTO{
+        public static class VoucherImageDTO {
             public String url;
 
             public VoucherImageDTO(String url) {
@@ -69,9 +66,8 @@ public class UserResponse {
 //    }
 
     // 클라이언트 메인
-
     @Data
-    public static class ClientMainDTO{
+    public static class ClientMainDTO {
         @Data
         public static class CommDTO {
             private Integer communityId;

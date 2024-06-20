@@ -162,13 +162,15 @@
                         <div>{{expert.expertTitle}}</div>
                     </div>
                     <div class="card-bottom contact">
-                        <div class="map"><i class="fas fa-map-marker-alt"></i></div>
                         {{#hasTextTherapy}}
-                            <div class="review"><i class="fas fa-comment-alt"></i></div>
+                            <div class="review"><img src="/images/chat.png"></div>
                         {{/hasTextTherapy}}
                         {{#hasVoiceTherapy}}
-                            <div class="phone"><i class="fas fa-phone-alt"></i></div>
+                            <div class="phone"><img src="/images/call.png"></div>
                         {{/hasVoiceTherapy}}
+                        {{#hasVideoTherapy}}
+                            <div class="map"><img src="/images/video.png"></div>
+                        {{/hasVideoTherapy}}
                     </div>
                 </a>
             {{/clientMain.experts}}

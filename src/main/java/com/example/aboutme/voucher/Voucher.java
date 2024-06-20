@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "voucher_tb")
-@ToString(exclude = {"issuedBy", "ownedBy", "reservation", "payments"})
+@ToString(exclude = {"expert"})
 public class Voucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
