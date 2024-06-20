@@ -3,11 +3,13 @@ package com.example.aboutme.user;
 import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.user.record.expertFindRecord.FindWrapperRecord;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -89,10 +91,12 @@ public class UserController {
     // 🐯🐯🐯Client🐯🐯🐯
     //전문가 찾기 - 메인
     @GetMapping("/client/findExpert")
-    public String findExpert() {
-
-        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
-        session.setAttribute("expertUserList", expertUserList);
+    public String findExpert(Model model) {
+          FindWrapperRecord findWrapperRecord = userService.getExpertFind();
+          model.addAttribute("expertList", findWrapperRecord);
+          System.out.println(findWrapperRecord);
+//        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
+//        session.setAttribute("expertUserList", expertUserList);
 
         return "client/findExpert/main";
     }
