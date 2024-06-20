@@ -2,12 +2,11 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
-import com.example.aboutme.user.ResponseDTO.ExpertDetailDTO.DetailDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
