@@ -1,5 +1,7 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme._core.error.exception.Exception401;
+import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.review.ReviewRepository;
@@ -54,8 +56,8 @@ public class UserService {
         return user;
     }
 
-    public DetailDTORecord getExpertDetails(Integer expertId) {
-        User user = userRepository.findById(expertId).orElseThrow(() -> new RuntimeException("User not found"));
+    public DetailDTORecord getFindExpertDetails(Integer expertId) {
+        User user = userRepository.findById(expertId).orElseThrow(() -> new Exception403("유저정보를 찾을 수 없습니다."));
         UserRecord userRecord = new UserRecord(user.getId(), user.getName(), user.getProfileImage());
 
         double price = voucherRepository.findLowestPriceByExpertId(expertId);

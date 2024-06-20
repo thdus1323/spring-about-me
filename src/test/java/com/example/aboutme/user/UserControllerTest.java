@@ -19,9 +19,6 @@ class UserControllerTest {
     @Autowired
     private UserRepository userRepo;
 
-
-
-
     //전문가 찾기 - 상세보기
     @Test
     void findExpertDetail() {

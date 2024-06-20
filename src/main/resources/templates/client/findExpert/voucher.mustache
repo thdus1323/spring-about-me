@@ -1,239 +1,186 @@
 {{> layout/client-header}}
 
-
-<div class="container mt-5">
-    <!-- 상담사 정보 -->
-    <div class="therapist-info d-flex align-items-center p-3 bg-light border rounded shadow-sm mb-4">
-        <img src="/images/iu.png" alt="상담사 사진" class="rounded-circle me-3" width="100" height="100">
-        <div>
-            <div class="name fs-5 fw-bold">고주연 상담사</div>
-            <div class="text-muted">2급 심리상담사 <span class="rating text-warning">★ 4.9</span><span> (30)</span></div>
-        </div>
-    </div>
-
-    <!-- 테라피 세션 카드 -->
-    <div class="accordion" id="therapyAccordion">
-        <div class="card voucher-session-card">
-            <div class="accordion-button card-header d-flex align-items-center justify-content-between"
-                 id="voiceTherapyHeader" data-bs-toggle="collapse" data-bs-target="#voiceTherapy"
-                 aria-expanded="false" aria-controls="voiceTherapy">
-                <div>
-                    <div class="d-flex align-items-center">
-                        <i style="color: #8CCCC9;" class="fas fa-phone me-2"></i>
-                        <h4 class="mb-0 fw-bold">보이스 테라피</h4>
-                        <span class="price ms-2">1회 최저 55,800 원</span>
-                    </div>
-                    <p class="mb-0 text-muted">전화로 전문가와 즉각적인 소통을 하고 싶으신 분</p>
-                </div>
-            </div>
-            <div id="voiceTherapy" class="collapse" aria-labelledby="voiceTherapyHeader">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card card-hover">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>1회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 1회</h2>
-                                </div>
-                                <div>
-                                    <strong>62,000원</strong>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{#model}}
+    <div class="container mt-5">
+        <!-- 상담사 정보 -->
+        <div class="therapist-info d-flex align-items-center p-3 bg-light border rounded shadow-sm mb-4">
+            <img src="/images/{{user.profileImage}}" alt="상담사 사진" class="rounded-circle me-3" width="100" height="100">
+            <div>
+                <div class="name fs-5 fw-bold">{{user.name}} 상담사</div>
+                <div class="text-muted">{{user.level}} <span class="rating text-warning">★ 4.9</span><span> (30)</span></div>
             </div>
         </div>
 
-        <div class="card voucher-session-card">
-            <div class="accordion-button card-header d-flex justify-content-between align-items-center"
-                 id="textTherapyHeader" data-bs-toggle="collapse" data-bs-target="#textTherapy" aria-expanded="false"
-                 aria-controls="textTherapy">
-                <div>
-                    <div class="d-flex align-items-center">
-                        <h6><i style="color: #E4D8A0;" class="fas fa-comment"></i> 텍스트 테라피</h6>
-                        <span class="price ms-2">1회 최저 46,800 원</span>
+        <!-- 테라피 세션 카드 -->
+        <div class="accordion" id="therapyAccordion">
+            <!-- 보이스 테라피 카드 -->
+            {{#voiceVoucher.0}}
+                <div class="card voucher-session-card">
+                    <div class="accordion-button card-header d-flex align-items-center justify-content-between"
+                         id="voiceTherapyHeader" data-bs-toggle="collapse" data-bs-target="#voiceTherapy"
+                         aria-expanded="false" aria-controls="voiceTherapy">
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <i style="color: #8CCCC9;" class="fas fa-phone me-2"></i>
+                                <h4 class="mb-0 fw-bold">보이스 테라피</h4>
+                                <span class="price ms-2">1회 최저 {{lowestPrice}} 원</span>
+                            </div>
+                            <p class="mb-0 text-muted">전화로 전문가와 즉각적인 소통을 하고 싶으신 분</p>
+                        </div>
                     </div>
-                    <p class="mb-0 text-muted">채팅으로 언제 어디서든 상담을 이용하고 내용을 지속적으로 확인하고 싶으신 분</p>
-                </div>
-
-
-            </div>
-            <div id="textTherapy" class="collapse" aria-labelledby="textTherapyHeader">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card card-hover">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>1회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 1회</h2>
-                                </div>
-                                <div>
-                                    <strong>62,000원</strong>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
+                    <div id="voiceTherapy" class="collapse" aria-labelledby="voiceTherapyHeader">
+                        <div class="card-body">
+                            <div class="row">
+                                {{#voiceVoucher}}
+                                    <div class="col-md-4 mb-3" style="cursor: pointer;"
+                                         onClick="location.href='/client/findExpert/reservation/{{voucherId}}'">
+                                        <div class="voucher-price-card card-hover">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <h3>{{count}}회권 </h3>
+                                                <h2 class="mx-2" style="color: #B89D9D;">{{duration}}분 X {{count}}회</h2>
+                                            </div>
+                                            <div>
+                                                <strong>{{price}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/voiceVoucher}}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {{/voiceVoucher.0}}
+
+            <!-- 텍스트 테라피 카드 -->
+            {{#textVoucher.0}}
+                <div class="card voucher-session-card">
+                    <div class="accordion-button card-header d-flex justify-content-between align-items-center"
+                         id="textTherapyHeader" data-bs-toggle="collapse" data-bs-target="#textTherapy" aria-expanded="false"
+                         aria-controls="textTherapy">
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <h6><i style="color: #E4D8A0;" class="fas fa-comment"></i> 텍스트 테라피</h6>
+                                <span class="price ms-2">1회 최저 {{lowestPrice}} 원</span>
+                            </div>
+                            <p class="mb-0 text-muted">채팅으로 언제 어디서든 상담을 이용하고 내용을 지속적으로 확인하고 싶으신 분</p>
+                        </div>
+                    </div>
+                    <div id="textTherapy" class="collapse" aria-labelledby="textTherapyHeader">
+                        <div class="card-body">
+                            <div class="row">
+                                {{#textVoucher}}
+                                    <div class="col-md-4 mb-3" style="cursor: pointer;"
+                                         onClick="location.href='/client/findExpert/reservation/{{voucherId}}'">
+                                        <div class="voucher-price-card card-hover">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <h3>{{count}}회권 </h3>
+                                                <h2 class="mx-2" style="color: #B89D9D;">{{duration}}분 X {{count}}회</h2>
+                                            </div>
+                                            <div>
+                                                <strong>{{price}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/textVoucher}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/textVoucher.0}}
+
+            <!-- 페이스 테라피 카드 -->
+            {{#videoVoucher.0}}
+                <div class="card voucher-session-card">
+                    <div class="accordion-button card-header d-flex justify-content-between align-items-center"
+                         id="faceTherapyHeader" data-bs-toggle="collapse" data-bs-target="#faceTherapy" aria-expanded="false"
+                         aria-controls="faceTherapy">
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <h6><i style="color: #6CDAFF;" class="fas fa-video"></i> 페이스 테라피</h6>
+                                <span class="price ms-2">1회 최저 {{lowestPrice}} 원</span>
+                            </div>
+                            <p class="mb-0 text-muted">영상으로 실제 대화하듯이 소통하며, 표정/몸짓 등 비언어적 정보를 함께 경험하고 싶으신 분</p>
+                        </div>
+                    </div>
+                    <div id="faceTherapy" class="collapse" aria-labelledby="faceTherapyHeader">
+                        <div class="card-body">
+                            <div class="row">
+                                {{#videoVoucher}}
+                                    <div class="col-md-4 mb-3" style="cursor: pointer;"
+                                         onClick="location.href='/client/findExpert/reservation/{{voucherId}}'">
+                                        <div class="voucher-price-card card-hover">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <h3>{{count}}회권 </h3>
+                                                <h2 class="mx-2" style="color: #B89D9D;">{{duration}}분 X {{count}}회</h2>
+                                            </div>
+                                            <div>
+                                                <strong>{{price}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/videoVoucher}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/videoVoucher.0}}
         </div>
 
-        <div class="card voucher-session-card">
-            <div class="accordion-button card-header d-flex justify-content-between align-items-center"
-                 id="faceTherapyHeader" data-bs-toggle="collapse" data-bs-target="#faceTherapy" aria-expanded="false"
-                 aria-controls="faceTherapy">
-                <div>
-                    <div class="d-flex align-items-center">
-                        <h6><i style="color: #6CDAFF;" class="fas fa-video"></i> 페이스 테라피</h6>
-                        <span class="price ms-2">1회 최저 55,800 원</span>
-                    </div>
-                    <p class="mb-0 text-muted">영상으로 실제 대화하듯이 소통하며, 표정/몸짓 등 비언어적 정보를 함께 경험하고 싶으신 분</p>
-
-                </div>
-
-            </div>
-            <div id="faceTherapy" class="collapse" aria-labelledby="faceTherapyHeader">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card card-hover">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>1회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 1회</h2>
-                                </div>
-                                <div>
-                                    <strong>62,000원</strong>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
+        <!-- FAQ -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">FAQ</h5>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h6 class="accordion-header" id="faq1Header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
+                                보이스(전화)/페이스(화상)/텍스트(채팅)의 차이점은 무엇인가요?
+                            </button>
+                        </h6>
+                        <div id="faq1" class="accordion-collapse collapse" aria-labelledby="faq1Header">
+                            <div class="accordion-body">
+                                보이스 테라피는 전화를 통해 즉각적인 상담을, 페이스 테라피는 화상 채팅을 통해 비언어적 요소까지 포함한 상담을, 텍스트 테라피는 채팅을 통해 언제 어디서나
+                                가능한 상담을 제공합니다.
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card voucher-session-card">
-            <div class="accordion-button card-header d-flex justify-content-between align-items-center"
-                 id="analysisHeader" data-bs-toggle="collapse" data-bs-target="#analysis" aria-expanded="false"
-                 aria-controls="analysis">
-
-                <div>
-                    <div class="d-flex align-items-center">
-                        <h6><i style="color: #A1CF71;" class="fas fa-flask"></i> 심리검사 & 해석상담</h6>
-                        <span class="price">상담사와 심리검사 결과를 통해 이야기하고 싶으신 분</span>
+                    <div class="accordion-item">
+                        <h6 class="accordion-header" id="faq2Header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                                심리상담과 코칭을 몇 번이나 받아야 하나요?
+                            </button>
+                        </h6>
+                        <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2Header">
+                            <div class="accordion-body">
+                                심리상담과 코칭의 빈도는 개인의 필요와 상황에 따라 다르며, 보통 주 1회에서 2회가 권장됩니다.
+                            </div>
+                        </div>
                     </div>
-                    <p class="mb-0 text-muted">심리검사를 통해 상대를 파악하고 상담사와 이야기를 하고 싶으신 분</p>
-
-                </div>
-
-            </div>
-            <div id="analysis" class="collapse" aria-labelledby="analysisHeader">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card card-hover">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>1회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 1회</h2>
-                                </div>
-                                <div>
-                                    <strong>62,000원</strong>
-
-                                </div>
+                    <div class="accordion-item">
+                        <h6 class="accordion-header" id="faq3Header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                심리상담과 코칭은 얼마나 자주 받아야 하나요?
+                            </button>
+                        </h6>
+                        <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq3Header">
+                            <div class="accordion-body">
+                                심리상담과 코칭은 초기에는 매주 받는 것이 효과적이며, 이후 점진적으로 간격을 조절할 수 있습니다.
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3" style="cursor: pointer;"
-                             onClick="location.href='/client/findExpert/reservation'">
-                            <div class="voucher-price-card">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <h3>4회권 </h3>
-                                    <h2 class="mx-2" style="color: #B89D9D;">50분 X 4회</h2>
-                                </div>
-                                <strong>235,600원</strong>
-                                <small>(1회당 58,900원)</small>
+                    </div>
+                    <div class="accordion-item">
+                        <h6 class="accordion-header" id="faq4Header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                                심리상담과 코칭, 어떤 차이가 있나요?
+                            </button>
+                        </h6>
+                        <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faq4Header">
+                            <div class="accordion-body">
+                                심리상담은 정서적 지원과 문제 해결을 목적으로 하는 반면, 코칭은 목표 설정과 달성에 중점을 둡니다.
                             </div>
                         </div>
                     </div>
@@ -242,68 +189,6 @@
         </div>
     </div>
 
-    <!-- FAQ -->
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5 class="fw-bold mb-3">FAQ</h5>
-            <div class="accordion" id="faqAccordion">
-                <div class="accordion-item">
-                    <h6 class="accordion-header" id="faq1Header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
-                            보이스(전화)/페이스(화상)/텍스트(채팅)의 차이점은 무엇인가요?
-                        </button>
-                    </h6>
-                    <div id="faq1" class="accordion-collapse collapse" aria-labelledby="faq1Header">
-                        <div class="accordion-body">
-                            보이스 테라피는 전화를 통해 즉각적인 상담을, 페이스 테라피는 화상 채팅을 통해 비언어적 요소까지 포함한 상담을, 텍스트 테라피는 채팅을 통해 언제 어디서나
-                            가능한 상담을 제공합니다.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h6 class="accordion-header" id="faq2Header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
-                            심리상담과 코칭을 몇 번이나 받아야 하나요?
-                        </button>
-                    </h6>
-                    <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2Header">
-                        <div class="accordion-body">
-                            심리상담과 코칭의 빈도는 개인의 필요와 상황에 따라 다르며, 보통 주 1회에서 2회가 권장됩니다.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h6 class="accordion-header" id="faq3Header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
-                            심리상담과 코칭은 얼마나 자주 받아야 하나요?
-                        </button>
-                    </h6>
-                    <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq3Header">
-                        <div class="accordion-body">
-                            심리상담과 코칭은 초기에는 매주 받는 것이 효과적이며, 이후 점진적으로 간격을 조절할 수 있습니다.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h6 class="accordion-header" id="faq4Header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
-                            심리상담과 코칭, 어떤 차이가 있나요?
-                        </button>
-                    </h6>
-                    <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faq4Header">
-                        <div class="accordion-body">
-                            심리상담은 정서적 지원과 문제 해결을 목적으로 하는 반면, 코칭은 목표 설정과 달성에 중점을 둡니다.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+{{/model}}
 
 {{> layout/footer}}

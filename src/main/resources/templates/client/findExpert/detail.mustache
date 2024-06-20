@@ -239,7 +239,6 @@
                             </div>
                         </div>
                         {{/prs}}
-
                     </div>
                 </div>
                 <!-- 상담사 질문 섹션 -->
@@ -252,7 +251,7 @@
                     <h2>{{user.name}} <span class="rating">★ 4.91</span> (34)</h2>
                     <p>1회 최저 가격</p>
                     <p class="price">{{lowestPrice}}</p>
-                    <a href="/client/findExpert/voucher" class="button-container">이용권 선택하기</a>
+                    <a href="/client/findExpert/voucher/{{user.expertId}}" class="button-container">이용권 선택하기</a>
                 </div>
             </div>
         </div>
