@@ -25,4 +25,23 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
             WHERE r.user.userRole = com.example.aboutme.user.enums.UserRole.EXPERT
                     """)
     List<UserResponse.ClientMainDTO.CommDTO> findCommsWithReply();
+
+    // /comm 출력하려고 뽑은 쿼리
+    @Query("""
+        SELECT new com.example.aboutme.comm.CommResponse$CommAndReplyDTO(
+            c.title,
+            c.content,
+            c.category,
+            c.user.profileImage,
+            c.user.name,
+            r.user.userRole,
+            r.user.profileImage,
+            r.user.name,
+            r.solution
+        )
+        FROM Comm c
+        JOIN c.replies r
+    """)
+    List<CommResponse.CommAndReplyDTO> findAllCommsWithReply();
+
 }

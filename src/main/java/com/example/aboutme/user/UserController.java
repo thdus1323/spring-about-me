@@ -2,8 +2,8 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
-import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
