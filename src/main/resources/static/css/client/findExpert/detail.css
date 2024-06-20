@@ -6,7 +6,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     text-align: center;
-    height: 550px;
+    height: auto; /* 높이 자동 */
     position: sticky;
     top: 100px;
     right: 20px;
@@ -14,7 +14,7 @@
 
 .card-expert img {
     width: 100%;
-    height: auto;
+    height: auto; /* 이미지 비율 유지 */
 }
 
 .card-body {
@@ -196,7 +196,6 @@
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: black;
-
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -205,3 +204,7 @@
 .btn-toggle.less {
     color: #6c757d;
 }
+
+
+
+

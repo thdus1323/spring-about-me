@@ -1,4 +1,4 @@
-package com.example.aboutme.user.ResponseDTO.ExpertDetailDTO;
+package com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO;
 
 public record UserRecord(
         Integer userId,

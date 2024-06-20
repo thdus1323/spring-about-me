@@ -2,7 +2,8 @@ package com.example.aboutme.user;
 
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.review.ReviewRepository;
-import com.example.aboutme.user.ResponseDTO.ExpertDetailDTO.*;
+import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.*;
+import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PRRepository;
 import com.example.aboutme.user.spec.SpecRepository;
@@ -37,6 +38,7 @@ public class UserService {
 //        User sessionUser = userNativeRepository.login(reqDTO);
 //        return sessionUser;
 //    }
+
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userNativeRepository.login(reqDTO);
@@ -58,11 +60,18 @@ public class UserService {
                 .map(pr -> new PRRecord(pr.getUser().getId(), pr.getIntro(), pr.getEffects(), pr.getMethods()))
                 .collect(Collectors.toList());
 
-        List<SpecRecord> specRecords = specRepository.findByExpertId(expertId).stream()
-                .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getDetails()))
+        // 학력과 경력을 각각 나눔
+        List<SpecRecord> careerRecords = specRepository.findByExpertId(expertId).stream()
+                .filter(spec -> spec.getSpecType() == SpecType.CAREER)
+                .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
-        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, specRecords);
+        List<SpecRecord> educationRecords = specRepository.findByExpertId(expertId).stream()
+                .filter(spec -> spec.getSpecType() == SpecType.EDUCATION)
+                .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
+                .collect(Collectors.toList());
+
+        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords,educationRecords);
     }
 
     // 전문가(상담사 리스트)
