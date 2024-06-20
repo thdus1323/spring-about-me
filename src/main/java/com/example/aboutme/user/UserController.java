@@ -1,6 +1,5 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.comm.CommResponse;
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.enums.UserRole;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -51,7 +51,7 @@ public class UserController {
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-            return "expert/main";
+            return "redirect:/expert/main";
         } else {
             return "oauth/login";
         }
@@ -73,14 +73,24 @@ public class UserController {
 //    }
 
     // 👻👻👻공통👻👻👻
-    // 메인페이지
+    // 클라이언트 메인페이지
     @GetMapping("/")
     public String index(HttpServletRequest request) {
-        List<CommResponse.ClientMainCommListDTO> mainCommListDTOS = commService.getMainComms();
-        request.setAttribute("mainCommList", mainCommListDTOS);
-        System.out.println(mainCommListDTOS);
+        HashMap<String, Object> clientMain = userService.getClientMain();
+        request.setAttribute("clientMain", clientMain);
+        System.out.println(clientMain);
         return "client/main";
     }
+
+    // 익스퍼트 메인페이지
+    @GetMapping("/expert/main")
+    public String expertMain(HttpServletRequest request) {
+        HashMap<String, Object> clientMain = userService.getClientMain();
+        request.setAttribute("clientMain", clientMain);
+        System.out.println(clientMain);
+        return "expert/main";
+    }
+
 
     //TODO: 커뮤니티 페이지
     //커뮤니티 - 메인
