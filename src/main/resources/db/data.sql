@@ -22,45 +22,120 @@ VALUES ('CLIENT', 'mimi@nate.com', '1234', '최미정', '0101112222', 'client1.j
        ('CLIENT', 'soyoung@nate.com', '1234', '김소영', '0102227777', 'client20.jpg', '2004-08-01', 'WOMAN', NOW(), NOW());
 
 
-
+--user_tb (상담사)
 INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, created_at, updated_at,
                      expert_title)
-VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert21.jpg', '1985-06-06', 'MAN', NOW(), NOW(),
+VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', 'expert1.jpg', '1985-06-06', 'MAN', NOW(), NOW(),
         '혼자 걷다 보면 외롭고 지칠 때가 있습니다. 당신의 길에 함께하는 동반자가 되고 싶습니다.'),
-       ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', 'expert22.jpg', '1987-07-07', 'WOMAN', NOW(), NOW(),
+       ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', 'expert2.jpg', '1987-07-07', 'WOMAN', NOW(), NOW(),
         '저는 당신의 이야기가 궁금하네요. 조금 더 자세하게 말씀해주실 수 있을까요?'),
-       ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', 'expert23.jpg', '1980-01-01', 'MAN', NOW(), NOW(),
+       ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', 'expert3.jpg', '1980-01-01', 'MAN', NOW(), NOW(),
         '어떤 마음이어도, 어떤 모습이어도 다 괜찮습니다.'),
-       ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', 'expert24.jpg', '1982-02-02', 'WOMAN', NOW(), NOW(),
+       ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', 'expert4.jpg', '1982-02-02', 'WOMAN', NOW(), NOW(),
         '자신을 비춰보며 따뜻하게 어루만져 줄 수 있는 시간을 만들어드리고 싶은 상담사 백소림입니다.'),
-       ('EXPERT', 'expert5@nate.com', '1234', '이종현', '0103336666', 'expert25.jpg', '1984-03-03', 'MAN', NOW(), NOW(),
+       ('EXPERT', 'expert5@nate.com', '1234', '이종현', '0103336666', 'expert5.jpg', '1984-03-03', 'MAN', NOW(), NOW(),
         '말의 힘을 믿기에 한 마디 한 마디에 진심을 담아 당신의 이야기를 듣고 더하겠습니다.'),
-       ('EXPERT', 'expert6@nate.com', '1234', '윤정희', '0103337777', 'expert26.jpg', '1986-04-04', 'WOMAN', NOW(), NOW(),
+       ('EXPERT', 'expert6@nate.com', '1234', '윤정희', '0103337777', 'expert6.jpg', '1986-04-04', 'WOMAN', NOW(), NOW(),
         '어떤 문제로 고민하세요?  함께 해요 ! 용기가 생겨요! 미래가 보여요!'),
-       ('EXPERT', 'expert7@nate.com', '1234', '최현우', '0103338888', 'expert27.jpg', '1988-05-05', 'MAN', NOW(), NOW(),
+       ('EXPERT', 'expert7@nate.com', '1234', '최현우', '0103338888', 'expert7.jpg', '1988-05-05', 'MAN', NOW(), NOW(),
         '그럼에도 불구하고 우리가 우리인 채로 잘 살아갈 수 있어요.'),
-       ('EXPERT', 'expert8@nate.com', '1234', '김소정', '0103339999', 'expert28.jpg', '1990-06-06', 'WOMAN', NOW(), NOW(),
+       ('EXPERT', 'expert8@nate.com', '1234', '김소정', '0103339999', 'expert8.jpg', '1990-06-06', 'WOMAN', NOW(), NOW(),
         '당신 안의 온전함을 다시 찾을 수 있게, 지친 마음이 쉬었다 갈 수 있게 함께 할게요. '),
-       ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', 'expert29.jpg', '1992-07-07', 'MAN', NOW(), NOW(),
+       ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', 'expert9.jpg', '1992-07-07', 'MAN', NOW(), NOW(),
         '당신에게 소금 같은 사람이 되어 드리고 싶습니다.'),
-       ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert30.jpg', '1994-08-08', 'WOMAN', NOW(), NOW(),
+       ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', 'expert10.jpg', '1994-08-08', 'WOMAN', NOW(), NOW(),
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.');
 
--- voucher_tb
-INSERT INTO voucher_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
-                        start_date, end_date, is_active, image_path, created_at, updated_at)
+-- voucher_tb 테이블에 데이터 추가
+INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_path, start_date, created_at, updated_at)
+VALUES
+    -- Expert 1 has 3 voucher types
+    ('TEXT_THERAPY', 21, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 21, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 21, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 2 has 2 voucher types
+    ('TEXT_THERAPY', 22, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 22, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+
+    -- Expert 3 has 1 voucher type
+    ('VIDEO_THERAPY', 23, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 4 has 2 voucher types
+    ('TEXT_THERAPY', 24, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 24, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 5 has 3 voucher types
+    ('TEXT_THERAPY', 25, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 25, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 25, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 6 has 1 voucher type
+    ('TEXT_THERAPY', 26, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+
+    -- Expert 7 has 2 voucher types
+    ('VOICE_THERAPY', 27, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 27, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 8 has 3 voucher types
+    ('TEXT_THERAPY', 28, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 28, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+    ('VIDEO_THERAPY', 28, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+
+    -- Expert 9 has 2 voucher types
+    ('TEXT_THERAPY', 29, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+    ('VOICE_THERAPY', 29, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+
+    -- Expert 10 has 1 voucher type
+    ('VIDEO_THERAPY', 30, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW());
+
+-- voucher_tb 테이블에 데이터 추가
+INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_path, start_date, created_at, updated_at)
+VALUES ('TEXT_THERAPY', 21, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 21, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 21, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 22, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 22, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 22, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 23, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 23, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 23, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 24, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 24, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 24, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 25, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 25, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 25, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 26, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 26, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 26, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 27, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 27, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 27, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 28, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 28, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 28, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 29, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 29, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 29, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW()),
+       ('TEXT_THERAPY', 30, 10000, 1, 60, '/images/chat.png', NOW(), NOW(), NOW()),
+       ('VOICE_THERAPY', 30, 15000, 1, 30, '/images/call.png', NOW(), NOW(), NOW()),
+       ('VIDEO_THERAPY', 30, 20000, 1, 45, '/images/video.png', NOW(), NOW(), NOW());
+-- voucher_history_tb
+INSERT INTO voucher_history_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
+                                start_date, end_date, is_active, image_path, created_at, updated_at)
 VALUES
     -- Expert 1
     (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (21, 2, NULL, 'TEXT_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    (21, 3, NULL, 'TEXT_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+    (21, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+    (21, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
     -- Expert 2
-    (22, 4, NULL, 'VOICE_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+    (22, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
     (22, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    (22, 6, NULL, 'VOICE_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+    (22, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
     -- Expert 3
-    (23, 7, NULL, 'VIDEO_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (23, 8, NULL, 'VIDEO_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+    (23, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+    (23, 8, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
     (23, 9, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
     -- Expert 4
     (24, 10, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
