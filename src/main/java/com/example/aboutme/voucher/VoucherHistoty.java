@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "voucher_history_tb")
-@ToString(exclude = {"issuedBy", "ownedBy", "reservation", "payments"})
+@ToString(exclude = {"expert", "client", "reservation", "payments"})
 public class VoucherHistoty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,9 +72,7 @@ public class VoucherHistoty {
     private String imagePath;
 
     @Builder
-
     public VoucherHistoty(Integer id, User expert, User client, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt, String imagePath) {
-
         this.id = id;
         this.expert = expert;
         this.client = client;
@@ -90,6 +88,6 @@ public class VoucherHistoty {
         this.payments = payments;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.imagePath = imagePath; // 추가
+        this.imagePath = imagePath;
     }
 }

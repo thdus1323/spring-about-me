@@ -1,36 +1,41 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.*;
 import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PRRepository;
-import com.example.aboutme.user.spec.SpecRepository;
 import com.example.aboutme.user.record.expertFindRecord.ExpertInfoRecord;
 import com.example.aboutme.user.record.expertFindRecord.FindWrapperRecord;
 import com.example.aboutme.user.record.expertFindRecord.VoucherImageRecord;
+import com.example.aboutme.user.spec.SpecRepository;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
+import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final CommRepository commRepository;
+    private final UserNativeRepository userNativeRepository;
     private final ReviewRepository reviewRepository;
     private final VoucherRepository voucherRepository;
     private final SpecRepository specRepository;
     private final PRRepository prRepository;
     private final Formatter formatter;
-    private final UserNativeRepository userNativeRepository;
 
-
+//회원가입
 //    @Transactional
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
 //        userNativeRepository.join(reqDTO);
@@ -41,10 +46,10 @@ public class UserService {
 //        User sessionUser = userNativeRepository.login(reqDTO);
 //        return sessionUser;
 //    }
-
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userNativeRepository.login(reqDTO);
+        user.getSpecs().size();
         return user;
     }
 
@@ -131,5 +136,36 @@ public class UserService {
 
         return new FindWrapperRecord(expertInfos);
 
+    }
+    // 클라이언트 메인
+    public HashMap<String, Object> getClientMain() {
+        List<UserResponse.ClientMainDTO.CommDTO> comms = commRepository.findCommsWithReply();
+        List<UserResponse.ClientMainDTO.ExpertDTO> experts = userRepository.findExpert();
+        List<UserResponse.ClientMainDTO.VoucherDTO> vouchers = voucherRepository.findAllVouchers();
+
+        List<Map<String, Object>> expertWithVouchers = experts.stream().map(expert -> {
+            Map<String, Object> expertMap = new HashMap<>();
+            expertMap.put("expert", expert);
+
+            List<String> voucherTypes = vouchers.stream()
+                    .filter(voucher -> voucher.getExpertId().equals(expert.getExpertId()))
+                    .map(UserResponse.ClientMainDTO.VoucherDTO::getVoucherType)
+                    .map(VoucherType::name)
+                    .collect(Collectors.toList());
+
+            // 특정 바우처 타입을 가진지 여부를 판단하는 boolean 값 추가
+            expertMap.put("hasTextTherapy", voucherTypes.contains("TEXT_THERAPY"));
+            expertMap.put("hasVoiceTherapy", voucherTypes.contains("VOICE_THERAPY"));
+            expertMap.put("hasVideoTherapy", voucherTypes.contains("VIDEO_THERAPY"));
+
+            expertMap.put("voucherTypes", voucherTypes);
+            return expertMap;
+        }).toList();
+
+        HashMap<String, Object> clientMain = new HashMap<>();
+        clientMain.put("comms", comms);
+        clientMain.put("experts", expertWithVouchers);
+        // clientMain.put("vouchers", vouchers);
+        return clientMain;
     }
 }
