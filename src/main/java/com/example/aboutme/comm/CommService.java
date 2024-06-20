@@ -14,4 +14,8 @@ public class CommService {
 
         return commRepository.findCommsWithReply();
     }
+
+    public List<CommResponse.CommAndReplyDTO> findAllCommsWithReply() {
+        return commRepository.findAllCommsWithReply();
+    }
 }
