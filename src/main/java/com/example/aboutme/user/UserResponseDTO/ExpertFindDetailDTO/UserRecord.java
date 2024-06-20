@@ -1,7 +1,7 @@
 package com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO;
 
 public record UserRecord(
-        Integer userId,
+        Integer expertId,
         String name,
         String profileImage
 ) {}

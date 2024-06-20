@@ -15,6 +15,10 @@ public interface VoucherRepository extends JpaRepository<Voucher, Integer> {
 
     List<Voucher> findByExpertId(Integer expertId);
 
+    // 특정 expertId의 가장 낮은 가격 조회
+    @Query("SELECT MIN(v.price) FROM Voucher v WHERE v.expert.id = :expertId")
+    Double findMinimumPriceByExpertId(Integer expertId);
+
     @Query("""
             SELECT new com.example.aboutme.user.UserResponse$ClientMainDTO$VoucherDTO(
                         v.id,
