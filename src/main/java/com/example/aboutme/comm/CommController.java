@@ -19,10 +19,10 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-//    @GetMapping("/comm-detail")
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
         request.setAttribute("comm", comm);
+        System.out.println("comm = " + comm);
         return "comm/comm-detail";
     }
 
