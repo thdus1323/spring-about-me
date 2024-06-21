@@ -378,7 +378,13 @@ VALUES (1, 1, 21, 1, '2024-06-20 10:00:00', 'COMPLETED', NOW(), NOW()),
        (27, 27, 27, 13, '2024-07-16 10:00:00', 'COMPLETED', NOW(), NOW()),
        (28, 28, 28, 15, '2024-07-17 10:00:00', 'COMPLETED', NOW(), NOW()),
        (29, 29, 29, 18, '2024-07-18 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (30, 30, 30, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW());
+       (30, 1, 24, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
+       (31, 2, 22, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
+       (32, 3, 23, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
+       (33, 4, 21, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
+       (34, 5, 25, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
+       (35, 6, 27, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
+       (36, 22, 29, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW());
 
 -- review_tb
 INSERT INTO review_tb (user_id, counsel_id, score, content, created_at, updated_at)
