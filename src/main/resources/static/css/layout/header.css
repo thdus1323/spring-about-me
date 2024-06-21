@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
+    padding: 30px 0;
 }
 
 .header-left {
@@ -40,7 +40,8 @@
 .menu ul li a {
     text-decoration: none;
     color: #333;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .header-right ul {
@@ -49,6 +50,7 @@
     margin: 0;
     padding: 0;
     margin-left: 20px;
+    align-items: center;
 }
 
 .header-right ul li {

@@ -1,10 +1,11 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme.comm.CommService;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.UserRole;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Controller
@@ -50,7 +49,7 @@ public class UserController {
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-            return "redirect:/expert/main";
+            return "redirect:/experts/" + sessionUser.getId();
         } else {
             return "oauth/login";
         }
@@ -67,31 +66,30 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
-        HashMap<String, Object> clientMain = userService.getClientMain();
-        request.setAttribute("clientMain", clientMain);
+    public String index(Model model) {
+        ClientMainDTORecord clientMain = userService.getClientMain();
+        model.addAttribute("clientMain", clientMain);
         System.out.println(clientMain);
         return "client/main";
     }
 
     // 익스퍼트 메인페이지
-    @GetMapping("/expert/main")
-    public String expertMain(HttpServletRequest request) {
-        HashMap<String, Object> clientMain = userService.getClientMain();
-        request.setAttribute("clientMain", clientMain);
-        System.out.println(clientMain);
+    @GetMapping("/experts/{expertId}")
+    public String expertMain(Model model, @PathVariable Integer expertId) {
+        ExpertMainDTORecord expertMain = userService.getExpertMain(expertId);
+        model.addAttribute("expertMain", expertMain);
+
         return "expert/main";
     }
-
 
 
     // 🐯🐯🐯Client🐯🐯🐯
     //전문가 찾기 - 메인
     @GetMapping("/client/findExpert")
     public String findExpert(Model model) {
-          FindWrapperRecord findWrapperRecord = userService.getExpertFind();
-          model.addAttribute("expertList", findWrapperRecord);
-          System.out.println(findWrapperRecord);
+        FindWrapperRecord findWrapperRecord = userService.getExpertFind();
+        model.addAttribute("expertList", findWrapperRecord);
+        System.out.println(findWrapperRecord);
 //        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
 //        session.setAttribute("expertUserList", expertUserList);
 

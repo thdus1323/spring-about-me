@@ -4,6 +4,9 @@ import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.user.enums.UserRole;
 import lombok.Data;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 public class CommResponse {
 
     @Data
@@ -27,6 +30,27 @@ public class CommResponse {
             this.writerName = writerName;
             this.expertImage = expertImage;
             this.expertName = expertName;
+        }
+    }
+
+    @Data
+    public static class CommDetailDTO {
+        private Integer commId;
+        private String name; // 조인해야 할 듯.
+        private String content;
+        private String title;
+        private CommCategory category;
+        private Timestamp createdAt;
+        private List<String> replyContents;
+
+        public CommDetailDTO(Integer commId, String name, String content, String title, CommCategory category, Timestamp createdAt, List<String> replyContents) {
+            this.commId = commId;
+            this.name = name;
+            this.content = content;
+            this.title = title;
+            this.category = category;
+            this.createdAt = createdAt;
+            this.replyContents = replyContents;
         }
     }
 

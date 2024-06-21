@@ -1,18 +1,26 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme._core.error.exception.Exception401;
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.comm.CommRepository;
+import com.example.aboutme.counsel.Counsel;
+import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.review.ReviewRepository;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.CommDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ExpertDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.VoucherDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.*;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.RecentReviewRecord;
+import com.example.aboutme.user.UserResponseDTO.expertFindDTO.ExpertInfoRecord;
+import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme.user.UserResponseDTO.expertFindDTO.VoucherImageRecord;
 import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PRRepository;
 import com.example.aboutme.user.spec.SpecRepository;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.ExpertInfoRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.VoucherImageRecord;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import com.example.aboutme.voucher.enums.VoucherType;
@@ -20,9 +28,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -35,6 +42,7 @@ public class UserService {
     private final VoucherRepository voucherRepository;
     private final SpecRepository specRepository;
     private final PRRepository prRepository;
+    private final CounselRepository counselRepository;
     private final Formatter formatter;
 
 //회원가입
@@ -42,7 +50,7 @@ public class UserService {
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
 //        userNativeRepository.join(reqDTO);
 //    }
-
+//
     //    //로그인
 //    public User loginByName(UserRequest.LoginDTO reqDTO) {
 //        User sessionUser = userNativeRepository.login(reqDTO);
@@ -82,39 +90,12 @@ public class UserService {
                 .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
-        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords,educationRecords);
-    }
-
-    // 전문가(상담사 리스트)
-    public List<UserResponse.ExpertUserDTO> getAllExpertUsers() {
-
-        // 1. 모든 유저 찾기
-        List<User> users = userRepository.findAll();
-
-        // 2. userRole이 EXPERT인 유저만 필터링
-        List<User> expertUsers = users.stream()
-                .filter(user -> user.getUserRole() == UserRole.EXPERT)
-                .collect(Collectors.toList());
-
-
-        // 3. ExpertUserDTO 리스트 생성
-        List<UserResponse.ExpertUserDTO> result = expertUsers.stream().map(user -> {
-
-            List<Voucher> voucherList = voucherRepository.findByExpertId(user.getId());
-
-            List<UserResponse.ExpertUserDTO.VoucherImageDTO> voucherImages = voucherList.stream()
-                    .map(voucher -> new UserResponse.ExpertUserDTO.VoucherImageDTO(voucher.getImagePath()))
-                    .collect(Collectors.toList());
-
-            return new UserResponse.ExpertUserDTO(user, voucherImages);
-        }).collect(Collectors.toList());
-
-        return result;
+        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords, educationRecords);
     }
 
 
     // 상담가리스트 (record)
-    public FindWrapperRecord getExpertFind(){
+    public FindWrapperRecord getExpertFind() {
 
         // 1. 모든 유저 찾기
         List<User> users = userRepository.findAll();
@@ -125,50 +106,106 @@ public class UserService {
                 .toList();
 
         // 3.ExpertinfoDTO 생성
-        List<ExpertInfoRecord> expertInfos =  expertUsers.stream().map(user -> {
+        List<ExpertInfoRecord> expertInfos = expertUsers.stream().map(user -> {
 
-          //4. voucher 이미지 찾기
-          List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
+            //4. voucher 이미지 찾기
+            List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
 
-          List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
-              return new VoucherImageRecord(voucher.getImagePath());
-          }).toList();
+            List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
+                return new VoucherImageRecord(voucher.getImagePath());
+            }).toList();
 
-          return new ExpertInfoRecord(user.getId(),user.getName(),user.getExpertTitle(),user.getProfileImage(),voucherImageDTOs);
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), voucherImageDTOs);
         }).toList();
 
         return new FindWrapperRecord(expertInfos);
 
     }
-    // 클라이언트 메인
-    public HashMap<String, Object> getClientMain() {
-        List<UserResponse.ClientMainDTO.CommDTO> comms = commRepository.findCommsWithReply();
-        List<UserResponse.ClientMainDTO.ExpertDTO> experts = userRepository.findExpert();
-        List<UserResponse.ClientMainDTO.VoucherDTO> vouchers = voucherRepository.findAllVouchers();
 
-        List<Map<String, Object>> expertWithVouchers = experts.stream().map(expert -> {
-            Map<String, Object> expertMap = new HashMap<>();
-            expertMap.put("expert", expert);
+    // 상담가 검색
+    public FindWrapperRecord getExpertFindBySearch(LocalDateTime localDateTime) {
 
-            List<String> voucherTypes = vouchers.stream()
-                    .filter(voucher -> voucher.getExpertId().equals(expert.getExpertId()))
-                    .map(UserResponse.ClientMainDTO.VoucherDTO::getVoucherType)
-                    .map(VoucherType::name)
-                    .collect(Collectors.toList());
+        // 1. 모든 유저 찾기
+        List<User> users = userRepository.findAll();
 
-            // 특정 바우처 타입을 가진지 여부를 판단하는 boolean 값 추가
-            expertMap.put("hasTextTherapy", voucherTypes.contains("TEXT_THERAPY"));
-            expertMap.put("hasVoiceTherapy", voucherTypes.contains("VOICE_THERAPY"));
-            expertMap.put("hasVideoTherapy", voucherTypes.contains("VIDEO_THERAPY"));
+        // 2. userRole이 EXPERT인 유저만 필터링
+        List<User> expertUsers = users.stream()
+                .filter(user -> user.getUserRole() == UserRole.EXPERT)
+                .filter(user -> {
+                    List<Counsel> counsels = counselRepository.findCounselsByDateAndTime(localDateTime);
+                    return counsels.stream().noneMatch(counsel -> counsel.getClient().getId().equals(user.getId()));
+                })
+                .toList();
 
-            expertMap.put("voucherTypes", voucherTypes);
-            return expertMap;
+        // 3.ExpertinfoDTO 생성
+        List<ExpertInfoRecord> expertInfos = expertUsers.stream().map(user -> {
+
+            //4. voucher 이미지 찾기
+            List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
+
+            List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
+                return new VoucherImageRecord(voucher.getImagePath());
+            }).toList();
+
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), voucherImageDTOs);
         }).toList();
 
-        HashMap<String, Object> clientMain = new HashMap<>();
-        clientMain.put("comms", comms);
-        clientMain.put("experts", expertWithVouchers);
-        // clientMain.put("vouchers", vouchers);
-        return clientMain;
+        return new FindWrapperRecord(expertInfos);
+
+    }
+
+
+    // 클라이언트 메인
+    public ClientMainDTORecord getClientMain() {
+        List<CommDTORecord> comms = commRepository.findCommsWithReply().stream()
+                .map(comm -> new CommDTORecord(
+                        comm.getCommunityId(),
+                        comm.getWriterName(),
+                        comm.getWriterImage(),
+                        comm.getExpertName(),
+                        comm.getExpertImage(),
+                        comm.getTitle(),
+                        comm.getContent(),
+                        comm.getCategory()))
+                .toList();
+
+        List<ExpertDTORecord> experts = userRepository.findExpert().stream()
+                .map(expert -> {
+                    List<VoucherDTORecord> vouchers = voucherRepository.findByExpertId(expert.getExpertId()).stream()
+                            .map(voucher -> new VoucherDTORecord(
+                                    voucher.getVoucherType(),
+                                    voucher.getPrice(),
+                                    voucher.getDuration()))
+                            .toList();
+
+                    boolean hasTextTherapy = vouchers.stream()
+                            .anyMatch(voucher -> voucher.voucherType() == VoucherType.TEXT_THERAPY);
+                    boolean hasVoiceTherapy = vouchers.stream()
+                            .anyMatch(voucher -> voucher.voucherType() == VoucherType.VOICE_THERAPY);
+                    boolean hasVideoTherapy = vouchers.stream()
+                            .anyMatch(voucher -> voucher.voucherType() == VoucherType.VIDEO_THERAPY);
+
+                    return new ExpertDTORecord(
+                            expert.getExpertId(),
+                            expert.getName(),
+                            expert.getProfileImage(),
+                            expert.getExpertTitle(),
+                            vouchers,
+                            hasTextTherapy,
+                            hasVoiceTherapy,
+                            hasVideoTherapy);
+                })
+                .toList();
+
+        return new ClientMainDTORecord(comms, experts);
+    }
+
+    // 익스퍼트 메인
+    @Transactional
+    public ExpertMainDTORecord getExpertMain(Integer expertId) {
+        List<RecentReviewRecord> recentReviewRecords = reviewRepository.findReviewRecordsByExpertId(expertId);
+        List<CounselScheduleRecord> counselScheduleRecords = counselRepository.findCounselScheduleRecordsByExpertId(expertId);
+
+        return new ExpertMainDTORecord(recentReviewRecords, counselScheduleRecords);
     }
 }
