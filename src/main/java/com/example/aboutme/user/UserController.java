@@ -10,9 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -33,11 +31,32 @@ public class UserController {
         return "oauth/login";
     }
 
+    @PostMapping("/setUserRole")
+    @ResponseBody
+    public void setUserRole(@RequestParam("userRole") String userRoleStr) {
+        session.setAttribute("userRole", userRoleStr);
+    }
+
+    @GetMapping("/oauth/kakao/callback")
+    public String kakaoCallback(@RequestParam("code") String code) {
+        User sessionUser = userService.loginKakao(code, session);
+        session.setAttribute("sessionUser", sessionUser);
+        System.out.println("세션유저: " + sessionUser);
+        return "redirect:/";
+    }
+
+//    @GetMapping("/oauth/naver/callback")
+//    public String naverCallback(@RequestParam("code") String code) {
+//        User sessionUser = userService.loginNaver(code);
+//        session.setAttribute("sessionUser", sessionUser);
+//        return "redirect:/";
+//    }
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
         session.setAttribute("sessionUser", sessionUser);
+
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {

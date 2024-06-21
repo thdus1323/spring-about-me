@@ -15,5 +15,6 @@ public class UserRequest {
     public static class LoginDTO {
         private String email;
         private String password;
+        private UserRole userRole;
     }
 }
