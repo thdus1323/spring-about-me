@@ -50,7 +50,7 @@ public class UserService {
 //    public void joinByEmail(UserRequest.JoinDTO reqDTO){
 //        userNativeRepository.join(reqDTO);
 //    }
-
+//
     //    //로그인
 //    public User loginByName(UserRequest.LoginDTO reqDTO) {
 //        User sessionUser = userNativeRepository.login(reqDTO);
