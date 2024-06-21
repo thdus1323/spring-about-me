@@ -392,7 +392,7 @@ VALUES
     ('EDUCATION', '이화여자대학교 놀이치료학 석사 졸업', 30);
 
 -- counsel_tb
-INSERT INTO counsel_tb (id, client_id, expert_id, voucher_id, counsel_date, result, created_at, updated_at)
+INSERT INTO counsel_tb (id, client_id, expert_id, voucher_id, counsel_date, state, created_at, updated_at)
 VALUES (1, 1, 21, 1, '2024-06-20 10:00:00', 'COMPLETED', NOW(), NOW()),
        (2, 2, 22, 2, '2024-06-21 10:00:00', 'COMPLETED', NOW(), NOW()),
        (3, 3, 23, 6, '2024-06-22 10:00:00', 'COMPLETED', NOW(), NOW()),
