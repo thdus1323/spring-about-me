@@ -17,6 +17,9 @@ public interface CounselRepository extends JpaRepository<Counsel, Integer> {
     List<Counsel> findAllCounselByExpertId(Integer expertId);
 
 
+    @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId ")
+    Integer countAllByClientId(@Param("clientId") Integer clientId);
+
     @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId AND c.state = :state")
     Integer countByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") StateEnum state);
 

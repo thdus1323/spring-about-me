@@ -51,7 +51,7 @@ public class CounselService {
                     .orElseThrow(() -> new Exception404("해당 유저를 찾지 못했습니다"));
 
             // 4. Voucher 전체카운트 찾기
-            Integer voucherTotal = counselRepository.countByClientIdAndState(user.getId(), StateEnum.COMPLETED);
+            Integer voucherTotal = counselRepository.countAllByClientId(user.getId());
 
             // 5. Vocher 남은 카운트찾기
             Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), StateEnum.PENDING);
