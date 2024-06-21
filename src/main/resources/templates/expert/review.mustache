@@ -6,48 +6,26 @@
             <div class="line-up">
                 <button class="main-background defalut-btn">정렬</button>
             </div>
-            <h3 class="page-title mb-20">
+            <h3 class="page-title mb-50">
                 후기보기
             </h3>
             <div class="page-content">
                 <div class="review">
                     <ul class="review-list">
-                        <li class="review-item">
-                            <div class="review-header">
-                                <figure>
-                                    <img src="/images/unknown_user.png" alt="유저 이미지">
-                                </figure>
-                                <span>홍길동(4점)</span>
-                            </div>
-                            <div class="review-content">
-                                <span>살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라살라</span>
-                            </div>
-                            <div class="more-btn"><span class="txt">더보기</span></div>
-                        </li>
-                        <li class="review-item">
-                            <div class="review-header">
-                                <figure>
-                                    <img src="/images/unknown_user.png" alt="유저 이미지">
-                                </figure>
-                                <span>홍길동(4점)</span>
-                            </div>
-                            <div class="review-content">
-                                살라살라
-                            </div>
-                            <div class="more-btn"><span class="txt">더보기</span></div>
-                        </li>
-                        <li class="review-item">
-                            <div class="review-header">
-                                <figure>
-                                    <img src="/images/unknown_user.png" alt="유저 이미지">
-                                </figure>
-                                <span>홍길동(4점)</span>
-                            </div>
-                            <div class="review-content">
-                                살라살라
-                            </div>
-                            <div class="more-btn"><span class="txt">더보기</span></div>
-                        </li>
+                        {{#reviewList.reviews}}
+                            <li class="review-item">
+                                <div class="review-header">
+                                    <figure>
+                                        <img src="/images/{{user.imagePath}}" alt="유저 이미지">
+                                    </figure>
+                                    <span>{{user.name}}(4점)</span>
+                                </div>
+                                <div class="review-content">
+                                    <span>{{content}}</span>
+                                </div>
+                                <div class="more-btn"><span class="txt">더보기</span></div>
+                            </li>
+                        {{/reviewList.reviews}}
                     </ul>
                 </div>
 

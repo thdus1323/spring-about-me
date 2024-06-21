@@ -6,13 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class CommController {
     private final CommService commService;
 
     @GetMapping("/comm/write")
-    public String community() {
+    public String communityWrite() {
         return "comm/comm-write";
     }
 
@@ -24,7 +26,11 @@ public class CommController {
         return "comm/comm-detail";
     }
 
-    //게시판 상세보기
+    @GetMapping("/comm")
+    public String community(HttpServletRequest request) {
+        List<CommResponse.CommAndReplyDTO> commsWithReplyList = commService.findAllCommsWithReply();
+        request.setAttribute("commsWithReplyList", commsWithReplyList);
 
-
+        return "comm/comm-main";
+    }
 }
