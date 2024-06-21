@@ -17,51 +17,25 @@
                         <span>신청날짜</span>
                     </div>
                     <ul class="schedule-list">
-                        <li>
-                            <div class="schedule-item">
-                                <figure></figure>
-                                <p>홍길동</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>보이스테라피</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>1회/3회</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>2024-06-24</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="schedule-item">
-                                <figure></figure>
-                                <p>홍길동</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>보이스테라피</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>1회/3회</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>2024-06-24</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="schedule-item">
-                                <figure></figure>
-                                <p>홍길동</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>보이스테라피</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>1회/3회</p>
-                            </div>
-                            <div class="schedule-item">
-                                <p>2024-06-24</p>
-                            </div>
-                        </li>
+                        {{#counselList.user}}
+                            <li>
+                                <div class="schedule-item">
+                                    <figure></figure>
+                                    <p>{{name}}</p>
+                                </div>
+                                <div class="schedule-item">
+                                    <p>{{voucherType}}</p>
+                                </div>
+                                <div class="schedule-item">
+                                    <p>{{remainCount}}회/{{totalCount}}회</p>
+                                </div>
+                                <div class="schedule-item">
+                                    <p>{{applyDate}}</p>
+                                </div>
+                            </li>
+                        {{/counselList.user}}
+
+
                     </ul>
                 </div>
                 <!-- 페이지 네이션 -->

@@ -34,4 +34,17 @@ public class CounselRepositoryTest {
             System.out.println(c);
         }
     }
+
+    @Test
+    public void findAllCounselByExpertId_test() {
+
+        //Given
+        Integer expertId = 21;
+
+        //When
+        List<Counsel> counselList = counselRepository.findAllCounselByExpertId(expertId);
+
+        //Eye
+        System.out.println(counselList.size());
+    }
 }
