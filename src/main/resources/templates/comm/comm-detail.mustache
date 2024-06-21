@@ -19,11 +19,11 @@
                                 <a href="#">홈화면</a> > <a href="#">커뮤니티</a> > <a href="#"
                                                                                 class="active main-color">자유</a>
                             </div>
-                            <h4 class="card-title">comm.title}}</h4>
+                            <h4 class="card-title">{{comm.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
                                     <figure><img src="images/level1.png" alt="회원이미지"></figure>
-                                    <span>handon7018</span><span class="time">10시간 전</span></div>
+                                    <span>{{comm.name}}</span><span class="time">{{comm.createdAt}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
                                         <button class=" defalut-btn" onclick="clip()"><i
@@ -128,10 +128,9 @@
                             <div class="community-cartegory">
                                 <div class="user-info">
                                     <figure><img src="/images/level1.png" alt="회원이미지"></figure>
-                                    <span>handon7018</span></div>
+                                    <span>{{comm.name}}</span></div>
                             </div>
-                            <p class="card-text mb-20">군 재대 후 24년 1월부터 평인엔 시골에서 지내고 왈가왈부 두줄 테스트를 하기 위해서 글을 써내려 가고 있습니다
-                                하하하하하하하하하</p>
+                            <p class="card-text mb-20">{{comm.content}}</p>
 
                             <div class="bottom-content">
                                 <div class="click-wrapper">

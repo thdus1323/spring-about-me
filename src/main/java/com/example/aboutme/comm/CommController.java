@@ -16,10 +16,10 @@ public class CommController {
         return "comm/comm-write";
     }
 
-    @GetMapping("/comm-detail/{commId}")
+    @GetMapping("/comm-detail/{id}")
 //    @GetMapping("/comm-detail")
-    public String detail(@PathVariable Integer commId, HttpServletRequest request) {
-        CommResponse.CommDetailDTO comm = commService.getCommDetail(commId);
+    public String detail(@PathVariable Integer id, HttpServletRequest request) {
+        CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
         request.setAttribute("comm", comm);
         return "comm/comm-detail";
     }
