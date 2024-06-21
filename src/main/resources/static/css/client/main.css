@@ -3,7 +3,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    margin: 30px 0;
+    margin: 50px 0 20px 0;
 }
 
 .banner-container .card-container a img {
@@ -21,9 +21,11 @@
 }
 
 .categories ul li a {
+    display: flex;
     color: black;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
+    align-items: center;
 }
 
 .categories img {
@@ -43,7 +45,7 @@
 .container .title {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
 }
 
 .pick-ex {
@@ -83,7 +85,7 @@
     padding: 20px;
     box-sizing: border-box;
     /* margin-right: 20px; */
-    margin: 0 10px;
+    margin: 0 20px 0 0;
 
 }
 
@@ -95,7 +97,7 @@
 
 .pick-container .card-top .category-area {
     display: flex;
-
+    align-items: center;
 }
 
 .pick-container .card-top .category-area > div {
@@ -103,7 +105,7 @@
 }
 
 .pick-container .card-top .pick-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -115,6 +117,7 @@
 .pick-container .card-top .pick-category {
     color: #359798;
     font-weight: bold;
+    font-size: 14px;
 }
 
 .dot {
@@ -125,19 +128,31 @@
 }
 
 .pick-container .card-top .category-area .badge {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    padding:0;
+    margin: 0 10px;
+    border-radius: 50%;
+    overflow: hidden;
 }
-
+.pick-container .card-top .category-area .name{
+    display: flex;
+    align-items: center;
+}
 .pick-container .card-top .category-area .badge img {
     width: 100%;
-    border-radius: 50%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .pick-container .card-bottom {
     display: flex;
+    align-items: center;
 }
-
+.pick-container .card-bottom > div{
+    color : #999;
+    font-size: 14px;
+}
 .pick-container .card-bottom .expert-img {
     width: 20px;
     height: 20px;
@@ -146,51 +161,8 @@
 
 .pick-container .card-bottom .expert-img img {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
-}
-
-/* 나에게 맞는 전문가 */
-
-.expert-ex {
-    width: 100vw;
-    background-color: #EAF5F5;
-    padding: 30px 0;
-}
-
-.expert-container .card-container {
-    scroll-behavior: smooth;
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.expert-container .card {
-    flex: 0 0 calc(25% - 10px);
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    box-sizing: border-box;
-    /* margin-right: 10px; */
-    margin: 0 5px;
-}
-
-.expert-container .card-top .expert-img {
-    width: 45px;
-    height: 45px;
-}
-
-.expert-container .card-top .expert-img img {
-    width: 100%;
-    border-radius: 50%;
-}
-
-.expert-container .card-top .expert-name {
-    font-weight: bold;
-}
-
-.expert-container .card-bottom.contact {
-    display: flex;
-    gap: 10px;
 }
 
 /* 센터 */
@@ -224,6 +196,7 @@
 
 .center-container .card img {
     width: 100%;
+    height: 100%;
     border-radius: 10px;
 }
 
@@ -247,6 +220,72 @@
     border-radius: 5px;
     font-size: 11px;
 
+}
+
+/* 나에게 맞는 전문가 */
+
+.expert-ex {
+    width: 100vw;
+    background-color: #EAF5F5;
+    padding: 30px 0;
+}
+
+.expert-container .card-container {
+    scroll-behavior: smooth;
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.expert-container .card {
+    flex: 0 0 calc(25% - 10px);
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    /* margin-right: 10px; */
+    margin: 0 10px 0 0;
+}
+
+.expert-container .card-top .expert-img {
+    width: 45px;
+    height: 45px;
+}
+
+.expert-container .card-top .expert-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.expert-container .card-top .expert-name {
+    font-weight: bold;
+}
+
+.expert-container .card-top .expert-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #999;
+}
+
+.expert-container .card-bottom.contact {
+    display: flex;
+    gap: 10px;
+}
+
+.expert-container .card-bottom.contact > div {
+    width: 15px;
+    height: 15px;
+}
+
+.expert-container .card-bottom.contact > div img{
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
 }
 
 /* 화살표 버튼 */
@@ -292,14 +331,17 @@
 
 .pick-container.swiper .swiper-button-prev,
 .pick-container.swiper .swiper-rtl .swiper-button-next {
-    left: -15px;
+    left: -20px;
 }
 
 .pick-container.swiper .swiper-button-next,
 .pick-container.swiper .swiper-rtl .swiper-button-prev {
-    right: -15px;
+    right: -20px;
 }
-
+.swiper-button-next:after, .swiper-button-prev:after{
+    font-size: 30px !important;
+    color: #666;
+}
 .pick-container.swiper .swiper-scrollbar-drag {
     background-color: #fd8234;
 }

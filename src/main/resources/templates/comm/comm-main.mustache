@@ -1,4 +1,3 @@
-
 {{> layout/client-header}}
 
 <!--커뮤니티 시작-->
@@ -15,7 +14,8 @@
                             <div class="container-fluid">
                                 <a class="navbar-brand" href="#">모든 사연</a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                        aria-expanded="false"
                                         aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
@@ -58,32 +58,37 @@
                     <div class="c-card">
 
                         {{#commsWithReplyList}}
-                        <div class="c-card-body">
-                            <a href="#">
-                                <h4 class="card-title mb-10">{{title}}</h4>
-                                <div class="community-cartegory">
-                                    <div class="category main-color">{{category}}</div>
-                                    <div class="user-info"><figure><img src="/images/level1.png" alt="회원이미지"></figure><span>{{writerName}}</span></div>
+                            <div class="c-card-body">
+                                <a href="/comm-detail/{{id}}">
+                                    <h4 class="card-title mb-10">{{title}}</h4>
+                                    <div class="community-cartegory">
+                                        <div class="category main-color">{{category}}</div>
+                                        <div class="user-info">
+                                            <figure><img src="/images/level1.png" alt="회원이미지"></figure>
+                                            <span>{{writerName}}</span>
+                                            <!-- TODO: 잘 몰라서 일단 하나 더 붙여넣음 -->
+                                            <span>{{comm.name}}</span>
+                                        </div>
+                                    </div>
+                                    <p class="card-text mb-20">{{content}}</p>
+                                </a>
+                                <div class="link-wrapper">
+                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>
+                                    <a href="#" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
-                                <p class="card-text mb-20">{{content}}</p>
-                            </a>
-                            <div class="link-wrapper">
-                                <a href="#" class="card-link like">❤<em class="count">1</em></a>
-                                <a href="#" class="card-link reply">💌<em class="count">2</em></a>
-                            </div>
 
-                            {{#userRole}}
-                            <div class="expert-reply">
-                                <div class="expert-reply-info mb-10">
-                                    <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
-                                    <span class="expert-reply-name active-color">{{expertName}}님의 전문답변</span>
-                                </div>
-                                <p class="reply-content">
-                                    {{solution}}
-                                </p>
+                                {{#userRole}}
+                                    <div class="expert-reply">
+                                        <div class="expert-reply-info mb-10">
+                                            <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
+                                            <span class="expert-reply-name active-color">{{expertName}}님의 전문답변</span>
+                                        </div>
+                                        <p class="reply-content">
+                                            {{solution}}
+                                        </p>
+                                    </div>
+                                {{/userRole}}
                             </div>
-                            {{/userRole}}
-                        </div>
                         {{/commsWithReplyList}}
 
                     </div>

@@ -19,10 +19,7 @@ public class ReviewController {
     @GetMapping("/review/{expertId}")
     public String review(Model model, @PathVariable("expertId") Integer expertId) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        System.out.println("유저" + sessionUser);
         ReviewDTORecord reviewDTORecord = reviewService.getExpertReview(expertId,sessionUser);
-        System.out.println("review 정보 " + reviewDTORecord);
 
         model.addAttribute("reviewList", reviewDTORecord);
         return "expert/review";

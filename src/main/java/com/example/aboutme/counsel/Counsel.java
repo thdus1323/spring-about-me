@@ -1,5 +1,6 @@
 package com.example.aboutme.counsel;
 
+import com.example.aboutme.counsel.enums.StateEnum;
 import com.example.aboutme.review.Review;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
@@ -41,17 +42,19 @@ public class Counsel {
     @Column(nullable = false)
     private LocalDateTime counselDate;
 
-    @Column(nullable = false)
-    private String result;
+    private String result; // 상담결과
 
     @CreationTimestamp
-    private Timestamp createdAt;
 
+    private Timestamp createdAt;
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    private StateEnum state;
+
     @Builder
-    public Counsel(Integer id, User client, User expert, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt) {
+    public Counsel(Integer id, User client, User expert, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt,StateEnum state) {
         this.id = id;
         this.client = client;
         this.expert = expert;
@@ -60,5 +63,6 @@ public class Counsel {
         this.result = result;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.state = state;
     }
 }
