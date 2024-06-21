@@ -6,7 +6,6 @@ import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORec
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.UserRole;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Controller
@@ -44,7 +41,7 @@ public class UserController {
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-            return "redirect:/expert/main";
+            return "redirect:/experts/" + sessionUser.getId();
         } else {
             return "oauth/login";
         }
@@ -82,9 +79,9 @@ public class UserController {
     //전문가 찾기 - 메인
     @GetMapping("/client/findExpert")
     public String findExpert(Model model) {
-          FindWrapperRecord findWrapperRecord = userService.getExpertFind();
-          model.addAttribute("expertList", findWrapperRecord);
-          System.out.println(findWrapperRecord);
+        FindWrapperRecord findWrapperRecord = userService.getExpertFind();
+        model.addAttribute("expertList", findWrapperRecord);
+        System.out.println(findWrapperRecord);
 //        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
 //        session.setAttribute("expertUserList", expertUserList);
 
