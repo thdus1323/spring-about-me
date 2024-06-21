@@ -1,17 +1,29 @@
 package com.example.aboutme.counsel;
 
+import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.CounselDTORecord;
+import com.example.aboutme.user.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RequiredArgsConstructor
 @Controller
 public class CounselController {
     private final CounselService counselService;
+    private final HttpSession session;
 
     //상담일정
-    @GetMapping("/schedule")
-    public String schedule() {
+    @GetMapping("/schedule/{expertId}")
+    public String schedule(@PathVariable Integer expertId, Model model) {
+
+    User sessionUser = (User) session.getAttribute("sessionUser");
+
+        CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser,expertId);
+        model.addAttribute("counselList",counselDTORecord);
+
         return "expert/schedule";
     }
 }
