@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class CommResponse {
 
@@ -35,27 +36,49 @@ public class CommResponse {
 
     @Data
     public static class CommDetailDTO {
-        private Integer commId;
-        private String name; // 조인해야 할 듯.
+        private Integer id;
+        private String clientImage;
+        private String name;
         private String content;
         private String title;
-        private CommCategory category;
+        private String category;
         private Timestamp createdAt;
         private List<String> replyContents;
+        private Map<String, List<CommDTO>> commsByCategory;
 
-        public CommDetailDTO(Integer commId, String name, String content, String title, CommCategory category, Timestamp createdAt, List<String> replyContents) {
-            this.commId = commId;
+        public CommDetailDTO(Integer id, String clientImage, String name, String content, String title, String category, Timestamp createdAt, List<String> replyContents, Map<String, List<CommDTO>> commsByCategory) {
+            this.id = id;
+            this.clientImage = clientImage;
             this.name = name;
             this.content = content;
             this.title = title;
             this.category = category;
             this.createdAt = createdAt;
             this.replyContents = replyContents;
+            this.commsByCategory = commsByCategory;
+        }
+    }
+
+    @Data
+    public static class CommDTO {
+        private Integer id;
+        private String content;
+        private String title;
+        private String category;
+        private Timestamp createdAt;
+
+        public CommDTO(Integer id, String content, String title, String category, Timestamp createdAt) {
+            this.id = id;
+            this.content = content;
+            this.title = title;
+            this.category = category;
+            this.createdAt = createdAt;
         }
     }
 
     @Data
     public static class CommAndReplyDTO {
+        private Integer id;
         private String title;
         private String content;
         private String category;
@@ -67,8 +90,9 @@ public class CommResponse {
         private String solution;
 
         // 생성자 잘 확인해야함. EXPERT면 true 나와서 출력할 수 있도록.
-        public CommAndReplyDTO(String title, String content, CommCategory category, String userProfileImage, String writerName,
+        public CommAndReplyDTO(Integer id, String title, String content, CommCategory category, String userProfileImage, String writerName,
                                UserRole userRole, String replyProfileImage, String expertName, String solution) {
+            this.id = id;
             this.title = title;
             this.content = content;
             this.category = category.getKorean();
