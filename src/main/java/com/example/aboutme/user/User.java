@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.UserRole;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-@ToString(exclude = {"pr", "specs", "payments", "refunds", "alarms", "comms", "replies", "vouchers"})
+@ToString(exclude = {"pr", "specs", "schedules"}) // 유효한 필드만 제외
 public class User {
 
     // 필수 입력
@@ -57,6 +58,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Schedule> schedules;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PR pr;
 
@@ -70,20 +74,22 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt, String expertTitle) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String expertTitle, ExpertLevel level, String profileImage, String birth, Gender gender, List<Schedule> schedules, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
+        this.expertTitle = expertTitle;
+        this.level = level;
         this.profileImage = profileImage;
         this.birth = birth;
         this.gender = gender;
+        this.schedules = schedules;
         this.pr = pr;
         this.specs = specs;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.expertTitle = expertTitle;
     }
 }

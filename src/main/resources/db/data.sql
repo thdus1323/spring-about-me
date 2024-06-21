@@ -65,6 +65,7 @@ VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', '/imag
        ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', '/images/expert30.jpg', '1994-08-08', 'WOMAN', 'LEVEL2',
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.', NOW(), NOW());
 
+
 -- voucher_tb 테이블에 데이터 추가
 INSERT INTO voucher_tb (id, voucher_type, expert_id, price, count, duration, image_path, start_date, created_at,
                         updated_at)
@@ -418,3 +419,37 @@ VALUES (1, 1, 4.5, '상담사가 매우 친절하고 도움이 많이 되었습�
        (28, 28, 4.5, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
        (29, 29, 5.0, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
        (30, 30, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW());
+
+
+
+--스케줄 테이블 더미
+-- schedule_tb 더미 데이터 추가
+INSERT INTO schedule_tb (expert_id, start_date, end_date, start_hour, end_hour, rest_type, day_of_week, specific_date, created_at, updated_at)
+VALUES
+    -- Expert 1 (홍길동)
+    (21, '2024-06-01', '2024-06-30', '10:00', '11:00', 'WEEKLY', 'MONDAY', NULL, NOW(), NOW()),
+    (21, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'TUESDAY', NULL, NOW(), NOW()),
+    (21, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'WEDNESDAY', NULL, NOW(), NOW()),
+    (21, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'THURSDAY', NULL, NOW(), NOW()),
+    (21, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'FRIDAY', NULL, NOW(), NOW()),
+    (21, '2024-06-01', '2024-06-30', '10:00', '14:00', 'WEEKLY', 'SATURDAY', NULL, NOW(), NOW()),
+
+    -- Expert 2 (이영희)
+    (22, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'MONDAY', NULL, NOW(), NOW()),
+    (22, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'TUESDAY', NULL, NOW(), NOW()),
+    (22, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'WEDNESDAY', NULL, NOW(), NOW()),
+    (22, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'THURSDAY', NULL, NOW(), NOW()),
+    (22, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'FRIDAY', NULL, NOW(), NOW()),
+    (22, '2024-06-01', '2024-06-30', '10:00', '14:00', 'WEEKLY', 'SATURDAY', NULL, NOW(), NOW()),
+
+    -- Expert 3 (박철수)
+    (23, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'MONDAY', NULL, NOW(), NOW()),
+    (23, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'TUESDAY', NULL, NOW(), NOW()),
+    (23, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'WEDNESDAY', NULL, NOW(), NOW()),
+    (23, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'THURSDAY', NULL, NOW(), NOW()),
+    (23, '2024-06-01', '2024-06-30', '09:00', '18:00', 'WEEKLY', 'FRIDAY', NULL, NOW(), NOW()),
+
+    -- 특정 날짜 휴식
+    (23, '2024-06-01', '2024-06-30', '09:00', '18:00', 'DATE_SPECIFIC', NULL, '2024-06-15', NOW(), NOW());
+
+
