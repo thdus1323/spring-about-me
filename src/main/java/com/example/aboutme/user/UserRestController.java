@@ -16,7 +16,7 @@ public class UserRestController {
     private final UserService userService;
 
 
-    @GetMapping("/users/times")
+    @GetMapping("/expert/search")
     public ResponseEntity<?> getUsersTimes(@RequestParam String date) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
