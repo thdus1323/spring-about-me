@@ -21,6 +21,14 @@ public class UserController {
     private final CommService commService;
     private final HttpSession session;
 
+    @GetMapping("/expert/reply")
+    public String expertReply(Model model) {
+        return "expert/expert-reply";
+    }
+
+//    @PostMapping("expert/reply-save")
+
+
 
     @GetMapping("/join")
     public String joinForm() {

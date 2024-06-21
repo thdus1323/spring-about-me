@@ -1,3 +1,4 @@
+
 {{> layout/client-header}}
 
 <!--커뮤니티 시작-->
@@ -130,7 +131,7 @@
                                     <figure><img src="/images/level1.png" alt="회원이미지"></figure>
                                     <span>{{comm.name}}</span></div>
                             </div>
-                            <p class="card-text mb-20">{{comm.content}}</p>
+                            <p class="card-text mb-20">여기는 일반인 댓글 출력 공간입니다</p>
 
                             <div class="bottom-content">
                                 <div class="click-wrapper">
@@ -211,6 +212,17 @@
             console.log(url);
         };
     });
+
+    // 전문가 댓글 달기 창 열기
+    function openNewWindow() {
+        // 새로운 창으로 열고자 하는 URL을 여기에 입력하세요.
+        var url = "/expert/reply";
+
+        // 새 창의 특성을 지정할 수 있습니다. (폭, 높이 등)
+        var windowFeatures = "width=600, height=850,scrollbars=yes";
+        // 새 창 열기
+        window.open(url, "_blank", windowFeatures);
+    }
 </script>
 <!--컨텐츠 끝-->
 </div>
