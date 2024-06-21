@@ -83,7 +83,7 @@ public class User {
         this.phone = phone;
         this.expertTitle = expertTitle;
         this.level = level;
-        this.profileImage = UserDefault.getProfileImage(profileImage);
+        this.profileImage = profileImage;
         this.birth = birth;
         this.gender = gender;
         this.pr = pr;
@@ -91,9 +91,5 @@ public class User {
         this.provider = provider;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    public String getProfileImage() {
-        return UserDefault.getProfileImage(profileImage);
     }
 }
