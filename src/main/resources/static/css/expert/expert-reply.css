@@ -1,0 +1,72 @@
+body {
+    font-family: 'Noto Sans KR', Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.expert-reply-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.expert-reply-header {
+    background-color: #ffa45b;
+    color: #fff;
+    padding: 10px;
+    display: flex; /* 플렉스박스 적용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    border-radius: 10px;
+}
+.expert-reply-header img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; /* 이미지와 텍스트 사이 간격 */
+}
+.expert-reply-header-info h1 {
+    margin: 0;
+    font-size: 1.5em;
+}
+.expert-reply-header-info p {
+    margin: 0;
+}
+.form-group {
+    margin: 15px 0;
+
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input, .form-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: auto;
+}
+.form-group-button {
+    display: flex;
+    justify-content: flex-end;
+}
+.form-group textarea {
+    height: 120px;
+}
+
+.form-group-button button {
+    background-color: #ffa45b; /* 오렌지색 버튼 */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: auto; /* 버튼의 너비를 자동으로 설정 */
+    margin-left: auto; /* 왼쪽 마진을 0으로 설정하여 왼쪽 정렬 */
+}
+.form-group-button button:hover {
+    background-color: #fd780f;
+}

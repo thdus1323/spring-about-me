@@ -39,6 +39,9 @@ public class Reply {
     @CreationTimestamp
     private Timestamp createdAt;
 
+    @Column
+    private String introduction; // 전문가가 댓글 달때 소개글
+
     @Builder
     public Reply(Integer id, User user, Comm comm, String summary, String causeAnalysis, String solution, Timestamp createdAt) {
         this.id = id;
