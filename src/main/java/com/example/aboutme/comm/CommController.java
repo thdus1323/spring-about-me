@@ -1,7 +1,6 @@
 package com.example.aboutme.comm;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ public class CommController {
         return "comm/comm-write";
     }
 
-    @GetMapping("comm/detail")
+    @GetMapping("/comm/detail")
     public String communityDetail() {
         return "comm/comm-detail";
     }

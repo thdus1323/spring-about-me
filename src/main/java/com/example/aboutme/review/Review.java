@@ -28,6 +28,9 @@ public class Review {
     @JoinColumn(name = "counsel_id", nullable = false)
     private Counsel counsel; // 외래 키로 상담 정보를 참조
 
+    @JoinColumn(nullable = false)
+    private Double score;
+
     @Column(nullable = false)
     private String content;
 
@@ -37,14 +40,13 @@ public class Review {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-
     @Builder
-
-    public Review(Integer id, User user, Counsel counsel, Timestamp createdAt, Timestamp updatedAt) {
-
+    public Review(Integer id, User user, Counsel counsel, Double score, String content, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.user = user;
         this.counsel = counsel;
+        this.score = score;
+        this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
