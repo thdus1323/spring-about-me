@@ -5,13 +5,13 @@ public enum VoucherType {
     VOICE_THERAPY("음성 테라피"), // 음성 테라피
     VIDEO_THERAPY("화상 테라피"); // 화상 테라피
 
-    private final String korean;
+    private final String voucherType;
 
-    VoucherType(String korean) {
-        this.korean = korean;
+    VoucherType(String voucherType) {
+        this.voucherType = voucherType;
     }
 
-    public String getKorean() {
-        return korean;
+    public String getVoucherType() {
+        return voucherType;
     }
 }

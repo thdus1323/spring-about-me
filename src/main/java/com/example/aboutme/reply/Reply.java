@@ -27,23 +27,23 @@ public class Reply {
     @JoinColumn(name = "comm_id", nullable = false)
     private Comm comm;
 
-    @Column(nullable = false)
+    // 일반 유저 댓글
+    private String content;
+
+    // 전문가 댓글
     private String summary;
-
-    @Column(nullable = false)
     private String causeAnalysis;
-
-    @Column(nullable = false)
     private String solution;
 
     @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
-    public Reply(Integer id, User user, Comm comm, String summary, String causeAnalysis, String solution, Timestamp createdAt) {
+    public Reply(Integer id, User user, Comm comm, String content, String summary, String causeAnalysis, String solution, Timestamp createdAt) {
         this.id = id;
         this.user = user;
         this.comm = comm;
+        this.content = content;
         this.summary = summary;
         this.causeAnalysis = causeAnalysis;
         this.solution = solution;
