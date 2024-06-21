@@ -15,12 +15,5 @@ public class UserRequest {
     public static class LoginDTO {
         private String email;
         private String password;
-        private UserRole userRole;
-
-        public LoginDTO(String email, String password) {
-            this.email = email;
-            this.password = password;
-//            this.userRole = userRole;
-        }
     }
 }

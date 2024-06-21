@@ -1,316 +1,261 @@
 {{> layout/client-header}}
 
+{{#model}}
+    <div class="d-flex container">
+        <div class="content col-md-8">
+            <div class="header">
+                <h1>내담자의 성장을 함께하고 싶은 상담자입니다.</h1>
+            </div>
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    <div class="mb-4">
+                        <h2><img src="/images/icons8-bot-64.png"> AI가 요약한 후기</h2>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p style="font-weight: bold;">다양한 문제를 다각도로 접근하고 공감하며 해결책을 제시하는 전문가.</p>
+                                <p>{{user.name}} 전문가는 깊이 있는 공감과 경청으로 감정을 잘 이해하고 조언해 주는 전문가입니다. {{user.name}} 전문가는 이야기를 귀
+                                    기울여 듣고 진심으로 깊이 공감해 주는 전문가예요. 마키님들이 간단하게 이야기한 내용에서도 감정을 잘 짚어내며 디테일한 부분에까지 이끌어가세요. 상태를
+                                    이해하는 데 도움이 되는 조언도 많이 해주시고, 문제점을 스스로 깨달을 수 있도록 인사이트를 주시는 점이 특히 인상적이에요. 긴 상담일지도 모안
+                                    마키님들을 잘 파헤쳐서 맞춤형 상담을 진행해 주시고, 해결되지 않는 감정에 대한 디테일한 분석도 알려주셔서 많은 도움이 되었다고 해요. 또한, 같은
+                                    신앙을 가진 마키님들에게는 더 편하게 말할 수 있는 점이 좋았다고 해요. {{user.name}} 전문기사의 상담에서 마키님들은 자신을 사랑하는 법을
+                                    배우고, 진심으로 걱정해주는 조언을 받으며 마음의 안정감을 느낄 수 있었다고 합니다.</p>
+                            </div>
+                        </div>
+                        <div></div>
+                        <p class="info-note" style="color: rgb(156, 153, 153);">현재 AI 기술 수준에서는 후기 요약이 정확하지 않거나 표현이 어색할 수
+                            있습니다.</p>
+                    </div>
 
-<div class="d-flex  container ">
-    <div class="content col-md-8">
-        <div class="header">
-            <h1>내담자의 성장을 함께하고 싶은 상담자입니다.</h1>
-        </div>
-        <div class="row mb-4">
-            <div class="col-lg-12">
-                <div class="mb-4">
-                    <h2><img src="/images/icons8-bot-64.png"> AI가 요약한 후기</h2>
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <p style="font-weight: bold;">다양한 문제를 다각도로 접근하고 공감하며 해결책을 제시하는 전문가.</p>
-                            <p>이혜경 전문가는 깊이 있는 공감과 경청으로 마키님들의 감정을 잘 이해하고 조언해 주는 전문가입니다. 이혜경 전문가는 마키님들의 이야기를 귀 기울여 듣고 진심으로
-                                깊이 공감해 주는 전문가예요. 마키님들이 간단하게 이야기한 내용에서도 감정을 잘 짚어내며 디테일한 부분에까지 이끌어가세요. 마키님들의 상태를 이해하는 데
-                                도움이 되는 조언도 많이 해주시고, 문제점을 스스로 깨달을 수 있도록 인사이트를 주시는 점이 특히 인상적이에요. 긴 상담일지도 모안 마키님들을 잘 파헤쳐서
-                                맞춤형 상담을 진행해 주시고, 해결되지 않는 감정에 대한 디테일한 분석도 알려주셔서 많은 도움이 되었다고 해요. 또한, 같은 신앙을 가진 마키님들에게는 더
-                                편하게 말할 수 있는 점이 좋았다고 해요. 이혜경 전문기사의 상담에서 마키님들은 자신을 사랑하는 법을 배우고, 진심으로 걱정해주는 조언을 받으며 마음의
-                                안정감을 느낄 수 있었다고 합니다.</p>
+                    <div class="mb-4">
+                        <div>
+                            <i class="fa-regular fa-thumbs-up mt-5"></i>
+                            <h4 class="fw-bold border-bottom pb-2 mb-4">{{user.name}} 상담사님에 대한 104개의 후기</h4>
+                        </div>
+
+                        <div class="review-rating">
+                            <i class="fas fa-star" style="color: #f5c518;"></i>
+                            <span>4.95</span>
+                            <span style="font-size: large; font-weight: lighter;">/5</span>
+                        </div>
+
+                        <div class="container mb-4">
+                            <div class="row align-items-start">
+                                <div class="col-md-6">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="mr-2">5</span>
+                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                <div class="progress-bar"
+                                                     style="width: 100%; background-color: #007D7C;" aria-valuenow="100"
+                                                     aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span>186</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="mr-2">4</span>
+                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                <div class="progress-bar" style="width: 3%; background-color: #007D7C;"
+                                                     aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span>6</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="mr-2">3</span>
+                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                <div class="progress-bar" style="background-color: #007D7C;"
+                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span>0</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="mr-2">2</span>
+                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                <div class="progress-bar" style="background-color: #007D7C;"
+                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span>0</span>
+                                        </div>
+                                        <div class="d-flex align-items-center my-2">
+                                            <span class="mr-2">1</span>
+                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                <div class="progress-bar" style="background-color: #007D7C;"
+                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span>0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="review-detail-item" style="--score: 4.7; height: 20px;">
+                                        <div class="item-info">
+                                            <i class="fas fa-heart icon-heart"></i>
+                                            <span>경청과 공감</span>
+                                        </div>
+                                        <span class="rating">4.7</span>
+                                    </div>
+                                    <div class="review-detail-item" style="--score: 4; height: 20px;">
+                                        <div class="item-info">
+                                            <i class="fas fa-lightbulb icon-solution"></i>
+                                            <span>적절한 해결책</span>
+                                        </div>
+                                        <span class="rating">4</span>
+                                    </div>
+                                    <div class="review-detail-item" style="--score: 4.7; height: 20px;">
+                                        <div class="item-info">
+                                            <i class="fas fa-eye icon-lightbulb"></i>
+                                            <span>객관적 시각</span>
+                                        </div>
+                                        <span class="rating">4.7</span>
+                                    </div>
+                                    <div class="review-detail-item" style="--score: 4.6; height: 20px;">
+                                        <div class="item-info">
+                                            <i class="fas fa-book icon-book"></i>
+                                            <span>유용한 심리지식</span>
+                                        </div>
+                                        <span class="rating">4.6</span>
+                                    </div>
+                                    <div class="review-detail-item" style="--score: 4.6; height: 20px;">
+                                        <div class="item-info">
+                                            <i class="fas fa-bolt icon-lightning"></i>
+                                            <span>신속한 대응</span>
+                                        </div>
+                                        <span class="rating">4.6</span>
+                                    </div>
+                                    <div class="review-detail-item" style="--score: 4.7; height: 20px;">
+                                        <div class="item-info">
+                                            <i class="fas fa-smile icon-smile"></i>
+                                            <span>친절한 설명</span>
+                                        </div>
+                                        <span class="rating">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div >
+                            {{#reviews}}
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-score">
+                                            <i class="fas fa-star" style="color: #f5c518;"></i> 5.0
+                                        </div>
+                                        <div class="review-best">
+                                            BEST
+                                        </div>
+                                    </div>
+                                    <div class="review-text">
+                                        {{content}} <a href="#">더 보기</a>
+                                    </div>
+                                    <div class="review-footer">
+                                        <div>
+                                            <i class="fas fa-comments"></i> 보이스 테라피
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-user"></i> 8회기권 구매고객
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/reviews}}
+                        </div>                        <div class="review-toggle btn-group">
+                            <button class="btn btn-toggle more " type="button">후기 더보기</button>
+                            <button class="btn btn-toggle less mx-2" type="button" style="display: none;">접기</button>
                         </div>
                     </div>
-                    <div></div>
-                    <p class="info-note" style="color: rgb(156, 153, 153);">현재 AI 기술 수준에서는 후기 요약이 정확하지 않거나 표현이 어색할 수
-                        있습니다.</p>
 
                 </div>
-
-
                 <div class="mb-4">
                     <div>
                         <i class="fa-regular fa-thumbs-up mt-5"></i>
-                        <h4 class="fw-bold border-bottom pb-2 mb-4">이윤희 상담사님에 대한 104개의 후기</h4>
+                        <h4 class="fw-bold border-bottom pb-2">이윤희 상담사님의 간단한 소개</h4>
                     </div>
+                    <div class="container mt-3">
+                        <!-- 경력 및 학력 -->
+                        <div class="row">
+                            <!-- 경력 -->
+                            <div class="col-12 col-lg-6">
+                                <h4 class="fw-bold mb-3 border-bottom pb-2">경력</h4>
+                                <ul class="list-group">
+                                    {{#careerSpecs}}
+                                        <li class="list-group-item">{{details}}</li>
+                                    {{/careerSpecs}}
+                                </ul>
+                            </div>
+                            <!-- 학력 -->
+                            <div class="col-12 col-lg-6">
+                                <h4 class="fw-bold mb-3 border-bottom pb-2">학력</h4>
+                                <ul class="list-group">
+                                    {{#educationSpecs}}
+                                        <li class="list-group-item">{{details}}</li>
+                                    {{/educationSpecs}}
+                                </ul>
+                            </div>
+                        </div>
 
-                    <div class="review-rating">
-                        <i class="fas fa-star" style="color: #f5c518;"></i>
-                        <span>4.95</span>
-                        <sapn style="font-size: large; font-weight: lighter;">/5</sapn>
-                    </div>
-
-                    <div class="container mb-4">
-                        <div class="row align-items-start">
-                            <div class="col-md-6">
-                                <div class="d-flex flex-column justify-content-center">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="mr-2">5</span>
-                                        <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                            <div class="progress-bar" style="width: 100%; background-color: #007D7C;"
-                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>186</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="mr-2">4</span>
-                                        <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                            <div class="progress-bar" style="width: 3%; background-color: #007D7C;"
-                                                 aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>6</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="mr-2">3</span>
-                                        <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                            <div class="progress-bar" style="width: 0%; background-color: #007D7C;"
-                                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>0</span>
-                                    </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="mr-2">2</span>
-                                        <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                            <div class="progress-bar" style="width: 0%; background-color: #007D7C;"
-                                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>0</span>
-                                    </div>
-                                    <div class="d-flex align-items-center my-2">
-                                        <span class="mr-2">1</span>
-                                        <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                            <div class="progress-bar" style="width: 0%; background-color: #007D7C;"
-                                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>0</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="review-detail-item" style="--score: 4.7; height: 20px;">
-                                    <div class="item-info">
-                                        <i class="fas fa-heart icon-heart"></i>
-                                        <span>경청과 공감</span>
-                                    </div>
-                                    <span class="rating">4.7</span>
-                                </div>
-                                <div class="review-detail-item" style="--score: 4; height: 20px;">
-                                    <div class="item-info">
-                                        <i class="fas fa-lightbulb icon-solution"></i>
-                                        <span>적절한 해결책</span>
-                                    </div>
-                                    <span class="rating">4</span>
-                                </div>
-                                <div class="review-detail-item" style="--score: 4.7; height: 20px;">
-                                    <div class="item-info">
-                                        <i class="fas fa-eye icon-lightbulb"></i>
-                                        <span>객관적 시각</span>
-                                    </div>
-                                    <span class="rating">4.7</span>
-                                </div>
-                                <div class="review-detail-item" style="--score: 4.6; height: 20px;">
-                                    <div class="item-info">
-                                        <i class="fas fa-book icon-book"></i>
-                                        <span>유용한 심리지식</span>
-                                    </div>
-                                    <span class="rating">4.6</span>
-                                </div>
-                                <div class="review-detail-item" style="--score: 4.6; height: 20px;">
-                                    <div class="item-info">
-                                        <i class="fas fa-bolt icon-lightning"></i>
-                                        <span>신속한 대응</span>
-                                    </div>
-                                    <span class="rating">4.6</span>
-                                </div>
-                                <div class="review-detail-item" style="--score: 4.7; height: 20px;">
-                                    <div class="item-info">
-                                        <i class="fas fa-smile icon-smile"></i>
-                                        <span>친절한 설명</span>
-                                    </div>
-                                    <span class="rating">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="review-score">
-                                <i class="fas fa-star" style="color: #f5c518;"></i> 5.0
-                            </div>
-                            <div class="review-best">
-                                BEST
-                            </div>
-                        </div>
-                        <div class="review-text">
-                            선생님과 상담하면서 정말 큰 도움이 되었어요. 제 마음 상태와 생각에 대해서도 정리할 수 있었고, 다른 사람들에 대해서도 새로운 시각으로 볼 수 있게 되었어요.
-                            실적으로 안정되고 불안이 줄어들기도 했고, 늘 진심으로 대해주시는 게 느껴져 참 감사합니다 ... <a href="#">더 보기</a>
-                        </div>
-                        <div class="review-footer">
-                            <div>
-                                <i class="fas fa-comments"></i> 보이스 테라피
-                            </div>
-                            <div>
-                                <i class="fas fa-user"></i> 8회기권 구매고객
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <div class="review-score">
-                                <i class="fas fa-star" style="color: #f5c518;"></i> 5.0
-                            </div>
-                            <div class="review-best">
-                                BEST
-                            </div>
-                        </div>
-                        <div class="review-text">
-                            선생님과 상담하면서 정말 큰 도움이 되었어요. 제 마음 상태와 생각에 대해서도 정리할 수 있었고, 다른 사람들에 대해서도 새로운 시각으로 볼 수 있게 되었어요.
-                            실적으로 안정되고 불안이 줄어들기도 했고, 늘 진심으로 대해주시는 게 느껴져 참 감사합니다 ... <a href="#">더 보기</a>
-                        </div>
-                        <div class="review-footer">
-                            <div>
-                                <i class="fas fa-comments"></i> 보이스 테라피
-                            </div>
-                            <div>
-                                <i class="fas fa-user"></i> 8회기권 구매고객
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-toggle">
-                        <button class="btn btn-toggle" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#reviewSection" aria-expanded="false" aria-controls="reviewSection">
-                            후기 더보기 <i class="fas fa-chevron-down"></i>
-                        </button>
                     </div>
                 </div>
-
-            </div>
-            <div class="mb-4">
-                <div>
-                    <i class="fa-regular fa-thumbs-up mt-5"></i>
-                    <h4 class="fw-bold border-bottom pb-2">이윤희 상담사님의 간단한 소개</h4>
-                </div>
-                <div class="container mt-5">
-                    <!-- 경력 및 학력 -->
-                    <div class="row mb-4">
-                        <!-- 경력 -->
-                        <div class="col-12 col-lg-6">
-                            <h4 class="fw-bold mb-3 border-bottom pb-2">경력</h4>
-                            <ul class="list-group">
-                                <li class="list-group-item">마인드카페 선정, 11월의 전문가</li>
-                                <li class="list-group-item">상담심리사 1급 (한국상담심리학회)</li>
-                                <li class="list-group-item">성폭력전문상담사 (여성가족부)</li>
-                                <li class="list-group-item">명상수련전문가 T급 (한국명상학회)</li>
-                                <li class="list-group-item">현 마인드카페 심리상담사</li>
-                                <li class="list-group-item">일본 기후현 토요카시 개인상담사</li>
-                                <li class="list-group-item">전 LGDisplay본사 전문상담사</li>
-                                <li class="list-group-item">전 분당차병원 차심리상담센터 전문상담사</li>
-                                <li class="list-group-item">전 용인시청소년상담복지센터 전문상담사</li>
-                                <li class="list-group-item">전문상담사 1급 (한국상담학회)</li>
-                                <li class="list-group-item">청소년상담사 2급 (여성가족부)</li>
-                                <li class="list-group-item">MBTI일반강사 (한국MBTI연구소)</li>
-                                <li class="list-group-item">전문심리상담경력 (10년)</li>
-                                <li class="list-group-item">현 심리상담연구소 그린 소장</li>
-                                <li class="list-group-item">현 근로복지넷 협약상담사</li>
-                                <li class="list-group-item">전 소중한아이정신건강의학과 전문상담사</li>
-                                <li class="list-group-item">전 경기도성남교육지원청Wee센터 전문상담사</li>
-                            </ul>
-                        </div>
-                        <!-- 학력 -->
-                        <div class="col-12 col-lg-6">
-                            <h4 class="fw-bold mb-3 border-bottom pb-2">학력</h4>
-                            <ul class="list-group">
-                                <li class="list-group-item">도쿄대학대학원 교육학연구과 임상심리학코스 박사과정</li>
-                                <li class="list-group-item">차의과학대학교 일반대학원 의학과 임상상담심리전공 박사 졸업</li>
-                            </ul>
-                        </div>
+                <!-- 상담사 질문 섹션 -->
+                <div class="mb-4">
+                    <div>
+                        <i class="fa-regular fa-thumbs-up mt-5"></i>
+                        <h4 class="fw-bold border-bottom pb-2">이윤희 상담사님에게 여쭤봤어요</h4>
                     </div>
-
-
-                </div>
-
-            </div>
-            <!-- 상담사 질문 섹션 -->
-            <div>
-                <div>
-                    <h4 class="fw-bold border-bottom pb-2">이윤희 상담사님에게 여쭤봤어요</h4>
                     <div class="row experience">
-                        <div class="col-md-6 review-item">
+                        {{#prs}}
+
+                        <div class="col-md-6">
                             <h5 class="fw-bold">심리상담을 망설이는 분에게</h5>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="content-container" id="content1">
-                                        내 문제가 아닌, 내가 처해 있는 삶의 험난한 지형을 보게 될 때 문제는 더 이상 나를 힘들게 할 수 없습니다. 내 문제가 아닌, 내가 처해
-                                        있는 삶의 험난한 지형을 보게 될 때 문제는 더 이상 나를 힘들게 할 수 없습니다. 내 문제가 아닌, 내가 처해 있는 삶의 험난한 지형을 보게
-                                        될 때 문제는 더 이상 나를 힘들게 할 수 없습니다. 내 문제가 아닌, 내가 처해 있는 삶의 험난한 지형을 보게 될 때 문제는 더 이상 나를
-                                        힘들게 할 수 없습니다.
-                                        <div class="overlay"></div>
-                                    </div>
-                                    <span class="toggle-text" data-target="#content1">더보기</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 review-item">
-                            <h5 class="fw-bold">상담사님의 심리상담 효과</h5>
-                            <div class="card">
-                                <div class="card-body">
                                     <div class="content-container" id="content2">
-                                        첫째, 나를 이끌고 있는 영향력의 존재를 확인할 수 있습니다. 둘째, 그 영향력이 나의 삶을 어떻게 이끌고 있는지 알 수 있습니다. 셋째, 나는
-                                        내 삶의 방향을 선택할 수 있습니다. 첫째, 나를 이끌고 있는 영향력의 존재를 확인할 수 있습니다. 둘째, 그 영향력이 나의 삶을 어떻게 이끌고
-                                        있는지 알 수 있습니다. 셋째, 나는 내 삶의 방향을 선택할 수 있습니다.
+                                        {{intro}}
                                         <div class="overlay"></div>
                                     </div>
                                     <span class="toggle-text" data-target="#content2">더보기</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 review-item">
-                            <h5 class="fw-bold">상담사님의 심리상담 방식</h5>
+                        <div class="col-md-6">
+                            <h5 class="fw-bold">상담사님의 심리상담 효과</h5>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="content-container" id="content3">
-                                        내 인생의 주제는 "나 자신"입니다. 저와의 상담은 "진정한 나"를 찾아가는 여정이 될 것입니다. 내 인생의 주제는 "나 자신"입니다. 저와의
-                                        상담은 "진정한 나"를 찾아가는 여정이 될 것입니다. 내 인생의 주제는 "나 자신"입니다. 저와의 상담은 "진정한 나"를 찾아가는 여정이 될
-                                        것입니다. 내 인생의 주제는 "나 자신"입니다.
+                                        {{effects}}
+
                                         <div class="overlay"></div>
                                     </div>
                                     <span class="toggle-text" data-target="#content3">더보기</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 review-item">
-                            <h5 class="fw-bold">Q. 이윤희 상담사님은 다른 상담사님들과 어떤 차별점이 있나요?</h5>
+                        <div class="col-md-6">
+                            <h5 class="fw-bold">상담사님의 심리상담 방식</h5>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="content-container" id="content4">
-                                        저는 인간중심, 대상관계 및 애착이론을 기반으로 한 인간 이해를 훈련받은 상담자입니다. 저는 인간중심, 대상관계 및 애착이론을 기반으로 한 인간
-                                        이해를 훈련받은 상담자입니다. 저는 인간중심, 대상관계 및 애착이론을 기반으로 한 인간 이해를 훈련받은 상담자입니다. 저는 인간중심, 대상관계
-                                        및 애착이론을 기반으로 한 인간 이해를 훈련받은 상담자입니다.
+                                        {{methods}}
                                         <div class="overlay"></div>
                                     </div>
                                     <span class="toggle-text" data-target="#content4">더보기</span>
                                 </div>
                             </div>
                         </div>
+                        {{/prs}}
                     </div>
                 </div>
-            </div>
-            <!-- 상담사 질문 섹션 -->
-        </div>
-    </div>
-    <div class="col-md-2" style="margin-left: auto; position: relative;width: 290px;">
-        <div class="card-expert"> <!-- 경계 추가 -->
-            <img src="/images/iu.png" alt="상담사 사진">
-            <div class="card-body">
-                <h2>김연정 <span class="rating">★ 4.91</span> (34)</h2>
-                <p>1회 최저 가격</p>
-                <p class="price">49,000원</p>
-                <a href="/client/findExpert/voucher" class="button-container">이용권 선택하기</a>
+                <!-- 상담사 질문 섹션 -->
             </div>
         </div>
+        <div class="col-md-2" style="margin-left: auto; position: relative; width: 290px;">
+            <div class="card-expert">
+                <img src="/images/{{user.profileImage}}" alt="상담사 사진">
+                <div class="card-body">
+                    <h2>{{user.name}} <span class="rating">★ 4.91</span> (34)</h2>
+                    <p>1회 최저 가격</p>
+                    <p class="price">{{lowestPrice}}</p>
+                    <a href="/client/findExpert/voucher/{{user.expertId}}" class="button-container">이용권 선택하기</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-
+{{/model}}
 
 {{> layout/footer}}
