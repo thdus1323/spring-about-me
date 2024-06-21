@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,9 +17,10 @@ public class CommService {
     private final CommRepository commRepository;
     private final CommNativeRepository commNativeRepository;
 
-    public List<CommResponse.ClientMainCommListDTO> getMainComms() {
 
-        return commRepository.findCommsWithReply();
+
+    public List<CommResponse.CommAndReplyDTO> findAllCommsWithReply() {
+        return commRepository.findAllCommsWithReply();
     }
 
     //상품 상세보기
