@@ -58,7 +58,7 @@
 
                     <!--댓글 제목 시작-->
                     <hr>
-                    <br>
+
                     <h3 class="page-title mb-20">전문답변 <span class="main-color">1</span> 개가 달렸어요.</h3>
 
                     <!--전문가 댓글 시작-->
@@ -122,7 +122,7 @@
                             <div class="community-cartegory">
                                 <div class="user-info"><figure><img src="/images/level1.png" alt="회원이미지"></figure><span>handon7018</span></div>
                             </div>
-                            <p class="card-text mb-20">군 재대 후 24년 1월부터 평인엔 시골에서 지내고 왈가왈부 두줄 테스트를 하기 위해서 글을 써내려 가고 있습니다 하하하하하하하하하</p>
+                            <p class="card-text mb-20">여기는 일반인 댓글 출력 공간입니다</p>
 
                             <div class="bottom-content">
                                 <div class="click-wrapper">
@@ -134,6 +134,7 @@
                     <div class="comment-section mb-50">
                         <input type="text" placeholder="따뜻한 댓글을 남겨주세요">
                         <button class="main-background defalut-btn">게시</button>
+                        <button class="main-background defalut-btn" onclick="openNewWindow()"> 전문가 댓글 게시</button>
                     </div>
 
                     <hr>
@@ -200,6 +201,17 @@
             console.log(url);
         };
     });
+
+    // 전문가 댓글 달기 창 열기
+    function openNewWindow() {
+        // 새로운 창으로 열고자 하는 URL을 여기에 입력하세요.
+        var url = "/expert/reply";
+
+        // 새 창의 특성을 지정할 수 있습니다. (폭, 높이 등)
+        var windowFeatures = "width=600, height=850,scrollbars=yes";
+        // 새 창 열기
+        window.open(url, "_blank", windowFeatures);
+    }
 </script>
 <!--컨텐츠 끝-->
 </div>

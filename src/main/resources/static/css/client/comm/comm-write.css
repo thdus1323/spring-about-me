@@ -15,7 +15,7 @@ h2 {
 }
 
 /* 드롭다운 및 체크박스 그룹 스타일링 */
-.form-group {
+.form-write-group {
     margin-top: 20px;
 }
 
@@ -40,15 +40,14 @@ textarea, input[type="text"] {
 }
 
 /* 버튼 스타일링 */
-button {
-    background-color: #007bff;
+.btn-primary {
+    background-color: #FFA45B;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
 }
-
-button:hover {
-    background-color: #FFA45B;
+.btn-primary:hover{
+    background-color: #fd780f;
 }
