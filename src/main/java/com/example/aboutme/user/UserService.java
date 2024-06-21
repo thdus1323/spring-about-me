@@ -257,7 +257,8 @@ public class UserService {
                     .email(email != null ? email : "kakao_" + kakaoId + "@kakao.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-                    .profileImage(UserDefault.getDefaultProfileImage())
+                    .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
+//                    .profileImage(UserDefault.getDefaultProfileImage())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
