@@ -1,7 +1,9 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme._core.utils.UserDefault;
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
+import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
@@ -21,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-//@ToString(exclude = {"pr", "specs"}) // 유효한 필드만 제외
+@ToString(exclude = {"pr", "specs", "payments", "refunds", "alarms", "comms", "replies", "vouchers"})
 public class User {
 
     // 필수 입력
@@ -66,6 +68,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Spec> specs;
 
+    @Enumerated(EnumType.STRING)
+    private OauthProvider provider; // kakao, naver
+
     @CreationTimestamp
     private Timestamp createdAt;
 
@@ -73,7 +78,7 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String expertTitle, ExpertLevel level, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String expertTitle, ExpertLevel level, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, OauthProvider provider, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
@@ -87,6 +92,7 @@ public class User {
         this.gender = gender;
         this.pr = pr;
         this.specs = specs;
+        this.provider = provider;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
