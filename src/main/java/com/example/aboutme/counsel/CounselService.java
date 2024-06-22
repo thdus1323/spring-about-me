@@ -5,6 +5,7 @@ import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.CounselDTORecord;
 import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.UserRecord;
 import com.example.aboutme.counsel.enums.StateEnum;
+import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.voucher.VoucherRepository;
@@ -25,7 +26,7 @@ public class CounselService {
 
     //상담일정
     @Transactional
-    public CounselDTORecord findCounsel(User sessionUser, Integer expertId) {
+    public CounselDTORecord findCounsel(SessionUser sessionUser, Integer expertId) {
 
         // 0. 인증
         if (sessionUser == null) {

@@ -22,7 +22,7 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ReviewDTORecord getExpertReview(Integer expertId,User sessionUser){
+    public ReviewDTORecord getExpertReview(Integer expertId,SessionUser sessionUser){
         // 0. 인증
         if (sessionUser == null){
             throw new Exception403("인증되지 않은 유저입니다");
