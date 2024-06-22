@@ -9,6 +9,11 @@ server:
   port: 8080
 
 spring:
+  redis:
+    data:
+      host: 127.0.0.1
+      port: 6379
+      password:
   mustache:
     servlet:
       expose-session-attributes: true
