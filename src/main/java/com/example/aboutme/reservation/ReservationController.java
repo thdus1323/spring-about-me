@@ -1,6 +1,5 @@
 package com.example.aboutme.reservation;
 
-import com.example.aboutme.reservation.resrvationResponse.ReservationDetails.ReservationDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +19,10 @@ public class ReservationController {
             @RequestParam(name = "expertId", required = false) Integer expertId,
             Model model) {
 
+        model.addAttribute("voucherId", voucherId);
+        model.addAttribute("expertId", expertId);
 
-        System.out.println("voucherId = " + voucherId);
-        System.out.println("expertId = " + expertId);
-        ReservationDetailsDTO reservationDetails = reservationService.getReservationDetails(voucherId, expertId);
-        model.addAttribute("model", reservationDetails);
-        System.out.println("reservationDetails = " + reservationDetails);
+
         return "client/findExpert/reservation";
     }
 

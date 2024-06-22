@@ -5,18 +5,11 @@ import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -58,11 +51,11 @@ public class Reservation {
 
     // 예약 시작 시간
     @Column(nullable = false)
-    private LocalTime startTime;
+    private String startTime;
 
     // 예약 날짜
     @Column(nullable = false)
-    private LocalDate reservationDate;
+    private String reservationDate;
 
     // 예약 생성 시간
     @CreationTimestamp
@@ -73,7 +66,7 @@ public class Reservation {
     private Timestamp updatedAt;
 
     @Builder
-    public Reservation(Integer id, User expert, User client, Voucher voucher, ReservationStatus status, LocalTime startTime, LocalDate reservationDate, Schedule schedule, Timestamp createdAt, Timestamp updatedAt) {
+    public Reservation(Integer id, User expert, User client, Voucher voucher, ReservationStatus status, String startTime, String reservationDate, Schedule schedule, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.expert = expert;
         this.client = client;
