@@ -3,10 +3,10 @@ package com.example.aboutme.user.oauth;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-public class KakaoResponse {
+public class UserResponse {
 
     @Data
-    public static class TokenDTO {
+    public static class KakaoTokenDTO {
         @JsonProperty("access_token")
         private String accessToken;
 
