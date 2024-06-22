@@ -14,11 +14,12 @@ public class ReservationController {
 
 
     //    전문가 칮기 - 예약하기
-    @GetMapping("/client/findExpert/reservation/")
+    @GetMapping("/client/findExpert/reservation")
     public String findExpertReservation(
             @RequestParam(name = "voucherId", required = false) Integer voucherId,
             @RequestParam(name = "expertId", required = false) Integer expertId,
             Model model) {
+
 
         System.out.println("voucherId = " + voucherId);
         System.out.println("expertId = " + expertId);

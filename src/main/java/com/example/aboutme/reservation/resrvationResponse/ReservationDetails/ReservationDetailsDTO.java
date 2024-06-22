@@ -7,9 +7,11 @@ import java.util.List;
 
 public record ReservationDetailsDTO(
         VoucherDTO voucher,
+        List<String> availableTimes,
         List<ScheduleDTO> schedules,
         List<ReservationDTO> reservations
 ) {
+
     public record ReservationDTO(
             Integer id,
             Integer expertId,
@@ -50,5 +52,6 @@ public record ReservationDetailsDTO(
     ) {
 
     }
+
 
 }

@@ -12,7 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -77,7 +81,40 @@ public class ReservationService {
                 ))
                 .collect(toList());
 
-        return new ReservationDetailsDTO(voucherDTO, scheduleDTOs, reservationDTOs);
+        // 예약 가능한 시간 계산
+        List<String> availableTimes = calculateAvailableTimes(schedules, reservations);
+        System.out.println("availableTimes = " + availableTimes);
+
+        return new ReservationDetailsDTO(voucherDTO, availableTimes, scheduleDTOs, reservationDTOs);
+    }
+
+    
+    private List<String> calculateAvailableTimes(List<Schedule> schedules, List<Reservation> reservations) {
+        List<String> availableTimes = new ArrayList<>();
+
+        // 예약된 시간대를 가져옵니다.
+        List<LocalTime> reservedTimes = reservations.stream()
+                .map(Reservation::getStartTime)
+                .toList();
+
+        // 스케줄에 따른 예약 가능한 시간을 계산합니다.
+        for (Schedule schedule : schedules) {
+            // 점심 시간대를 제외한 시간을 계산합니다.
+            List<LocalTime> times = IntStream.rangeClosed(schedule.getStartTime().getHour(), schedule.getEndTime().getHour() - 1)
+                    .mapToObj(hour -> LocalTime.of(hour, 0))
+                    .collect(Collectors.toList());
+
+            // 점심 시간대를 제외합니다.
+            times.removeIf(time -> !time.isBefore(schedule.getLunchStartTime()) && !time.isAfter(schedule.getLunchEndTime()));
+
+            // 이미 예약된 시간을 제외합니다.
+            times.removeAll(reservedTimes);
+
+            // 포맷하여 추가합니다.
+            availableTimes.addAll(times.stream().map(LocalTime::toString).collect(Collectors.toList()));
+        }
+
+        return availableTimes;
     }
 
     @Transactional
