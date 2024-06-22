@@ -1,6 +1,7 @@
 package com.example.aboutme.user.pr;
 
 import com.example.aboutme.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class PR {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id")
+//    @JsonIgnore
     private User user;
 
     @Builder

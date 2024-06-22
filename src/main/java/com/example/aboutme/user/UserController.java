@@ -6,12 +6,12 @@ import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecor
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
-import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
 //import com.example.aboutme.user.oauth.KakaoOAuthService;
 //import com.example.aboutme.user.oauth.NaverOAuthService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +23,17 @@ public class UserController {
     private final CommService commService;
     private final HttpSession session;
     private final RedisConfig redisConfig;
+    private final RedisTemplate<String, Object> rt;
+
 //    private final KakaoOAuthService kakaoOAuthService;
 //    private final NaverOAuthService naverOAuthService;
 
 
     @GetMapping("/redis/test")
-    public @ResponseBody String redisTest(){
+    public @ResponseBody String redisTest() {
+        SessionUser sessionUser = (SessionUser) rt.opsForValue().get("sessionUser");
+        System.out.println("sessionUser = " + sessionUser);
+
         return "redis test";
     }
 
@@ -38,7 +43,6 @@ public class UserController {
     }
 
 //    @PostMapping("expert/reply-save")
-
 
 
     @GetMapping("/join")
@@ -60,19 +64,18 @@ public class UserController {
 
     @GetMapping("/oauth/callback/kakao")
     public String kakaoCallback(@RequestParam("code") String code) {
-        User sessionUser = userService.loginKakao(code, session);
-        session.setAttribute("sessionUser", sessionUser);
+        SessionUser sessionUser = userService.loginKakao(code, session);
+        rt.opsForValue().set("sessionUser", sessionUser);
 
         return "redirect:/";
     }
 
-    // 여기서 code로 토큰을 받아야 된다.
     @GetMapping("/oauth/callback/naver")
-    public String oauthNaverCallback(
+    public String naverCallback(
             @RequestParam(value = "code") String code,
-            @RequestParam("state") String state){
-        User sessionUser = userService.loginNaver(code, state, session);
-        session.setAttribute("sessionUser", sessionUser);
+            @RequestParam("state") String state) {
+        SessionUser sessionUser = userService.loginNaver(code, state, session);
+        rt.opsForValue().set("sessionUser", sessionUser);
 
         return "redirect:/";
     }
@@ -118,8 +121,13 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
-        User sessionUser = userService.loginByName(reqDTO);
-        session.setAttribute("sessionUser", sessionUser);
+        SessionUser sessionUser = userService.loginByName(reqDTO);
+
+        if (sessionUser == null) {
+            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
+        } else {
+            rt.opsForValue().set("sessionUser", sessionUser);
+        }
 
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
