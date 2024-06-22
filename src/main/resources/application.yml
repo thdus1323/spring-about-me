@@ -32,6 +32,7 @@ spring:
       mode: always
       data-locations:
         - classpath:db/data.sql
+      schema-locations:
   jpa:
     hibernate:
       ddl-auto: create

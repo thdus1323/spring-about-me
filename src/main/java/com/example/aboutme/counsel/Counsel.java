@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "counsel_tb")
-@ToString(exclude = {"client", "expert", "voucher", "review"})
+@ToString(exclude = {"client", "expert", "voucher"}) // 유효한 필드만 제외
 public class Counsel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
