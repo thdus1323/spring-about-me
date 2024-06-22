@@ -1,6 +1,5 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme._core.utils.UserDefault;
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.OauthProvider;
@@ -8,10 +7,7 @@ import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -23,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-@ToString(exclude = {"pr", "specs", "payments", "refunds", "alarms", "comms", "replies", "vouchers"})
+@ToString(exclude = {"pr", "specs"})
 public class User {
 
     // 필수 입력
