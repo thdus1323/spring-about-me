@@ -65,6 +65,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Spec> specs;
 
+    @Enumerated(EnumType.STRING)
     private OauthProvider provider; // kakao, naver
 
     @CreationTimestamp
