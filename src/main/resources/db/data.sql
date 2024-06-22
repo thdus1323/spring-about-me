@@ -44,25 +44,35 @@ VALUES ('CLIENT', 'mimi@nate.com', '1234', '최미정', '0101112222', '/images/c
 -- user_tb (상담사)
 INSERT INTO user_tb (user_role, email, password, name, phone, profile_image, birth, gender, level, expert_title,
                      created_at, updated_at)
-VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', '/images/expert21.jpg', '1985-06-06', 'MAN', 'LEVEL1',
+VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', '/images/expert21.jpg', '1985-06-06', 'MAN',
+        'LEVEL1',
         '혼자 걷다 보면 외롭고 지칠 때가 있습니다. 당신의 길에 함께하는 동반자가 되고 싶습니다.', NOW(), NOW()),
-       ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', '/images/expert22.jpg', '1987-07-07', 'WOMAN', 'LEVEL2',
+       ('EXPERT', 'expert2@nate.com', '1234', '이영희', '01087654321', '/images/expert22.jpg', '1987-07-07', 'WOMAN',
+        'LEVEL2',
         '저는 당신의 이야기가 궁금하네요. 조금 더 자세하게 말씀해주실 수 있을까요?', NOW(), NOW()),
-       ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', '/images/expert23.jpg', '1980-01-01', 'MAN', 'LEVEL1',
+       ('EXPERT', 'expert3@nate.com', '1234', '박철수', '0103334444', '/images/expert23.jpg', '1980-01-01', 'MAN',
+        'LEVEL1',
         '어떤 마음이어도, 어떤 모습이어도 다 괜찮습니다.', NOW(), NOW()),
-       ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', '/images/expert24.jpg', '1982-02-02', 'WOMAN', 'LEVEL2',
+       ('EXPERT', 'expert4@nate.com', '1234', '김미영', '0103335555', '/images/expert24.jpg', '1982-02-02', 'WOMAN',
+        'LEVEL2',
         '자신을 비춰보며 따뜻하게 어루만져 줄 수 있는 시간을 만들어드리고 싶은 상담사 백소림입니다.', NOW(), NOW()),
-       ('EXPERT', 'expert5@nate.com', '1234', '이종현', '0103336666', '/images/expert25.jpg', '1984-03-03', 'MAN', 'LEVEL1',
+       ('EXPERT', 'expert5@nate.com', '1234', '이종현', '0103336666', '/images/expert25.jpg', '1984-03-03', 'MAN',
+        'LEVEL1',
         '말의 힘을 믿기에 한 마디 한 마디에 진심을 담아 당신의 이야기를 듣고 더하겠습니다.', NOW(), NOW()),
-       ('EXPERT', 'expert6@nate.com', '1234', '윤정희', '0103337777', '/images/expert26.jpg', '1986-04-04', 'WOMAN', 'LEVEL2',
+       ('EXPERT', 'expert6@nate.com', '1234', '윤정희', '0103337777', '/images/expert26.jpg', '1986-04-04', 'WOMAN',
+        'LEVEL2',
         '어떤 문제로 고민하세요? 함께 해요! 용기가 생겨요! 미래가 보여요!', NOW(), NOW()),
-       ('EXPERT', 'expert7@nate.com', '1234', '최현우', '0103338888', '/images/expert27.jpg', '1988-05-05', 'MAN', 'LEVEL1',
+       ('EXPERT', 'expert7@nate.com', '1234', '최현우', '0103338888', '/images/expert27.jpg', '1988-05-05', 'MAN',
+        'LEVEL1',
         '그럼에도 불구하고 우리가 우리인 채로 잘 살아갈 수 있어요.', NOW(), NOW()),
-       ('EXPERT', 'expert8@nate.com', '1234', '김소정', '0103339999', '/images/expert28.jpg', '1990-06-06', 'WOMAN', 'LEVEL2',
+       ('EXPERT', 'expert8@nate.com', '1234', '김소정', '0103339999', '/images/expert28.jpg', '1990-06-06', 'WOMAN',
+        'LEVEL2',
         '당신 안의 온전함을 다시 찾을 수 있게, 지친 마음이 쉬었다 갈 수 있게 함께 할게요.', NOW(), NOW()),
-       ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', '/images/expert29.jpg', '1992-07-07', 'MAN', 'LEVEL1',
+       ('EXPERT', 'expert9@nate.com', '1234', '박재호', '0104441111', '/images/expert29.jpg', '1992-07-07', 'MAN',
+        'LEVEL1',
         '당신에게 소금 같은 사람이 되어 드리고 싶습니다.', NOW(), NOW()),
-       ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', '/images/expert30.jpg', '1994-08-08', 'WOMAN', 'LEVEL2',
+       ('EXPERT', 'expert10@nate.com', '1234', '이유리', '0104442222', '/images/expert30.jpg', '1994-08-08', 'WOMAN',
+        'LEVEL2',
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.', NOW(), NOW());
 
 
@@ -146,39 +156,6 @@ VALUES
     -- Expert 10
     (30, 20, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW());
 
--- reservation_tb
-INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, created_at,
-                            updated_at)
-VALUES
-    -- Expert 1's Vouchers
-    (21, 1, 1, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (21, 2, 2, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    (21, 3, 3, 'SCHEDULED', '12:00', NOW(), NOW(), NOW()),
-    -- Expert 2's Vouchers
-    (22, 4, 4, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (22, 5, 5, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    -- Expert 3's Vouchers
-    (23, 6, 6, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    -- Expert 4's Vouchers
-    (24, 7, 7, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (24, 8, 8, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    -- Expert 5's Vouchers
-    (25, 9, 9, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (25, 10, 10, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    -- Expert 6's Vouchers
-    (26, 11, 11, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    -- Expert 7's Vouchers
-    (27, 12, 12, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (27, 13, 13, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    -- Expert 8's Vouchers
-    (28, 14, 14, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (28, 15, 15, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    -- Expert 9's Vouchers
-    (29, 16, 16, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (29, 17, 17, 'SCHEDULED', '11:00', NOW(), NOW(), NOW()),
-    -- Expert 10's Vouchers
-    (30, 18, 18, 'SCHEDULED', '10:00', NOW(), NOW(), NOW()),
-    (30, 19, 19, 'SCHEDULED', '11:00', NOW(), NOW(), NOW());
 
 -- comm_tb
 INSERT INTO comm_tb (user_id, content, title, category, created_at)
@@ -420,6 +397,86 @@ VALUES (1, 1, 4.5, '상담사가 매우 친절하고 도움이 많이 되었습�
        (29, 29, 5.0, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
        (30, 30, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW());
 
+
+-- 연속된 기간 동안의 일정 설정 예시
+INSERT INTO schedule_tb(expert_id, start_time, end_time, rest_type, start_day, end_day, specific_date, lunch_start_time,
+                        lunch_end_time, created_at, updated_at, notes)
+VALUES (21, '09:00:00', '18:00:00', 'PERIODIC', 'MONDAY', 'FRIDAY', NULL, '12:00:00', '13:00:00', NOW(), NOW(),
+        'Weekdays schedule with lunch break'),
+--
+-- -- 특정 요일에 대한 일정 설정 예시
+       (22, '10:00:00', '17:00:00', 'WEEKLY', 'MONDAY', NULL, NULL, '12:30:00', '13:30:00', NOW(), NOW(),
+        'Mondays schedule with lunch break'),
+--
+-- -- 특정 시간대 휴무 설정 예시
+       (23, '00:00:00', '23:59:59', 'TIME_SPECIFIC', NULL, NULL, '2024-06-15', NULL, NULL, NOW(), NOW(),
+        'Full day off on 2024-06-15'),
+--
+-- -- 특정 요일만 일정이 있는 경우
+       (24, '10:00:00', '14:00:00', 'DAY_SPECIFIC', 'WEDNESDAY', NULL, NULL, NULL, NULL, NOW(), NOW(),
+        'Only available on Wednesdays'),
+--
+-- -- 연속된 기간 동안의 일정 설정 예시 (22번, 23번도 설정 가능)
+       (22, '09:00:00', '17:00:00', 'PERIODIC', 'MONDAY', 'FRIDAY', NULL, '12:00:00', '13:00:00', NOW(), NOW(),
+        'Weekdays schedule with lunch break'),
+       (23, '10:00:00', '16:00:00', 'PERIODIC', 'TUESDAY', 'THURSDAY', NULL, '12:00:00', '13:00:00', NOW(), NOW(),
+        'Tuesday to Thursday schedule'),
+--
+-- -- 특정 요일에 대한 추가 일정 설정 (22번, 23번)
+       (22, '09:00:00', '11:00:00', 'DAY_SPECIFIC', 'SATURDAY', NULL, NULL, NULL, NULL, NOW(), NOW(),
+        'Available Saturday morning'),
+       (23, '10:00:00', '12:00:00', 'DAY_SPECIFIC', 'SUNDAY', NULL, NULL, NULL, NULL, NOW(), NOW(),
+        'Available Sunday morning'),
+--
+-- -- 특정한 날에 휴무 (22번, 23번도 동일하게 설정 가능)
+       (22, '00:00:00', '23:59:59', 'TIME_SPECIFIC', NULL, NULL, '2024-06-10', NULL, NULL, NOW(), NOW(),
+        'Day off on June 10th'),
+       (23, '00:00:00', '23:59:59', 'TIME_SPECIFIC', NULL, NULL, '2024-06-20', NULL, NULL, NOW(), NOW(),
+        'Day off on June 20th');
+
+
+-- 예약 테이블
+INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, schedule_id,
+                            created_at, updated_at)
+VALUES
+    -- Expert 1's Vouchers
+    (21, 1, 1, 'SCHEDULED', '10:00:00', '2024-06-01', 1, NOW(), NOW()),
+    (21, 2, 2, 'SCHEDULED', '11:00:00', '2024-06-01', 1, NOW(), NOW()),
+    (21, 3, 3, 'SCHEDULED', '12:00:00', '2024-06-01', 1, NOW(), NOW()),
+--
+--       -- Expert 2's Vouchers
+    (22, 4, 4, 'SCHEDULED', '10:00:00', '2024-06-02', 2, NOW(), NOW()),
+    (22, 5, 5, 'SCHEDULED', '11:00:00', '2024-06-02', 2, NOW(), NOW()),
+--
+--       -- Expert 3's Vouchers
+    (23, 6, 6, 'SCHEDULED', '10:00:00', '2024-06-03', 3, NOW(), NOW()),
+--
+--       -- Expert 4's Vouchers
+    (24, 7, 7, 'SCHEDULED', '10:00:00', '2024-06-04', 4, NOW(), NOW()),
+    (24, 8, 8, 'SCHEDULED', '11:00:00', '2024-06-04', 4, NOW(), NOW()),
+--
+--       -- Expert 5's Vouchers
+    (25, 9, 9, 'SCHEDULED', '10:00:00', '2024-06-05', 5, NOW(), NOW()),
+    (25, 10, 10, 'SCHEDULED', '11:00:00', '2024-06-05', 5, NOW(), NOW()),
+--
+--       -- Expert 6's Vouchers
+    (26, 11, 11, 'SCHEDULED', '10:00:00', '2024-06-06', 6, NOW(), NOW()),
+--
+--       -- Expert 7's Vouchers
+    (27, 12, 12, 'SCHEDULED', '10:00:00', '2024-06-07', 7, NOW(), NOW()),
+    (27, 13, 13, 'SCHEDULED', '11:00:00', '2024-06-07', 7, NOW(), NOW()),
+--
+--       -- Expert 8's Vouchers
+    (28, 14, 14, 'SCHEDULED', '10:00:00', '2024-06-08', 8, NOW(), NOW()),
+    (28, 15, 15, 'SCHEDULED', '11:00:00', '2024-06-08', 8, NOW(), NOW()),
+--
+--       -- Expert 9's Vouchers
+    (29, 16, 16, 'SCHEDULED', '10:00:00', '2024-06-09', 9, NOW(), NOW()),
+    (29, 17, 17, 'SCHEDULED', '11:00:00', '2024-06-09', 9, NOW(), NOW()),
+
+    -- Expert 10's Vouchers
+    (30, 18, 18, 'SCHEDULED', '10:00:00', '2024-06-10', 10, NOW(), NOW()),
+    (30, 19, 19, 'SCHEDULED', '11:00:00', '2024-06-10', 10, NOW(), NOW());
 
 
 

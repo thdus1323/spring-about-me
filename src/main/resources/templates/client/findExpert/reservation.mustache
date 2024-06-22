@@ -1,319 +1,169 @@
-{{> layout/client-header}}
-<style>
-    .re-times {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: calc((100% - 750px));
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-left: 50px;
-        padding: 50px 20px;
-    }
-    .custom-time-btn, .time-btn {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0;
-        background-color: #e0f7fa;
-        border: none;
-        cursor: pointer;
-        text-align: center;
-        border-radius: 5px;
-    }
-    .custom-time-btn:hover, .time-btn:hover {
-        background-color: #00aaff;
-        color: white;
-    }
-    .custom-time-btn.active, .time-btn.active {
-        background-color: #00aaff;
-        color: white;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Details</title>
+    <style>
+        .reser-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
 
-    .reservation-times {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 35%; /* 예약 가능한 시간대의 너비 조정 */
-        margin-left: 2%;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
+        .reser-voucher-info, .reser-schedule-info, .reser-reservation-info, .reser-available-times {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
 
-    .reservation-times h3 {
-        font-weight: 700;
-        font-size: 18px;
-    }
+        .reser-container h2 {
+            margin-top: 0;
+        }
 
-    .reservation-times button {
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #bfe7e7;
-        cursor: pointer;
-        height: 40px;
-        width: calc((100% - 15px) / 3);
-        margin-right: 5px;
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
+        .reser-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    .reservation-times button:last-child {
-        margin-right: 0;
-    }
+        .reser-container th, .reser-container td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
 
-    .reservation-times button:hover {
-        background-color: #00bbba;
-        color: white;
-    }
+        .reser-container th {
+            background-color: #f2f2f2;
+        }
 
-    .reservation-times button.active {
-        background-color: #00bbba;
-        color: white;
-    }
+        .reser-available-times button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+        }
 
-    .day.today {
-        background-color: #f0f0f0;
-        color: #999;
-        cursor: not-allowed;
-    }
+        .reser-available-times button:hover {
+            background-color: #00aaff;
+            color: white;
+        }
 
-    /* 결제하기 버튼 기본 스타일 */
-    #custom-payButton {
-        background-color: #ddd; /* 비활성화 기본 색상 */
-        color: #999; /* 비활성화 시 텍스트 색상 */
-        cursor: not-allowed; /* 비활성화 시 커서 */
-    }
+        .reser-available-times button.active {
+            background-color: #00aaff;
+            color: white;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 예약 가능한 시간 버튼 클릭 이벤트
+            const timeButtons = document.querySelectorAll('.reser-available-times button');
+            timeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    timeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    // 여기에 예약을 처리하는 로직을 추가하세요
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+{{#model}}
+    <div class="reser-container">
+        <div class="reser-voucher-info">
+            <h2>바우처 정보</h2>
+            <p>바우처 ID: {{voucher.id}}</p>
+            <p>유형: {{voucher.voucherType}}</p>
+            <p>전문가 ID: {{voucher.expertId}}</p>
+            <p>가격: {{voucher.price}}</p>
+            <p>카운트: {{voucher.count}}</p>
+            <p>기간: {{voucher.duration}}분</p>
+            <p>이미지 경로: <img src="{{voucher.imagePath}}" alt="바우처 이미지" style="width:100px;height:100px;"></p>
+            <p>시작일: {{voucher.startDate}}</p>
+            <p>생성일: {{voucher.createdAt}}</p>
+            <p>수정일: {{voucher.updatedAt}}</p>
+        </div>
 
-    #custom-payButton:enabled {
-        background-color: #00bbba; /* 활성화 시 색상 */
-        color: white; /* 활성화 시 텍스트 색상 */
-        cursor: pointer; /* 활성화 시 커서 */
-    }
+        <div class="reser-schedule-info">
+            <h2>스케줄 정보</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>스케줄 ID</th>
+                    <th>전문가 ID</th>
+                    <th>시작 시간</th>
+                    <th>종료 시간</th>
+                    <th>휴식 유형</th>
+                    <th>시작 요일</th>
+                    <th>종료 요일</th>
+                    <th>특정 날짜</th>
+                    <th>점심 시작 시간</th>
+                    <th>점심 종료 시간</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#schedules}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{expertId}}</td>
+                        <td>{{startTime}}</td>
+                        <td>{{endTime}}</td>
+                        <td>{{restType}}</td>
+                        <td>{{startDay}}</td>
+                        <td>{{endDay}}</td>
+                        <td>{{specificDate}}</td>
+                        <td>{{lunchStartTime}}</td>
+                        <td>{{lunchEndTime}}</td>
+                    </tr>
+                {{/schedules}}
+                </tbody>
+            </table>
+        </div>
 
-    .calendar-container {
-        display: flex;
-        align-items: flex-start; /* 캘린더와 예약 가능한 시간대를 동일 선상에 배치 */
-    }
+        <div class="reser-reservation-info">
+            <h2>예약된 시간</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>예약 ID</th>
+                    <th>전문가 ID</th>
+                    <th>클라이언트 ID</th>
+                    <th>바우처 ID</th>
+                    <th>상태</th>
+                    <th>시작 시간</th>
+                    <th>예약 날짜</th>
+                    <th>스케줄 ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#reservations}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{expertId}}</td>
+                        <td>{{clientId}}</td>
+                        <td>{{voucherId}}</td>
+                        <td>{{status}}</td>
+                        <td>{{startTime}}</td>
+                        <td>{{reservationDate}}</td>
+                        <td>{{scheduleId}}</td>
+                    </tr>
+                {{/reservations}}
+                </tbody>
+            </table>
+        </div>
 
-    .calendar {
-        width: 65%; /* 캘린더의 너비 조정 */
-    }
-
-    .spinner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-    }
-
-    .spinner::after {
-        content: '';
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-left-color: #00bbba;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-</style>
-<!-- HTML 구조 (첫 번째 디자인) -->
-<section id="section01">
-    <div class="container">
-        <div class="page-wrapper">
-            <h3 class="page-title mb-20 explanation own-time">
-                2급) 보이스테라피 1회기권
-            </h3>
-            <div class="page-content">
-                <div class="spinner" id="loading-spinner"></div>
-                <div class="calendar-container">
-                    <div class="calendar custom-calendar">
-                        <div class="month">
-                            <div class="d-flex justify-content-center">
-                                <button id="custom-prevMonth"><i class="fa fa-chevron-left"></i></button>
-                                <h3 id="custom-month-year" style="margin-top: 40px">6월 2024년</h3>
-                                <button id="custom-nextMonth"><i class="fa fa-chevron-right"></i></button>
-                            </div>
-                            <div class="days custom-days" id="custom-days">
-                                <!-- 날짜가 여기에 렌더링됨 -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="reservation-times custom-times re-times">
-                        <h3 class="explanation time">예약 가능한 시간대</h3>
-                        <div id="custom-times">
-                            <!-- 시간대가 여기에 렌더링됨 -->
-                        </div>
-                    </div>
-                </div>
-                <div class="next-wrapper">
-                    <button id="custom-skipButton">건너뛰기</button>
-                    <button id="custom-payButton" disabled onClick="location.href='/client/findExpert/payment'">결제하기</button>
-                </div>
-            </div>
+        <div class="reser-available-times">
+            <h2>예약 가능한 시간대</h2>
+            {{#availableTimes}}
+                <button>{{this}}</button>
+            {{/availableTimes}}
         </div>
     </div>
-</section>
-<!-- 숨겨진 JSON 데이터 -->
-<div id="model" style="display:none;" data-json="{{model}}"></div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', async function() {
-        const payButton = document.getElementById('custom-payButton');
-        const customTimesElement = document.getElementById('custom-times');
-        const modelElement = document.getElementById('model');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const calendarContainer = document.querySelector('.calendar-container');
-
-        // JSON 데이터를 비동기적으로 가져오는 함수
-        async function fetchModel() {
-            if (modelElement) {
-                const jsonString = modelElement.dataset.json;
-                try {
-                    return JSON.parse(jsonString);
-                } catch (error) {
-                    console.error('Invalid JSON:', error);
-                    return [];
-                }
-            }
-            return [];
-        }
-
-        // 예약 가능한 시간을 초기화
-        function initializeAvailableTimes(model) {
-            const availableTimes = {};
-            model.forEach(schedule => {
-                const startDate = new Date(schedule.startDate);
-                const endDate = new Date(schedule.endDate);
-                const startHour = parseInt(schedule.startHour.split(':')[0], 10);
-                const endHour = parseInt(schedule.endHour.split(':')[0], 10);
-                const dayOfWeek = schedule.dayOfWeek;
-
-                // 날짜 범위 내에 각 날짜에 대해 시간대를 추가
-                for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
-                    const localeDay = date.toLocaleString('en-US', { weekday: 'long' }).toUpperCase();
-                    if (localeDay === dayOfWeek.toUpperCase()) {
-                        const dateString = date.getDate();
-                        if (!availableTimes[dateString]) {
-                            availableTimes[dateString] = [];
-                        }
-                        for (let hour = 10; hour < 20; hour++) { // 기본 상담 가능 시간: 10:00 ~ 20:00
-                            if (hour < startHour || hour >= endHour) {
-                                availableTimes[dateString].push(`${String(hour).padStart(2, '0')}:00`);
-                            }
-                        }
-                    }
-                }
-            });
-            return availableTimes;
-        }
-
-        // 캘린더 렌더링 함수
-        function renderCalendar(year, month, availableTimes) {
-            const today = new Date();
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const monthYearText = `${month + 1}월 ${year}년`;
-
-            document.getElementById('custom-month-year').textContent = monthYearText;
-
-            const daysHtml = [];
-            for (let i = 0; i < firstDay; i++) {
-                daysHtml.push('<div></div>');
-            }
-            for (let i = 1; i <= daysInMonth; i++) {
-                const date = new Date(year, month, i);
-                const pastClass = date < today ? 'past' : '';
-                const todayClass = date.toDateString() === today.toDateString() ? 'today' : '';
-                daysHtml.push(`<div class="day ${pastClass} ${todayClass}" data-custom-date="${i}">${i}</div>`);
-            }
-
-            document.getElementById('custom-days').innerHTML = `
-                <div class="main-color disabled day">일</div>
-                <div class="main-color disabled day">월</div>
-                <div class="main-color disabled day">화</div>
-                <div class="main-color disabled day">수</div>
-                <div class="main-color disabled day">목</div>
-                <div class="main-color disabled day">금</div>
-                <div class="main-color disabled day">토</div>
-                ${daysHtml.join('')}
-            `;
-
-            document.querySelectorAll('.custom-calendar .custom-days div[data-custom-date]').forEach(element => {
-                element.addEventListener('click', function() {
-                    if (!this.classList.contains('past') && !this.classList.contains('today')) {
-                        document.querySelectorAll('.custom-calendar .custom-days div').forEach(el => el.classList.remove('selected'));
-                        this.classList.add('selected');
-                        const selectedDate = parseInt(this.getAttribute('data-custom-date'));
-                        displayTimes(selectedDate, availableTimes);
-                        payButton.disabled = true;
-                        payButton.style.backgroundColor = ''; // 기본색으로 복구
-                    }
-                });
-            });
-        }
-
-        // 시간대 표시 함수
-        function displayTimes(date, availableTimes) {
-            const times = availableTimes[date] || [];
-            console.log("Selected date:", date, "Times:", times);  // 디버깅: 선택된 날짜와 시간대 출력
-
-            customTimesElement.innerHTML = times.map(time => `<button class="custom-time-btn" data-time="${time}">${time}</button>`).join('');
-
-            document.querySelectorAll('.custom-time-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    document.querySelectorAll('.custom-time-btn').forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    payButton.disabled = false;
-                    payButton.style.backgroundColor = '#00bbba'; // 버튼 색상을 활성화된 색으로 변경
-                });
-            });
-        }
-
-        // 초기화 함수
-        async function init() {
-            const model = await fetchModel();
-            const availableTimes = initializeAvailableTimes(model);
-
-            const today = new Date();
-            let currentYear = today.getFullYear();
-            let currentMonth = today.getMonth(); // JavaScript months are 0-based
-
-            renderCalendar(currentYear, currentMonth, availableTimes);
-
-            document.getElementById('custom-prevMonth').addEventListener('click', function() {
-                if (currentMonth > 0) {
-                    currentMonth--;
-                } else {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                renderCalendar(currentYear, currentMonth, availableTimes);
-            });
-
-            document.getElementById('custom-nextMonth').addEventListener('click', function() {
-                if (currentMonth < 11) {
-                    currentMonth++;
-                } else {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                renderCalendar(currentYear, currentMonth, availableTimes);
-            });
-
-            // 데이터가 로드되면 로딩 스피너를 숨기고 캘린더를 표시
-            loadingSpinner.style.display = 'none';
-            calendarContainer.style.display = 'flex';
-        }
-
-        init();
-    });
-</script>
-
-
-{{> layout/footer}}
+{{/model}}
+</body>
+</html>

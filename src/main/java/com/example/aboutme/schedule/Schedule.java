@@ -1,14 +1,11 @@
 package com.example.aboutme.schedule;
 
+import com.example.aboutme.schedule.enums.DayOfWeek;
 import com.example.aboutme.schedule.enums.RestType;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,10 +20,11 @@ public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer scheduleId;
+    private Integer id;
 
-    @Column(name = "expert_id", nullable = false)
-    private Integer expertId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_id", nullable = false)
+    private User expert;
 
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
@@ -65,9 +63,9 @@ public class Schedule {
     private String notes;
 
     @Builder
-    public Schedule(Integer scheduleId, Integer expertId, LocalTime startTime, LocalTime endTime, RestType restType, DayOfWeek startDay, DayOfWeek endDay, LocalDate specificDate, LocalTime lunchStartTime, LocalTime lunchEndTime, LocalDateTime createdAt, LocalDateTime updatedAt, String notes) {
-        this.scheduleId = scheduleId;
-        this.expertId = expertId;
+    public Schedule(Integer id, User expert, LocalTime startTime, LocalTime endTime, RestType restType, DayOfWeek startDay, DayOfWeek endDay, LocalDate specificDate, LocalTime lunchStartTime, LocalTime lunchEndTime, LocalDateTime createdAt, LocalDateTime updatedAt, String notes) {
+        this.id = id;
+        this.expert = expert;
         this.startTime = startTime;
         this.endTime = endTime;
         this.restType = restType;
