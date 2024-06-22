@@ -5,14 +5,15 @@ import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecor
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
+//import com.example.aboutme.user.oauth.KakaoOAuthService;
+//import com.example.aboutme.user.oauth.NaverOAuthService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -20,6 +21,8 @@ public class UserController {
     private final UserService userService;
     private final CommService commService;
     private final HttpSession session;
+//    private final KakaoOAuthService kakaoOAuthService;
+//    private final NaverOAuthService naverOAuthService;
 
     @GetMapping("/expert/reply")
     public String expertReply(Model model) {
@@ -41,11 +44,75 @@ public class UserController {
         return "oauth/login";
     }
 
+    @PostMapping("/setUserRole")
+    @ResponseBody
+    public void setUserRole(@RequestParam("userRole") String userRoleStr) {
+        session.setAttribute("userRole", userRoleStr);
+    }
+
+    @GetMapping("/oauth/callback/kakao")
+    public String kakaoCallback(@RequestParam("code") String code) {
+        User sessionUser = userService.loginKakao(code, session);
+        session.setAttribute("sessionUser", sessionUser);
+
+        return "redirect:/";
+    }
+
+    // 여기서 code로 토큰을 받아야 된다.
+    @GetMapping("/oauth/callback/naver")
+    public String oauthNaverCallback(
+            @RequestParam(value = "code") String code,
+            @RequestParam("state") String state){
+        User sessionUser = userService.loginNaver(code, state, session);
+        session.setAttribute("sessionUser", sessionUser);
+
+        return "redirect:/";
+    }
+
+//    @GetMapping("/oauth/callback/kakao")
+//    public String kakaoCallback(@RequestParam("code") String code) {
+//        User sessionUser = kakaoOAuthService.login(code, null, session);
+//        session.setAttribute("sessionUser", sessionUser);
+//
+//        return "redirect:/";
+//    }
+//
+//    @GetMapping("/oauth/callback/naver")
+//    public String oauthNaverCallback(
+//            @RequestParam(value = "code") String code,
+//            @RequestParam("state") String state) {
+//        User sessionUser = naverOAuthService.login(code, state, session);
+//        session.setAttribute("sessionUser", sessionUser);
+//
+//        return "redirect:/";
+//    }
+
+//    @GetMapping("/oauth/callback/{provider}")
+//    public String oauthCallback(
+//            @PathVariable("provider") OauthProvider provider,
+//            @RequestParam("code") String code,
+//            @RequestParam(value = "state", required = false) String state,
+//            HttpSession session) {
+//
+//        User sessionUser;
+//
+//        if (provider == OauthProvider.KAKAO) {
+//            sessionUser = kakaoOAuthService.login(code, null, session);
+//        } else if (provider == OauthProvider.NAVER) {
+//            sessionUser = naverOAuthService.login(code, state, session);
+//        } else {
+//            throw new IllegalArgumentException("Unsupported OAuth provider: " + provider);
+//        }
+//
+//        session.setAttribute("sessionUser", sessionUser);
+//        return "redirect:/";
+//    }
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         User sessionUser = userService.loginByName(reqDTO);
         session.setAttribute("sessionUser", sessionUser);
+
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
