@@ -58,10 +58,14 @@ public class UserService {
     private final Formatter formatter;
 
 
-    @Transactional
+//    @Transactional
+//    public User loginByName(UserRequest.LoginDTO reqDTO) {
+//        User user = userNativeRepository.login(reqDTO);
+//        return user;
+//    }
+
     public User loginByName(UserRequest.LoginDTO reqDTO) {
-        User user = userNativeRepository.login(reqDTO);
-        return user;
+        return userRepository.findByEmailAndPassword(reqDTO.getEmail(), reqDTO.getPassword());
     }
 
 
