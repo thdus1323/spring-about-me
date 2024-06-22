@@ -21,7 +21,7 @@ import com.example.aboutme.user.UserResponseDTO.expertFindDTO.VoucherImageRecord
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
-import com.example.aboutme.user.oauth.KakaoResponse;
+import com.example.aboutme.user.oauth.UserResponse;
 import com.example.aboutme.user.pr.PRRepository;
 import com.example.aboutme.user.spec.SpecRepository;
 import com.example.aboutme.voucher.Voucher;
@@ -205,11 +205,11 @@ public class UserService {
                 new HttpEntity<>(body, headers);
 
         // 1.5 api 요청하기 (토큰 받기)
-        ResponseEntity<KakaoResponse.TokenDTO> response = rt.exchange(
+        ResponseEntity<UserResponse.KakaoTokenDTO> response = rt.exchange(
                 "https://kauth.kakao.com/oauth/token",
                 HttpMethod.POST,
                 request,
-                KakaoResponse.TokenDTO.class);
+                UserResponse.KakaoTokenDTO.class);
 
         // 1.6 값 확인
         System.out.println(response.getBody().toString());
@@ -220,16 +220,16 @@ public class UserService {
 
         HttpEntity<Void> request2 = new HttpEntity<>(headers2);
 
-        ResponseEntity<KakaoResponse.KakaoUserDTO> response2 = rt.exchange(
+        ResponseEntity<UserResponse.KakaoUserDTO> response2 = rt.exchange(
                 "https://kapi.kakao.com/v2/user/me",
                 HttpMethod.GET,
                 request2,
-                KakaoResponse.KakaoUserDTO.class);
+                UserResponse.KakaoUserDTO.class);
 
         System.out.println("response2 : " + response2.getBody().toString());
 
         // 3. 사용자 정보 가져오기
-        KakaoResponse.KakaoUserDTO kakaoUser = response2.getBody();
+        UserResponse.KakaoUserDTO kakaoUser = response2.getBody();
         String email = kakaoUser.getKakaoAccount().getEmail();
         String nickname = kakaoUser.getKakaoAccount().getProfile().getNickname();
         Long kakaoId = kakaoUser.getId();
