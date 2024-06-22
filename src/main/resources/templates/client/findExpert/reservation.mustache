@@ -1,80 +1,169 @@
-{{> layout/client-header}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Details</title>
+    <style>
+        .reser-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
 
-<section id="section01">
-    <div class="container">
-        <div class="page-wrapper">
-            <h3 class="page-title mb-20 explanation own-time">
-                2급) 보이스테라피 1회기권
-            </h3>
-            <div class="page-content">
-                <div class="calendar">
-                    <div class="month">
-                        <h3>6월 2024년</h3>
-                        <div class="days" id="days">
-                            <div class="main-color disabled day">일</div>
-                            <div class="main-color disabled day">월</div>
-                            <div class="main-color disabled day">화</div>
-                            <div class="main-color disabled day">수</div>
-                            <div class="main-color disabled day">목</div>
-                            <div class="main-color disabled day">금</div>
-                            <div class="main-color disabled day">토</div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div data-date="1">1</div>
-                            <div data-date="2">2</div>
-                            <div data-date="3">3</div>
-                            <div data-date="4">4</div>
-                            <div data-date="5">5</div>
-                            <div data-date="6">6</div>
-                            <div data-date="7">7</div>
-                            <div data-date="8">8</div>
-                            <div data-date="9">9</div>
-                            <div data-date="10">10</div>
-                            <div data-date="11">11</div>
-                            <div data-date="12">12</div>
-                            <div data-date="13">13</div>
-                            <div data-date="14">14</div>
-                            <div data-date="15">15</div>
-                            <div data-date="16">16</div>
-                            <div data-date="17">17</div>
-                            <div data-date="18" class="selected">18</div>
-                            <div data-date="19">19</div>
-                            <div data-date="20">20</div>
-                            <div data-date="21">21</div>
-                            <div data-date="22">22</div>
-                            <div data-date="23">23</div>
-                            <div data-date="24">24</div>
-                            <div data-date="25">25</div>
-                            <div data-date="26">26</div>
-                            <div data-date="27">27</div>
-                            <div data-date="28">28</div>
-                            <div data-date="29">29</div>
-                            <div data-date="30">30</div>
-                        </div>
-                    </div>
-                    <div class="times">
-                        <h3 class="explanation time">예약 가능한 시간대</h3>
-                        <div id="times">
-                            <button>18:00</button>
-                            <button>19:00</button>
-                            <button>20:00</button>
-                            <button>21:00</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="next-wrapper">
-                    <!--                    일단 보류-->
-                    <button id="skipButton">건너뛰기</button>
-                    <!--                    일단 보류-->
-                    <button id="payButton" disabled onClick="location.href='/client/findExpert/payment'">결제하기</button>
-                </div>
-            </div>
+        .reser-voucher-info, .reser-schedule-info, .reser-reservation-info, .reser-available-times {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .reser-container h2 {
+            margin-top: 0;
+        }
+
+        .reser-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .reser-container th, .reser-container td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .reser-container th {
+            background-color: #f2f2f2;
+        }
+
+        .reser-available-times button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .reser-available-times button:hover {
+            background-color: #00aaff;
+            color: white;
+        }
+
+        .reser-available-times button.active {
+            background-color: #00aaff;
+            color: white;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 예약 가능한 시간 버튼 클릭 이벤트
+            const timeButtons = document.querySelectorAll('.reser-available-times button');
+            timeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    timeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    // 여기에 예약을 처리하는 로직을 추가하세요
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+{{#model}}
+    <div class="reser-container">
+        <div class="reser-voucher-info">
+            <h2>바우처 정보</h2>
+            <p>바우처 ID: {{voucher.id}}</p>
+            <p>유형: {{voucher.voucherType}}</p>
+            <p>전문가 ID: {{voucher.expertId}}</p>
+            <p>가격: {{voucher.price}}</p>
+            <p>카운트: {{voucher.count}}</p>
+            <p>기간: {{voucher.duration}}분</p>
+            <p>이미지 경로: <img src="{{voucher.imagePath}}" alt="바우처 이미지" style="width:100px;height:100px;"></p>
+            <p>시작일: {{voucher.startDate}}</p>
+            <p>생성일: {{voucher.createdAt}}</p>
+            <p>수정일: {{voucher.updatedAt}}</p>
+        </div>
+
+        <div class="reser-schedule-info">
+            <h2>스케줄 정보</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>스케줄 ID</th>
+                    <th>전문가 ID</th>
+                    <th>시작 시간</th>
+                    <th>종료 시간</th>
+                    <th>휴식 유형</th>
+                    <th>시작 요일</th>
+                    <th>종료 요일</th>
+                    <th>특정 날짜</th>
+                    <th>점심 시작 시간</th>
+                    <th>점심 종료 시간</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#schedules}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{expertId}}</td>
+                        <td>{{startTime}}</td>
+                        <td>{{endTime}}</td>
+                        <td>{{restType}}</td>
+                        <td>{{startDay}}</td>
+                        <td>{{endDay}}</td>
+                        <td>{{specificDate}}</td>
+                        <td>{{lunchStartTime}}</td>
+                        <td>{{lunchEndTime}}</td>
+                    </tr>
+                {{/schedules}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="reser-reservation-info">
+            <h2>예약된 시간</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>예약 ID</th>
+                    <th>전문가 ID</th>
+                    <th>클라이언트 ID</th>
+                    <th>바우처 ID</th>
+                    <th>상태</th>
+                    <th>시작 시간</th>
+                    <th>예약 날짜</th>
+                    <th>스케줄 ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#reservations}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{expertId}}</td>
+                        <td>{{clientId}}</td>
+                        <td>{{voucherId}}</td>
+                        <td>{{status}}</td>
+                        <td>{{startTime}}</td>
+                        <td>{{reservationDate}}</td>
+                        <td>{{scheduleId}}</td>
+                    </tr>
+                {{/reservations}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="reser-available-times">
+            <h2>예약 가능한 시간대</h2>
+            {{#availableTimes}}
+                <button>{{this}}</button>
+            {{/availableTimes}}
         </div>
     </div>
-</section>
-
-{{> layout/footer}}
+{{/model}}
+</body>
+</html>

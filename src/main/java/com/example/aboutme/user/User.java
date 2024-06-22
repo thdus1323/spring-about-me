@@ -1,6 +1,5 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme._core.utils.UserDefault;
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.OauthProvider;
@@ -20,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-@ToString(exclude = {"pr", "specs", "payments", "refunds", "alarms", "comms", "replies", "vouchers"})
+@ToString(exclude = {"pr", "specs"})
 public class User {
 
     // 필수 입력

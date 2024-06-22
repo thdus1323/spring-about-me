@@ -57,24 +57,13 @@ public class UserService {
     private final CounselRepository counselRepository;
     private final Formatter formatter;
 
-//회원가입
-//    @Transactional
-//    public void joinByEmail(UserRequest.JoinDTO reqDTO){
-//        userNativeRepository.join(reqDTO);
-//    }
-//
-    //    //로그인
-//    public User loginByName(UserRequest.LoginDTO reqDTO) {
-//        User sessionUser = userNativeRepository.login(reqDTO);
-//        return sessionUser;
-//    }
 
     @Transactional
     public User loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userNativeRepository.login(reqDTO);
-        user.getSpecs().size();
         return user;
     }
+
 
     public DetailDTORecord getFindExpertDetails(Integer expertId) {
         User user = userRepository.findById(expertId).orElseThrow(() -> new Exception403("유저정보를 찾을 수 없습니다."));

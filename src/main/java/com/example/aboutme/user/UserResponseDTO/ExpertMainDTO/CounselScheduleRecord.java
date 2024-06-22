@@ -13,6 +13,6 @@ public record CounselScheduleRecord(
         Integer duration
 ) {
     public CounselScheduleRecord(Integer counselId, String clientName, LocalDateTime counselDate, VoucherType voucherType, Integer duration) {
-        this(counselId, clientName, Formatter.formatDate(counselDate), voucherType.getVoucherType(), duration);
+        this(counselId, clientName, Formatter.formatDate(counselDate), voucherType.getKorean(), duration);
     }
 }
