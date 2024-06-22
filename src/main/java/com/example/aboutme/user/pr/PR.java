@@ -1,15 +1,16 @@
 package com.example.aboutme.user.pr;
 
 import com.example.aboutme.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "pr_tb")
+@ToString(exclude = {"user"})
 public class PR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,7 @@ public class PR {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expert_id")
+//    @JsonIgnore
     private User user;
 
     @Builder
