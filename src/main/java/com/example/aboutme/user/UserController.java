@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme._core.config.RedisConfig;
 import com.example.aboutme.comm.CommService;
 import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
@@ -21,8 +22,15 @@ public class UserController {
     private final UserService userService;
     private final CommService commService;
     private final HttpSession session;
+    private final RedisConfig redisConfig;
 //    private final KakaoOAuthService kakaoOAuthService;
 //    private final NaverOAuthService naverOAuthService;
+
+
+    @GetMapping("/redis/test")
+    public @ResponseBody String redisTest(){
+        return "redis test";
+    }
 
     @GetMapping("/expert/reply")
     public String expertReply(Model model) {
@@ -134,6 +142,10 @@ public class UserController {
     // 클라이언트 메인페이지
     @GetMapping("/")
     public String index(Model model) {
+        System.out.println("이게레디스다");
+        System.out.println(redisConfig.getRedisHost());
+        System.out.println(redisConfig.getRedisPort());
+        System.out.println(redisConfig.getRedisPassword());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
         System.out.println(clientMain);
