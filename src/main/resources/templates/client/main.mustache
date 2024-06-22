@@ -26,7 +26,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="categories">
+    <div class="categories mb-20">
         <ul>
             <li><a href="#!"><img src="./images/cate01.jpg" alt="">심리상담</a></li>
             <li><a href="#!"><img src="./images/cate02.jpg" alt="">코칭</a></li>
@@ -39,24 +39,24 @@
 <div class="pick-ex">
     <div class="pick-container container swiper mySwiper">
         <div class="title">
-            <h2>About's PICK</h2>
+            <h2 class="page-title">About's PICK</h2>
             <a href="#!" class="view-all">전체보기</a>
         </div>
         <div class="card-container swiper-wrapper">
             {{#clientMain.comms}}
                 <a href="#!" class="card swiper-slide">
                     <div class="card-top">
-                        <div class="pick-title">
+                        <div class="pick-title mb-20">
                             {{title}}
                         </div>
-                        <div class="category-area">
+                        <div class="category-area mb-10">
                             <div class="pick-category">{{category}}</div>
                             <div class="dot"></div>
                             <div>
                                 <div class="badge">
                                     <img src=".{{writerImage}}" alt="">
                                 </div>
-                                <div>{{writerName}}</div>
+                                <div class="name">{{writerName}}</div>
                             </div>
                         </div>
                         <div class="pick-content">
@@ -82,7 +82,7 @@
 <div class="center-ex">
     <div class="center-container container swiper mySwiper">
         <div class="title">
-            <h2>국내 1위 대면 심리상담센터</h2>
+            <h2 class="page-title">국내 1위 대면 심리상담센터</h2>
             <a href="#!" class="view-all">전체보기</a>
         </div>
         <div class="card-container swiper-wrapper">
@@ -149,17 +149,17 @@
 <!-- 나에게 맞는 전문가 시작 -->
 <div class="expert-ex">
     <div class="expert-container container swiper mySwiper">
-        <h2>나에게 딱 맞는 전문가</h2>
-        <p>공인 자격을 갖춘 검증된 전문가들이 여러분을 기다리고 있어요.</p>
+        <h2 class="page-title">나에게 딱 맞는 전문가</h2>
+        <p class="mb-10">공인 자격을 갖춘 검증된 전문가들이 여러분을 기다리고 있어요.</p>
         <div class="card-container swiper-wrapper">
             {{#clientMain.experts}}
                 <a href="#!" class="card swiper-slide">
                     <div class="card-top">
-                        <div class="expert-img">
+                        <div class="expert-img mb-10">
                             <img src=".{{profileImage}}" alt="expert img">
                         </div>
-                        <div class="expert-name">{{name}}</div>
-                        <div class="expert-title">{{expertTitle}}</div>
+                        <div class="expert-name mb-10">{{name}}</div>
+                        <div class="expert-title mb-10">{{expertTitle}}</div>
                     </div>
                     <div class="card-bottom contact">
                         {{#hasTextTherapy}}

@@ -136,6 +136,9 @@ hr{
     cursor: pointer;
     padding: 0;
 }
+.defalut-btn:hover{
+    background-color: #fd780f;
+}
 
 .c-card .c-card-body.detail{
     width: 100%;
