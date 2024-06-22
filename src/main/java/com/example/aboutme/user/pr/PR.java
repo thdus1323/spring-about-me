@@ -2,14 +2,14 @@ package com.example.aboutme.user.pr;
 
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "pr_tb")
+@ToString(exclude = {"user"})
 public class PR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
