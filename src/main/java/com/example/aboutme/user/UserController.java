@@ -6,34 +6,33 @@ import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecor
 import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
 //import com.example.aboutme.user.oauth.KakaoOAuthService;
 //import com.example.aboutme.user.oauth.NaverOAuthService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserService userService;
-    private final CommService commService;
-    private final HttpSession session;
-    private final RedisConfig redisConfig;
-    private final RedisTemplate<String, Object> rt;
-
+    private final RedisTemplate<String, Object> redisTemp;
 //    private final KakaoOAuthService kakaoOAuthService;
 //    private final NaverOAuthService naverOAuthService;
 
 
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
-        SessionUser sessionUser = (SessionUser) rt.opsForValue().get("sessionUser");
+        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
         System.out.println("sessionUser = " + sessionUser);
-
         return "redis test";
     }
 
@@ -59,24 +58,21 @@ public class UserController {
     @PostMapping("/setUserRole")
     @ResponseBody
     public void setUserRole(@RequestParam("userRole") String userRoleStr) {
-        session.setAttribute("userRole", userRoleStr);
+        redisTemp.opsForValue().set("userRole", userRoleStr);
     }
 
     @GetMapping("/oauth/callback/kakao")
     public String kakaoCallback(@RequestParam("code") String code) {
-        SessionUser sessionUser = userService.loginKakao(code, session);
-        rt.opsForValue().set("sessionUser", sessionUser);
-
+        SessionUser sessionUser = userService.loginKakao(code, redisTemp);
+        redisTemp.opsForValue().set("sessionUser", sessionUser);
         return "redirect:/";
     }
 
     @GetMapping("/oauth/callback/naver")
-    public String naverCallback(
-            @RequestParam(value = "code") String code,
-            @RequestParam("state") String state) {
-        SessionUser sessionUser = userService.loginNaver(code, state, session);
-        rt.opsForValue().set("sessionUser", sessionUser);
-
+    public String naverCallback(@RequestParam(value = "code") String code,
+                                @RequestParam("state") String state) {
+        SessionUser sessionUser = userService.loginNaver(code, state, redisTemp);
+        redisTemp.opsForValue().set("sessionUser", sessionUser);
         return "redirect:/";
     }
 
@@ -122,11 +118,10 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {
         SessionUser sessionUser = userService.loginByName(reqDTO);
-
         if (sessionUser == null) {
             throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
         } else {
-            rt.opsForValue().set("sessionUser", sessionUser);
+            redisTemp.opsForValue().set("sessionUser", sessionUser);
         }
 
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
@@ -141,8 +136,25 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout() {
-        session.invalidate();
-        return "redirect:/";
+        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        if (sessionUser != null) {
+            redisTemp.delete("sessionUser");
+            redisTemp.delete("userRole");
+            // OAuth 로그아웃 처리
+            boolean isLoggedOut = false;
+            if (sessionUser.getProvider() == OauthProvider.KAKAO) {
+                isLoggedOut = userService.logoutKakao(sessionUser.getAccessToken());
+            } else if (sessionUser.getProvider() == OauthProvider.NAVER) {
+                isLoggedOut = userService.logoutNaver(sessionUser.getAccessToken());
+            }
+
+            // OAuth 로그아웃 성공 시 Redis에서 세션 정보 삭제
+            if (isLoggedOut) {
+                redisTemp.delete("sessionUser");
+                redisTemp.delete("userRole");
+            }
+        }
+        return "redirect:/login";
     }
 
 
@@ -191,7 +203,7 @@ public class UserController {
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
     public String clientMypage() {
-        User sessionUser = (User) session.getAttribute("sessionUser");
+        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
         if (sessionUser == null) {
             return "oauth/login";
         } else {
