@@ -59,9 +59,9 @@ public class UserService {
 
 
     @Transactional
-    public User loginByName(UserRequest.LoginDTO reqDTO) {
+    public SessionUser loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userNativeRepository.login(reqDTO);
-        return user;
+        return new SessionUser(user);
     }
 
 
@@ -169,7 +169,7 @@ public class UserService {
 
     // 오어스 회원가입
     @Transactional
-    public User loginKakao(String code, HttpSession session) {
+    public SessionUser loginKakao(String code, HttpSession session) {
         // 1. 선택된 유저 롤
         String userRoleStr = (String) session.getAttribute("userRole");
         UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
@@ -236,11 +236,8 @@ public class UserService {
 
         // 4. 있으면? - 조회된 유저정보 리턴
         if (userPS != null) {
-            System.out.println("어? 유저가 있네? 강제로그인 진행");
-            return userPS;
+            return new SessionUser(userPS);
         } else {
-            System.out.println("어? 유저가 없네? 강제회원가입 and 강제로그인 진행");
-            // 5. 없으면? - 강제 회원가입
             User user = User.builder()
                     .name(nickname)
                     .password(UUID.randomUUID().toString())
@@ -248,16 +245,15 @@ public class UserService {
                     .phone("000-0000-0000")
                     .userRole(userRole)
                     .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
-                    .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
             User returnUser = userRepository.save(user);
-            return returnUser;
+            return new SessionUser(returnUser);
         }
     }
 
     @Transactional
-    public User loginNaver(String code, String state, HttpSession session) {
+    public SessionUser loginNaver(String code, String state, HttpSession session) {
         // 1. 선택된 유저 롤
         String userRoleStr = (String) session.getAttribute("userRole");
         UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
@@ -329,14 +325,8 @@ public class UserService {
 
         // 4. 있으면? - 조회된 유저정보 리턴
         if (userPS != null) {
-            System.out.println("어? 유저가 있네? 강제로그인 진행시켜!");
-            return userPS;
-
-            // 5-2. 사용자 정보가 DB에 없으면??
+            return new SessionUser(userPS);
         } else {
-            System.out.println("어? 유저가 없네? 강제회원가입 and 강제로그인 진행시켜!!");
-
-            // 5. 없으면? - 강제 회원가입
             User user = User.builder()
                     .name(nickname)
                     .password(UUID.randomUUID().toString())
@@ -348,7 +338,7 @@ public class UserService {
                     .provider(OauthProvider.NAVER)
                     .build();
             User returnUser = userRepository.save(user);
-            return returnUser;
+            return new SessionUser(returnUser);
         }
     }
 }
