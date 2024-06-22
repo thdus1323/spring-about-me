@@ -14,7 +14,7 @@ $(document).ready(function () {
         var userRole = $('#userRole').val();
         // 세션에 userRole을 저장하기 위해 서버로 AJAX 요청
         $.post('/setUserRole', {userRole: userRole}, function () {
-            var kakaoAuthUrl = "https://kauth.kakao.com/oauth/authorize?redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code&client_id=f07259c71010e17f9a081c435bc8328b";
+            var kakaoAuthUrl = "https://kauth.kakao.com/oauth/authorize?redirect_uri=http://localhost:8080/oauth/callback/kakao&response_type=code&client_id=f07259c71010e17f9a081c435bc8328b";
             window.location.href = kakaoAuthUrl;
         });
     });
@@ -27,7 +27,7 @@ $(document).ready(function () {
 
         // 세션에 userRole을 저장하기 위해 서버로 AJAX 요청
         $.post('/setUserRole', {userRole: userRole}, function () {
-            var NaverAuthUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=elWt0DvVScIBARwZfyU7&redirect_uri=http://localhost:8080/oauth/naver/callback&state=" + state;
+            var NaverAuthUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=elWt0DvVScIBARwZfyU7&redirect_uri=http://localhost:8080/oauth/callback/naver&state=" + state;
             window.location.href = NaverAuthUrl;
         });
     });

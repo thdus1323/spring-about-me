@@ -198,7 +198,7 @@ public class UserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "f07259c71010e17f9a081c435bc8328b");
-        body.add("redirect_uri", "http://localhost:8080/oauth/kakao/callback");
+        body.add("redirect_uri", "http://localhost:8080/oauth/callback/kakao");
         body.add("code", code);
 
         // 1.4 body+header 객체 만들기
