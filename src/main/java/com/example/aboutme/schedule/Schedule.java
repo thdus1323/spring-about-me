@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
@@ -20,54 +21,63 @@ import java.time.LocalTime;
 @ToString(exclude = "expert")
 public class Schedule {
 
-    // 필수 입력
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // 스케줄 아이디
+    private Integer scheduleId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expert_id", nullable = false)
-    private User expert; // 상담사
+    @Column(name = "expert_id", nullable = false)
+    private Integer expertId;
 
-    @Column(nullable = false)
-    private LocalDate startDate; // 시작 날짜
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
 
-    @Column(nullable = false)
-    private LocalDate endDate; // 종료 날짜
-
-    @Column(nullable = false)
-    private LocalTime startHour; // 시작 시간
-
-    @Column(nullable = false)
-    private LocalTime endHour; // 종료 시간
+    @Column(name = "end_time", nullable = false)
+    private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private RestType restType; // 휴식 유형
+    @Column(name = "rest_type", nullable = false)
+    private RestType restType;
 
     @Enumerated(EnumType.STRING)
-    private DayOfWeek dayOfWeek; // 매주 특정 요일 (WEEKLY)
+    @Column(name = "start_day")
+    private DayOfWeek startDay;
 
-    private LocalDate specificDate; // 특정 날짜 (DATE_SPECIFIC)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "end_day")
+    private DayOfWeek endDay;
 
-    @CreationTimestamp
-    private Timestamp createdAt;
+    @Column(name = "specific_date")
+    private LocalDate specificDate;
 
-    @UpdateTimestamp
-    private Timestamp updatedAt;
+    @Column(name = "lunch_start_time")
+    private LocalTime lunchStartTime;
+
+    @Column(name = "lunch_end_time")
+    private LocalTime lunchEndTime;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "notes")
+    private String notes;
 
     @Builder
-    public Schedule(Integer id, User expert, LocalDate startDate, LocalDate endDate, LocalTime startHour, LocalTime endHour, RestType restType, DayOfWeek dayOfWeek, LocalDate specificDate, Timestamp createdAt, Timestamp updatedAt) {
-        this.id = id;
-        this.expert = expert;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.startHour = startHour;
-        this.endHour = endHour;
+    public Schedule(Integer scheduleId, Integer expertId, LocalTime startTime, LocalTime endTime, RestType restType, DayOfWeek startDay, DayOfWeek endDay, LocalDate specificDate, LocalTime lunchStartTime, LocalTime lunchEndTime, LocalDateTime createdAt, LocalDateTime updatedAt, String notes) {
+        this.scheduleId = scheduleId;
+        this.expertId = expertId;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.restType = restType;
-        this.dayOfWeek = dayOfWeek;
+        this.startDay = startDay;
+        this.endDay = endDay;
         this.specificDate = specificDate;
+        this.lunchStartTime = lunchStartTime;
+        this.lunchEndTime = lunchEndTime;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.notes = notes;
     }
 }
