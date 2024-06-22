@@ -49,16 +49,21 @@ public class UserController {
     public String kakaoCallback(@RequestParam("code") String code) {
         User sessionUser = userService.loginKakao(code, session);
         session.setAttribute("sessionUser", sessionUser);
-        System.out.println("세션유저: " + sessionUser);
+
         return "redirect:/";
     }
 
-//    @GetMapping("/oauth/naver/callback")
-//    public String naverCallback(@RequestParam("code") String code) {
-//        User sessionUser = userService.loginNaver(code);
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
-//    }
+    // 여기서 code로 토큰을 받아야 된다.
+    @GetMapping("/oauth/naver/callback")
+    public String oauthNaverCallback(
+            @RequestParam(value = "code") String code,
+            @RequestParam("state") String state){
+        User sessionUser = userService.loginNaver(code, state, session);
+        session.setAttribute("sessionUser", sessionUser);
+
+        return "redirect:/";
+    }
+
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO) {

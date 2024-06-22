@@ -18,4 +18,17 @@ $(document).ready(function () {
             window.location.href = kakaoAuthUrl;
         });
     });
+
+    $('#NaverSignup').click(function (e) {
+        e.preventDefault();
+        var userRole = $('#userRole').val();
+        // UUID로 state를 생성
+        var state = uuid.v4();
+
+        // 세션에 userRole을 저장하기 위해 서버로 AJAX 요청
+        $.post('/setUserRole', {userRole: userRole}, function () {
+            var NaverAuthUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=elWt0DvVScIBARwZfyU7&redirect_uri=http://localhost:8080/oauth/naver/callback&state=" + state;
+            window.location.href = NaverAuthUrl;
+        });
+    });
 })

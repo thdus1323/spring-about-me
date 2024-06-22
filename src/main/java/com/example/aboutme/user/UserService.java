@@ -181,6 +181,7 @@ public class UserService {
     // 오어스 회원가입
     @Transactional
     public User loginKakao(String code, HttpSession session) {
+        // 1. 선택된 유저 롤
         String userRoleStr = (String) session.getAttribute("userRole");
         UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
 
@@ -258,7 +259,6 @@ public class UserService {
                     .phone("000-0000-0000")
                     .userRole(userRole)
                     .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
-//                    .profileImage(UserDefault.getDefaultProfileImage())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
@@ -266,4 +266,101 @@ public class UserService {
             return returnUser;
         }
     }
+
+    @Transactional
+    public User loginNaver(String code, String state, HttpSession session) {
+        // 1. 선택된 유저 롤
+        String userRoleStr = (String) session.getAttribute("userRole");
+        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+
+        // 1.1 RestTemplate 설정
+        RestTemplate rt = new RestTemplate();
+
+        // 1.2 http header 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // 1.3 http body 설정
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", "elWt0DvVScIBARwZfyU7");
+        body.add("client_secret", "iQ7E21zhDQ");
+        body.add("code", code);
+        body.add("state", state);
+
+        // 1.4 body+header 객체 만들기
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+
+        // 1.5 api 요청하기 (토큰 받기)
+        ResponseEntity<UserResponse.NaverTokenDTO> response = rt.exchange(
+                "https://nid.naver.com/oauth2.0/token",
+                HttpMethod.POST,
+                request,
+                UserResponse.NaverTokenDTO.class);
+
+        // 1.6 값 확인
+        System.out.println(response.getBody().toString());
+
+        // 2. 토큰으로 사용자 정보 받기 (PK, Email)
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.add("Authorization", "Bearer " + response.getBody().getAccessToken());
+
+        HttpEntity<Void> request2 = new HttpEntity<>(headers2);
+
+        ResponseEntity<UserResponse.NaverUserDTO> response2 = rt.exchange(
+                "https://openapi.naver.com/v1/nid/me",
+                HttpMethod.GET,
+                request2,
+                UserResponse.NaverUserDTO.class);
+
+        System.out.println("response2 : " + response2.getBody().toString());
+
+        // 3. 사용자 정보 가져오기
+        UserResponse.NaverUserDTO naverUser = response2.getBody();
+
+        // naverUser 또는 naverUser.getResponse()가 null인지 확인
+        if (naverUser == null || naverUser.getResponse() == null) {
+            throw new IllegalStateException("네이버 계정 정보를 불러오지 못했습니다.");
+        }
+
+        String email = naverUser.getResponse().getEmail();
+        UserResponse.NaverUserDTO.Response.Profile profile = naverUser.getResponse().getProfile();
+        String nickname = (profile != null) ? profile.getNickname() : "NaverUser";
+        Long naverId = naverUser.getId();
+
+        User userPS = null;
+
+        if (email != null) {
+            // 이메일이 있는 경우
+            userPS = userRepository.findByEmail(email);
+        } else {
+            // 이메일이 없는 경우, 네이버 ID로 사용자 찾기
+            userPS = userRepository.findByEmail("naver_" + naverId + "@naver.com");
+        }
+
+        // 4. 있으면? - 조회된 유저정보 리턴
+        if (userPS != null) {
+            System.out.println("어? 유저가 있네? 강제로그인 진행시켜!");
+            return userPS;
+
+            // 5-2. 사용자 정보가 DB에 없으면??
+        } else {
+            System.out.println("어? 유저가 없네? 강제회원가입 and 강제로그인 진행시켜!!");
+
+            // 5. 없으면? - 강제 회원가입
+            User user = User.builder()
+                    .name(nickname)
+                    .password(UUID.randomUUID().toString())
+                    .email(email != null ? email : "naver_" + naverId + "@naver.com")
+                    .phone("000-0000-0000")
+                    .userRole(userRole)
+                    .profileImage(UserDefault.getDefaultProfileImage())
+                    .expertTitle(UserDefault.getDefaultExpertTitle())
+                    .provider(OauthProvider.NAVER)
+                    .build();
+            User returnUser = userRepository.save(user);
+            return returnUser;
+        }
+    }
 }
+
