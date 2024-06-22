@@ -30,13 +30,12 @@ import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
@@ -169,74 +168,43 @@ public class UserService {
 
     // 오어스 회원가입
     @Transactional
-    public SessionUser loginKakao(String code, HttpSession session) {
-        // 1. 선택된 유저 롤
-        String userRoleStr = (String) session.getAttribute("userRole");
+    public SessionUser loginKakao(String code, RedisTemplate<String, Object> redisTemp) {
+        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
         UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
 
-        // 1. code로 카카오에서 토큰 받기
-
-        // 1.1 RestTemplate 설정
-        RestTemplate rt = new RestTemplate();
-
-        // 1.2 http header 설정
+        RestTemplate restTemp = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // 1.3 http body 설정
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "f07259c71010e17f9a081c435bc8328b");
         body.add("redirect_uri", "http://localhost:8080/oauth/callback/kakao");
         body.add("code", code);
 
-        // 1.4 body+header 객체 만들기
-        HttpEntity<MultiValueMap<String, String>> request =
-                new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+        ResponseEntity<UserResponse.KakaoTokenDTO> response = restTemp.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST, request, UserResponse.KakaoTokenDTO.class);
 
-        // 1.5 api 요청하기 (토큰 받기)
-        ResponseEntity<UserResponse.KakaoTokenDTO> response = rt.exchange(
-                "https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                request,
-                UserResponse.KakaoTokenDTO.class);
-
-        // 1.6 값 확인
-        System.out.println(response.getBody().toString());
-
-        // 2. 토큰으로 사용자 정보 받기 (PK, Email)
         HttpHeaders headers2 = new HttpHeaders();
         headers2.add("Authorization", "Bearer " + response.getBody().getAccessToken());
-
         HttpEntity<Void> request2 = new HttpEntity<>(headers2);
+        ResponseEntity<UserResponse.KakaoUserDTO> response2 = restTemp.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.GET, request2, UserResponse.KakaoUserDTO.class);
 
-        ResponseEntity<UserResponse.KakaoUserDTO> response2 = rt.exchange(
-                "https://kapi.kakao.com/v2/user/me",
-                HttpMethod.GET,
-                request2,
-                UserResponse.KakaoUserDTO.class);
-
-        System.out.println("response2 : " + response2.getBody().toString());
-
-        // 3. 사용자 정보 가져오기
         UserResponse.KakaoUserDTO kakaoUser = response2.getBody();
         String email = kakaoUser.getKakaoAccount().getEmail();
         String nickname = kakaoUser.getKakaoAccount().getProfile().getNickname();
         Long kakaoId = kakaoUser.getId();
+        String accessToken = response.getBody().getAccessToken();
 
         User userPS = null;
-
         if (email != null) {
-            // 이메일이 있는 경우
             userPS = userRepository.findByEmail(email);
         } else {
-            // 이메일이 없는 경우, 카카오 ID로 사용자 찾기
             userPS = userRepository.findByEmail("kakao_" + kakaoId + "@kakao.com");
         }
 
-        // 4. 있으면? - 조회된 유저정보 리턴
         if (userPS != null) {
-            return new SessionUser(userPS);
+            return new SessionUser(userPS, accessToken);
         } else {
             User user = User.builder()
                     .name(nickname)
@@ -248,24 +216,19 @@ public class UserService {
                     .provider(OauthProvider.KAKAO)
                     .build();
             User returnUser = userRepository.save(user);
-            return new SessionUser(returnUser);
+            return new SessionUser(returnUser, accessToken);
         }
     }
 
     @Transactional
-    public SessionUser loginNaver(String code, String state, HttpSession session) {
-        // 1. 선택된 유저 롤
-        String userRoleStr = (String) session.getAttribute("userRole");
+    public SessionUser loginNaver(String code, String state, RedisTemplate<String, Object> redisTemp) {
+        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
         UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
 
-        // 1.1 RestTemplate 설정
-        RestTemplate rt = new RestTemplate();
-
-        // 1.2 http header 설정
+        RestTemplate restTemp = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        // 1.3 http body 설정
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "elWt0DvVScIBARwZfyU7");
@@ -273,37 +236,15 @@ public class UserService {
         body.add("code", code);
         body.add("state", state);
 
-        // 1.4 body+header 객체 만들기
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+        ResponseEntity<UserResponse.NaverTokenDTO> response = restTemp.exchange("https://nid.naver.com/oauth2.0/token", HttpMethod.POST, request, UserResponse.NaverTokenDTO.class);
 
-        // 1.5 api 요청하기 (토큰 받기)
-        ResponseEntity<UserResponse.NaverTokenDTO> response = rt.exchange(
-                "https://nid.naver.com/oauth2.0/token",
-                HttpMethod.POST,
-                request,
-                UserResponse.NaverTokenDTO.class);
-
-        // 1.6 값 확인
-        System.out.println(response.getBody().toString());
-
-        // 2. 토큰으로 사용자 정보 받기 (PK, Email)
         HttpHeaders headers2 = new HttpHeaders();
         headers2.add("Authorization", "Bearer " + response.getBody().getAccessToken());
-
         HttpEntity<Void> request2 = new HttpEntity<>(headers2);
+        ResponseEntity<UserResponse.NaverUserDTO> response2 = restTemp.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET, request2, UserResponse.NaverUserDTO.class);
 
-        ResponseEntity<UserResponse.NaverUserDTO> response2 = rt.exchange(
-                "https://openapi.naver.com/v1/nid/me",
-                HttpMethod.GET,
-                request2,
-                UserResponse.NaverUserDTO.class);
-
-        System.out.println("response2 : " + response2.getBody().toString());
-
-        // 3. 사용자 정보 가져오기
         UserResponse.NaverUserDTO naverUser = response2.getBody();
-
-        // naverUser 또는 naverUser.getResponse()가 null인지 확인
         if (naverUser == null || naverUser.getResponse() == null) {
             throw new IllegalStateException("네이버 계정 정보를 불러오지 못했습니다.");
         }
@@ -312,20 +253,17 @@ public class UserService {
         UserResponse.NaverUserDTO.Response.Profile profile = naverUser.getResponse().getProfile();
         String nickname = (profile != null) ? profile.getNickname() : "NaverUser";
         Long naverId = naverUser.getId();
+        String accessToken = response.getBody().getAccessToken();
 
         User userPS = null;
-
         if (email != null) {
-            // 이메일이 있는 경우
             userPS = userRepository.findByEmail(email);
         } else {
-            // 이메일이 없는 경우, 네이버 ID로 사용자 찾기
             userPS = userRepository.findByEmail("naver_" + naverId + "@naver.com");
         }
 
-        // 4. 있으면? - 조회된 유저정보 리턴
         if (userPS != null) {
-            return new SessionUser(userPS);
+            return new SessionUser(userPS, accessToken);
         } else {
             User user = User.builder()
                     .name(nickname)
@@ -338,7 +276,67 @@ public class UserService {
                     .provider(OauthProvider.NAVER)
                     .build();
             User returnUser = userRepository.save(user);
-            return new SessionUser(returnUser);
+            return new SessionUser(returnUser, accessToken);
+        }
+    }
+
+    public boolean logoutKakao(String accessToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "https://kapi.kakao.com/v1/user/logout",
+                    HttpMethod.POST,
+                    request,
+                    String.class
+            );
+            System.out.println("Kakao logout response: " + response.getBody());
+            return true;
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                System.out.println("Kakao logout failed: Unauthorized");
+            } else {
+                System.out.println("Kakao logout failed: " + e.getStatusCode());
+            }
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean logoutNaver(String accessToken) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=elWt0DvVScIBARwZfyU7&client_secret=iQ7E21zhDQ&access_token=" + accessToken + "&service_provider=NAVER",
+                    HttpMethod.GET,
+                    request,
+                    String.class
+            );
+            System.out.println("Naver logout response: " + response.getBody());
+            return true;
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                System.out.println("Naver logout failed: Unauthorized");
+            } else {
+                System.out.println("Naver logout failed: " + e.getStatusCode());
+            }
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
