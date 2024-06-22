@@ -150,13 +150,9 @@ public class UserController {
     // 클라이언트 메인페이지
     @GetMapping("/")
     public String index(Model model) {
-        System.out.println("이게레디스다");
-        System.out.println(redisConfig.getRedisHost());
-        System.out.println(redisConfig.getRedisPort());
-        System.out.println(redisConfig.getRedisPassword());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
-        System.out.println(clientMain);
+
         return "client/main";
     }
 
