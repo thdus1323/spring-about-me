@@ -1,6 +1,5 @@
 package com.example.aboutme.reservation;
 
-import com.example.aboutme.schedule.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +12,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
             "DATE(r.reservationDate) = :date")
     List<Reservation> findByExpertIdAndDate(@Param("expertId") Integer expertId,
                                             @Param("date") LocalDate date);
+
+    //전문가의 예약현황 확인
+    List<Reservation> findByExpertId(Integer expertId);
 }

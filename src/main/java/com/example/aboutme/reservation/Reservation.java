@@ -46,6 +46,11 @@ public class Reservation {
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
+    // 스케줄 ID (외래 키)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private Schedule schedule;
+
     // 예약 상태
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -58,11 +63,6 @@ public class Reservation {
     // 예약 날짜
     @Column(nullable = false)
     private LocalDate reservationDate;
-
-    // 스케줄 ID (외래 키)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id", nullable = false)
-    private Schedule schedule;
 
     // 예약 생성 시간
     @CreationTimestamp

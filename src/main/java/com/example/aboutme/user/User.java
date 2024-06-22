@@ -1,13 +1,15 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-@ToString(exclude = {"pr", "specs", "schedules"}) // 유효한 필드만 제외
+//@ToString(exclude = {"pr", "specs"}) // 유효한 필드만 제외
 public class User {
 
     // 필수 입력
@@ -58,9 +60,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Schedule> schedules;
-
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PR pr;
 
@@ -74,7 +73,7 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String expertTitle, ExpertLevel level, String profileImage, String birth, Gender gender, List<Schedule> schedules, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String expertTitle, ExpertLevel level, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
@@ -86,7 +85,6 @@ public class User {
         this.profileImage = profileImage;
         this.birth = birth;
         this.gender = gender;
-        this.schedules = schedules;
         this.pr = pr;
         this.specs = specs;
         this.createdAt = createdAt;
