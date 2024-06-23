@@ -35,7 +35,7 @@ public class Reservation {
     private User client;
 
     // 바우처 ID (외래 키)
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
