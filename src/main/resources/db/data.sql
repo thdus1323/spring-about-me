@@ -454,51 +454,34 @@ VALUES
     -- 24번 스케줄: 수요일만 근무 시간
     (24, 'WEDNESDAY', '10:00', '14:00', NOW(), NOW());
 
-
--- 예약 테이블
-INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, schedule_id,
-                            created_at, updated_at)
+-- reservation_tb 테이블
+INSERT INTO reservation_tb (expert_id, client_id, voucher_id, schedule_id, status, start_time, reservation_date,
+                            day_of_week, created_at, updated_at)
 VALUES
-    -- Expert 21 (근무 시간: 월요일 ~ 금요일, 09:00 ~ 18:00)
-    -- 6월 24일 (월요일), schedule_id = 1
-    (21, 1, 1, 'SCHEDULED', '09:00', '2024-06-24', 1, NOW(), NOW()),
-    (21, 2, 2, 'SCHEDULED', '10:00', '2024-06-24', 1, NOW(), NOW()),
-    (21, 3, 3, 'SCHEDULED', '11:00', '2024-06-24', 1, NOW(), NOW()),
-    (21, 4, 1, 'SCHEDULED', '13:00', '2024-06-24', 1, NOW(), NOW()),
+    -- Expert 21 (월요일과 금요일)에서 4개 스케줄
+    (21, 1, 1, 1, 'PENDING', '09:00', '2024-06-24', '월', NOW(), NOW()),
+    (21, 2, 2, 1, 'SCHEDULED', '10:00', '2024-06-24', '월', NOW(), NOW()),
+    (21, 3, 2, 5, 'PENDING', '09:00', '2024-06-28', '금', NOW(), NOW()),
+    (21, 4, 2, 5, 'SCHEDULED', '10:00', '2024-06-28', '금', NOW(), NOW()),
 
-    -- 6월 25일 (화요일), schedule_id = 2
-    (21, 5, 2, 'SCHEDULED', '09:00', '2024-06-25', 2, NOW(), NOW()),
-    (21, 6, 3, 'SCHEDULED', '10:00', '2024-06-25', 2, NOW(), NOW()),
-    (21, 7, 1, 'SCHEDULED', '11:00', '2024-06-25', 2, NOW(), NOW()),
-    (21, 8, 2, 'SCHEDULED', '13:00', '2024-06-25', 2, NOW(), NOW()),
+    -- Expert 21 (화요일과 수요일)에서 4개 스케줄
+    (21, 5, 2, 2, 'PENDING', '09:00', '2024-06-25', '화', NOW(), NOW()),
+    (21, 6, 2, 2, 'SCHEDULED', '10:00', '2024-06-25', '화', NOW(), NOW()),
+    (21, 7, 3, 3, 'PENDING', '09:00', '2024-06-26', '수', NOW(), NOW()),
+    (21, 8, 3, 3, 'SCHEDULED', '10:00', '2024-06-26', '수', NOW(), NOW()),
 
-    -- 6월 26일 (수요일), schedule_id = 3
-    (21, 9, 3, 'SCHEDULED', '09:00', '2024-06-26', 3, NOW(), NOW()),
-    (21, 10, 1, 'SCHEDULED', '10:00', '2024-06-26', 3, NOW(), NOW()),
-    (21, 11, 2, 'SCHEDULED', '11:00', '2024-06-26', 3, NOW(), NOW()),
-    (21, 12, 3, 'SCHEDULED', '13:00', '2024-06-26', 3, NOW(), NOW()),
+    -- Expert 22 (월요일)에서 4개 스케줄
+    (22, 9, 4, 6, 'PENDING', '10:00', '2024-06-24', '월', NOW(), NOW()),
+    (22, 10, 4, 6, 'SCHEDULED', '11:00', '2024-06-24', '월', NOW(), NOW()),
+    (22, 11, 4, 6, 'PENDING', '12:00', '2024-06-24', '월', NOW(), NOW()),
+    (22, 12, 4, 6, 'SCHEDULED', '13:00', '2024-06-24', '월', NOW(), NOW()),
 
-    -- 6월 27일 (목요일), schedule_id = 4
-    (21, 13, 1, 'SCHEDULED', '09:00', '2024-06-27', 4, NOW(), NOW()),
-    (21, 14, 2, 'SCHEDULED', '10:00', '2024-06-27', 4, NOW(), NOW()),
-    (21, 15, 3, 'SCHEDULED', '11:00', '2024-06-27', 4, NOW(), NOW()),
-    (21, 16, 1, 'SCHEDULED', '13:00', '2024-06-27', 4, NOW(), NOW()),
+    -- Expert 24 (수요일)에서 4개 스케줄
+    (24, 13, 7, 7, 'PENDING', '10:00', '2024-06-26', '수', NOW(), NOW()),
+    (24, 14, 7, 7, 'SCHEDULED', '11:00', '2024-06-26', '수', NOW(), NOW()),
+    (24, 15, 7, 7, 'PENDING', '12:00', '2024-06-26', '수', NOW(), NOW()),
+    (24, 16, 7, 7, 'SCHEDULED', '13:00', '2024-06-26', '수', NOW(), NOW());
 
-    -- 6월 28일 (금요일), schedule_id = 5
-    (21, 17, 2, 'SCHEDULED', '09:00', '2024-06-28', 5, NOW(), NOW()),
-    (21, 18, 3, 'SCHEDULED', '10:00', '2024-06-28', 5, NOW(), NOW()),
-    (21, 19, 1, 'SCHEDULED', '11:00', '2024-06-28', 5, NOW(), NOW()),
-    (21, 20, 2, 'SCHEDULED', '13:00', '2024-06-28', 5, NOW(), NOW()),
-
-    -- Expert 22 (근무 시간: 월요일, 10:00 ~ 17:00)
-    -- 6월 24일 (월요일), schedule_id = 6
-    (22, 21, 4, 'SCHEDULED', '10:00', '2024-06-24', 6, NOW(), NOW()),
-    (22, 22, 5, 'SCHEDULED', '11:00', '2024-06-24', 6, NOW(), NOW()),
-
-    -- Expert 24 (근무 시간: 수요일, 10:00 ~ 14:00)
-    -- 6월 26일 (수요일), schedule_id = 7
-    (24, 23, 7, 'SCHEDULED', '10:00', '2024-06-26', 7, NOW(), NOW()),
-    (24, 24, 8, 'SCHEDULED', '11:00', '2024-06-26', 7, NOW(), NOW());
 
 
 

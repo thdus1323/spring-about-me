@@ -1,110 +1,105 @@
 package com.example.aboutme.reservation;
 
+import com.example.aboutme._core.error.exception.Exception400;
+import com.example.aboutme._core.utils.DayOfWeekConverter;
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme.reservation.RevervationRequest.ReservationTempRepDTO;
+import com.example.aboutme.reservation.enums.ReservationStatus;
+import com.example.aboutme.reservation.resrvationResponse.ReservationDetails.ReservationDetailsDTO;
+import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.schedule.ScheduleRepository;
+import com.example.aboutme.user.SessionUser;
+import com.example.aboutme.user.User;
+import com.example.aboutme.user.UserRepository;
+import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
+
     private final ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
     private final VoucherRepository voucherRepository;
     private final ScheduleRepository scheduleRepository;
     private final Formatter formatter;
 
+    @Transactional
+    public Reservation createTempReservation(ReservationTempRepDTO reqDTO, SessionUser sessionUser) {
+        User client = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("고객을 찾을 수 없습니다."));
+        User expert = userRepository.findById(reqDTO.expertId())
+                .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
+        Voucher voucher = voucherRepository.findById(reqDTO.voucherId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
 
-    //예약 페이지의 예약 가능 시간대 조회
-//    public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId) {
-//        Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(() -> new Exception400("해당하는 이용권을 찾을 수 없습니다."));
-//        List<Schedule> schedules = scheduleRepository.findByExpertId(expertId);
-//// 널 처리
-//        schedules = schedules.stream().map(NullHandlerUtil::handleNulls).toList();
-//
-//        List<Reservation> reservations = reservationRepository.findByExpertId(expertId);
-//        // 가격 포맷
-//        String formattedPrice = formatter.number((int) voucher.getPrice());
-//        // 엔티티를 DTO로 변환
-//        ReservationDetailsDTO.VoucherDTO voucherDTO = new ReservationDetailsDTO.VoucherDTO(
-//                voucher.getId(),
-//                voucher.getVoucherType().getKorean(),
-//                voucher.getExpert().getId(),
-//                formattedPrice,
-//                voucher.getCount(),
-//                voucher.getDuration(),
-//                voucher.getImagePath(),
-//                voucher.getStartDate(),
-//                voucher.getCreatedAt().toLocalDateTime(),
-//                voucher.getUpdatedAt().toLocalDateTime()
-//        );
-//
-//        List<ReservationDetailsDTO.ScheduleDTO> scheduleDTOs = schedules.stream()
-//                .map(schedule -> new ReservationDetailsDTO.ScheduleDTO(
-//                        schedule.getId(),
-//                        schedule.getExpert().getId(),
-//                        schedule.getStartTime(),
-//                        schedule.getEndTime(),
-//                        schedule.getRestType().getKorean(),
-//                        schedule.getStartDay().getKorean(),
-//                        schedule.getEndDay().getKorean(),
-//                        schedule.getSpecificDate(),
-//                        schedule.getLunchStartTime(),
-//                        schedule.getLunchEndTime()
-//                ))
-//                .collect(toList());
-//
-//        List<ReservationDetailsDTO.ReservationDTO> reservationDTOs = reservations.stream()
-//                .map(reservation -> new ReservationDetailsDTO.ReservationDTO(
-//                        reservation.getId(),
-//                        reservation.getExpert().getId(),
-//                        reservation.getClient().getId(),
-//                        reservation.getVoucher().getId(),
-//                        reservation.getStatus().getKorean(),
-//                        reservation.getStartTime(),
-//                        reservation.getReservationDate(),
-//                        reservation.getSchedule().getId()
-//                ))
-//                .collect(toList());
-//
-//        // 예약 가능한 시간 계산
-//        List<String> availableTimes = calculateAvailableTimes(schedules, reservations);
-//        System.out.println("availableTimes = " + availableTimes);
-//
-//        return new ReservationDetailsDTO(voucherDTO, availableTimes, scheduleDTOs, reservationDTOs);
-//    }
+        //이넘으로 변경
+        DayOfWeek dayOfWeekEnum = DayOfWeekConverter.toEnum(reqDTO.dayOfWeek());
+
+        // 해당 스케줄 조회
+        Schedule schedule = scheduleRepository.findByExpertIdAndDayOfWeekAndStartTime(
+                        reqDTO.expertId(), dayOfWeekEnum, reqDTO.startTime())
+                .orElseThrow(() -> new Exception400("해당 시간을 찾을 수 없습니다."));
+
+        Reservation reservation = Reservation.builder()
+                .client(client)
+                .reservationDate(reqDTO.reservationDate())
+                .dayOfWeek(reqDTO.dayOfWeek())
+                .startTime(reqDTO.startTime())
+                .expert(expert)
+                .voucher(voucher)
+                .schedule(schedule)
+                .status(ReservationStatus.PENDING)
+                .build();
+
+        return reservationRepository.save(reservation);
+    }
 
 
-//    private List<String> calculateAvailableTimes(List<Schedule> schedules, List<Reservation> reservations) {
-//        List<String> availableTimes = new ArrayList<>();
-//
-//        // 예약된 시간대를 가져옵니다.
-//        List<LocalTime> reservedTimes = reservations.stream()
-//                .map(Reservation::getStartTime)
-//                .toList();
-//
-//        // 스케줄에 따른 예약 가능한 시간을 계산합니다.
-//        for (Schedule schedule : schedules) {
-//            // 점심 시간대를 제외한 시간을 계산합니다.
-//            List<LocalTime> times = IntStream.rangeClosed(schedule.getStartTime().getHour(), schedule.getEndTime().getHour() - 1)
-//                    .mapToObj(hour -> LocalTime.of(hour, 0))
-//                    .collect(Collectors.toList());
-//
-//            // 점심 시간대를 제외합니다.
-//            times.removeIf(time -> !time.isBefore(schedule.getLunchStartTime()) && !time.isAfter(schedule.getLunchEndTime()));
-//
-//            // 이미 예약된 시간을 제외합니다.
-//            times.removeAll(reservedTimes);
-//
-//            // 포맷하여 추가합니다.
-//            availableTimes.addAll(times.stream().map(LocalTime::toString).collect(Collectors.toList()));
-//        }
-//
-//        return availableTimes;
-//    }
+    @Transactional
+    public void confirmReservation(Integer id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("예약을 찾을 수 없습니다."));
+        reservation.setStatus(ReservationStatus.SCHEDULED);
+        reservationRepository.save(reservation);
+    }
+
+    @Transactional
+    public void cancelReservation(Integer id) {
+        reservationRepository.deleteById(id);
+    }
+
+    //예약 페이지의 바우처와 유저정보 조회
+    public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId) {
+        Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(() -> new Exception400("해당하는 이용권을 찾을 수 없습니다."));
+        User user = userRepository.findById(expertId).orElseThrow(() -> new Exception400("해당하는 전문가를 찾을 수 없습니다."));
+
+        // 가격 포맷
+        String formattedPrice = formatter.number((int) voucher.getPrice());
+
+        // 엔티티를 DTO로 변환
+        ReservationDetailsDTO.VoucherDTO voucherDTO = new ReservationDetailsDTO.VoucherDTO(
+                voucher.getId(),
+                voucher.getVoucherType().getKorean(),
+                voucher.getExpert().getId(),
+                formattedPrice,
+                voucher.getCount(),
+                voucher.getDuration()
+        );
+        ReservationDetailsDTO.UserDTO userDTO = new ReservationDetailsDTO.UserDTO(
+                user.getId(),
+                user.getLevel().getKorean()
+        );
+
+        return new ReservationDetailsDTO(voucherDTO, userDTO);
+    }
+
 
     @Transactional
     public void Reservation(Reservation reservation) {
