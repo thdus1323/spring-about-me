@@ -23,6 +23,8 @@ class ReservationServiceTest {
 
     //테스트에서는 빈주입이 안되어서 직접 뉴~
     private Formatter formatter = new Formatter();
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Test
     void getReservationDetails() {
@@ -72,6 +74,13 @@ class ReservationServiceTest {
         reservation.setReservationDate(reservationDate);
         reservation.setStatus(ReservationStatus.PENDING);
 
+        System.out.println("reservation = " + reservation);
+    }
+
+    @Test
+    void 예약조회하기() {
+        int id = 16;
+        Reservation reservation = reservationRepository.findById(id).get();
         System.out.println("reservation = " + reservation);
     }
 }

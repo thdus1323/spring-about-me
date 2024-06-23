@@ -3,6 +3,7 @@ package com.example.aboutme.reservation;
 import com.example.aboutme._core.error.exception.Exception400;
 import com.example.aboutme._core.utils.DayOfWeekConverter;
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
 import com.example.aboutme.reservation.enums.ReservationStatus;
 import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
 import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
@@ -14,12 +15,14 @@ import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
@@ -29,6 +32,44 @@ public class ReservationService {
     private final VoucherRepository voucherRepository;
     private final ScheduleRepository scheduleRepository;
     private final Formatter formatter;
+
+
+    public PaymentDetailsDTO getTempReservation(Integer reservationId) {
+        log.info("예약조회하기 called with reservationId: {}", reservationId);
+
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new Exception400("해당 예약정보를 찾을 수 없습니다."));
+        log.info("Reservation found: {}", reservation);
+
+        User expert = userRepository.findById(reservation.getExpert().getId())
+                .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
+        log.info("Expert found: {}", expert);
+
+        Voucher voucher = voucherRepository.findById(reservation.getVoucher().getId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
+        log.info("Voucher found: {}", voucher);
+
+        String formattedPrice = formatter.number((int) voucher.getPrice());
+        log.info("Formatted price: {}", formattedPrice);
+
+        PaymentDetailsDTO.VoucherDTO voucherDTO = new PaymentDetailsDTO.VoucherDTO(
+                voucher.getId(),
+                voucher.getVoucherType().getKorean(),
+                voucher.getExpert().getId(),
+                formattedPrice,
+                voucher.getCount(),
+                voucher.getDuration()
+        );
+        PaymentDetailsDTO.ExpertDTO expertDTO = new PaymentDetailsDTO.ExpertDTO(
+                expert.getId(),
+                expert.getLevel().getKorean()
+        );
+
+        PaymentDetailsDTO paymentDetailsDTO = new PaymentDetailsDTO(voucherDTO, expertDTO, reservationId);
+        log.info("PaymentDetailsDTO: {}", paymentDetailsDTO);
+
+        return paymentDetailsDTO;
+    }
 
 
     //    결제 전까지 예약 임시 저장
@@ -102,9 +143,6 @@ public class ReservationService {
     }
 
 
-    public void 예약조회하기() {
-
-    }
 }
 
 
