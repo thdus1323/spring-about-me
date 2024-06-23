@@ -73,10 +73,10 @@
                 const todayClass = date.toDateString() === today.toDateString() ? 'reservation-today' : '';
                 const dayOfWeek = daysOfWeekInKorean[date.getUTCDay()];
                 daysHtml.push(`
-                <div class="reservation-day ${pastClass} ${todayClass}" data-date="${i}" data-full-date="${date.toISOString().split('T')[0]}" data-day="${dayOfWeek}">
-                    <span>${i}</span>
-                    <br>
-                </div>`);
+                    <div class="reservation-day ${pastClass} ${todayClass}" data-date="${i}" data-full-date="${date.toISOString().split('T')[0]}" data-day="${dayOfWeek}">
+                        <span>${i}</span>
+                        <br>
+                    </div>`);
             }
 
             $('#reservation-days').html(`
@@ -104,7 +104,7 @@
                 $('#reservation-payButton').prop('disabled', true).removeClass('active');
             });
 
-            // Select the first available day automatically
+            // Automatically select the first available day
             selectFirstAvailableDay();
         }
 
@@ -138,7 +138,7 @@
 
         function selectFirstAvailableDay() {
             const tomorrow = new Date(today);
-            tomorrow.setDate(today.getDate());
+            tomorrow.setDate(today.getDate());  // Skip today
 
             const firstAvailableDay = $('#reservation-days .reservation-day').filter(function () {
                 const dayDate = new Date(Date.UTC(currentYear, currentMonth, $(this).data('date')));
@@ -149,6 +149,8 @@
                 firstAvailableDay.addClass('reservation-selected');
                 selectedDate = firstAvailableDay.data('date');
                 const fullDate = firstAvailableDay.data('full-date');
+                $('#selected-date').val(fullDate); // Set hidden input value
+                $('#selected-day').val(firstAvailableDay.data('day')); // Set hidden input value
                 displayTimes(fullDate);
                 console.log("First available day selected:", selectedDate);
             } else {
@@ -183,6 +185,9 @@
                 $(this).css('background-color', '#00bbba').css('color', 'white');
             }
         });
+
+        // Initialize the calendar on page load
+        renderCalendar(currentYear, currentMonth);
     });
 </script>
 {{> layout/footer}}

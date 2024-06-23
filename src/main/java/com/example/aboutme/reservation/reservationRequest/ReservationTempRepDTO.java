@@ -1,4 +1,4 @@
-package com.example.aboutme.reservation.RevervationRequest;
+package com.example.aboutme.reservation.reservationRequest;
 
 public record ReservationTempRepDTO(
         String reservationDate,

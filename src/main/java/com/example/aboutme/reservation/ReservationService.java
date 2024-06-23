@@ -3,9 +3,9 @@ package com.example.aboutme.reservation;
 import com.example.aboutme._core.error.exception.Exception400;
 import com.example.aboutme._core.utils.DayOfWeekConverter;
 import com.example.aboutme._core.utils.Formatter;
-import com.example.aboutme.reservation.RevervationRequest.ReservationTempRepDTO;
 import com.example.aboutme.reservation.enums.ReservationStatus;
-import com.example.aboutme.reservation.resrvationResponse.ReservationDetails.ReservationDetailsDTO;
+import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
+import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.schedule.ScheduleRepository;
 import com.example.aboutme.user.SessionUser;
@@ -30,6 +30,8 @@ public class ReservationService {
     private final ScheduleRepository scheduleRepository;
     private final Formatter formatter;
 
+
+    //    결제 전까지 예약 임시 저장
     @Transactional
     public Reservation createTempReservation(ReservationTempRepDTO reqDTO, SessionUser sessionUser) {
         User client = userRepository.findById(sessionUser.getId())
@@ -61,19 +63,6 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-
-    @Transactional
-    public void confirmReservation(Integer id) {
-        Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("예약을 찾을 수 없습니다."));
-        reservation.setStatus(ReservationStatus.SCHEDULED);
-        reservationRepository.save(reservation);
-    }
-
-    @Transactional
-    public void cancelReservation(Integer id) {
-        reservationRepository.deleteById(id);
-    }
 
     //예약 페이지의 바우처와 유저정보 조회
     public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId) {
@@ -113,6 +102,9 @@ public class ReservationService {
     }
 
 
+    public void 예약조회하기() {
+
+    }
 }
 
 
