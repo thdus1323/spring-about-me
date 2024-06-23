@@ -8,6 +8,7 @@ import com.example.aboutme.user.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +41,13 @@ public class PaymentController {
         return paymentService.requestPayment(paymentRequestDTO, sessionUser);
     }
 
+
     @PostMapping("/payments/complete")
-    @ResponseBody
-    public String completePayment(@RequestParam String impUid, @RequestParam String merchantUid) {
-        return paymentService.completePayment(impUid, merchantUid);
+    public ResponseEntity<String> completePayment(@RequestParam String impUid, @RequestParam String merchantUid, @RequestParam Integer reservationId) {
+        paymentService.completePayment(impUid, merchantUid, reservationId);
+        return ResponseEntity.ok("/");
     }
+
 
     @GetMapping("/list")
     public String getAllPayments(Model model) {

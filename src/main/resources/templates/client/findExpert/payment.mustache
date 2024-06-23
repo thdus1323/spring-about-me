@@ -72,7 +72,7 @@
         const originalPrice = 100; // 템플릿에서 JavaScript 변수로 전달
         let discountAmount = 0; // 할인 금액
         let finalAmount = originalPrice - discountAmount; // 최종 금액
-
+        let paymentCompleted = false; // 결제 완료 상태 추적
         console.log("Original Price:", originalPrice);
         console.log("Final Amount:", finalAmount);
 
@@ -136,13 +136,16 @@
                         }, function (rsp) {
                             if (rsp.success) {
                                 alert("결제가 완료되었습니다.");
+                                paymentCompleted = true; // 결제 완료 플래그 설정
                                 // 서버에 결제 완료 정보 전송
                                 $.post('/payments/complete', {
                                     impUid: rsp.imp_uid,
                                     merchantUid: rsp.merchant_uid,
                                     reservationId: reservationId
                                 }, function (data) {
-                                    alert(data);
+                                    alert("홈페이지로 이동합니다.");
+                                    console.log("결제 완료 응답:", data);
+                                    window.location.href = data; // 서버에서 받은 URL로 리다이렉트
                                 }).fail(function (xhr, status, error) {
                                     alert("서버로 전송 중 오류 발생: " + error);
                                 });
@@ -164,9 +167,9 @@
         // 예약 대기 삭제 처리
         window.addEventListener('unload', function (e) {
             const reservationId = $('#reservationId').val(); // 예약 ID를 가져옵니다.
-            if (reservationId) {
+            if (reservationId && !paymentCompleted) { // 결제가 완료되지 않은 경우에만 삭제
                 navigator.sendBeacon('/client/reservations/temp/' + reservationId, JSON.stringify({
-                    _method: 'DELETE'
+                    _method: 'POST'
                 }));
             }
         });

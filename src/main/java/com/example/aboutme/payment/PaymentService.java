@@ -3,6 +3,9 @@ package com.example.aboutme.payment;
 import com.example.aboutme.payment.PaymentRequestRecord.PaymentPortOneReqDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentPortOneRespDTO;
 import com.example.aboutme.payment.enums.PaymentStatus;
+import com.example.aboutme.reservation.Reservation;
+import com.example.aboutme.reservation.ReservationRepository;
+import com.example.aboutme.reservation.enums.ReservationStatus;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
@@ -22,6 +25,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
     private final VoucherRepository voucherRepository;
+    private final ReservationRepository reservationRepository;
 
     //결제데이터 받아서 임시저장
     @Transactional
@@ -56,14 +60,30 @@ public class PaymentService {
 
     //임시 저장한 결제가 완료되면 'COMPLETED' 로 변경
     @Transactional
-    public String completePayment(String impUid, String merchantUid) {
+    public String completePayment(String impUid, String merchantUid, Integer reservationId) {
         Payment payment = paymentRepository.findByMerchantUid(merchantUid)
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 결제 내역이 없습니다."));
 
         payment.setImpUid(impUid);
         payment.setStatus(PaymentStatus.COMPLETED);
         paymentRepository.save(payment);
+
+        // 예약 상태를 변경하는 로직 추가
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 예약 내역이 없습니다."));
+        reservation.setStatus(ReservationStatus.COMPLETED);
+        reservationRepository.save(reservation);
+
         return "Payment completed: " + payment.getId();
+    }
+
+    private void updateReservationStatus(Payment payment) {
+        Reservation reservation = reservationRepository.findByVoucherIdAndStatus(
+                        payment.getVoucher().getId(), ReservationStatus.PENDING)
+                .orElseThrow(() -> new IllegalArgumentException("예약 대기 상태의 예약을 찾을 수 없습니다."));
+
+        reservation.setStatus(ReservationStatus.SCHEDULED);
+        reservationRepository.save(reservation);
     }
 
     //결제내역 뷰에 반환

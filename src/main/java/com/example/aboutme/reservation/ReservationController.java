@@ -31,8 +31,7 @@ public class ReservationController {
 
 
     @PostMapping("/client/reservations/temp")
-    public String saveTempReservation(ReservationTempRepDTO reqDTO,
-                                      Model model) {
+    public String saveTempReservation(ReservationTempRepDTO reqDTO) {
         SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
         Reservation tempReservation = reservationService.createTempReservation(reqDTO, sessionUser);
         return "redirect:/client/findExpert/payment/" + tempReservation.getId();
