@@ -56,6 +56,7 @@
                             </div>
                             <button class="payment-button" id="payButton">{{voucher.price}} 결제하기</button>
                             <input type="hidden" id="reservationId" value="{{reservationId}}">
+                            <input type="hidden" id="voucherId" name="voucherId" value="{{voucher.id}}">
                         </div>
                     </div>
                 </div>
@@ -65,9 +66,10 @@
 {{/model}}
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
+    // parseInt($('#originalPrice').text().replace(/,/g, ''))
     $(document).ready(function () {
         let itemName = $('h3.page-title').text();
-        const originalPrice = parseInt($('#originalPrice').text().replace(/,/g, '')); // 템플릿에서 JavaScript 변수로 전달
+        const originalPrice = 100; // 템플릿에서 JavaScript 변수로 전달
         let discountAmount = 0; // 할인 금액
         let finalAmount = originalPrice - discountAmount; // 최종 금액
 
@@ -101,22 +103,60 @@
 
             IMP.init("imp14397622");
 
-            const paymentMethod = $('#paymentMethod').val();
+            const amount = finalAmount;
+            const buyerName = $('#buyerName').val();
+            const buyerTel = $('#buyerTel').val();
+            const voucherId = $('#voucherId').val();
+            const reservationId = $('#reservationId').val();
 
-            IMP.request_pay({
-                pg: "html5_inicis.INIpayTest",
-                pay_method: paymentMethod,
-                merchant_uid: "test_lxoahwnt",
-                name: itemName,
-                amount: finalAmount,
-                buyer_tel: "010-3334-6852",
-            }, function (rsp) {
-                if (rsp.success) {
-                    alert("결제가 완료되었습니다.");
-                    // 예약 완료 시, 예약 ID를 통해 예약 상태를 업데이트
-                    $.post('/client/reservations/complete', {reservationId: $('#reservationId').val()});
-                } else {
-                    alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+            const merchantUid = 'order_' + new Date().getTime(); // 유니크한 주문 ID 생성
+
+            // 결제 정보를 서버로 전달
+            $.ajax({
+                url: '/payments/request',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    amount: amount,
+                    paymentMethod: "card",
+                    voucherId: voucherId,
+                    merchantUid: merchantUid
+                }),
+                success: function (response) {
+                    console.log("서버에서 결제 요청 처리 완료:", response);
+                    if (response && response.merchantUid) {
+                        IMP.request_pay({
+                            pg: "html5_inicis.INIpayTest",
+                            pay_method: "card",
+                            merchant_uid: response.merchantUid,
+                            name: "테스트 결제",
+                            amount: amount,
+                            buyer_name: buyerName,
+                            buyer_tel: buyerTel,
+                        }, function (rsp) {
+                            if (rsp.success) {
+                                alert("결제가 완료되었습니다.");
+                                // 서버에 결제 완료 정보 전송
+                                $.post('/payments/complete', {
+                                    impUid: rsp.imp_uid,
+                                    merchantUid: rsp.merchant_uid,
+                                    reservationId: reservationId
+                                }, function (data) {
+                                    alert(data);
+                                }).fail(function (xhr, status, error) {
+                                    alert("서버로 전송 중 오류 발생: " + error);
+                                });
+                            } else {
+                                alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+                            }
+                        });
+                    } else {
+                        alert("서버에서 유효한 응답을 받지 못했습니다.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("서버 요청 중 오류 발생:", error);
+                    alert("결제 요청 중 오류 발생: " + error);
                 }
             });
         }
@@ -126,7 +166,7 @@
             const reservationId = $('#reservationId').val(); // 예약 ID를 가져옵니다.
             if (reservationId) {
                 navigator.sendBeacon('/client/reservations/temp/' + reservationId, JSON.stringify({
-                    _method: 'POST'
+                    _method: 'DELETE'
                 }));
             }
         });
