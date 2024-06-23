@@ -36,7 +36,6 @@ public class PaymentController {
     @ResponseBody
     public PaymentPortOneRespDTO requestPayment(@RequestBody PaymentPortOneReqDTO paymentRequestDTO) {
         SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
-
         log.info("Requesting payment" + paymentRequestDTO);
         return paymentService.requestPayment(paymentRequestDTO, sessionUser);
     }
