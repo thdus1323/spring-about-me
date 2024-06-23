@@ -1,6 +1,5 @@
 package com.example.aboutme.reservation;
 
-import com.example.aboutme.reservation.resrvationResponse.ReservationDetails.ReservationDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +13,16 @@ public class ReservationController {
 
 
     //    전문가 칮기 - 예약하기
-    @GetMapping("/client/findExpert/reservation/")
+    @GetMapping("/client/findExpert/reservation")
     public String findExpertReservation(
             @RequestParam(name = "voucherId", required = false) Integer voucherId,
             @RequestParam(name = "expertId", required = false) Integer expertId,
             Model model) {
 
-        System.out.println("voucherId = " + voucherId);
-        System.out.println("expertId = " + expertId);
-        ReservationDetailsDTO reservationDetails = reservationService.getReservationDetails(voucherId, expertId);
-        model.addAttribute("model", reservationDetails);
-        System.out.println("reservationDetails = " + reservationDetails);
+        model.addAttribute("voucherId", voucherId);
+        model.addAttribute("expertId", expertId);
+
+
         return "client/findExpert/reservation";
     }
 
