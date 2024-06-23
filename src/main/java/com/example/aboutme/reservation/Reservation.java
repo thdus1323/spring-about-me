@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "reservation_tb")
-@ToString(exclude = {"voucher"})
+@ToString(exclude = {"voucher", "schedule", "expert", "client"})
 public class Reservation {
 
     // 예약 고유 ID
@@ -57,6 +57,10 @@ public class Reservation {
     @Column(nullable = false)
     private String reservationDate;
 
+    // 예약 요일
+    @Column(nullable = false)
+    private String dayOfWeek;  // 요일 (월요일, 화요일, 등)
+
     // 예약 생성 시간
     @CreationTimestamp
     private Timestamp createdAt;
@@ -66,15 +70,16 @@ public class Reservation {
     private Timestamp updatedAt;
 
     @Builder
-    public Reservation(Integer id, User expert, User client, Voucher voucher, ReservationStatus status, String startTime, String reservationDate, Schedule schedule, Timestamp createdAt, Timestamp updatedAt) {
+    public Reservation(Integer id, User expert, User client, Voucher voucher, Schedule schedule, ReservationStatus status, String startTime, String reservationDate, String dayOfWeek, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.expert = expert;
         this.client = client;
         this.voucher = voucher;
+        this.schedule = schedule;
         this.status = status;
         this.startTime = startTime;
         this.reservationDate = reservationDate;
-        this.schedule = schedule;
+        this.dayOfWeek = dayOfWeek;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

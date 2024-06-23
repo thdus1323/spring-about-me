@@ -131,4 +131,5 @@ $(document).ready(function () {
             $(this).css('background-color', '#00bbba').css('color', 'white');
         }
     });
+    
 })

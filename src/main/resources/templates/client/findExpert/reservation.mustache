@@ -1,34 +1,193 @@
 {{> layout/client-header}}
+{{#model}}
 
-<section id="section01">
-    <div class="reservation-container">
-        <div class="page-wrapper">
-            <h3 class="page-title mb-20 explanation own-time">
-                2급) 보이스테라피 1회기권
-            </h3>
-            <div class="page-content">
-                <div class="reservation-calendar">
-                    <div class="reservation-month">
-                        <div class="d-flex justify-content-center">
-                            <button id="reservation-prevMonth" class="month-nav">&lt;</button>
-                            <h3 id="reservation-month-year" style="margin-top: 40px"></h3>
-                            <button id="reservation-nextMonth" class="month-nav">&gt;</button>
+    <section id="section01">
+        <div class="reservation-container">
+            <div class="page-wrapper">
+                <h3 class="page-title mb-20 explanation own-time">
+                    {{user.level}}) {{voucher.voucherType}} {{voucher.count}}회기권
+                </h3>
+                <div class="page-content">
+                    <div class="reservation-calendar">
+                        <div class="reservation-month">
+                            <div class="d-flex justify-content-center">
+                                <button type="button" id="reservation-prevMonth" class="month-nav">&lt;</button>
+                                <h3 id="reservation-month-year" style="margin-top: 40px"></h3>
+                                <button type="button" id="reservation-nextMonth" class="month-nav">&gt;</button>
+                            </div>
+                            <div class="reservation-days" id="reservation-days"></div>
                         </div>
-                        <div class="reservation-days" id="reservation-days"></div>
+                        <div class="reservation-times">
+                            <h3 class="explanation time">예약 가능한 시간대</h3>
+                            <div id="reservation-times"></div>
+                        </div>
                     </div>
-                    <div class="reservation-times">
-                        <h3 class="explanation time">예약 가능한 시간대</h3>
-                        <div id="reservation-times"></div>
-                    </div>
-                </div>
 
-                <div class="reservation-next-wrapper">
-                    <button id="reservation-skipButton">건너뛰기</button>
-                    <button id="reservation-payButton" disabled>결제하기</button>
+                    <form id="reservation-form" method="post" action="/client/reservations/temp">
+                        <input type="hidden" id="selected-date" name="reservationDate">
+                        <input type="hidden" id="selected-day" name="dayOfWeek">
+                        <input type="hidden" id="selected-time" name="startTime">
+                        <input type="hidden" id="expert-id" name="expertId" value="{{user.id}}">
+                        <input type="hidden" id="voucher-id" name="voucherId" value="{{voucher.id}}">
+
+                        <div class="reservation-next-wrapper">
+                            <button type="button" id="reservation-skipButton">건너뛰기</button>
+                            <button type="submit" id="reservation-payButton" disabled>{{voucher.price}} 결제하기</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{{/model}}
 
+<script>
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const voucherId = urlParams.get('voucherId');
+        const expertId = urlParams.get('expertId');
+
+        console.log('voucherId:', voucherId);
+        console.log('expertId:', expertId);
+
+        const today = new Date();
+        let currentYear = today.getFullYear();
+        let currentMonth = today.getMonth();
+        let selectedDate = null;
+
+        function renderCalendar(year, month) {
+            const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+            const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+            const monthYearText = `${month + 1}월 ${year}년`;
+
+            $('#reservation-month-year').text(monthYearText);
+
+            const daysHtml = [];
+            for (let i = 0; i < firstDay; i++) {
+                daysHtml.push('<div></div>');
+            }
+            const daysOfWeekInKorean = ['일', '월', '화', '수', '목', '금', '토'];
+            for (let i = 1; i <= daysInMonth; i++) {
+                const date = new Date(Date.UTC(year, month, i));
+                const pastClass = date < today ? 'reservation-past' : '';
+                const todayClass = date.toDateString() === today.toDateString() ? 'reservation-today' : '';
+                const dayOfWeek = daysOfWeekInKorean[date.getUTCDay()];
+                daysHtml.push(`
+                    <div class="reservation-day ${pastClass} ${todayClass}" data-date="${i}" data-full-date="${date.toISOString().split('T')[0]}" data-day="${dayOfWeek}">
+                        <span>${i}</span>
+                        <br>
+                    </div>`);
+            }
+
+            $('#reservation-days').html(`
+                <div class="main-color reservation-disabled reservation-day">일</div>
+                <div class="main-color reservation-disabled reservation-day">월</div>
+                <div class="main-color reservation-disabled reservation-day">화</div>
+                <div class="main-color reservation-disabled reservation-day">수</div>
+                <div class="main-color reservation-disabled reservation-day">목</div>
+                <div class="main-color reservation-disabled reservation-day">금</div>
+                <div class="main-color reservation-disabled reservation-day">토</div>
+                ${daysHtml.join('')}
+            `);
+
+            // Attach click event to each day
+            $('#reservation-days .reservation-day').not('.reservation-past').click(function () {
+                $('#reservation-days .reservation-day').removeClass('reservation-selected');
+                $(this).addClass('reservation-selected');
+                const fullDate = $(this).data('full-date');
+                const dayOfWeek = $(this).data('day');
+                console.log("Selected full date:", fullDate);
+                console.log("Selected day of the week:", dayOfWeek);
+                $('#selected-date').val(fullDate); // Set hidden input value
+                $('#selected-day').val(dayOfWeek); // Set hidden input value
+                displayTimes(fullDate);
+                $('#reservation-payButton').prop('disabled', true).removeClass('active');
+            });
+
+            // Automatically select the first available day
+            selectFirstAvailableDay();
+        }
+
+        function displayTimes(fullDate) {
+            $.ajax({
+                url: '/api/available-times',
+                method: 'GET',
+                data: {date: fullDate, expertId: expertId},
+                success: function (times) {
+                    console.log("Available times for date", fullDate, ":", times);
+                    if (times.length === 0) {
+                        $('#reservation-times').html('<p>해당 날짜에 예약 가능한 시간이 없습니다.</p>');
+                    } else {
+                        $('#reservation-times').html(times.map(time => `<button class="reservation-time-btn" data-time="${time}">${time}</button>`).join(''));
+
+                        // Attach click event to each time button
+                        $('#reservation-times .reservation-time-btn').click(function () {
+                            $('#reservation-times .reservation-time-btn').removeClass('active');
+                            $(this).addClass('active');
+                            $('#selected-time').val($(this).data('time')); // Set hidden input value
+                            $('#reservation-payButton').prop('disabled', false).addClass('active');
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to load available times:", error);
+                    $('#reservation-times').html('<p>시간을 로드하는데 실패했습니다.</p>');
+                }
+            });
+        }
+
+        function selectFirstAvailableDay() {
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate());  // Skip today
+
+            const firstAvailableDay = $('#reservation-days .reservation-day').filter(function () {
+                const dayDate = new Date(Date.UTC(currentYear, currentMonth, $(this).data('date')));
+                return dayDate >= tomorrow;
+            }).first();
+
+            if (firstAvailableDay.length) {
+                firstAvailableDay.addClass('reservation-selected');
+                selectedDate = firstAvailableDay.data('date');
+                const fullDate = firstAvailableDay.data('full-date');
+                $('#selected-date').val(fullDate); // Set hidden input value
+                $('#selected-day').val(firstAvailableDay.data('day')); // Set hidden input value
+                displayTimes(fullDate);
+                console.log("First available day selected:", selectedDate);
+            } else {
+                console.log("No available day found.");
+            }
+        }
+
+        renderCalendar(currentYear, currentMonth);
+
+        $('#reservation-prevMonth').click(function () {
+            if (currentMonth > 0) {
+                currentMonth--;
+            } else {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentYear, currentMonth);
+        });
+
+        $('#reservation-nextMonth').click(function () {
+            if (currentMonth < 11) {
+                currentMonth++;
+            } else {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        });
+
+        $('#reservation-payButton').click(function () {
+            if (!$(this).prop('disabled')) {
+                $(this).css('background-color', '#00bbba').css('color', 'white');
+            }
+        });
+
+        // Initialize the calendar on page load
+        renderCalendar(currentYear, currentMonth);
+    });
+</script>
 {{> layout/footer}}
