@@ -12,6 +12,7 @@ import com.example.aboutme.user.enums.UserRole;
 //import com.example.aboutme.user.oauth.NaverOAuthService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -28,6 +30,41 @@ public class UserController {
 //    private final KakaoOAuthService kakaoOAuthService;
 //    private final NaverOAuthService naverOAuthService;
 
+    @PostMapping("/login")
+    public String login(UserRequest.LoginDTO reqDTO) {
+        SessionUser sessionUser = userService.loginByName(reqDTO);
+        if (sessionUser == null) {
+            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
+        } else {
+            redisTemp.opsForValue().set("sessionUser", sessionUser);
+        }
+
+        if (sessionUser.getUserRole() == UserRole.CLIENT) {
+            return "redirect:/";
+        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
+            return "redirect:/experts/" + sessionUser.getId();
+        } else {
+            return "oauth/login";
+        }
+    }
+
+    //    @PostMapping("/login")
+//    public String login(UserRequest.LoginDTO reqDTO) {
+//        SessionUser sessionUser = userService.loginByName(reqDTO);
+//        if (sessionUser == null) {
+//            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
+//        } else {
+//            redisTemp.opsForValue().set("sessionUser", sessionUser);
+//        }
+//
+//        if (sessionUser.getUserRole() == UserRole.CLIENT) {
+//            return "redirect:/";
+//        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
+//            return "redirect:/experts/" + sessionUser.getId();
+//        } else {
+//            return "oauth/login";
+//        }
+//    }
 
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
@@ -115,23 +152,7 @@ public class UserController {
 //        return "redirect:/";
 //    }
 
-    @PostMapping("/login")
-    public String login(UserRequest.LoginDTO reqDTO) {
-        SessionUser sessionUser = userService.loginByName(reqDTO);
-        if (sessionUser == null) {
-            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
-        } else {
-            redisTemp.opsForValue().set("sessionUser", sessionUser);
-        }
 
-        if (sessionUser.getUserRole() == UserRole.CLIENT) {
-            return "redirect:/";
-        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-            return "redirect:/experts/" + sessionUser.getId();
-        } else {
-            return "oauth/login";
-        }
-    }
 
 
     @GetMapping("/logout")

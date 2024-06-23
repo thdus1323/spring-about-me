@@ -57,9 +57,14 @@ public class UserService {
     private final Formatter formatter;
 
 
-    @Transactional
+//    @Transactional
+//    public User loginByName(UserRequest.LoginDTO reqDTO) {
+//        User user = userNativeRepository.login(reqDTO);
+//        return user;
+//    }
+
     public SessionUser loginByName(UserRequest.LoginDTO reqDTO) {
-        User user = userNativeRepository.login(reqDTO);
+        User user = userRepository.findByEmailAndPassword(reqDTO.getEmail(), reqDTO.getPassword());
         return new SessionUser(user);
     }
 
@@ -176,6 +181,7 @@ public class UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
+        // 1.3 http body 설정
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "f07259c71010e17f9a081c435bc8328b");
@@ -185,11 +191,19 @@ public class UserService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<UserResponse.KakaoTokenDTO> response = restTemp.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST, request, UserResponse.KakaoTokenDTO.class);
 
+        // 1.6 값 확인
+        System.out.println(response.getBody().toString());
+
+        // 2. 토큰으로 사용자 정보 받기 (PK, Email)
         HttpHeaders headers2 = new HttpHeaders();
         headers2.add("Authorization", "Bearer " + response.getBody().getAccessToken());
+
         HttpEntity<Void> request2 = new HttpEntity<>(headers2);
         ResponseEntity<UserResponse.KakaoUserDTO> response2 = restTemp.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.GET, request2, UserResponse.KakaoUserDTO.class);
 
+        System.out.println("response2 : " + response2.getBody().toString());
+
+        // 3. 사용자 정보 가져오기
         UserResponse.KakaoUserDTO kakaoUser = response2.getBody();
         String email = kakaoUser.getKakaoAccount().getEmail();
         String nickname = kakaoUser.getKakaoAccount().getProfile().getNickname();
@@ -197,15 +211,21 @@ public class UserService {
         String accessToken = response.getBody().getAccessToken();
 
         User userPS = null;
+
         if (email != null) {
+            // 이메일이 있는 경우
             userPS = userRepository.findByEmail(email);
         } else {
+            // 이메일이 없는 경우, 카카오 ID로 사용자 찾기
             userPS = userRepository.findByEmail("kakao_" + kakaoId + "@kakao.com");
         }
 
+        // 4. 있으면? - 조회된 유저정보 리턴
         if (userPS != null) {
             return new SessionUser(userPS, accessToken);
         } else {
+            System.out.println("어? 유저가 없네? 강제회원가입 and 강제로그인 진행");
+            // 5. 없으면? - 강제 회원가입
             User user = User.builder()
                     .name(nickname)
                     .password(UUID.randomUUID().toString())
@@ -213,6 +233,7 @@ public class UserService {
                     .phone("000-0000-0000")
                     .userRole(userRole)
                     .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
+                    .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
             User returnUser = userRepository.save(user);

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -15,19 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class CommService {
     private final CommRepository commRepository;
-    private final CommNativeRepository commNativeRepository;
+//    private final CommNativeRepository commNativeRepository;
 
 
     public List<CommResponse.CommAndReplyDTO> findAllCommsWithReply() {
         return commRepository.findAllCommsWithReply();
     }
-
-    //상품 상세보기
-//    public CommResponse.CommDetailDTO getCommDetail(int id) {
-//        Comm comm = commNativeRepository.findById(id);
-//        return new CommResponse.CommDetailDTO(comm);
-//    }
-
 
     @Transactional
     public CommResponse.CommDetailDTO getCommDetail(int id) {
@@ -59,5 +53,10 @@ public class CommService {
                 replyContents,
                 commsByCategory
         );
+    }
+
+    public Comm findById(Integer id) {
+        Optional<Comm> commOptional = commRepository.findById(id);
+        return commOptional.orElse(null); // orElse(null)을 사용하여 엔티티가 없을 경우 null 반환
     }
 }
