@@ -1,74 +1,78 @@
 {{> layout/client-header}}
-
-<section id="section01">
-    <div class="container">
-        <div class="page-wrapper">
-            <h3 class="page-title mb-20">
-                2급) 보이스테라피 1회기권
-            </h3>
-            <div class="page-content">
-                <div class="payment-content">
-                    <div class="left-panel">
-                        <p class="description"><span>❝</span>1회기당 보이스 시간은 50분이며 결제일로부터 2주간 사용할 수 있습니다</p>
-                        <div class="notice">
-                            <p>구매 전 유의사항</p>
-                            <p>* 본 이용권의 유효기간은 결제일로부터 2주입니다.</p>
-                            <p><em>이용기간 내에 이용권 사용을 완료</em>해주세요</p>
-                        </div>
-                        <div class="discount">
-                            <p>할인 적용</p>
-                            <div class="coupon">
-                                <label for="coupon">쿠폰</label>
-                                <div class="body">
-                                    <select id="coupon">
-                                        <option value="" disabled selected>선택해주세요</option>
-                                        <option value="12400">첫 상담을 축하해요! WELCOME 할인 쿠폰 (7일) - 12,400원</option>
-                                        <option value="6200">여름 특별 할인 쿠폰 - 6,200원</option>
-                                        <option value="3100">봄맞이 할인 쿠폰 - 3,100원</option>
-                                    </select>
-                                    <button class="coupon-button" id="applyCoupon">쿠폰 등록</button>
+{{#model}}
+    <section id="section01">
+        <div class="container">
+            <div class="page-wrapper">
+                <h3 class="page-title mb-20">
+                    {{user.level}}) {{voucher.voucherType}} {{voucher.count}}회기권
+                </h3>
+                <div class="page-content">
+                    <div class="payment-content">
+                        <div class="left-panel">
+                            <div class="notice">
+                                <p>구매 전 유의사항</p>
+                                <p>* 본 이용권의 유효기간은 결제일로부터 2주입니다.</p>
+                                <p><em>이용기간 내에 이용권 사용을 완료</em>해주세요</p>
+                            </div>
+                            <div class="discount">
+                                <p>할인 적용</p>
+                                <div class="coupon">
+                                    <label for="coupon">쿠폰</label>
+                                    <div class="body">
+                                        <select id="coupon">
+                                            <option value="" disabled selected>선택해주세요</option>
+                                            <option value="12400">첫 상담을 축하해요! WELCOME 할인 쿠폰 (7일) - 12,400원</option>
+                                            <option value="6200">여름 특별 할인 쿠폰 - 6,200원</option>
+                                            <option value="3100">봄맞이 할인 쿠폰 - 3,100원</option>
+                                        </select>
+                                        <button class="coupon-button" id="applyCoupon">쿠폰 등록</button>
+                                    </div>
+                                </div>
+                                <div class="coffee">
+                                    <label for="coffee">커피팝 (보유 커피팝 0개)</label>
+                                    <div class="body">
+                                        <input type="number" id="coffee" value="0" min="0">
+                                        <button class="coffee-button">전액 사용</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="coffee">
-                                <label for="coffee">커피팝 (보유 커피팝 0개)</label>
-                                <div class="body">
-                                    <input type="number" id="coffee" value="0" min="0">
-                                    <button class="coffee-button">전액 사용</button>
+                        </div>
+                        <div class="right-panel">
+                            <div class="final-amount">
+                                <p>최종 결제금액</p>
+                                <div class="amount-details">
+                                    <p>정상가 <span id="originalPrice">{{voucher.price}}</span></p>
+                                    <p class="coupon-discount">쿠폰 할인 <span>0원</span></p>
+                                    <p class="total">결제 예정 금액 <span>{{voucher.price}}</span></p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="right-panel">
-                        <div class="final-amount">
-                            <p>최종 결제금액</p>
-                            <div class="amount-details">
-                                <p>정상가 <span>62,000원</span></p>
-                                <p class="coupon-discount">쿠폰 할인 <span>0원</span></p>
-                                <p class="total">결제 예정 금액 <span>62,000원</span></p>
+                            <div class="payment-method">
+                                <p>결제 수단 선택</p>
+                                <select id="paymentMethod">
+                                    <option value="credit-card">신용카드</option>
+                                    <option value="mobile-payment">휴대폰결제</option>
+                                    <option value="real-time-account">실시간 계좌이체</option>
+                                </select>
                             </div>
+                            <button class="payment-button" id="payButton">{{voucher.price}} 결제하기</button>
+                            <input type="hidden" id="reservationId" value="{{reservationId}}">
                         </div>
-                        <div class="payment-method">
-                            <p>결제 수단 선택</p>
-                            <select>
-                                <option value="credit-card">신용카드</option>
-                                <option value="mobile-payment">휴대폰결제</option>
-                                <option value="real-time-account">실시간 계좌이체</option>
-                            </select>
-                        </div>
-                        <button class="payment-button" id="payButton" onclick="payBody()">62,000원 결제하기</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{{/model}}
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
     $(document).ready(function () {
         let itemName = $('h3.page-title').text();
-        const originalPrice = 62000; // 원래 가격
+        const originalPrice = parseInt($('#originalPrice').text().replace(/,/g, '')); // 템플릿에서 JavaScript 변수로 전달
         let discountAmount = 0; // 할인 금액
         let finalAmount = originalPrice - discountAmount; // 최종 금액
+
+        console.log("Original Price:", originalPrice);
+        console.log("Final Amount:", finalAmount);
 
         // 쿠폰 적용 버튼 클릭 시
         $('#applyCoupon').on('click', function () {
@@ -109,11 +113,23 @@
             }, function (rsp) {
                 if (rsp.success) {
                     alert("결제가 완료되었습니다.");
+                    // 예약 완료 시, 예약 ID를 통해 예약 상태를 업데이트
+                    $.post('/client/reservations/complete', {reservationId: $('#reservationId').val()});
                 } else {
                     alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
                 }
             });
         }
+
+        // 예약 대기 삭제 처리
+        window.addEventListener('unload', function (e) {
+            const reservationId = $('#reservationId').val(); // 예약 ID를 가져옵니다.
+            if (reservationId) {
+                navigator.sendBeacon('/client/reservations/temp/' + reservationId, JSON.stringify({
+                    _method: 'POST'
+                }));
+            }
+        });
     });
 </script>
 {{> layout/footer}}
