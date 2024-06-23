@@ -10,16 +10,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class ScheduleService {
 
-    private static final Logger logger = Logger.getLogger(ScheduleService.class.getName());
     private final ScheduleRepository scheduleRepository;
     private final ReservationRepository reservationRepository;
+
 
     public List<String> getAvailableTimesForDate(int expertId, LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
