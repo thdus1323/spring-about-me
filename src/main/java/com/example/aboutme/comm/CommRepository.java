@@ -49,4 +49,5 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
     List<CommResponse.CommAndReplyDTO> findAllCommsWithReply();
 
 
+
 }

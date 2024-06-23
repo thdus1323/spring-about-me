@@ -31,20 +31,18 @@ public class UserController {
 //    private final NaverOAuthService naverOAuthService;
 
     @PostMapping("/login")
-    public String login(UserRequest.LoginDTO reqDTO, RedirectAttributes redirectAttributes) {
-        User user = userService.loginByName(reqDTO);
-        if (user == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "아이디 혹은 패스워드가 틀렸습니다.");
-            return "redirect:/login";
+    public String login(UserRequest.LoginDTO reqDTO) {
+        SessionUser sessionUser = userService.loginByName(reqDTO);
+        if (sessionUser == null) {
+            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
         } else {
-            SessionUser sessionUser = new SessionUser(user);
             redisTemp.opsForValue().set("sessionUser", sessionUser);
         }
 
-        if (user.getUserRole() == UserRole.CLIENT) {
+        if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
-        } else if (user.getUserRole() == UserRole.EXPERT) {
-            return "redirect:/experts/" + user.getId();
+        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
+            return "redirect:/experts/" + sessionUser.getId();
         } else {
             return "oauth/login";
         }
