@@ -20,7 +20,7 @@
                                 <a href="#">홈화면</a> > <a href="#">커뮤니티</a> > <a href="#"
                                                                                 class="active main-color">{{comm.category}}</a>
                             </div>
-                            <h4 class="card-title">{{comm.title}}</h4>
+                            <h4 class="card-title">{{comm.title}} 아이디 : {{comm.commId}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
                                     <figure><img src="images/level1.png" alt="회원이미지"></figure>
@@ -143,6 +143,7 @@
                     <div class="comment-section mb-50">
                         <input type="text" placeholder="따뜻한 댓글을 남겨주세요">
                         <button class="main-background defalut-btn">게시</button>
+                        <button class="main-background defalut-btn" onclick="openNewWindow({{comm.commId}})"> 전문가 댓글 게시</button>
                     </div>
 
                     <hr>
@@ -214,9 +215,9 @@
     });
 
     // 전문가 댓글 달기 창 열기
-    function openNewWindow() {
+    function openNewWindow(id) {
         // 새로운 창으로 열고자 하는 URL을 여기에 입력하세요.
-        var url = "/expert/reply";
+        var url = "/expert/reply?id=" + id;
 
         // 새 창의 특성을 지정할 수 있습니다. (폭, 높이 등)
         var windowFeatures = "width=600, height=850,scrollbars=yes";
