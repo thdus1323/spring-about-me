@@ -63,8 +63,9 @@ public class UserService {
 //        return user;
 //    }
 
-    public User loginByName(UserRequest.LoginDTO reqDTO) {
-        return userRepository.findByEmailAndPassword(reqDTO.getEmail(), reqDTO.getPassword());
+    public SessionUser loginByName(UserRequest.LoginDTO reqDTO) {
+        User user = userRepository.findByEmailAndPassword(reqDTO.getEmail(), reqDTO.getPassword());
+        return new SessionUser(user);
     }
 
 
