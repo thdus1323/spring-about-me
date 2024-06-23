@@ -3,7 +3,7 @@ package com.example.aboutme.reservation;
 import com.example.aboutme._core.error.exception.Exception400;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.reservation.enums.ReservationStatus;
-import com.example.aboutme.reservation.resrvationResponse.ReservationDetails.ReservationDetailsDTO;
+import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.voucher.Voucher;
