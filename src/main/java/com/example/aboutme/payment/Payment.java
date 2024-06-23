@@ -41,10 +41,8 @@ public class Payment {
     @Column(nullable = false)
     private PaymentStatus status;
 
-    @Column(nullable = true)
     private String impUid; // 아임포트 거래 고유 ID
 
-    @Column(nullable = true)
     private String merchantUid; // 상점 거래 고유 ID
 
     @Builder
