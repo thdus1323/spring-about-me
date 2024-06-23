@@ -30,14 +30,30 @@ public class ReservationRestController {
         return ResponseEntity.ok("Reservation cancelled");
     }
 
-    @PostMapping("/complete")
-    public ResponseEntity<?> completeReservation(@RequestParam("reservationId") Integer reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
+    @PostMapping("/client/reservations/complete")
+    public ResponseEntity<?> completeReservation(
+            @RequestParam("reservationId") Integer reservationId,
+            @RequestParam("imp_uid") String impUid,
+            @RequestParam("merchant_uid") String merchantUid,
+            @RequestParam("paid_amount") int paidAmount,
+            @RequestParam("apply_num") String applyNum) {
+    
+        log.info("Complete reservation      " + reservationId, "impUid " + impUid, "paid " + paidAmount, "apply " + applyNum);
+        // 여기에 결제 내역을 저장하는 로직을 추가합니다.
+        // 예: 결제 정보를 기반으로 결제 테이블에 저장
 
-        reservation.setStatus(ReservationStatus.COMPLETED);
-        reservationRepository.save(reservation);
-
-        return ResponseEntity.ok("Reservation completed");
+        return ResponseEntity.ok("결제 내역 저장 완료");
     }
+
+//    @PostMapping("/complete")
+//    public String completeReservation(@RequestParam("reservationId") Integer reservationId) {
+//        log.info("Complete reservation      " + reservationId);
+//        Reservation reservation = reservationRepository.findById(reservationId)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
+//
+//        reservation.setStatus(ReservationStatus.COMPLETED);
+//        reservationRepository.save(reservation);
+//
+//        return "redirect:/";
+//    }
 }
