@@ -438,85 +438,50 @@ VALUES (1, 1, 4.5, '상담사가 매우 친절하고 도움이 많이 되었습�
        (30, 30, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW());
 
 
--- 연속된 기간 동안의 일정 설정 예시
-INSERT INTO schedule_tb(expert_id, start_time, end_time, rest_type, start_day, end_day, specific_date, lunch_start_time,
-                        lunch_end_time, created_at, updated_at, notes)
-VALUES (21, '09:00:00', '18:00:00', 'PERIODIC', 'MONDAY', 'FRIDAY', NULL, '12:00:00', '13:00:00', NOW(), NOW(),
-        'Weekdays schedule with lunch break'),
---
--- -- 특정 요일에 대한 일정 설정 예시
-       (22, '10:00:00', '17:00:00', 'WEEKLY', 'MONDAY', NULL, NULL, '12:30:00', '13:30:00', NOW(), NOW(),
-        'Mondays schedule with lunch break'),
---
--- -- 특정 시간대 휴무 설정 예시
-       (23, '00:00:00', '23:59:59', 'TIME_SPECIFIC', NULL, NULL, '2024-06-15', NULL, NULL, NOW(), NOW(),
-        'Full day off on 2024-06-15'),
---
--- -- 특정 요일만 일정이 있는 경우
-       (24, '10:00:00', '14:00:00', 'DAY_SPECIFIC', 'WEDNESDAY', NULL, NULL, NULL, NULL, NOW(), NOW(),
-        'Only available on Wednesdays'),
---
--- -- 연속된 기간 동안의 일정 설정 예시 (22번, 23번도 설정 가능)
-       (22, '09:00:00', '17:00:00', 'PERIODIC', 'MONDAY', 'FRIDAY', NULL, '12:00:00', '13:00:00', NOW(), NOW(),
-        'Weekdays schedule with lunch break'),
-       (23, '10:00:00', '16:00:00', 'PERIODIC', 'TUESDAY', 'THURSDAY', NULL, '12:00:00', '13:00:00', NOW(), NOW(),
-        'Tuesday to Thursday schedule'),
---
--- -- 특정 요일에 대한 추가 일정 설정 (22번, 23번)
-       (22, '09:00:00', '11:00:00', 'DAY_SPECIFIC', 'SATURDAY', NULL, NULL, NULL, NULL, NOW(), NOW(),
-        'Available Saturday morning'),
-       (23, '10:00:00', '12:00:00', 'DAY_SPECIFIC', 'SUNDAY', NULL, NULL, NULL, NULL, NOW(), NOW(),
-        'Available Sunday morning'),
---
--- -- 특정한 날에 휴무 (22번, 23번도 동일하게 설정 가능)
-       (22, '00:00:00', '23:59:59', 'TIME_SPECIFIC', NULL, NULL, '2024-06-10', NULL, NULL, NOW(), NOW(),
-        'Day off on June 10th'),
-       (23, '00:00:00', '23:59:59', 'TIME_SPECIFIC', NULL, NULL, '2024-06-20', NULL, NULL, NOW(), NOW(),
-        'Day off on June 20th');
-
-
--- 예약 테이블
-INSERT INTO reservation_tb (expert_id, client_id, voucher_id, status, start_time, reservation_date, schedule_id,
-                            created_at, updated_at)
+-- 스케줄 테이블
+INSERT INTO schedule_tb (expert_id, day_of_week, start_time, end_time, created_at, updated_at)
 VALUES
-    -- Expert 1's Vouchers
-    (21, 1, 1, 'SCHEDULED', '10:00:00', '2024-06-01', 1, NOW(), NOW()),
-    (21, 2, 2, 'SCHEDULED', '11:00:00', '2024-06-01', 1, NOW(), NOW()),
-    (21, 3, 3, 'SCHEDULED', '12:00:00', '2024-06-01', 1, NOW(), NOW()),
---
---       -- Expert 2's Vouchers
-    (22, 4, 4, 'SCHEDULED', '10:00:00', '2024-06-02', 2, NOW(), NOW()),
-    (22, 5, 5, 'SCHEDULED', '11:00:00', '2024-06-02', 2, NOW(), NOW()),
---
---       -- Expert 3's Vouchers
-    (23, 6, 6, 'SCHEDULED', '10:00:00', '2024-06-03', 3, NOW(), NOW()),
---
---       -- Expert 4's Vouchers
-    (24, 7, 7, 'SCHEDULED', '10:00:00', '2024-06-04', 4, NOW(), NOW()),
-    (24, 8, 8, 'SCHEDULED', '11:00:00', '2024-06-04', 4, NOW(), NOW()),
---
---       -- Expert 5's Vouchers
-    (25, 9, 9, 'SCHEDULED', '10:00:00', '2024-06-05', 5, NOW(), NOW()),
-    (25, 10, 10, 'SCHEDULED', '11:00:00', '2024-06-05', 5, NOW(), NOW()),
---
---       -- Expert 6's Vouchers
-    (26, 11, 11, 'SCHEDULED', '10:00:00', '2024-06-06', 6, NOW(), NOW()),
---
---       -- Expert 7's Vouchers
-    (27, 12, 12, 'SCHEDULED', '10:00:00', '2024-06-07', 7, NOW(), NOW()),
-    (27, 13, 13, 'SCHEDULED', '11:00:00', '2024-06-07', 7, NOW(), NOW()),
---
---       -- Expert 8's Vouchers
-    (28, 14, 14, 'SCHEDULED', '10:00:00', '2024-06-08', 8, NOW(), NOW()),
-    (28, 15, 15, 'SCHEDULED', '11:00:00', '2024-06-08', 8, NOW(), NOW()),
---
---       -- Expert 9's Vouchers
-    (29, 16, 16, 'SCHEDULED', '10:00:00', '2024-06-09', 9, NOW(), NOW()),
-    (29, 17, 17, 'SCHEDULED', '11:00:00', '2024-06-09', 9, NOW(), NOW()),
+    -- 21번 스케줄: 주중 근무 시간
+    (21, 'MONDAY', '09:00', '18:00', NOW(), NOW()),
+    (21, 'TUESDAY', '09:00', '18:00', NOW(), NOW()),
+    (21, 'WEDNESDAY', '09:00', '18:00', NOW(), NOW()),
+    (21, 'THURSDAY', '09:00', '18:00', NOW(), NOW()),
+    (21, 'FRIDAY', '09:00', '18:00', NOW(), NOW()),
 
-    -- Expert 10's Vouchers
-    (30, 18, 18, 'SCHEDULED', '10:00:00', '2024-06-10', 10, NOW(), NOW()),
-    (30, 19, 19, 'SCHEDULED', '11:00:00', '2024-06-10', 10, NOW(), NOW());
+    -- 22번 스케줄: 월요일만 근무 시간
+    (22, 'MONDAY', '10:00', '17:00', NOW(), NOW()),
+
+    -- 24번 스케줄: 수요일만 근무 시간
+    (24, 'WEDNESDAY', '10:00', '14:00', NOW(), NOW());
+
+-- reservation_tb 테이블
+INSERT INTO reservation_tb (expert_id, client_id, voucher_id, schedule_id, status, start_time, reservation_date,
+                            day_of_week, created_at, updated_at)
+VALUES
+    -- Expert 21 (월요일과 금요일)에서 4개 스케줄
+    (21, 1, 1, 1, 'PENDING', '09:00', '2024-06-24', '월', NOW(), NOW()),
+    (21, 2, 2, 1, 'SCHEDULED', '10:00', '2024-06-24', '월', NOW(), NOW()),
+    (21, 3, 2, 5, 'PENDING', '09:00', '2024-06-28', '금', NOW(), NOW()),
+    (21, 4, 2, 5, 'SCHEDULED', '10:00', '2024-06-28', '금', NOW(), NOW()),
+
+    -- Expert 21 (화요일과 수요일)에서 4개 스케줄
+    (21, 5, 2, 2, 'PENDING', '09:00', '2024-06-25', '화', NOW(), NOW()),
+    (21, 6, 2, 2, 'SCHEDULED', '10:00', '2024-06-25', '화', NOW(), NOW()),
+    (21, 7, 3, 3, 'PENDING', '09:00', '2024-06-26', '수', NOW(), NOW()),
+    (21, 8, 3, 3, 'SCHEDULED', '10:00', '2024-06-26', '수', NOW(), NOW()),
+
+    -- Expert 22 (월요일)에서 4개 스케줄
+    (22, 9, 4, 6, 'PENDING', '10:00', '2024-06-24', '월', NOW(), NOW()),
+    (22, 10, 4, 6, 'SCHEDULED', '11:00', '2024-06-24', '월', NOW(), NOW()),
+    (22, 11, 4, 6, 'PENDING', '12:00', '2024-06-24', '월', NOW(), NOW()),
+    (22, 12, 4, 6, 'SCHEDULED', '13:00', '2024-06-24', '월', NOW(), NOW()),
+
+    -- Expert 24 (수요일)에서 4개 스케줄
+    (24, 13, 7, 7, 'PENDING', '10:00', '2024-06-26', '수', NOW(), NOW()),
+    (24, 14, 7, 7, 'SCHEDULED', '11:00', '2024-06-26', '수', NOW(), NOW()),
+    (24, 15, 7, 7, 'PENDING', '12:00', '2024-06-26', '수', NOW(), NOW()),
+    (24, 16, 7, 7, 'SCHEDULED', '13:00', '2024-06-26', '수', NOW(), NOW());
+
 
 
 

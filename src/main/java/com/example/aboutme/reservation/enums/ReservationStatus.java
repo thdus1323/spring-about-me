@@ -2,8 +2,9 @@ package com.example.aboutme.reservation.enums;
 
 
 public enum ReservationStatus {
-    SCHEDULED("예약 예정"),
-    COMPLETED("예약 완료"),
+    PENDING("예약 대기"),
+    SCHEDULED("확정 예정"),
+    COMPLETED("예약 확정"),
     CANCELLED("예약 취소");
 
     private final String korean;
@@ -11,6 +12,7 @@ public enum ReservationStatus {
     ReservationStatus(String korean) {
         this.korean = korean;
     }
+
     public String getKorean() {
         return korean;
     }
