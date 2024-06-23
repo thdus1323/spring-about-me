@@ -5,25 +5,18 @@ import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "reservation_tb")
-@ToString(exclude = {"voucher"})
+@ToString(exclude = {"voucher", "schedule", "expert", "client"})
 public class Reservation {
 
     // 예약 고유 ID
@@ -42,7 +35,7 @@ public class Reservation {
     private User client;
 
     // 바우처 ID (외래 키)
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "voucher_id", nullable = false)
     private Voucher voucher;
 
@@ -58,11 +51,15 @@ public class Reservation {
 
     // 예약 시작 시간
     @Column(nullable = false)
-    private LocalTime startTime;
+    private String startTime;
 
     // 예약 날짜
     @Column(nullable = false)
-    private LocalDate reservationDate;
+    private String reservationDate;
+
+    // 예약 요일
+    @Column(nullable = false)
+    private String dayOfWeek;  // 요일 (월요일, 화요일, 등)
 
     // 예약 생성 시간
     @CreationTimestamp
@@ -73,15 +70,16 @@ public class Reservation {
     private Timestamp updatedAt;
 
     @Builder
-    public Reservation(Integer id, User expert, User client, Voucher voucher, ReservationStatus status, LocalTime startTime, LocalDate reservationDate, Schedule schedule, Timestamp createdAt, Timestamp updatedAt) {
+    public Reservation(Integer id, User expert, User client, Voucher voucher, Schedule schedule, ReservationStatus status, String startTime, String reservationDate, String dayOfWeek, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.expert = expert;
         this.client = client;
         this.voucher = voucher;
+        this.schedule = schedule;
         this.status = status;
         this.startTime = startTime;
         this.reservationDate = reservationDate;
-        this.schedule = schedule;
+        this.dayOfWeek = dayOfWeek;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

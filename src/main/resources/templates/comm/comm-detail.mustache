@@ -23,7 +23,7 @@
                             <h4 class="card-title">{{comm.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
-                                    <figure><img src=".{{comm.clientImage}}" alt="회원이미지"></figure>
+                                    <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
                                     <span>{{comm.name}}</span><span class="time">{{comm.createdAt}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
@@ -128,7 +128,7 @@
                         <div class="c-card-body detail mb-20">
                             <div class="community-cartegory">
                                 <div class="user-info">
-                                    <figure><img src="/images/level1.png" alt="회원이미지"></figure>
+                                    <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
                                     <span>{{comm.name}}</span></div>
                             </div>
                             <p class="card-text mb-20">여기는 일반인 댓글 출력 공간입니다</p>
@@ -156,12 +156,12 @@
                     {{#comm.commsByCategory.일반고민}}
                         <div class="c-card">
                             <div class="c-card-body detail">
-                                <a href="#">
+                                <a href="/comm-detail/{{id}}">
                                     <h4 class="card-title mb-10">{{this.title}}</h4>
                                     <div class="community-cartegory">
                                         <div class="category main-color">{{this.category}}</div>
                                         <div class="user-info">
-                                            <figure><img src="/images/level1.png" alt="회원이미지"></figure>
+                                            <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
                                             <span>{{comm.name}}</span>
                                         </div>
                                     </div>
@@ -171,7 +171,20 @@
                                     <a href="#" class="card-link like">❤<em class="count">1</em></a>
                                     <a href="#" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
+
+                                {{#userRole}}
+                                    <div class="expert-reply">
+                                        <div class="expert-reply-info mb-10">
+                                            <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
+                                            <span class="expert-reply-name active-color">{{expertName}}님의 전문답변</span>
+                                        </div>
+                                        <p class="reply-content">
+                                            {{solution}}
+                                        </p>
+                                    </div>
+                                {{/userRole}}
                             </div>
+
                         </div>
                     {{/comm.commsByCategory.일반고민}}
                 </div>

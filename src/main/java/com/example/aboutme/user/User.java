@@ -59,9 +59,11 @@ public class User {
     private Gender gender;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
     private PR pr;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
     private List<Spec> specs;
 
     @Enumerated(EnumType.STRING)
