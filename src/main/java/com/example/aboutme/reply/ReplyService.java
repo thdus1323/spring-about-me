@@ -7,4 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReplyService {
     private final ReplyRepository replyRepository;
+
+    public Reply saveReply(Reply reply) {
+        return replyRepository.save(reply);
+    }
+
 }
