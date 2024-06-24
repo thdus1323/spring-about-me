@@ -1,10 +1,8 @@
 package com.example.aboutme.reply;
 
 import com.example.aboutme.comm.Comm;
-import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
-import jakarta.servlet.http.HttpSession;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -33,10 +31,10 @@ public class Reply {
     private String content;
 
     //전문가 댓글
-    private String introduction; // 전문가가 댓글 달때 소개글
-    private String summary;
-    private String causeAnalysis;
-    private String solution;
+    private String introduction; // 소개글
+    private String summary; // 사연 요약
+    private String causeAnalysis; // 원인 분석
+    private String solution; // 대처 방향
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -54,4 +52,13 @@ public class Reply {
         this.createdAt = createdAt;
     }
 
+    @Builder
+    public Reply(User user, Comm comm, ReplyResponse.ReplyDataDTO newReply) {
+        this.user = user;
+        this.comm = comm;
+        this.introduction = newReply.getIntroduction(); // 소개글
+        this.solution = newReply.getSolution(); // 대처 방향
+        this.summary = newReply.getSummary(); // 사연 요약
+        this.causeAnalysis = newReply.getAnalysis(); // 원인 분석
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.aboutme.reply;
 
+import lombok.Builder;
 import lombok.Data;
 
 public class ReplyResponse {
@@ -13,6 +14,7 @@ public class ReplyResponse {
         private String analysis;
         private String solution;
 
+        @Builder
         public ReplyDataDTO(String id, String introduction, String summary, String analysis, String solution) {
             this.id = id;
             this.introduction = introduction;
@@ -20,5 +22,10 @@ public class ReplyResponse {
             this.analysis = analysis;
             this.solution = solution;
         }
+
+        public ReplyDataDTO() {
+            // 기본 생성자
+        }
+
     }
 }

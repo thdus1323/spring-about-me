@@ -1,8 +1,12 @@
 package com.example.aboutme.comm;
 
+import com.example.aboutme.user.User;
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -19,10 +23,20 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-//    @GetMapping("/comm-detail")
-    public String detail(@PathVariable Integer id, HttpServletRequest request) {
+    public String detail(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
+        // 세션에서 사용자 정보 가져오기
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("sessionUser");
+
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-        request.setAttribute("comm", comm);
+//        request.setAttribute("comm", comm);
+
+        // userRole이 EXPERT인 경우에는 true, 그 외에는 false
+        boolean isUserRole = user.getUserRole() == UserRole.EXPERT;
+
+        model.addAttribute("comm", comm);
+        model.addAttribute("isUserRole", isUserRole);
+
         return "comm/comm-detail";
     }
 

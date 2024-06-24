@@ -142,8 +142,12 @@
                     </div>
                     <div class="comment-section mb-50">
                         <input type="text" placeholder="따뜻한 댓글을 남겨주세요">
-                        <button class="main-background defalut-btn">게시</button>
-                        <button class="main-background defalut-btn" onclick="openNewWindow({{comm.commId}})"> 전문가 댓글 게시</button>
+                        {{#isUserRole}}
+                            <button class="main-background defalut-btn" onclick="openNewWindow({{comm.commId}})"> 전문가 댓글 게시</button>
+                        {{/isUserRole}}
+                        {{^isUserRole}}
+                            <button class="main-background defalut-btn">게시</button>
+                        {{/isUserRole}}
                     </div>
 
                     <hr>
