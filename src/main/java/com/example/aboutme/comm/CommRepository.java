@@ -28,7 +28,7 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
             WHERE r.user.userRole = com.example.aboutme.user.enums.UserRole.EXPERT
                     """)
     List<UserResponse.ClientMainDTO.CommDTO> findCommsWithReply();
-
+//
     // /comm 출력하려고 뽑은 쿼리
     @Query("""
                 SELECT new com.example.aboutme.comm.CommResponse$CommAndReplyDTO(
@@ -44,10 +44,8 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
                     r.solution
                 )
                 FROM Comm c
-                JOIN c.replies r
+                LEFT JOIN Reply r On c.id = r.user.id
             """)
     List<CommResponse.CommAndReplyDTO> findAllCommsWithReply();
-
-
 
 }
