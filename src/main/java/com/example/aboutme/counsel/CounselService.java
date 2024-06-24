@@ -26,15 +26,16 @@ public class CounselService {
 
     //상담일정
     @Transactional
-    public CounselDTORecord findCounsel(SessionUser sessionUser, Integer expertId) {
+    public CounselDTORecord findCounsel(SessionUser sessionUser) {
 
         // 0. 인증
         if (sessionUser == null) {
             throw new Exception403("인증되지 않은 유저입니다");
         }
+        User expert = userRepository.findById(sessionUser.getId()).orElseThrow(() -> new Exception404("전문가를 찾을 수 없습니다."));
 
         // 1. 상담사 리스트 찾기
-        List<Counsel> counselList = counselRepository.findAllCounselByExpertId(expertId);
+        List<Counsel> counselList = counselRepository.findAllCounselByExpertId(sessionUser.getId());
 
         // 2. Transform Counsel list to UserRecord list
         List<UserRecord> userRecords = counselList.stream().map(counsel -> {
@@ -66,7 +67,7 @@ public class CounselService {
         }).collect(Collectors.toList());
 
         // 최종적으로 CounselDTORecord를 반환
-        return new CounselDTORecord(userRecords);
+        return new CounselDTORecord(expert.getId(),expert.getProfileImage(),userRecords);
     }
 
 }

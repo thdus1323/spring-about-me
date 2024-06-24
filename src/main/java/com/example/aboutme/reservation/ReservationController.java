@@ -1,5 +1,6 @@
 package com.example.aboutme.reservation;
 
+import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
 import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.user.SessionUser;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ReservationController {
     private final ReservationService reservationService;
+    private final RedisUtil redisUtil;
     private final RedisTemplate<String, Object> redisTemp;
 
 
@@ -32,7 +34,7 @@ public class ReservationController {
 
     @PostMapping("/client/reservations/temp")
     public String saveTempReservation(ReservationTempRepDTO reqDTO) {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         Reservation tempReservation = reservationService.createTempReservation(reqDTO, sessionUser);
         return "redirect:/client/findExpert/payment/" + tempReservation.getId();
     }
