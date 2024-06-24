@@ -34,10 +34,6 @@ public class UserController {
             // 세션 데이터를 저장
             redisUtil.saveSessionUser(sessionUser);
         }
-
-        redirectAttributes.addFlashAttribute("sessionUser", sessionUser);
-        log.info("로그인한 유저 {}", sessionUser);
-
         // 모델에 세션 데이터를 추가
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
@@ -69,7 +65,7 @@ public class UserController {
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        System.out.println("sessionUser = " + sessionUser);
+        log.info("SessionUser: " + sessionUser);
         return "redis test";
     }
 
@@ -180,7 +176,8 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
     @GetMapping("/")
-    public String index(@RequestParam(name = "clientId", required = false) String clientId, Model model) {
+    public String index( Model model) {
+        model.addAttribute("sessionUser", redisUtil.getSessionUser());
 
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
@@ -192,6 +189,7 @@ public class UserController {
     @GetMapping("/experts")
     public String expertMain(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
+        model.addAttribute("sessionUser", sessionUser);
         ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
         model.addAttribute("expertMain", expertMain);
         return "expert/main";

@@ -17,7 +17,7 @@ public class RedisUtil {
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String USER_SESSION_KEY_PREFIX = "sessionUser:";
+    private static final String SESSIONUSER = "sessionUser:";
 
     public void saveSessionUser(SessionUser sessionUser) {
         log.info("sessionUser {} " , sessionUser);
@@ -25,7 +25,7 @@ public class RedisUtil {
             String sessionUserJson = objectMapper.writeValueAsString(sessionUser);
             log.info("sessionUserJson {} " , sessionUserJson);
 
-            redisTemplate.opsForValue().set(USER_SESSION_KEY_PREFIX, sessionUserJson);
+            redisTemplate.opsForValue().set(SESSIONUSER, sessionUserJson);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Redis 저장 중 오류 발생: " + e.getMessage(), e);
         }
@@ -41,13 +41,13 @@ public class RedisUtil {
     }
 
     public SessionUser getSessionUser() {
-        String sessionUserJson = (String) redisTemplate.opsForValue().get(USER_SESSION_KEY_PREFIX);
-        log.info("sessionUserJson: {}" + sessionUserJson);
+        Object sessionUserJson = redisTemplate.opsForValue().get(SESSIONUSER);
         if (sessionUserJson != null) {
             try {
-                return objectMapper.readValue(sessionUserJson, SessionUser.class);
+                return objectMapper.readValue(sessionUserJson.toString(), SessionUser.class);
             } catch (JsonProcessingException e) {
-                throw new RuntimeException("Redis 읽기 중 오류 발생: " + e.getMessage(), e);
+                e.printStackTrace();
+                return null;
             }
         }
         return null;
