@@ -17,7 +17,7 @@ public class RedisUtil {
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String SESSIONUSER = "sessionUser:";
+    private static final String SESSIONUSER = "sessionUser";
 
     public void saveSessionUser(SessionUser sessionUser) {
         log.info("sessionUser {} " , sessionUser);
@@ -44,9 +44,12 @@ public class RedisUtil {
         Object sessionUserJson = redisTemplate.opsForValue().get(SESSIONUSER);
         if (sessionUserJson != null) {
             try {
-                return objectMapper.readValue(sessionUserJson.toString(), SessionUser.class);
+                log.info("Retrieved sessionUserJson: {}" , sessionUserJson.toString());
+                SessionUser sessionUser = objectMapper.readValue(sessionUserJson.toString(), SessionUser.class);
+                sessionUser.determineRoles(); // 역할 설정
+                return sessionUser;
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                log.error("Error reading sessionUserJson: {}", e.getMessage());
                 return null;
             }
         }

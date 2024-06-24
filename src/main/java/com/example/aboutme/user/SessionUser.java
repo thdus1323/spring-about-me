@@ -18,6 +18,15 @@ public class SessionUser {
     private OauthProvider provider;
     private String accessToken;
 
+    // 추가 필드
+    private boolean isClient;
+    private boolean isExpert;
+
+    public void determineRoles() {
+        this.isClient = this.userRole == UserRole.CLIENT;
+        this.isExpert = this.userRole == UserRole.EXPERT;
+    }
+
     @Builder
     public SessionUser(Integer id, String name, String email, String expertTitle, UserRole userRole, OauthProvider provider, String accessToken) {
         this.id = id;
