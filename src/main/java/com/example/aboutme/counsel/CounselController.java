@@ -1,5 +1,6 @@
 package com.example.aboutme.counsel;
 
+import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.CounselDTORecord;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class CounselController {
     private final CounselService counselService;
-    private final HttpSession session;
+    private final RedisUtil redisUtil;
     private final RedisTemplate<String, Object> redisTemp;
 
 
     //상담일정
     @GetMapping("/schedule/{expertId}")
     public String schedule(@PathVariable Integer expertId, Model model) {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
         CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser,expertId);
         model.addAttribute("counselList",counselDTORecord);
 

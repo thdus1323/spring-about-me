@@ -20,10 +20,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
-
 </head>
 <body>
+
+{{#sessionUser}}
 <!-- 헤더 시작 -->
 <header class="header-ex">
     <div class="container">
@@ -42,23 +42,44 @@
                 </div>
             </div>
             <div class="header-right">
-                {{#sessionUser}}
                     <ul>
                         <li><a href="/logout">로그아웃</a></li>
                         <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
                         <li><a href="#!" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
-                {{/sessionUser}}
-                {{^sessionUser}}
-                    <ul>
-                        <li><a href="/login">로그인</a></li>
-                        <li><a href="/join">회원가입</a></li>
-                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
-                        <li><a href="/client/mypage" class="icon"><i class="far fa-user"></i></a></li>
-                    </ul>
-                {{/sessionUser}}
             </div>
         </div>
     </div>
 </header>
+{{/sessionUser}}
+{{^sessionUser}}
+<header class="header-ex">
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/images/main_logo.svg" alt="Main Logo">
+                    </a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="/comm">커뮤니티</a></li>
+                        <li><a href="/client/findExpert">전문가 찾기</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header-right">
+                <ul>
+                    <li><a href="/login">로그인</a></li>
+                    <li><a href="/join">회원가입</a></li>
+                    <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                    <li><a href="/client/mypage" class="icon"><i class="far fa-user"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+{{/sessionUser}}
+
 <!-- 헤더 끝 -->
