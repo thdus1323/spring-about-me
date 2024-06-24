@@ -23,6 +23,17 @@
 
 <!-- 헤더 시작 -->
 {{#sessionUser}}
+    {{#isClient}}
+
+        {{> layout/client-header}}
+    {{/isClient}}
+    {{#isExpert}}
+
+        {{> layout/expert-header}}
+    {{/isExpert}}
+
+{{/sessionUser}}
+{{^sessionUser}}
     <header class="header-ex">
         <div class="container">
             <div class="header">
@@ -40,23 +51,14 @@
                     </div>
                 </div>
                 <div class="header-right">
-                        <ul>
-                            <li><a href="/login">로그인</a></li>
-                            <li><a href="/join">회원가입</a></li>
-                            <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
-                            <li><a href="#!" class="icon"><i class="far fa-user"></i></a></li>
-                        </ul>
+                    <ul>
+                        <li><a href="/login">로그인</a></li>
+                        <li><a href="/join">회원가입</a></li>
+                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                        <li><a href="#!" class="icon"><i class="far fa-user"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </header>
 {{/sessionUser}}
-{{^sessionUser}}
-<!--{{#client}}-->
-<!--    {{> client-header}}-->
-<!--{{/client}}-->
-<!--{{#expert}}-->
-<!--    {{> expert-header}}-->
-<!--{{/expert}}-->
-{{/sessionUser}}
-<!--&lt;!&ndash; 헤더 끝 &ndash;&gt;-->

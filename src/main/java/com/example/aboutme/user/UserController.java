@@ -11,6 +11,7 @@ import com.example.aboutme.user.enums.UserRole;
 //import com.example.aboutme.user.oauth.NaverOAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
     private final UserService userService;
     private final RedisUtil redisUtil;
-    private final RedisTemplate<String, Object> redisTemp;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemp;
 
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO, Model model, RedirectAttributes redirectAttributes) {
@@ -34,6 +37,7 @@ public class UserController {
             // 세션 데이터를 저장
             redisUtil.saveSessionUser(sessionUser);
         }
+
         // 모델에 세션 데이터를 추가
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
@@ -178,7 +182,7 @@ public class UserController {
     @GetMapping("/")
     public String index( Model model) {
         model.addAttribute("sessionUser", redisUtil.getSessionUser());
-
+        log.info("클라이언트이동 👍👍👍👍👍 {}", redisUtil.getSessionUser());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
         return "client/main";
@@ -190,6 +194,8 @@ public class UserController {
     public String expertMain(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         model.addAttribute("sessionUser", sessionUser);
+        log.info("전문가 이동 👍👍👍👍👍 {}", redisUtil.getSessionUser());
+
         ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
         model.addAttribute("expertMain", expertMain);
         return "expert/main";
