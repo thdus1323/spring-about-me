@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.Gender;
+import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
 import com.example.aboutme.user.pr.PR;
 import com.example.aboutme.user.spec.Spec;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-@ToString(exclude = {"pr", "specs", "payments", "refunds", "alarms", "comms", "replies", "vouchers"})
+@ToString(exclude = {"pr", "specs"})
 public class User {
 
     // 필수 입력
@@ -58,10 +59,15 @@ public class User {
     private Gender gender;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
     private PR pr;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JsonIgnore
     private List<Spec> specs;
+
+    @Enumerated(EnumType.STRING)
+    private OauthProvider provider; // kakao, naver
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -70,20 +76,22 @@ public class User {
     private Timestamp updatedAt;
 
     @Builder
-    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, Timestamp createdAt, Timestamp updatedAt, String expertTitle) {
+    public User(Integer id, UserRole userRole, String email, String password, String name, String phone, String expertTitle, ExpertLevel level, String profileImage, String birth, Gender gender, PR pr, List<Spec> specs, OauthProvider provider, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.userRole = userRole;
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
+        this.expertTitle = expertTitle;
+        this.level = level;
         this.profileImage = profileImage;
         this.birth = birth;
         this.gender = gender;
         this.pr = pr;
         this.specs = specs;
+        this.provider = provider;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.expertTitle = expertTitle;
     }
 }
