@@ -23,7 +23,7 @@ public class CounselController {
     //상담일정
     @GetMapping("/schedule/{expertId}")
     public String schedule(@PathVariable Integer expertId, Model model) {
-        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser,expertId);
         model.addAttribute("counselList",counselDTORecord);
 

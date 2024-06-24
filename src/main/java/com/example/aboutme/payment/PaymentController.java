@@ -38,7 +38,7 @@ public class PaymentController {
     @PostMapping("/payments/request")
     @ResponseBody
     public PaymentPortOneRespDTO requestPayment(@RequestBody PaymentPortOneReqDTO paymentRequestDTO) {
-        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         log.info("Requesting payment" + paymentRequestDTO);
         return paymentService.requestPayment(paymentRequestDTO, sessionUser);
     }
