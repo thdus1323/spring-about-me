@@ -26,20 +26,21 @@ public class UserController {
     private final RedisTemplate<String, Object> redisTemp;
 
     @PostMapping("/login")
-    public String login(UserRequest.LoginDTO reqDTO, Model model,RedirectAttributes redirectAttributes) {
+    public String login(UserRequest.LoginDTO reqDTO, Model model, RedirectAttributes redirectAttributes) {
         SessionUser sessionUser = userService.loginByName(reqDTO);
+        log.info("User:aaaaaaaaaa " + sessionUser.getUserRole());
+
         if (sessionUser == null) {
             throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
         } else {
             // 세션 데이터를 저장
             redisUtil.saveSessionUser(sessionUser);
         }
-        sessionUser = redisUtil.getSessionUser("sessionUser");
-        log.info("sessionUser {} ", sessionUser);
-
+        redirectAttributes.addFlashAttribute("sessionUsers", sessionUser);
+        log.info("Useraaaaaaaaaaaaaa {}", sessionUser);
         // 모델에 세션 데이터를 추가
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
-            return "redirect:/"+ sessionUser.getId();
+            return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
             return "redirect:/experts/" + sessionUser.getId();
         } else {
@@ -67,7 +68,7 @@ public class UserController {
 
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
-        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         System.out.println("sessionUser = " + sessionUser);
         return "redis test";
     }
@@ -154,7 +155,7 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout() {
-        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser(     );
         if (sessionUser != null) {
             redisTemp.delete("sessionUser");
             redisTemp.delete("userRole");
@@ -185,7 +186,6 @@ public class UserController {
         model.addAttribute("clientMain", clientMain);
         return "client/main";
     }
-
 
 
     // 익스퍼트 메인페이지
@@ -222,7 +222,7 @@ public class UserController {
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
     public String clientMypage() {
-        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser == null) {
             return "oauth/login";
         } else {
