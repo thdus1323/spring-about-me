@@ -1,4 +1,4 @@
-package com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO;
+package com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO;
 
 
 import com.example.aboutme.user.enums.SpecType;
