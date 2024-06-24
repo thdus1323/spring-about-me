@@ -9,6 +9,11 @@ server:
   port: 8080
 
 spring:
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password:
   mustache:
     servlet:
       expose-session-attributes: true
@@ -27,6 +32,7 @@ spring:
       mode: always
       data-locations:
         - classpath:db/data.sql
+      schema-locations:
   jpa:
     hibernate:
       ddl-auto: create

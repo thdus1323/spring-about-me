@@ -559,4 +559,9 @@ a.link span i{}
     background-color: #00bbba;
     color: white;
 }
-
+.month-nav button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}

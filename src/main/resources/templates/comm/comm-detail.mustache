@@ -23,7 +23,7 @@
                             <h4 class="card-title">{{comm.title}} 아이디 : {{comm.commId}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
-                                    <figure><img src="images/level1.png" alt="회원이미지"></figure>
+                                    <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
                                     <span>{{comm.name}}</span><span class="time">{{comm.createdAt}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
@@ -128,7 +128,7 @@
                         <div class="c-card-body detail mb-20">
                             <div class="community-cartegory">
                                 <div class="user-info">
-                                    <figure><img src="/images/level1.png" alt="회원이미지"></figure>
+                                    <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
                                     <span>{{comm.name}}</span></div>
                             </div>
                             <p class="card-text mb-20">여기는 일반인 댓글 출력 공간입니다</p>
@@ -156,43 +156,49 @@
                     <!--댓글 섹션 시작-->
                     <!--같은 카테고리 다른 글 살펴보기 시작-->
                     <br>
-                    <h3 class="page-title mb-20">정신건강의 다른 글 살펴보기</h3>
+                    <h3 class="page-title mb-20">{{comm.category}}의 다른 글 살펴보기</h3>
                     <!-- 다른 글 -->
-                    <div class="c-card">
-                        <div class="c-card-body detail">
-                            <a href="#">
-                                <h4 class="card-title mb-10">군대 재대 후 아무것도</h4>
-                                <div class="community-cartegory">
-                                    <div class="category main-color">직장</div>
-                                    <div class="user-info">
-                                        <figure><img src="/images/level1.png" alt="회원이미지"></figure>
-                                        <span>handon7018</span></div>
+                    {{#comm.commsByCategory.일반고민}}
+                        <div class="c-card">
+                            <div class="c-card-body detail">
+                                <a href="/comm-detail/{{id}}">
+                                    <h4 class="card-title mb-10">{{this.title}}</h4>
+                                    <div class="community-cartegory">
+                                        <div class="category main-color">{{this.category}}</div>
+                                        <div class="user-info">
+                                            <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
+                                            <span>{{comm.name}}</span>
+                                        </div>
+                                    </div>
+                                    <p class="card-text mb-20">{{this.content}}</p>
+                                </a>
+                                <div class="link-wrapper">
+                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>
+                                    <a href="#" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
-                                <p class="card-text mb-20">군 재대 후 24년 1월부터 평인엔 시골에서 지내고 왈가왈부 두줄 테스트를 하기 위해서 글을 써내려 가고
-                                    있습니다 하하하하하하하하하</p>
-                            </a>
-                            <div class="link-wrapper">
-                                <a href="#" class="card-link like">❤<em class="count">1</em></a>
-                                <a href="#" class="card-link reply">💌<em class="count">2</em></a>
-                            </div>
-                            <div class="expert-reply">
-                                <div class="expert-reply-info mb-10">
-                                    <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
-                                    <span class="expert-reply-name active-color">최원아님의 전문답변</span>
-                                </div>
-                                <p class="reply-content">
-                                    현재 느끼는 부담감과 불안감은 시험을 준비하는 과정에서 당연히 나타날 수 있는 감정들이에요.
-                                    그리고 부모님에 대한 미안함과 그로 인한 바보같은 생각은 하지마세요
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--답변 중 전문가가 리플 달아준 것 시작-->
 
+                                {{#userRole}}
+                                    <div class="expert-reply">
+                                        <div class="expert-reply-info mb-10">
+                                            <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
+                                            <span class="expert-reply-name active-color">{{expertName}}님의 전문답변</span>
+                                        </div>
+                                        <p class="reply-content">
+                                            {{solution}}
+                                        </p>
+                                    </div>
+                                {{/userRole}}
+                            </div>
+
+                        </div>
+                    {{/comm.commsByCategory.일반고민}}
                 </div>
-                <!--커뮤니티 상세보기 끝-->
+                <!--답변 중 전문가가 리플 달아준 것 시작-->
+
             </div>
+            <!--커뮤니티 상세보기 끝-->
         </div>
+    </div>
     </div>
 </section>
 <script>
