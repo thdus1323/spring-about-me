@@ -33,7 +33,7 @@
                             <div class="row">
                                 {{#voiceVoucher}}
                                     <div class="col-md-4 mb-3" style="cursor: pointer;"
-                                         onClick="location.href='/client/findExpert/reservation/{{voucherId}}'">
+                                         onClick="location.href='/client/findExpert/reservation?voucherId={{voucherId}}&expertId={{user.expertId}}'">
                                         <div class="voucher-price-card card-hover">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <h3>{{count}}회권 </h3>
@@ -70,8 +70,9 @@
                             <div class="row">
                                 {{#textVoucher}}
                                     <div class="col-md-4 mb-3" style="cursor: pointer;"
-                                         onClick="location.href='/client/findExpert/reservation/{{voucherId}}'">
-                                        <div class="voucher-price-card card-hover">
+                                         onClick="location.href='/client/findExpert/reservation?voucherId={{voucherId}}&expertId={{user.expertId}}'">
+
+                                    <div class="voucher-price-card card-hover">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <h3>{{count}}회권 </h3>
                                                 <h2 class="mx-2" style="color: #B89D9D;">{{duration}}분 X {{count}}회</h2>
@@ -107,8 +108,8 @@
                             <div class="row">
                                 {{#videoVoucher}}
                                     <div class="col-md-4 mb-3" style="cursor: pointer;"
-                                         onClick="location.href='/client/findExpert/reservation/{{voucherId}}'">
-                                        <div class="voucher-price-card card-hover">
+                                         onClick="location.href='/client/findExpert/reservation?voucherId={{voucherId}}&expertId={{user.expertId}}'">
+                                    <div class="voucher-price-card card-hover">
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <h3>{{count}}회권 </h3>
                                                 <h2 class="mx-2" style="color: #B89D9D;">{{duration}}분 X {{count}}회</h2>

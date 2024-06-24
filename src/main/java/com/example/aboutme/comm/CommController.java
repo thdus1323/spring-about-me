@@ -23,6 +23,7 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
+
     public String detail(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
         // 세션에서 사용자 정보 가져오기
         HttpSession session = request.getSession();
@@ -36,6 +37,7 @@ public class CommController {
 
         model.addAttribute("comm", comm);
         model.addAttribute("isUserRole", isUserRole);
+
 
         return "comm/comm-detail";
     }
