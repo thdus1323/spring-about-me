@@ -2,6 +2,7 @@ package com.example.aboutme.user.spec;
 
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.enums.SpecType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Spec {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+//    @JsonIgnore
     private User user;
 
     @Builder

@@ -8,17 +8,11 @@ import com.example.aboutme.counsel.enums.StateEnum;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.ExpertInfoRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.VoucherImageRecord;
-import com.example.aboutme.user.enums.UserRole;
-import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,9 +25,8 @@ public class CounselService {
 
 
     //상담일정
-
     @Transactional
-    public CounselDTORecord findCounsel(User sessionUser, Integer expertId) {
+    public CounselDTORecord findCounsel(SessionUser sessionUser, Integer expertId) {
 
         // 0. 인증
         if (sessionUser == null) {
@@ -57,7 +50,7 @@ public class CounselService {
             Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), StateEnum.PENDING);
 
             // 6. VoucherType 변환
-            String voucherType = counsel.getVoucher().getVoucherType().getVoucherType();
+            String voucherType = counsel.getVoucher().getVoucherType().getKorean();
 
             // UserRecord 생성
             return new UserRecord(
