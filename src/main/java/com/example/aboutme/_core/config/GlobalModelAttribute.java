@@ -15,7 +15,7 @@ public class GlobalModelAttribute {
     private final RedisUtil redisUtil;
 
     @ModelAttribute("sessionUser")
-    public SessionUser addSessionUserToModel() {
+    public SessionUser addSessionUserToModel(   ) {
         SessionUser sessionUser =redisUtil.getSessionUser();
         log.info("전역 세선 유저 {} 👍👍👍👍👍👍👍",redisUtil.getSessionUser());
         if (sessionUser != null) {
