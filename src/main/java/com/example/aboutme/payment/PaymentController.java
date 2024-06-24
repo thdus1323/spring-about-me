@@ -1,5 +1,6 @@
 package com.example.aboutme.payment;
 
+import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.payment.PaymentRequestRecord.PaymentPortOneReqDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentPortOneRespDTO;
@@ -23,6 +24,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final ReservationService reservationService;
     private final RedisTemplate<String, Object> redisTemp;
+    private final RedisUtil redisUtil;
 
     //전문가 칮기 - 결제하기
     @GetMapping("/client/findExpert/payment/{reservationId}")
@@ -36,7 +38,7 @@ public class PaymentController {
     @PostMapping("/payments/request")
     @ResponseBody
     public PaymentPortOneRespDTO requestPayment(@RequestBody PaymentPortOneReqDTO paymentRequestDTO) {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         log.info("Requesting payment" + paymentRequestDTO);
         return paymentService.requestPayment(paymentRequestDTO, sessionUser);
     }

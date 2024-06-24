@@ -30,6 +30,7 @@ import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -55,13 +56,15 @@ public class UserService {
     private final PRRepository prRepository;
     private final CounselRepository counselRepository;
     private final Formatter formatter;
-
-
+    private final RedisTemplate<String, Object> redisTemplate;
 //    @Transactional
 //    public User loginByName(UserRequest.LoginDTO reqDTO) {
 //        User user = userNativeRepository.login(reqDTO);
 //        return user;
 //    }
+
+
+
 
     public SessionUser loginByName(UserRequest.LoginDTO reqDTO) {
         User user = userRepository.findByEmailAndPassword(reqDTO.getEmail(), reqDTO.getPassword());
@@ -164,9 +167,9 @@ public class UserService {
 
     // 익스퍼트 메인
     @Transactional
-    public ExpertMainDTORecord getExpertMain(Integer expertId) {
-        List<RecentReviewRecord> recentReviewRecords = reviewRepository.findReviewRecordsByExpertId(expertId);
-        List<CounselScheduleRecord> counselScheduleRecords = counselRepository.findCounselScheduleRecordsByExpertId(expertId);
+    public ExpertMainDTORecord getExpertMain(SessionUser sessionUser) {
+        List<RecentReviewRecord> recentReviewRecords = reviewRepository.findReviewRecordsByExpertId(sessionUser.getId());
+        List<CounselScheduleRecord> counselScheduleRecords = counselRepository.findCounselScheduleRecordsByExpertId(sessionUser.getId());
 
         return new ExpertMainDTORecord(recentReviewRecords, counselScheduleRecords);
     }
