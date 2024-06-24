@@ -28,21 +28,21 @@ public class UserController {
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO, Model model, RedirectAttributes redirectAttributes) {
         SessionUser sessionUser = userService.loginByName(reqDTO);
-        log.info("User:aaaaaaaaaa " + sessionUser.getUserRole());
-
         if (sessionUser == null) {
             throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
         } else {
             // 세션 데이터를 저장
             redisUtil.saveSessionUser(sessionUser);
         }
-        redirectAttributes.addFlashAttribute("sessionUsers", sessionUser);
-        log.info("Useraaaaaaaaaaaaaa {}", sessionUser);
+
+        redirectAttributes.addFlashAttribute("sessionUser", sessionUser);
+        log.info("로그인한 유저 {}", sessionUser);
+
         // 모델에 세션 데이터를 추가
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-            return "redirect:/experts/" + sessionUser.getId();
+            return "redirect:/experts";
         } else {
             return "oauth/login";
         }
@@ -155,7 +155,7 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout() {
-        SessionUser sessionUser = redisUtil.getSessionUser(     );
+        SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser != null) {
             redisTemp.delete("sessionUser");
             redisTemp.delete("userRole");
@@ -189,9 +189,10 @@ public class UserController {
 
 
     // 익스퍼트 메인페이지
-    @GetMapping("/experts/{expertId}")
-    public String expertMain(Model model, @PathVariable Integer expertId) {
-        ExpertMainDTORecord expertMain = userService.getExpertMain(expertId);
+    @GetMapping("/experts")
+    public String expertMain(Model model) {
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
         model.addAttribute("expertMain", expertMain);
         return "expert/main";
     }

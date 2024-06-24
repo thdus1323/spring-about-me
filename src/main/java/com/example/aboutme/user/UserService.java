@@ -167,9 +167,9 @@ public class UserService {
 
     // 익스퍼트 메인
     @Transactional
-    public ExpertMainDTORecord getExpertMain(Integer expertId) {
-        List<RecentReviewRecord> recentReviewRecords = reviewRepository.findReviewRecordsByExpertId(expertId);
-        List<CounselScheduleRecord> counselScheduleRecords = counselRepository.findCounselScheduleRecordsByExpertId(expertId);
+    public ExpertMainDTORecord getExpertMain(SessionUser sessionUser) {
+        List<RecentReviewRecord> recentReviewRecords = reviewRepository.findReviewRecordsByExpertId(sessionUser.getId());
+        List<CounselScheduleRecord> counselScheduleRecords = counselRepository.findCounselScheduleRecordsByExpertId(sessionUser.getId());
 
         return new ExpertMainDTORecord(recentReviewRecords, counselScheduleRecords);
     }
