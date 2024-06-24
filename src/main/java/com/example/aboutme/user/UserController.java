@@ -181,8 +181,6 @@ public class UserController {
     // 클라이언트 메인페이지
     @GetMapping("/")
     public String index( Model model) {
-        model.addAttribute("sessionUser", redisUtil.getSessionUser());
-        log.info("클라이언트이동 👍👍👍👍👍 {}", redisUtil.getSessionUser());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
         return "client/main";
@@ -193,9 +191,6 @@ public class UserController {
     @GetMapping("/experts")
     public String expertMain(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        model.addAttribute("sessionUser", sessionUser);
-        log.info("전문가 이동 👍👍👍👍👍 {}", redisUtil.getSessionUser());
-
         ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
         model.addAttribute("expertMain", expertMain);
         return "expert/main";
