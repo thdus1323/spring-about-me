@@ -75,7 +75,7 @@ public class UserController {
 
     // 익스퍼트 메인페이지
     @GetMapping("/experts/{expertId}")
-    public String expertMain(Model model, @PathVariable Integer expertId) {
+    public String expertMain(Model model, @PathVariable("expertId") Integer expertId) {
         ExpertMainDTORecord expertMain = userService.getExpertMain(expertId);
         model.addAttribute("expertMain", expertMain);
 
