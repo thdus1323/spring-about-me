@@ -1,5 +1,6 @@
 package com.example.aboutme.review;
 
+import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.review.ReviewResponseDTO.ExpertReviewDTO.ReviewDTORecord;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
@@ -16,12 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ReviewController {
     private final ReviewService reviewService;
     private final RedisTemplate<String, Object> redisTemp;
+    private final RedisUtil redisUtil;
 
     //TODO: 전문가용 페이지
     //후기
     @GetMapping("/review/{expertId}")
     public String review(Model model, @PathVariable("expertId") Integer expertId) {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser("sessionUser");
         ReviewDTORecord reviewDTORecord = reviewService.getExpertReview(expertId,sessionUser);
 
         model.addAttribute("reviewList", reviewDTORecord);

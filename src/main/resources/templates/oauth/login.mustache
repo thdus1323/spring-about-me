@@ -2,22 +2,7 @@
 
 <div class="login-wrap">
     <h1 class="login-title">로그인</h1>
-    <div class="login-toggle mb-4">
-        <button type="button" class="login-active btn btn-outline-success me-2" id="getClient" value="CLIENT">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 class="bi bi-check-circle" viewBox="0 0 16 16">
-                <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
-            </svg>
-            개인 회원
-        </button>
-        <button type="button" class="btn btn-outline-secondary" id="getExpert" value="EXPERT">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 class="bi bi-check-circle" viewBox="0 0 16 16">
-                <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
-            </svg>
-            상담사
-        </button>
-    </div>
+
     <form action="/login" method="post" id="loginForm">
         <input type="hidden" id="userRole" name="userRole" value="CLIENT">
         <div class="login-group mb-3">
@@ -37,6 +22,22 @@
             <a href="/join" class="text-success">회원가입</a>
         </div>
         <hr class="join-divider ">
+        <div class="login-toggle mb-4">
+            <button type="button" class="login-active btn btn-outline-success me-2" id="getClient" value="CLIENT">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-check-circle" viewBox="0 0 16 16">
+                    <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
+                </svg>
+                개인 회원
+            </button>
+            <button type="button" class="btn btn-outline-secondary" id="getExpert" value="EXPERT">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-check-circle" viewBox="0 0 16 16">
+                    <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
+                </svg>
+                상담사
+            </button>
+        </div>
         <div class="join-social">
             <a href="#" id="NaverSignup" ><img src="./images/naver_oauth.png" alt="Naver Signup"></a>
             <a href="#" id="kakaoSignup"><img src="./images/kakao_oauth.png" alt="Kakao Signup"></a>
