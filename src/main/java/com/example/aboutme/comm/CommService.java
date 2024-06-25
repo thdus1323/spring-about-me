@@ -55,6 +55,13 @@ public class CommService {
         );
     }
 
+    public List<Comm> find() {
+        List<Comm> commList = commRepository.findAll();
+        List<Comm> replyList = commRepository.findByCommId(Integer commId);
+
+        return commOptional;
+    }
+
     public Comm findById(Integer id) {
         Optional<Comm> commOptional = commRepository.findById(id);
         return commOptional.orElse(null); // orElse(null)을 사용하여 엔티티가 없을 경우 null 반환
