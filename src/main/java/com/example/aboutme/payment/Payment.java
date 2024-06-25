@@ -43,7 +43,7 @@ public class Payment {
 
     private String impUid; // 아임포트 거래 고유 ID
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String merchantUid; // 상점 거래 고유 ID
 
     @Builder

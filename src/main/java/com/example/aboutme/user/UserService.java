@@ -1,12 +1,19 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme._core.error.exception.Exception400;
 import com.example.aboutme._core.error.exception.Exception403;
+import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
+import com.example.aboutme.comm.Comm;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
+import com.example.aboutme.payment.Payment;
+import com.example.aboutme.payment.PaymentRepository;
+import com.example.aboutme.reservation.Reservation;
+import com.example.aboutme.reservation.ReservationRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
@@ -17,6 +24,7 @@ import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.*;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
+import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.ExpertInfoRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.VoucherImageRecord;
@@ -51,6 +59,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
     private final CommRepository commRepository;
     private final UserNativeRepository userNativeRepository;
     private final ReviewRepository reviewRepository;
@@ -58,8 +67,75 @@ public class UserService {
     private final SpecRepository specRepository;
     private final PRRepository prRepository;
     private final CounselRepository counselRepository;
+    private final PaymentRepository paymentRepository;
     private final Formatter formatter;
     private final RedisUtil redisUtil;
+
+    @Transactional
+    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
+
+        UserProfileDTO.User userProfile = UserProfileDTO.User.builder().
+                id(user.getId()).
+                name(user.getName()).
+                email(user.getEmail()).
+                birth(user.getBirth()).
+                gender(user.getGender().getKorean()).
+                profileImage(user.getProfileImage()).
+                build();
+
+        List<UserProfileDTO.VoucherDTO> vouchers = paymentRepository.findByClientId(sessionUser.getId()).stream()
+                .map(payment -> {
+                    Voucher v = payment.getVoucher();
+                    return new UserProfileDTO.VoucherDTO(
+                            v.getId(), v.getVoucherType().getKorean(), v.getExpert().getId(),
+                            formatter.number((int) v.getPrice()), v.getCount(),
+                            v.getDuration(),  v.getCreatedAt(), v.getUpdatedAt());
+                })
+                .toList();
+
+        List<UserProfileDTO.ReservationDTO> reservations = reservationRepository.findByClientId(sessionUser.getId()).stream()
+                .map(r -> new UserProfileDTO.ReservationDTO(
+                        r.getId(), r.getExpert().getId(), r.getClient().getId(), r.getVoucher().getId(),
+                        r.getSchedule().getId(), r.getStatus().getKorean(), r.getStartTime(), r.getReservationDate(),
+                        r.getDayOfWeek(), r.getCreatedAt(), r.getUpdatedAt()))
+                .toList();
+
+        List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
+                .map(c -> new UserProfileDTO.Comm(
+                        c.getId(),c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
+                .toList();
+
+        return new UserProfileDTO(userProfile, vouchers, reservations, commPosts);
+    }
+
+
+//    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
+//        User user = userRepository.findById(sessionUser.getId())
+//                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
+//
+//        List<UserProfileDTO.VoucherDTO> vouchers = voucherRepository.findByUserId(sessionUser.getId()).stream()
+//                .map(v -> new UserProfileDTO.VoucherDTO(
+//                        v.getId(), v.getVoucherType().getKorean(), v.getExpert().getId(), formatter.number((int) v.getPrice()),
+//                        v.getCount(), v.getDuration(),
+//                        v.getCreatedAt(), v.getUpdatedAt()))
+//                .toList();
+//
+//        List<UserProfileDTO.ReservationDTO> reservations = reservationRepository.findByUserId(sessionUser.getId()).stream()
+//                .map(r -> new UserProfileDTO.ReservationDTO(
+//                        r.getId(), r.getExpert().getId(), r.getClient().getId(), r.getVoucher().getId(),
+//                        r.getSchedule().getId(), r.getStatus().getKorean(), r.getStartTime(), r.getReservationDate(),
+//                        r.getDayOfWeek(), r.getCreatedAt(), r.getUpdatedAt()))
+//                .toList();
+//
+//        List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
+//                .map(c -> new UserProfileDTO.Comm(
+//                        c.getId(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
+//                .toList();
+//
+//        return new UserProfileDTO(user, vouchers, reservations, commPosts);
+//    }
 
     public void updateUserProfile(UserProfileUpdateReqDTO reqDTO) {
         log.info("유저 프로필 수정 업데이트: {}", reqDTO);
@@ -382,5 +458,7 @@ public class UserService {
             return false;
         }
     }
+
+
 }
 
