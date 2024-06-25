@@ -23,7 +23,6 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-
     public String detail(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
         // 세션에서 사용자 정보 가져오기
         HttpSession session = request.getSession();
@@ -38,14 +37,21 @@ public class CommController {
         model.addAttribute("comm", comm);
         model.addAttribute("isUserRole", isUserRole);
 
-
         return "comm/comm-detail";
     }
 
     @GetMapping("/comm")
     public String community(HttpServletRequest request) {
+
+
         List<CommResponse.CommAndReplyDTO> commsWithReplyList = commService.findAllCommsWithReply();
-        request.setAttribute("commsWithReplyList", commsWithReplyList);
+
+
+        // 필터링 예시: 고유한 Comm에 대해 하나의 DTO만 추가하기
+        CommResponse.UniqueCommAndReplyDTOFilter filter = new CommResponse.UniqueCommAndReplyDTOFilter();
+        List<CommResponse.CommAndReplyDTO> filteredList = filter.filterUnique(commsWithReplyList);
+
+        request.setAttribute("filteredList", filteredList);
 
         return "comm/comm-main";
     }

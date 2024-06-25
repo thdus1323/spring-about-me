@@ -5,6 +5,8 @@ import com.example.aboutme.user.enums.UserRole;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,10 +100,34 @@ public class CommResponse {
             this.category = category.getKorean();
             this.userProfileImage = userProfileImage;
             this.writerName = writerName;
-            this.userRole = userRole == UserRole.EXPERT ? true : false;
+            this.userRole = userRole == UserRole.EXPERT;
             this.replyProfileImage = replyProfileImage;
             this.expertName = expertName;
             this.solution = solution;
+        }
+    }
+
+    // 모든 글, 댓글 받아와서 아이디 당 하나, 전문가 댓글 있는지 없는지 필터링 하는 DTO
+    @Data
+    public static class UniqueCommAndReplyDTOFilter {
+
+        public List<CommResponse.CommAndReplyDTO> filterUnique(List<CommResponse.CommAndReplyDTO> commAndReplyDTOList) {
+            Map<Integer, CommResponse.CommAndReplyDTO> filteredMap = new HashMap<>();
+
+            for (CommResponse.CommAndReplyDTO dto : commAndReplyDTOList) {
+                // 이미 해당 Comm ID에 대한 DTO가 존재하는 경우
+                if (filteredMap.containsKey(dto.getId())) {
+                    // 기존 DTO와 현재 DTO 중 userRole이 true인 것을 선택
+                    if (!filteredMap.get(dto.getId()).isUserRole() && dto.isUserRole()) {
+                        filteredMap.put(dto.getId(), dto);
+                    }
+                } else {
+                    // 처음 추가되는 경우
+                    filteredMap.put(dto.getId(), dto);
+                }
+            }
+
+            return new ArrayList<>(filteredMap.values());
         }
     }
 }
