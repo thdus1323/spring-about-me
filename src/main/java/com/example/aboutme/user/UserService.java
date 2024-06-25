@@ -2,22 +2,25 @@ package com.example.aboutme.user;
 
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.review.ReviewRepository;
-import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.CommDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ExpertDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.VoucherDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.*;
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.RecentReviewRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.ExpertInfoRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.VoucherImageRecord;
+import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
+import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.CommDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ExpertDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.VoucherDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.*;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
+import com.example.aboutme.user.UserResponseRecord.expertFindDTO.ExpertInfoRecord;
+import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme.user.UserResponseRecord.expertFindDTO.VoucherImageRecord;
+import com.example.aboutme.user.enums.Gender;
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
@@ -27,10 +30,9 @@ import com.example.aboutme.user.spec.SpecRepository;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import com.example.aboutme.voucher.enums.VoucherType;
-import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -56,14 +59,30 @@ public class UserService {
     private final PRRepository prRepository;
     private final CounselRepository counselRepository;
     private final Formatter formatter;
-    private final RedisTemplate<String, Object> redisTemplate;
-//    @Transactional
-//    public User loginByName(UserRequest.LoginDTO reqDTO) {
-//        User user = userNativeRepository.login(reqDTO);
-//        return user;
-//    }
+    private final RedisUtil redisUtil;
 
+    public void updateUserProfile(UserProfileUpdateReqDTO reqDTO) {
+        log.info("유저 프로필 수정 업데이트: {}", reqDTO);
 
+        // User ID가 세션에서 필요할 경우, RedisUtil에서 가져올 수 있음
+        SessionUser sessionUser = redisUtil.getSessionUser();
+
+        // 사용자 정보 갱신
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        user.setName(reqDTO.username());
+        user.setBirth(reqDTO.birthYear());
+        user.setGender(Gender.fromKorean(reqDTO.gender()));
+        user.setProfileImage(reqDTO.profileImage());
+
+        // DB 저장
+        userRepository.save(user);
+
+        // Redis 세션 정보 갱신
+        sessionUser.setName(reqDTO.username());
+        redisUtil.saveSessionUser(sessionUser);
+    }
 
 
     public SessionUser loginByName(UserRequest.LoginDTO reqDTO) {
