@@ -1,7 +1,7 @@
 package com.example.aboutme.counsel;
 
+import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
-import com.example.aboutme.counsel.enums.StateEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,9 +11,10 @@ import java.util.List;
 
 public interface CounselRepository extends JpaRepository<Counsel, Integer> {
 
+
     //상담결과에 따른 데이터 가져오기
-    @Query("SELECT c FROM Counsel c WHERE c.client.id = :clientId AND c.state = :state")
-    List<Counsel> findByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") StateEnum state);
+    @Query("SELECT count(c) FROM Counsel c WHERE c.client.id = :clientId AND c.state = :state")
+    Integer findByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") CounselStateEnum state);
 
     @Query("SELECT c FROM Counsel c WHERE c.counselDate = :counselDateAndTime")
     List<Counsel> findCounselsByDateAndTime(@Param("counselDateAndTime") LocalDateTime counselDateAndTime);
@@ -25,7 +26,7 @@ public interface CounselRepository extends JpaRepository<Counsel, Integer> {
     Integer countAllByClientId(@Param("clientId") Integer clientId);
 
     @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId AND c.state = :state")
-    Integer countByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") StateEnum state);
+    Integer countByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") CounselStateEnum state);
 
     @Query("""
             SELECT new com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord(

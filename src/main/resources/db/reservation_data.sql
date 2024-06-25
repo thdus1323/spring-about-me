@@ -1,5 +1,3 @@
-
-
 -- reservation_tb 테이블
 INSERT INTO reservation_tb (expert_id, client_id, voucher_id, schedule_id, status, start_time, reservation_date,
                             day_of_week, created_at, updated_at)
@@ -7,6 +5,7 @@ VALUES
     -- Expert 21 (월요일과 금요일)에서 4개 스케줄
     (21, 1, 1, 1, 'SCHEDULED', '09:00', '2024-06-24', '월', NOW(), NOW()),
     (21, 2, 2, 1, 'COMPLETED', '10:00', '2024-06-24', '월', NOW(), NOW()),
+    (21, 1, 1, 5, 'SCHEDULED', '11:00', '2024-06-28', '금', NOW(), NOW()),
     (21, 3, 2, 5, 'SCHEDULED', '09:00', '2024-06-28', '금', NOW(), NOW()),
     (21, 4, 2, 5, 'COMPLETED', '10:00', '2024-06-28', '금', NOW(), NOW()),
 

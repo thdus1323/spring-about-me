@@ -1,15 +1,10 @@
 package com.example.aboutme.counsel;
 
-import com.example.aboutme.counsel.enums.StateEnum;
-import com.example.aboutme.review.Review;
+import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -51,10 +46,10 @@ public class Counsel {
     private Timestamp updatedAt;
 
     @Enumerated(EnumType.STRING)
-    private StateEnum state;
+    private CounselStateEnum state;
 
     @Builder
-    public Counsel(Integer id, User client, User expert, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt,StateEnum state) {
+    public Counsel(Integer id, User client, User expert, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt, CounselStateEnum state) {
         this.id = id;
         this.client = client;
         this.expert = expert;

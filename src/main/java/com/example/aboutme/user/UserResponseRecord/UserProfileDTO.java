@@ -8,9 +8,9 @@ import java.util.List;
 
 public record UserProfileDTO(
         User user,
-        List<VoucherDTO> vouchers,
+        List<PaymentDTO> payments,
         List<ReservationDTO> progressReservations,
-        List<ReservationDTO> completedReservations,
+        List<ReservationDTO> cecelReservations,
         List<Comm> CommPosts
 ) {
     @Builder
@@ -26,17 +26,19 @@ public record UserProfileDTO(
     }
 
     @Builder
-    public record VoucherDTO(
+    public record PaymentDTO(
             Integer id,
             String voucherType,
             Integer expertId,
+            String paymentMethod,
             String price,
             Integer count,
             Integer remainingCount,  // 추가된 필드
             Integer duration,
-            Timestamp createdAt,
-            Timestamp updatedAt,
-            Timestamp paymentDate
+            String createdAt,
+            String updatedAt,
+            String paymentDate,
+            String amount
     ) {
     }
 
