@@ -1,4 +1,4 @@
-package com.example.aboutme.user.UserResponseDTO.ClientMainDTO;
+package com.example.aboutme.user.UserResponseRecord.ClientMainDTO;
 
 public record CommDTORecord(
         Integer communityId,

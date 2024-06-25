@@ -1,6 +1,6 @@
 package com.example.aboutme.review;
 
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.RecentReviewRecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +13,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     List<Review> findByExpertId(@Param("expertId") Integer expertId);
 
     @Query("""
-            SELECT new com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.RecentReviewRecord(r.id, u.name, r.score, r.content) 
+            SELECT new com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord(r.id, u.name, r.score, r.content) 
             FROM Review r  
             JOIN r.user u  
             WHERE r.counsel.expert.id = :expertId
