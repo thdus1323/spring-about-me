@@ -310,6 +310,14 @@
         var socket = new SockJS('http://localhost:8080/chat');
         stompClient = Stomp.over(socket);
 
+        // SEND 메시지 로그 출력을 비활성화
+        stompClient.debug = function(str) {
+            if (str.startsWith('>>> SEND')) {
+                return;
+            }
+            console.log(str);
+        };
+
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/messages', function (messageOutput) {
@@ -328,13 +336,13 @@
 
         if (messageContent && stompClient && stompClient.connected) {
             var message = {
-                sender: 'client1',
-                recipient: 'user1',
+                sender: '{{sessionUser.userRole}}',
+                recipient: 'CLIENT',
                 content: messageContent
             };
             stompClient.send('/app/sendMessage', {}, JSON.stringify(message));
             messageInput.value = '';
-            displayMessage(message);
+            // displayMessage(message); // 이 줄을 제거하여 메시지를 직접 표시하지 않도록 함
         } else {
             console.log('Message not sent: inputMessage is empty or STOMP client is not connected');
         }
@@ -347,7 +355,7 @@
 
         var figure = document.createElement('figure');
         var img = document.createElement('img');
-        img.src = message.sender === 'client1' ? '/images/client01.jpg' : '/images/counselor.jpg';
+        img.src = message.sender === 'EXPERT' ? '{{sessionUser.profileImage}}' : '{{sessionUser.profileImage}}';
         figure.appendChild(img);
 
         var chatText = document.createElement('div');
@@ -355,7 +363,7 @@
 
         var sender = document.createElement('span');
         sender.className = 'sender';
-        sender.textContent = message.sender === 'client1' ? '클라이언트' : '상담사';
+        sender.textContent = message.sender === 'EXPERT' ? '{{sessionUser.name}}+(상담사)' : '{{sessionUser.name}}+(클라이언트)';
         chatText.appendChild(sender);
 
         var content = document.createElement('span');
