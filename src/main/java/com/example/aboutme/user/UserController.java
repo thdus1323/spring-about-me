@@ -203,7 +203,10 @@ public class UserController {
     public String findExpert(Model model) {
         FindWrapperRecord findWrapperRecord = userService.getExpertFind();
         model.addAttribute("expertList", findWrapperRecord);
-        System.out.println(findWrapperRecord);
+
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        log.info("SessionUser: " + sessionUser);
+
 //        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
 //        session.setAttribute("expertUserList", expertUserList);
 
