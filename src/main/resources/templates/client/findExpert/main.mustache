@@ -293,7 +293,7 @@
             <div id="chatBox"></div>
         </div>
         <div class="modal-footer">
-            <input type="text" id="message" class="form-control" placeholder="Type a message...">
+            <input type="text" id="message" placeholder="Type a message...">
             <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -304,67 +304,84 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <script>
-    var stompClient;
-    var username = '{{sessionUser.name}}'; // 현재 사용자 ID (상담사)
+    var stompClient = null;
 
-    function openChat() {
-        $('#chatModal').modal({
-            addclass: 'on'
-        });
-
-        var socket = new SockJS('/chat');
+    function connect() {
+        var socket = new SockJS('http://localhost:8080/chat');
         stompClient = Stomp.over(socket);
 
-        stompClient.connect({}, function(frame) {
+        stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/user/queue/messages', function(messageOutput) {
-                const message = JSON.parse(messageOutput.body);
-                console.log('Received message: ', message);
-                showMessage(message);
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
+                var message = JSON.parse(messageOutput.body);
+                console.log('Received message in browser:', message);
+                displayMessage(message);
             });
-        });
-
-        // 메시지 입력 필드에 keydown 이벤트 핸들러 추가
-        document.getElementById('message').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Enter 키의 기본 동작(줄 바꿈) 방지
-                sendMessage();
-            }
+        }, function (error) {
+            console.error('STOMP error:', error);
         });
     }
 
     function sendMessage() {
-        var input = document.getElementById('message');
-        var message = {
-            sender: username, // 현재 사용자 ID (상담사)
-            recipient: 'client', // 상대방 사용자 ID (클라이언트)
-            content: input.value
-        };
-        stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
-        input.value = '';
+        var messageInput = document.getElementById('message');
+        var messageContent = messageInput.value.trim();
 
-        // 내가 보낸 메시지를 chatBox에 추가
-        showMessage(message, true);
+        if (messageContent && stompClient && stompClient.connected) {
+            var message = {
+                sender: 'client1',
+                recipient: 'user1',
+                content: messageContent
+            };
+            stompClient.send('/app/sendMessage', {}, JSON.stringify(message));
+            messageInput.value = '';
+            displayMessage(message);
+        } else {
+            console.log('Message not sent: inputMessage is empty or STOMP client is not connected');
+        }
     }
 
-    function showMessage(message, isSent = false) {
+    function displayMessage(message) {
         var chatBox = document.getElementById('chatBox');
         var messageElement = document.createElement('div');
-        messageElement.classList.add('message', isSent ? 'sent' : 'received');
-        var isSender = message.sender === username;
-        console.log('Adding message to chatBox:', message);
-        messageElement.innerHTML = `
-            <figure>
-                <img src="${isSender ? '{{sessionUser.profileImage}}' : '/path/to/client/profileImage'}" alt="Profile Image" />
-            </figure>
-            <div class="chat-text">
-                <span class="sender">${isSender ? '상담사' : '클라이언트'} (${message.sender}):</span>
-                <span class="content">${message.content}</span>
-            </div>
-        `;
-        chatBox.appendChild(messageElement);
-        chatBox.scrollTop = chatBox.scrollHeight; // 자동 스크롤
-    }
-</script>
+        messageElement.className = 'message';
 
+        var figure = document.createElement('figure');
+        var img = document.createElement('img');
+        img.src = message.sender === 'client1' ? '/images/client01.jpg' : '/images/counselor.jpg';
+        figure.appendChild(img);
+
+        var chatText = document.createElement('div');
+        chatText.className = 'chat-text';
+
+        var sender = document.createElement('span');
+        sender.className = 'sender';
+        sender.textContent = message.sender === 'client1' ? '클라이언트' : '상담사';
+        chatText.appendChild(sender);
+
+        var content = document.createElement('span');
+        content.className = 'content';
+        content.textContent = message.content;
+        chatText.appendChild(content);
+
+        messageElement.appendChild(figure);
+        messageElement.appendChild(chatText);
+
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function openChat() {
+        $('#chatModal').modal();
+        connect();
+    }
+
+    window.onload = function() {
+        document.querySelector('.btn-primary').addEventListener('click', sendMessage);
+        document.getElementById('message').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    };
+</script>
 {{> layout/footer}}
