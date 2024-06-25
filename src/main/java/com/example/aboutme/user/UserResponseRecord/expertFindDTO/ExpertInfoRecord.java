@@ -1,4 +1,4 @@
-package com.example.aboutme.user.UserResponseDTO.expertFindDTO;
+package com.example.aboutme.user.UserResponseRecord.expertFindDTO;
 
 import java.util.List;
 

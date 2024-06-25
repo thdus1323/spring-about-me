@@ -1,4 +1,4 @@
-package com.example.aboutme.user.UserResponseDTO.ExpertMainDTO;
+package com.example.aboutme.user.UserResponseRecord.ExpertMainDTO;
 
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.voucher.enums.VoucherType;

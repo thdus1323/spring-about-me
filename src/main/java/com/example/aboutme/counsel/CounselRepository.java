@@ -1,6 +1,6 @@
 package com.example.aboutme.counsel;
 
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
 import com.example.aboutme.counsel.enums.StateEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +24,7 @@ public interface CounselRepository extends JpaRepository<Counsel, Integer> {
     Integer countByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") StateEnum state);
 
     @Query("""
-            SELECT new com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.CounselScheduleRecord(
+            SELECT new com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord(
                 c.id, 
                 c.client.name, 
                 c.counselDate, 
