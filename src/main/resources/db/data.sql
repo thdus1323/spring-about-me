@@ -454,34 +454,5 @@ VALUES
     -- 24번 스케줄: 수요일만 근무 시간
     (24, 'WEDNESDAY', '10:00', '14:00', NOW(), NOW());
 
--- reservation_tb 테이블
-INSERT INTO reservation_tb (expert_id, client_id, voucher_id, schedule_id, status, start_time, reservation_date,
-                            day_of_week, created_at, updated_at)
-VALUES
-    -- Expert 21 (월요일과 금요일)에서 4개 스케줄
-    (21, 1, 1, 1, 'PENDING', '09:00', '2024-06-24', '월', NOW(), NOW()),
-    (21, 2, 2, 1, 'SCHEDULED', '10:00', '2024-06-24', '월', NOW(), NOW()),
-    (21, 3, 2, 5, 'PENDING', '09:00', '2024-06-28', '금', NOW(), NOW()),
-    (21, 4, 2, 5, 'SCHEDULED', '10:00', '2024-06-28', '금', NOW(), NOW()),
-
-    -- Expert 21 (화요일과 수요일)에서 4개 스케줄
-    (21, 5, 2, 2, 'PENDING', '09:00', '2024-06-25', '화', NOW(), NOW()),
-    (21, 6, 2, 2, 'SCHEDULED', '10:00', '2024-06-25', '화', NOW(), NOW()),
-    (21, 7, 3, 3, 'PENDING', '09:00', '2024-06-26', '수', NOW(), NOW()),
-    (21, 8, 3, 3, 'SCHEDULED', '10:00', '2024-06-26', '수', NOW(), NOW()),
-
-    -- Expert 22 (월요일)에서 4개 스케줄
-    (22, 9, 4, 6, 'PENDING', '10:00', '2024-06-24', '월', NOW(), NOW()),
-    (22, 10, 4, 6, 'SCHEDULED', '11:00', '2024-06-24', '월', NOW(), NOW()),
-    (22, 11, 4, 6, 'PENDING', '12:00', '2024-06-24', '월', NOW(), NOW()),
-    (22, 12, 4, 6, 'SCHEDULED', '13:00', '2024-06-24', '월', NOW(), NOW()),
-
-    -- Expert 24 (수요일)에서 4개 스케줄
-    (24, 13, 7, 7, 'PENDING', '10:00', '2024-06-26', '수', NOW(), NOW()),
-    (24, 14, 7, 7, 'SCHEDULED', '11:00', '2024-06-26', '수', NOW(), NOW()),
-    (24, 15, 7, 7, 'PENDING', '12:00', '2024-06-26', '수', NOW(), NOW()),
-    (24, 16, 7, 7, 'SCHEDULED', '13:00', '2024-06-26', '수', NOW(), NOW());
-
-
 
 

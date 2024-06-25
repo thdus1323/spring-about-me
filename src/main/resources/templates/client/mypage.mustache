@@ -1,165 +1,271 @@
 {{> layout/header}}
 {{#model}}
 
-    <div class="container mt-5 user-mypage">
-        <h1 class="text-center mb-5">마이페이지</h1>
+<div class="container mt-5 user-mypage">
+    <h1 class="text-center mb-5">마이페이지</h1>
 
-        <!-- 프로필 보기 -->
-        <div class="card mb-4" id="profile-view-card">
-            <div class="card-header">프로필</div>
-            <div class="card-body">
-                <div id="profile-view" class="profile-container">
-                    <div class="profile-image-wrapper">
-                        <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image"
-                             id="profileImageView">
-                    </div>
-                    <div class="profile-details">
-                        <div class="row">
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bold">닉네임 :</div>
-                                <div id="username">{{user.name}}</div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bold">이메일 :</div>
-                                <div><i class="fas fa-envelope"></i> <span id="email">{{user.email}}</span></div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bold">출생 연도 :</div>
-                                <div id="birth-year">{{user.birth}}</div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bold">성별 :</div>
-                                <div id="gender">{{user.gender}}</div>
-                            </div>
+    <!-- 프로필 보기 -->
+    <div class="card mb-4" id="profile-view-card">
+        <div class="card-header">프로필</div>
+        <div class="card-body">
+            <div id="profile-view" class="profile-container">
+                <div class="profile-image-wrapper">
+                    <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image" id="profileImageView">
+                </div>
+                <div class="profile-details">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">닉네임 :</div>
+                            <div id="username">{{user.name}}</div>
                         </div>
-                        <div class="text-center mt-3">
-                            <button class="btn btn-outline-secondary" id="editProfile"><i class="fas fa-edit"></i> 수정
-                            </button>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">이메일 :</div>
+                            <div><i class="fas fa-envelope"></i> <span id="email">{{user.email}}</span></div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">출생 연도 :</div>
+                            <div id="birth-year">{{user.birth}}</div>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">성별 :</div>
+                            <div id="gender">{{user.gender}}</div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 내 이용권 -->
-        <div class="card mb-4">
-            <div class="card-header">내 이용권</div>
-            <div class="card-body tabs-container">
-                <div class="tabs">
-                    <div class="tab active" data-tab="progress-ticket">진행</div>
-                    <div class="tab" data-tab="completed-ticket">종료</div>
-                </div>
-                <div class="tab-content active" id="progress-ticket">
-                    <div class="table-container">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>이용권</th>
-                                <th>사용횟수</th>
-                                <th>남은횟수</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#vouchers}}
-                                <tr>
-                                    <td>{{voucherType}}</td>
-                                    <td>{{count}}회</td>
-                                    <td>{{duration}}분</td>
-                                </tr>
-                            {{/vouchers}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 예약관리 -->
-        <div class="card">
-            <div class="card-header">예약관리</div>
-            <div class="card-body tabs-container">
-                <div class="tabs">
-                    <div class="tab active" data-tab="progress-reservation">일정</div>
-                    <div class="tab" data-tab="completed-reservation">내역</div>
-                </div>
-                <div class="tab-content active" id="progress-reservation">
-                    <div class="table-container">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>이용권</th>
-                                <th>횟수</th>
-                                <th>시작시간</th>
-                                <th>상담날짜</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#reservations}}
-                                <tr>
-                                    <td>{{voucherId}}</td>
-                                    <td>{{startTime}}</td>
-                                    <td>{{reservationDate}}</td>
-                                    <td>{{dayOfWeek}}</td>
-                                    <td>{{status}}</td>
-                                </tr>
-                            {{/reservations}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 커뮤니티 나의 사연 -->
-        <div class="container mt-5 mb-5 user-mypage">
-            <div class="card">
-                <div class="card-header">내 커뮤니티 활동</div>
-                <div class="card-body">
-                    <div class="tabs-container">
-                        <div class="tabs">
-                            <div class="tab active" data-tab="my-stories">나의 사연</div>
-                            <div class="tab" data-tab="my-comments">나의 댓글</div>
-                            <div class="tab" data-tab="bookmark">북마크</div>
-                        </div>
-
-
-                        <div class="tab-content active" id="my-stories">
-                            <!-- 나의 사연 콘텐츠 -->
-                            {{#CommPosts}}
-                                <div class="user-mypage post" data-post-id="my-bookmark">
-                                    <div class="post-header">
-                                    <span class="post-category">{{category}} ·
-                                        <img src="/images/iu.png" alt="Profile Picture" class="post-profile-image">
-                                        <span class="username">{{name}}</span>
-                                    </span>
-                                    </div>
-                                    <div class="post-body">
-                                        <h5 class="post-title">{{title}}</h5>
-                                        <p class="post-content">{{content}}</p>
-                                    </div>
-                                    <div class="post-footer">
-                                    <span class="post-meta">
-                                        <span class="like-count">
-                                            <i class="far fa-heart like-btn"></i>
-                                            <span>0</span>
-                                        </span>
-                                        <span>
-                                            <i class="far fa-comment"></i>
-                                            <span>0</span>
-                                        </span>
-                                    </span>
-                                    </div>
-                                </div>
-                            {{/CommPosts}}
-                        </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-secondary" id="editProfile"><i class="fas fa-edit"></i> 수정</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{{/model}}
 
+    <!-- 프로필 수정 -->
+    <div class="card mb-4 d-none" id="profile-edit-card">
+        <div class="card-header">프로필 수정</div>
+        <div class="card-body">
+            <div id="profile-edit" class="profile-edit-container">
+                <div class="profile-image-wrapper">
+                    <input type="file" id="profileImageInput" class="d-none">
+                    <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image" id="profileImageEdit">
+                    <span class="edit-icon"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="profile-details border">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">닉네임 :</div>
+                            <input type="text" id="edit-username" class="form-control" value="{{user.name}}">
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">이메일 :</div>
+                            <p class="card-text"><i class="fas fa-envelope"></i> {{user.email}}</p>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">출생 연도 :</div>
+                            <select id="edit-birth-year" class="form-control">
+                                <!-- JavaScript를 통해 옵션 추가 -->
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <div class="font-weight-bold">성별 :</div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="gender" id="male" value="남성">
+                                <label class="form-check-label" for="male">남성</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="gender" id="female" value="여성">
+                                <label class="form-check-label" for="female">여성</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" name="gender" id="other" value="기타" checked>
+                                <label class="form-check-label" for="other">기타</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-secondary" id="cancelEdit">취소</button>
+                        <button class="btn btn-outline-primary" id="saveProfile">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 내 이용권 -->
+    <div class="card mb-4">
+        <div class="card-header">내 이용권</div>
+        <div class="card-body tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="progress-ticket">진행</div>
+                <div class="tab" data-tab="completed-ticket">종료</div>
+            </div>
+            <div class="tab-content active" id="progress-ticket">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>사용횟수</th>
+                            <th>남은횟수</th>
+                            <th>시작날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#vouchers}}
+                            <tr>
+                                <td>{{voucherType}}</td>
+                                <td>{{count}}회</td>
+                                <td>{{remainingCount}}회</td>
+                                <td>{{paymentDate}}</td>
+                            </tr>
+                        {{/vouchers}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-content" id="completed-ticket">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>사용횟수</th>
+                            <th>남은횟수</th>
+                            <th>종료날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#vouchers}}
+                            <tr>
+                                <td>{{voucherType}}</td>
+                                <td>{{count}}회</td>
+                                <td>{{remainingCount}}회</td>
+                                <td></td>
+                            </tr>
+                        {{/vouchers}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 예약관리 -->
+    <div class="card">
+        <div class="card-header">예약관리</div>
+        <div class="card-body tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="progress-reservation">일정</div>
+                <div class="tab" data-tab="completed-reservation">내역</div>
+            </div>
+            <div class="tab-content active" id="progress-reservation">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>횟수</th>
+                            <th>시작시간</th>
+                            <th>상담날짜</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#progressReservations}}
+                            <tr>
+                                <td>{{voucherType}}</td>
+                                <td>{{count}}회차/{{voucherCount}}회권</td>
+                                <td>{{startTime}}</td>
+                                <td>{{reservationDate}}</td>
+                                <td>
+                                    <button class="btn btn-outline-warning btn-small">변경</button>
+                                    <button class="btn btn-outline-danger btn-small" onclick="cancelReservation({{id}})">취소</button>
+                                </td>
+                            </tr>
+                        {{/progressReservations}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-content" id="completed-reservation">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>이용권</th>
+                            <th>횟수</th>
+                            <th>시작시간</th>
+                            <th>상담날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#completedReservations}}
+                            <tr>
+                                <td>{{voucherType}}</td>
+                                <td>{{count}}회차/{{totalCount}}회권</td>
+                                <td>{{startTime}}</td>
+                                <td>{{reservationDate}}</td>
+                            </tr>
+                        {{/completedReservations}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 커뮤니티 나의 사연 -->
+    <div class="container mt-5 mb-5 user-mypage">
+        <div class="card">
+            <div class="card-header">내 커뮤니티 활동</div>
+            <div class="card-body">
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="my-stories">나의 사연</div>
+                        <div class="tab" data-tab="my-comments">나의 댓글</div>
+                        <div class="tab" data-tab="bookmark">북마크</div>
+                    </div>
+                    <div class="tab-content active" id="my-stories">
+                        {{#CommPosts}}
+                            <div class="user-mypage post" data-post-id="my-board">
+                                <div class="post-header">
+                                <span class="post-category">{{category}} ·
+                                    <img src="{{user.profileImage}}" alt="Profile Picture" class="post-profile-image">
+                                    <span class="username">{{name}}</span>
+                                </span>
+                                </div>
+                                <div class="post-body">
+                                    <h5 class="post-title">{{title}}</h5>
+                                    <p class="post-content">{{content}}</p>
+                                </div>
+                                <div class="post-footer">
+                                <span class="post-meta">
+                                    <span class="like-count">
+                                        <i class="far fa-heart like-btn"></i>
+                                        <span>0</span>
+                                    </span>
+                                    <span>
+                                        <i class="far fa-comment"></i>
+                                        <span>0</span>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        {{/CommPosts}}
+                    </div>
+                    <div class="tab-content" id="my-comments">
+                        <!-- 나의 댓글 콘텐츠 -->
+                        <!-- 데이터를 여기에 추가 -->
+                    </div>
+                    <div class="tab-content" id="bookmark">
+                        <!-- 북마크 콘텐츠 -->
+                        <!-- 데이터를 여기에 추가 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/model}}
 
 <script>
     $(document).ready(function () {
@@ -229,14 +335,14 @@
                     gender: gender,
                     profileImage: profileImageSrc // 이미지 URL
                 }),
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
                         alert(response.message);
                     } else {
                         alert('저장에 실패했습니다: ' + response.message);
                     }
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     let message = '저장에 실패했습니다.';
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         message += ' ' + xhr.responseJSON.message;
@@ -276,7 +382,7 @@
                 url: '/like', // 서버의 엔드포인트 URL
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({postId: postId, like: !isLiked}), // 좋아요 상태 전환
+                data: JSON.stringify({ postId: postId, like: !isLiked }), // 좋아요 상태 전환
                 success: function (response) {
                     if (response.success) {
                         // 서버 응답에서 새로운 좋아요 수를 받아와 업데이트
@@ -299,11 +405,30 @@
         alert('상담 일정을 변경합니다.');
     }
 
-    function cancelReservation() {
+    function cancelReservation(id) {
         // 상담 예약 취소 로직을 여기에 추가
         alert('상담 일정을 취소합니다.');
+        // 실제 예약 취소 로직을 여기에 추가
+        $.ajax({
+            url: `/reservations/${id}/cancel`,
+            type: 'POST',
+            success: function(response) {
+                if (response.success) {
+                    alert('예약이 취소되었습니다.');
+                    location.reload();  // 페이지 새로고침
+                } else {
+                    alert('예약 취소에 실패했습니다: ' + response.message);
+                }
+            },
+            error: function(xhr) {
+                let message = '예약 취소에 실패했습니다.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message += ' ' + xhr.responseJSON.message;
+                }
+                alert(message);
+            }
+        });
     }
-
 </script>
 
 {{> layout/footer}}

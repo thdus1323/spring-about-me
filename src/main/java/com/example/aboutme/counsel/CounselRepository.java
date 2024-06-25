@@ -11,6 +11,10 @@ import java.util.List;
 
 public interface CounselRepository extends JpaRepository<Counsel, Integer> {
 
+    //상담결과에 따른 데이터 가져오기
+    @Query("SELECT c FROM Counsel c WHERE c.client.id = :clientId AND c.state = :state")
+    List<Counsel> findByClientIdAndState(@Param("clientId") Integer clientId, @Param("state") StateEnum state);
+
     @Query("SELECT c FROM Counsel c WHERE c.counselDate = :counselDateAndTime")
     List<Counsel> findCounselsByDateAndTime(@Param("counselDateAndTime") LocalDateTime counselDateAndTime);
 
