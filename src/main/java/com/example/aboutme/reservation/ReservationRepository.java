@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
+    @Query("SELECT r FROM Reservation r WHERE r.client.id = :clientId")
+    List<Reservation> findByUserId(@Param("clientId") Integer clientId);
+
     //예약대기를 SCHEDULED(확정예정)로 업데이트 하기
     Optional<Reservation> findByVoucherIdAndStatus(Integer voucherId, ReservationStatus status);
 
@@ -19,4 +22,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     //전문가의 예약현황 확인
     List<Reservation> findByExpertId(Integer expertId);
+
+    //클라이언트의 예약현황 확인
+    List<Reservation> findByClientId(Integer clientId);
+
+
+
 }
