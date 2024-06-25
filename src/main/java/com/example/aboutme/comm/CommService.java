@@ -55,12 +55,12 @@ public class CommService {
         );
     }
 
-    public List<Comm> find() {
-        List<Comm> commList = commRepository.findAll();
-        List<Comm> replyList = commRepository.findByCommId(Integer commId);
-
-        return commOptional;
-    }
+//    public List<Comm> find() {
+//        List<Comm> commList = commRepository.findAll();
+//        List<Comm> replyList = commRepository.findByCommId(Integer commId);
+//
+//        return commOptional;
+//    }
 
     public Comm findById(Integer id) {
         Optional<Comm> commOptional = commRepository.findById(id);
