@@ -1,10 +1,10 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme._core.utils.RedisUtil;
-import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
 //import com.example.aboutme.user.oauth.KakaoOAuthService;
@@ -47,24 +47,6 @@ public class UserController {
             return "oauth/login";
         }
     }
-
-    //    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        SessionUser sessionUser = userService.loginByName(reqDTO);
-//        if (sessionUser == null) {
-//            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
-//        } else {
-//            redisTemp.opsForValue().set("sessionUser", sessionUser);
-//        }
-//
-//        if (sessionUser.getUserRole() == UserRole.CLIENT) {
-//            return "redirect:/";
-//        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-//            return "redirect:/experts/" + sessionUser.getId();
-//        } else {
-//            return "oauth/login";
-//        }
-//    }
 
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
@@ -181,6 +163,7 @@ public class UserController {
     // 클라이언트 메인페이지
     @GetMapping("/")
     public String index( Model model) {
+        model.addAttribute("sessionUser", redisUtil.getSessionUser());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
         return "client/main";
