@@ -1,8 +1,6 @@
 package com.example.aboutme.comm;
 
 import com.example.aboutme.comm.enums.CommCategory;
-import com.example.aboutme.counsel.Counsel;
-import com.example.aboutme.counsel.enums.StateEnum;
 import com.example.aboutme.user.UserResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +10,7 @@ import java.util.List;
 
 public interface CommRepository extends JpaRepository<Comm, Integer> {
 
-    
+
     //클라이언트 게시물 조회
     @Query("SELECT c FROM Comm c WHERE c.user.id = :userId")
     List<Comm> findByUserId(@Param("userId") Integer userId);
@@ -55,7 +53,6 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
                 JOIN c.replies r
             """)
     List<CommResponse.CommAndReplyDTO> findAllCommsWithReply();
-
 
 
 }
