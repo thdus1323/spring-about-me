@@ -22,13 +22,13 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ReviewDTORecord getExpertReview(Integer expertId,SessionUser sessionUser){
+    public ReviewDTORecord getExpertReview(SessionUser sessionUser){
         // 0. 인증
         if (sessionUser == null){
             throw new Exception403("인증되지 않은 유저입니다");
         }
         // 1.리뷰 리스트 찾기
-        User user = userRepository.findById(expertId).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
+        User user = userRepository.findById(sessionUser.getId()).orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다"));
 
         List<ReviewRecord> reviews = reviewRepository.findByExpertId(user.getId()).stream().map(review -> {
             // 2. 유저정보 넣기

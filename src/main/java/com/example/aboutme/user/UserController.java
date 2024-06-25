@@ -1,75 +1,57 @@
 package com.example.aboutme.user;
 
-import com.example.aboutme._core.config.RedisConfig;
-import com.example.aboutme.comm.CommService;
-import com.example.aboutme.user.UserResponseDTO.ClientMainDTO.ClientMainDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertFindDetailDTO.DetailDTORecord;
-import com.example.aboutme.user.UserResponseDTO.ExpertMainDTO.ExpertMainDTORecord;
-import com.example.aboutme.user.UserResponseDTO.expertFindDTO.FindWrapperRecord;
+import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
 //import com.example.aboutme.user.oauth.KakaoOAuthService;
 //import com.example.aboutme.user.oauth.NaverOAuthService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final UserService userService;
-    private final RedisTemplate<String, Object> redisTemp;
-//    private final KakaoOAuthService kakaoOAuthService;
-//    private final NaverOAuthService naverOAuthService;
+    private final RedisUtil redisUtil;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemp;
 
     @PostMapping("/login")
-    public String login(UserRequest.LoginDTO reqDTO) {
+    public String login(UserRequest.LoginDTO reqDTO, Model model, RedirectAttributes redirectAttributes) {
         SessionUser sessionUser = userService.loginByName(reqDTO);
         if (sessionUser == null) {
             throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
         } else {
-            redisTemp.opsForValue().set("sessionUser", sessionUser);
+            // 세션 데이터를 저장
+            redisUtil.saveSessionUser(sessionUser);
         }
 
+        // 모델에 세션 데이터를 추가
         if (sessionUser.getUserRole() == UserRole.CLIENT) {
             return "redirect:/";
         } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-            return "redirect:/experts/" + sessionUser.getId();
+            return "redirect:/experts";
         } else {
             return "oauth/login";
         }
     }
 
-    //    @PostMapping("/login")
-//    public String login(UserRequest.LoginDTO reqDTO) {
-//        SessionUser sessionUser = userService.loginByName(reqDTO);
-//        if (sessionUser == null) {
-//            throw new RuntimeException("아이디 혹은 패스워드가 틀렸습니다.");
-//        } else {
-//            redisTemp.opsForValue().set("sessionUser", sessionUser);
-//        }
-//
-//        if (sessionUser.getUserRole() == UserRole.CLIENT) {
-//            return "redirect:/";
-//        } else if (sessionUser.getUserRole() == UserRole.EXPERT) {
-//            return "redirect:/experts/" + sessionUser.getId();
-//        } else {
-//            return "oauth/login";
-//        }
-//    }
-
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
-        System.out.println("sessionUser = " + sessionUser);
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        log.info("SessionUser: " + sessionUser);
         return "redis test";
     }
 
@@ -95,7 +77,7 @@ public class UserController {
     @PostMapping("/setUserRole")
     @ResponseBody
     public void setUserRole(@RequestParam("userRole") String userRoleStr) {
-        redisTemp.opsForValue().set("userRole", userRoleStr);
+        redisUtil.saveUserRole(userRoleStr);
     }
 
     @GetMapping("/oauth/callback/kakao")
@@ -153,11 +135,9 @@ public class UserController {
 //    }
 
 
-
-
     @GetMapping("/logout")
     public String logout() {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser != null) {
             redisTemp.delete("sessionUser");
             redisTemp.delete("userRole");
@@ -182,19 +162,20 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
     @GetMapping("/")
-    public String index(Model model) {
+    public String index( Model model) {
+        model.addAttribute("sessionUser", redisUtil.getSessionUser());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
-
         return "client/main";
     }
 
-    // 익스퍼트 메인페이지
-    @GetMapping("/experts/{expertId}")
-    public String expertMain(Model model, @PathVariable("expertId") Integer expertId) {
-        ExpertMainDTORecord expertMain = userService.getExpertMain(expertId);
-        model.addAttribute("expertMain", expertMain);
 
+    // 익스퍼트 메인페이지
+    @GetMapping("/experts")
+    public String expertMain(Model model) {
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
+        model.addAttribute("expertMain", expertMain);
         return "expert/main";
     }
 
@@ -224,7 +205,7 @@ public class UserController {
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
     public String clientMypage() {
-        SessionUser sessionUser = (SessionUser) redisTemp.opsForValue().get("sessionUser");
+        SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser == null) {
             return "oauth/login";
         } else {
