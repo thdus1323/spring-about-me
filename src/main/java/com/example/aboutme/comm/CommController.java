@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -41,18 +42,18 @@ public class CommController {
     }
 
     @GetMapping("/comm")
-    public String community(HttpServletRequest request) {
+    public @ResponseBody List<CommResponse.CommAndReplyDTO> community(HttpServletRequest request) {
 
 
-        List<CommResponse.CommAndReplyDTO> commsWithReplyList = commService.findAllCommsWithReply();
+        List<CommResponse.CommAndReplyDTO> commsWithReplyList = commService.findAllCommWithReply();
 
 
         // 필터링 예시: 고유한 Comm에 대해 하나의 DTO만 추가하기
-        CommResponse.UniqueCommAndReplyDTOFilter filter = new CommResponse.UniqueCommAndReplyDTOFilter();
-        List<CommResponse.CommAndReplyDTO> filteredList = filter.filterUnique(commsWithReplyList);
+//        CommResponse.UniqueCommAndReplyDTOFilter filter = new CommResponse.UniqueCommAndReplyDTOFilter();
+//        List<CommResponse.CommAndReplyDTO> filteredList = filter.filterUnique(commsWithReplyList);
 
-        request.setAttribute("filteredList", filteredList);
+//        request.setAttribute("filteredList", filteredList);
 
-        return "comm/comm-main";
+        return commsWithReplyList;
     }
 }
