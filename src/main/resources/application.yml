@@ -33,6 +33,7 @@ spring:
       data-locations:
         - classpath:db/data.sql
         - classpath:db/payment_data.sql
+        - classpath:db/reservation_data.sql
       schema-locations:
   jpa:
     hibernate:

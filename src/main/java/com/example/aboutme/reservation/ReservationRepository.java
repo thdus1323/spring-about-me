@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+    //이용권 조회
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.voucher.id = :voucherId AND r.status = :status")
+    Integer countByVoucherIdAndStatus(@Param("voucherId") Integer voucherId, @Param("status") ReservationStatus status);
+
 
     @Query("SELECT r FROM Reservation r WHERE r.client.id = :clientId")
     List<Reservation> findByUserId(@Param("clientId") Integer clientId);
