@@ -75,6 +75,7 @@ public class ReservationService {
     //    결제 전까지 예약 임시 저장
     @Transactional
     public Reservation createTempReservation(ReservationTempRepDTO reqDTO, SessionUser sessionUser) {
+
         User client = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception400("고객을 찾을 수 없습니다."));
         User expert = userRepository.findById(reqDTO.expertId())
