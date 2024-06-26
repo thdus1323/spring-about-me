@@ -32,8 +32,12 @@ spring:
       mode: always
       data-locations:
         - classpath:db/data.sql
-        - classpath:db/payment_data.sql
+        - classpath:db/schedule_data.sql
+        - classpath:db/voucher_data.sql
         - classpath:db/reservation_data.sql
+        - classpath:db/payment_data.sql
+        - classpath:db/counsel_data.sql
+        - classpath:db/review_data.sql
       schema-locations:
   jpa:
     hibernate:

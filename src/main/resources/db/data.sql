@@ -76,85 +76,42 @@ VALUES ('EXPERT', 'expert1@nate.com', '1234', '홍길동', '01012345678', '/imag
         '괜찮지 않은 그 순간, 온 마음으로 당신의 곁에 있겠습니다.', NOW(), NOW());
 
 
--- voucher_tb 테이블에 데이터 추가
-INSERT INTO voucher_tb (id, voucher_type, expert_id, price, count, duration, image_path,  created_at,
-                        updated_at)
-VALUES
-    -- Expert 1 has 3 voucher types
-    (1, 'TEXT_THERAPY', 21, 10000, 1, 60, '/images/chat.png', NOW(), NOW()),
-    (2, 'VOICE_THERAPY', 21, 15000, 1, 30, '/images/call.png',NOW(), NOW()),
-    (3, 'VIDEO_THERAPY', 21, 20000, 1, 45, '/images/video.png', NOW(), NOW()),
 
-    -- Expert 2 has 2 voucher types
-    (4, 'TEXT_THERAPY', 22, 10000, 1, 60, '/images/chat.png',  NOW(), NOW()),
-    (5, 'VOICE_THERAPY', 22, 15000, 1, 30, '/images/call.png',  NOW(), NOW()),
-
-    -- Expert 3 has 1 voucher type
-    (6, 'VIDEO_THERAPY', 23, 20000, 1, 45, '/images/video.png', NOW(), NOW()),
-
-    -- Expert 4 has 2 voucher types
-    (7, 'TEXT_THERAPY', 24, 10000, 1, 60, '/images/chat.png',  NOW(), NOW()),
-    (8, 'VIDEO_THERAPY', 24, 20000, 1, 45, '/images/video.png',  NOW(), NOW()),
-
-    -- Expert 5 has 3 voucher types
-    (9, 'TEXT_THERAPY', 25, 10000, 1, 60, '/images/chat.png',  NOW(), NOW()),
-    (10, 'VOICE_THERAPY', 25, 15000, 1, 30, '/images/call.png',  NOW(), NOW()),
-    (11, 'VIDEO_THERAPY', 25, 20000, 1, 45, '/images/video.png',  NOW(), NOW()),
-
-    -- Expert 6 has 1 voucher type
-    (12, 'TEXT_THERAPY', 26, 10000, 1, 60, '/images/chat.png',  NOW(), NOW()),
-
-    -- Expert 7 has 2 voucher types
-    (13, 'VOICE_THERAPY', 27, 15000, 1, 30, '/images/call.png',  NOW(), NOW()),
-    (14, 'VIDEO_THERAPY', 27, 20000, 1, 45, '/images/video.png',  NOW(), NOW()),
-
-    -- Expert 8 has 3 voucher types
-    (15, 'TEXT_THERAPY', 28, 10000, 1, 60, '/images/chat.png',  NOW(), NOW()),
-    (16, 'VOICE_THERAPY', 28, 15000, 1, 30, '/images/call.png',  NOW(), NOW()),
-    (17, 'VIDEO_THERAPY', 28, 20000, 1, 45, '/images/video.png',  NOW(), NOW()),
-
-    -- Expert 9 has 2 voucher types
-    (18, 'TEXT_THERAPY', 29, 10000, 1, 60, '/images/chat.png', NOW(), NOW()),
-    (19, 'VOICE_THERAPY', 29, 15000, 1, 30, '/images/call.png',  NOW(), NOW()),
-
-    -- Expert 10 has 1 voucher type
-    (20, 'VIDEO_THERAPY', 30, 20000, 1, 45, '/images/video.png',NOW(), NOW());
-
-
--- voucher_history_tb
-INSERT INTO voucher_history_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
-                                start_date, end_date, is_active, image_path, created_at, updated_at)
-VALUES
-    -- Expert 1
-    (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (21, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    (21, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
-    -- Expert 2
-    (22, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (22, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    -- Expert 3
-    (23, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
-    -- Expert 4
-    (24, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (24, 8, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
-    -- Expert 5
-    (25, 9, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (25, 10, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    (25, 11, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
-    -- Expert 6
-    (26, 12, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    -- Expert 7
-    (27, 13, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    (27, 14, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
-    -- Expert 8
-    (28, 15, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (28, 16, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    (28, 17, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
-    -- Expert 9
-    (29, 18, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
-    (29, 19, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
-    -- Expert 10
-    (30, 20, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW());
+--
+-- -- voucher_history_tb
+-- INSERT INTO voucher_history_tb (expert_id, client_id, reservation_id, voucher_type, price, count, duration, discount,
+--                                 start_date, end_date, is_active, image_path, created_at, updated_at)
+-- VALUES
+--     -- Expert 1
+--     (21, 1, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     (21, 2, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+--     (21, 3, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+--     -- Expert 2
+--     (22, 4, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     (22, 5, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+--     -- Expert 3
+--     (23, 6, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+--     -- Expert 4
+--     (24, 7, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     (24, 8, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+--     -- Expert 5
+--     (25, 9, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     (25, 10, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+--     (25, 11, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+--     -- Expert 6
+--     (26, 12, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     -- Expert 7
+--     (27, 13, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+--     (27, 14, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+--     -- Expert 8
+--     (28, 15, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     (28, 16, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+--     (28, 17, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW()),
+--     -- Expert 9
+--     (29, 18, NULL, 'TEXT_THERAPY', 10000, 1, 60, 0.1, NOW(), NULL, TRUE, '/images/chat.png', NOW(), NOW()),
+--     (29, 19, NULL, 'VOICE_THERAPY', 15000, 1, 30, 0.2, NOW(), NULL, TRUE, '/images/call.png', NOW(), NOW()),
+--     -- Expert 10
+--     (30, 20, NULL, 'VIDEO_THERAPY', 20000, 1, 45, 0.15, NOW(), NULL, TRUE, '/images/video.png', NOW(), NOW());
 
 
 -- comm_tb
@@ -365,94 +322,6 @@ VALUES
     ('CAREER', '전 이화여자대학교병원 놀이치료사', 30),
     ('EDUCATION', '이화여자대학교 놀이치료학 석사 졸업', 30);
 
--- counsel_tb
-INSERT INTO counsel_tb (id, client_id, expert_id, voucher_id, counsel_date, state, created_at, updated_at)
-VALUES (1, 1, 21, 1, '2024-06-20 10:00:00', 'PENDING', NOW(), NOW()),
-       (2, 2, 22, 2, '2024-06-21 10:00:00', 'PENDING', NOW(), NOW()),
-       (3, 3, 23, 6, '2024-06-22 10:00:00', 'PENDING', NOW(), NOW()),
-       (4, 4, 24, 7, '2024-06-23 10:00:00', 'PENDING', NOW(), NOW()),
-       (5, 5, 25, 9, '2024-06-24 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (6, 6, 26, 12, '2024-06-25 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (7, 7, 27, 13, '2024-06-26 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (8, 8, 28, 15, '2024-06-27 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (9, 9, 29, 18, '2024-06-28 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (10, 10, 30, 20, '2024-06-29 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (11, 11, 21, 1, '2024-06-30 10:00:00', 'PENDING', NOW(), NOW()),
-       (12, 12, 22, 4, '2024-07-01 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (13, 13, 23, 6, '2024-07-02 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (14, 14, 24, 7, '2024-07-03 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (15, 15, 25, 9, '2024-07-04 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (16, 16, 26, 12, '2024-07-05 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (17, 17, 27, 13, '2024-07-06 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (18, 18, 28, 15, '2024-07-07 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (19, 19, 29, 18, '2024-07-08 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (20, 20, 30, 20, '2024-07-09 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (21, 21, 21, 1, '2024-07-10 10:00:00', 'PENDING', NOW(), NOW()),
-       (22, 22, 22, 4, '2024-07-11 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (23, 23, 23, 6, '2024-07-12 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (24, 24, 24, 7, '2024-07-13 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (25, 25, 25, 9, '2024-07-14 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (26, 26, 26, 12, '2024-07-15 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (27, 27, 27, 13, '2024-07-16 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (28, 28, 28, 15, '2024-07-17 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (29, 29, 29, 18, '2024-07-18 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (30, 1, 24, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (31, 2, 22, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (32, 3, 23, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (33, 4, 21, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (34, 5, 25, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (35, 6, 27, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW()),
-       (36, 22, 29, 20, '2024-07-19 10:00:00', 'COMPLETED', NOW(), NOW());
-
--- review_tb
-INSERT INTO review_tb (user_id, counsel_id, score, content, created_at, updated_at)
-VALUES (1, 1, 4.5, '상담사가 매우 친절하고 도움이 많이 되었습니다.', NOW(), NOW()),
-       (2, 2, 4.5, '상담 내용이 정말 유익했고, 큰 도움이 되었습니다.', NOW(), NOW()),
-       (3, 3, 4.5, '친절하고 세심하게 상담해주셔서 감사했습니다.', NOW(), NOW()),
-       (4, 4, 5.0, '상담사가 문제를 잘 이해해주고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (5, 5, 4.0, '상담 후 마음이 많이 편안해졌습니다. 감사합니다.', NOW(), NOW()),
-       (6, 6, 4.0, '상담 시간이 짧아서 아쉬웠지만, 유익했습니다.', NOW(), NOW()),
-       (7, 7, 5.0, '상담사가 제 고민을 잘 들어주었고, 조언도 좋았습니다.', NOW(), NOW()),
-       (8, 8, 4.5, '상담이 매우 도움이 되었고, 다음에도 이용하고 싶습니다.', NOW(), NOW()),
-       (9, 9, 4.0, '상담사가 전문적이고 친절해서 좋았습니다.', NOW(), NOW()),
-       (10, 10, 4.5, '상담이 끝난 후 많은 도움이 되었습니다.', NOW(), NOW()),
-       (11, 11, 5.0, '상담을 통해 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
-       (12, 12, 4.0, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
-       (13, 13, 4.0, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
-       (14, 14, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (15, 15, 5.0, '상담 후 마음이 많이 편안해졌습니다.', NOW(), NOW()),
-       (16, 16, 4.5, '상담 시간 동안 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
-       (17, 17, 4.5, '상담사가 제 고민을 잘 들어주고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (18, 18, 4.0, '상담이 매우 유익했고, 큰 도움이 되었습니다.', NOW(), NOW()),
-       (19, 19, 4.0, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
-       (20, 20, 4.5, '상담사가 문제를 잘 이해하고 해결책을 제시해주었습니다.', NOW(), NOW()),
-       (21, 21, 4.0, '상담 후 마음이 많이 편안해졌습니다.', NOW(), NOW()),
-       (22, 22, 5.0, '상담 시간이 짧아서 아쉬웠지만, 유익했습니다.', NOW(), NOW()),
-       (23, 23, 4.5, '상담사가 제 고민을 잘 들어주었고, 조언도 좋았습니다.', NOW(), NOW()),
-       (24, 24, 5.0, '상담이 매우 도움이 되었고, 다음에도 이용하고 싶습니다.', NOW(), NOW()),
-       (25, 25, 4.0, '상담사가 전문적이고 친절해서 좋았습니다.', NOW(), NOW()),
-       (26, 26, 4.5, '상담이 끝난 후 많은 도움이 되었습니다.', NOW(), NOW()),
-       (27, 27, 4.0, '상담을 통해 많은 것을 배울 수 있었습니다.', NOW(), NOW()),
-       (28, 28, 4.5, '친절하고 전문적인 상담 감사합니다.', NOW(), NOW()),
-       (29, 29, 5.0, '상담이 매우 유익하고 도움이 많이 되었습니다.', NOW(), NOW()),
-       (30, 30, 4.5, '상담사가 문제를 잘 파악하고 해결책을 제시해주었습니다.', NOW(), NOW());
-
-
--- 스케줄 테이블
-INSERT INTO schedule_tb (expert_id, day_of_week, start_time, end_time, created_at, updated_at)
-VALUES
-    -- 21번 스케줄: 주중 근무 시간
-    (21, 'MONDAY', '09:00', '18:00', NOW(), NOW()),
-    (21, 'TUESDAY', '09:00', '18:00', NOW(), NOW()),
-    (21, 'WEDNESDAY', '09:00', '18:00', NOW(), NOW()),
-    (21, 'THURSDAY', '09:00', '18:00', NOW(), NOW()),
-    (21, 'FRIDAY', '09:00', '18:00', NOW(), NOW()),
-
-    -- 22번 스케줄: 월요일만 근무 시간
-    (22, 'MONDAY', '10:00', '17:00', NOW(), NOW()),
-
-    -- 24번 스케줄: 수요일만 근무 시간
-    (24, 'WEDNESDAY', '10:00', '14:00', NOW(), NOW());
 
 
 
