@@ -31,6 +31,7 @@ public record UserProfileDTO(
             String voucherType,
             Integer clientId,
             Integer expertId,
+            Integer voucherId,
             String paymentMethod,
             String price,
             Integer count,

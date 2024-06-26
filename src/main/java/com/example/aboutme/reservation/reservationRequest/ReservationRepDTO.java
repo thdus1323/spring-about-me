@@ -1,6 +1,6 @@
 package com.example.aboutme.reservation.reservationRequest;
 
-public record ReservationTempRepDTO(
+public record ReservationRepDTO(
         String reservationDate,
         String dayOfWeek,
         String startTime,
