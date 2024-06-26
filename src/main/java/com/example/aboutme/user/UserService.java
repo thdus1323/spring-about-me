@@ -89,15 +89,13 @@ public class UserService {
                     Voucher v = payment.getVoucher();
                     //상담 완료 횟수
                     Integer counselCount = counselRepository.findByClientIdAndStateCount(sessionUser.getId(), CounselStateEnum.COMPLETED);
-
-
-
                     Integer reservationCount = counselCount + 1;
                     Integer remainingCount = v.getCount() - counselCount;
                     return UserProfileDTO.PaymentDTO.builder()
                             .id(payment.getId())
                             .voucherType(v.getVoucherType().getKorean())
                             .expertId(v.getExpert().getId())
+                            .clientId(payment.getClient().getId())
                             .paymentMethod(payment.getPaymentMethod().getKorean())
                             .price(Formatter.number((int) v.getPrice()))
                             .count(v.getCount())
@@ -159,11 +157,10 @@ public class UserService {
                             .updatedAt(c.getUpdatedAt().toString())
                             .voucherType(v.getVoucherType().getKorean())
                             .voucherCount(v.getCount()) // 상담 완료 횟수
-                            .useCount(useCount+1)
+                            .useCount(useCount + 1)
                             .build();
                 })
                 .collect(Collectors.toList());
-
 
 
         List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
