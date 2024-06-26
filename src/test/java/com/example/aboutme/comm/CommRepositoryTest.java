@@ -14,7 +14,7 @@ class CommRepositoryTest {
 
     @Test
     void findAllCommsWithReply() {
-        List<CommResponse.CommAndReplyDTO> commAndReplyDTOS = commRepository.findAllCommsWithReply();
+        List<CommResponse.CommWithRepliesDTO> commAndReplyDTOS = commRepository.findAllCommWithReplies();
         commAndReplyDTOS.forEach(commAndReplyDTO -> System.out.println("commAndReplyDTO = " + commAndReplyDTO));
     }
 }
