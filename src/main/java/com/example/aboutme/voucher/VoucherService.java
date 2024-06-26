@@ -20,7 +20,6 @@ public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final UserRepository userRepository;
-    private final Formatter formatMapper;
 
 
     //바우처 목록과 최저 가격
@@ -29,14 +28,14 @@ public class VoucherService {
         VoucherUserRecord voucherUserRecord = new VoucherUserRecord(user.getId(), user.getName(), user.getLevel().getKorean(), user.getProfileImage());
 
         double price = voucherRepository.findLowestPriceByExpertId(expertId);
-        String lowestPrice = formatMapper.number((int) price); // 포맷터에서 가격을 포맷��
+        String lowestPrice = Formatter.number((int) price); // 포맷터에서 가격을 포맷��
 
         List<VoucherRecord> vouchers = voucherRepository.findByExpertId(expertId)
                 .stream()
                 .map(v -> new VoucherRecord(
                         v.getVoucherType(),
                         v.getId(),
-                        formatMapper.number((int) v.getPrice()),
+                        Formatter.number((int) v.getPrice()),
                         v.getCount(),
                         v.getDuration(),
                         v.getImagePath()
