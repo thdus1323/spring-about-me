@@ -6,18 +6,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CounselRepository extends JpaRepository<Counsel, Integer> {
 
+    //상담과 예약 횟수를 계산해서 카운트하기
+    @Query(value = "SELECT (SELECT count(*) FROM COUNSEL_TB WHERE client_id = :clientId AND state = 'COMPLETED') + " +
+            "(SELECT count(*) FROM RESERVATION_TB WHERE client_id = :clientId AND voucher_id = :voucherId AND RESERVATION_DATE <= :endDate) AS total_count",
+            nativeQuery = true)
+    Integer getTotalCount(@Param("clientId") Integer clientId, @Param("voucherId") Integer voucherId, @Param("endDate") String endDate);
 
-    @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId AND c.voucher.id = :voucherId AND c.counselDate < :counselDate")
+
+    //상담의
+    @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId AND c.voucher.id = :voucherId AND c.counselDate <= :counselDate")
     Integer countByClientIdAndVoucherIdAndBeforeDate(@Param("clientId") Integer clientId, @Param("voucherId") Integer voucherId, @Param("counselDate") LocalDateTime counselDate);
 
-
-    @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId AND c.voucher.id = :voucherId AND c.state = com.example.aboutme.counsel.enums.CounselStateEnum.COMPLETED")
+    //상담완료 횟수 가져오는 쿼리
+    @Query("SELECT COUNT(c) FROM Counsel c WHERE c.client.id = :clientId AND c.voucher.id = :voucherId AND c.state = 'COMPLETED'")
     Integer countCompletedCounselsByClientIdAndVoucherId(@Param("clientId") Integer clientId, @Param("voucherId") Integer voucherId);
 
     //상담결과에 따른 데이터 가져오기

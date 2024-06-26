@@ -5,21 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
 
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.client.id = :clientId AND r.voucher.id = :voucherId AND r.id <= :reservationId AND (r.status = com.example.aboutme.reservation.enums.ReservationStatus.SCHEDULED OR r.status = com.example.aboutme.reservation.enums.ReservationStatus.COMPLETED)")
+    Integer countReservationsBeforeDate(@Param("clientId") Integer clientId, @Param("voucherId") Integer voucherId, @Param("reservationId") Integer reservationId);
 
 
-    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.client.id = :clientId AND r.voucher.id = :voucherId AND r.reservationDate < :reservationDate AND (r.status = com.example.aboutme.reservation.enums.ReservationStatus.SCHEDULED OR r.status = com.example.aboutme.reservation.enums.ReservationStatus.COMPLETED)")
-    Integer countReservationsBeforeDate(@Param("clientId") Integer clientId, @Param("voucherId") Integer voucherId, @Param("reservationDate") String reservationDate);
-
-
-
-//이용권 조회
+    //이용권 조회
     @Query("SELECT COUNT(r) FROM Reservation r WHERE r.voucher.id = :voucherId AND r.status = :status")
     Integer countByVoucherIdAndStatus(@Param("voucherId") Integer voucherId, @Param("status") ReservationStatus status);
 
@@ -39,7 +35,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     //클라이언트의 예약현황 확인
     List<Reservation> findByClientId(Integer clientId);
-
 
 
 }
