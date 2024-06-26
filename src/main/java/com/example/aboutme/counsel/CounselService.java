@@ -4,7 +4,7 @@ import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.CounselDTORecord;
 import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.UserRecord;
-import com.example.aboutme.counsel.enums.StateEnum;
+import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
@@ -48,7 +48,7 @@ public class CounselService {
             Integer voucherTotal = counselRepository.countAllByClientId(user.getId());
 
             // 5. Vocher 남은 카운트찾기
-            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), StateEnum.PENDING);
+            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), CounselStateEnum.PENDING);
 
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
@@ -67,7 +67,7 @@ public class CounselService {
         }).collect(Collectors.toList());
 
         // 최종적으로 CounselDTORecord를 반환
-        return new CounselDTORecord(expert.getId(),expert.getProfileImage(),userRecords);
+        return new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecords);
     }
 
 }

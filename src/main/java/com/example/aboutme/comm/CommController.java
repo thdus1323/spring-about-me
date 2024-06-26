@@ -1,6 +1,9 @@
 package com.example.aboutme.comm;
 
+import com.example.aboutme.user.User;
+import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

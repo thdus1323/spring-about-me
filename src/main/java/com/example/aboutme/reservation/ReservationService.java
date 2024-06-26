@@ -31,7 +31,6 @@ public class ReservationService {
     private final UserRepository userRepository;
     private final VoucherRepository voucherRepository;
     private final ScheduleRepository scheduleRepository;
-    private final Formatter formatter;
 
 
     public PaymentDetailsDTO getTempReservation(Integer reservationId) {
@@ -49,7 +48,7 @@ public class ReservationService {
                 .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
         log.info("Voucher found: {}", voucher);
 
-        String formattedPrice = formatter.number((int) voucher.getPrice());
+        String formattedPrice = Formatter.number((int) voucher.getPrice());
         log.info("Formatted price: {}", formattedPrice);
 
         PaymentDetailsDTO.VoucherDTO voucherDTO = new PaymentDetailsDTO.VoucherDTO(
@@ -112,7 +111,7 @@ public class ReservationService {
         User user = userRepository.findById(expertId).orElseThrow(() -> new Exception400("해당하는 전문가를 찾을 수 없습니다."));
 
         // 가격 포맷
-        String formattedPrice = formatter.number((int) voucher.getPrice());
+        String formattedPrice = Formatter.number((int) voucher.getPrice());
 
         // 엔티티를 DTO로 변환
         ReservationDetailsDTO.VoucherDTO voucherDTO = new ReservationDetailsDTO.VoucherDTO(
