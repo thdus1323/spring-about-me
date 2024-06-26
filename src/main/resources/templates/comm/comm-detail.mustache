@@ -237,7 +237,7 @@
 
     // 전문가 댓글 달기 창 열기
     function openNewWindow(id) {
-        fetch(`/comm-detail/${id}/has-expert-reply`)
+        fetch(`/api/comm-detail/${id}/has-expert-reply`)
                 .then(response => response.json())
                 .then(data => {
                     if (data) {
@@ -254,7 +254,6 @@
                 });
     }
 
-    // TODO : 하자
     // 일반인 댓글 달기
     function clientReplyAction(id) {
         const content = document.getElementById('commentContent').value;

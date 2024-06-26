@@ -66,8 +66,8 @@ public class CommService {
         return comm;
     }
 
-    // 전문답변이 있는지 확인하는 메서드 추가
-    @Transactional
+    // 전문답변이 있는지 확인
+    @Transactional(readOnly = true)
     public boolean hasExpertReply(Integer id) {
         Optional<Comm> optionalComm = commRepository.findById(id);
         return optionalComm.map(comm -> comm.getReplies().stream()
