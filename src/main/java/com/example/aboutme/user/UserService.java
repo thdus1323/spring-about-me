@@ -87,8 +87,13 @@ public class UserService {
         List<UserProfileDTO.PaymentDTO> payments = paymentRepository.findByClientId(sessionUser.getId()).stream()
                 .map(payment -> {
                     Voucher v = payment.getVoucher();
-                    Integer usedCount = reservationRepository.countByVoucherIdAndStatus(v.getId(), ReservationStatus.COMPLETED);
-                    Integer remainingCount = v.getCount() - usedCount;
+                    //상담 완료 횟수
+                    Integer counselCount = counselRepository.findByClientIdAndStateCount(sessionUser.getId(), CounselStateEnum.COMPLETED);
+
+
+
+                    Integer reservationCount = counselCount + 1;
+                    Integer remainingCount = v.getCount() - counselCount;
                     return UserProfileDTO.PaymentDTO.builder()
                             .id(payment.getId())
                             .voucherType(v.getVoucherType().getKorean())
@@ -96,7 +101,8 @@ public class UserService {
                             .paymentMethod(payment.getPaymentMethod().getKorean())
                             .price(Formatter.number((int) v.getPrice()))
                             .count(v.getCount())
-                            .remainingCount(remainingCount)  // 계산된 필드
+                            .remainingCount(remainingCount)  // 남은횟수
+                            .counselCount(counselCount) // 상담완료 횟수
                             .duration(v.getDuration())
                             .createdAt(Formatter.formatTimestamp(v.getCreatedAt()))
                             .updatedAt(Formatter.formatTimestamp(v.getUpdatedAt()))
@@ -106,45 +112,66 @@ public class UserService {
                 })
                 .collect(Collectors.toList());
 
+
         List<UserProfileDTO.ReservationDTO> progressReservations = new ArrayList<>();
-        List<UserProfileDTO.ReservationDTO> cancelReservations = new ArrayList<>();
 
-        reservationRepository.findByClientIdOrderByIdDesc(sessionUser.getId()).stream()
-                .forEach(r -> {
-                    Voucher v = r.getVoucher();
-                    Integer usedCount = counselRepository.findByClientIdAndState(sessionUser.getId(), CounselStateEnum.COMPLETED);
-                    Integer remainingCount = v.getCount() - usedCount;
-                    UserProfileDTO.ReservationDTO reservationDTO = UserProfileDTO.ReservationDTO.builder()
-                            .id(r.getId())
-                            .expertId(r.getExpert().getId())
-                            .clientId(r.getClient().getId())
-                            .voucherId(r.getVoucher().getId())
-                            .scheduleId(r.getSchedule().getId())
-                            .status(r.getStatus().getKorean())
-                            .startTime(r.getStartTime().toString())
-                            .reservationDate(r.getReservationDate().toString())
-                            .dayOfWeek(r.getDayOfWeek().toString())
-                            .createdAt(r.getCreatedAt())
-                            .updatedAt(r.getUpdatedAt())
+        reservationRepository.findByClientId(sessionUser.getId()).forEach(r -> {
+            Voucher v = r.getVoucher();
+            Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(sessionUser.getId(), v.getId());
+            Integer reservationCount = reservationRepository.countReservationsBeforeDate(sessionUser.getId(), v.getId(), r.getReservationDate());
+
+            UserProfileDTO.ReservationDTO reservationDTO = UserProfileDTO.ReservationDTO.builder()
+                    .id(r.getId())
+                    .expertId(r.getExpert().getId())
+                    .clientId(r.getClient().getId())
+                    .voucherId(r.getVoucher().getId())
+                    .scheduleId(r.getSchedule().getId())
+                    .status(r.getStatus().getKorean())
+                    .startTime(r.getStartTime())
+                    .reservationDate(r.getReservationDate())
+                    .dayOfWeek(r.getDayOfWeek())
+                    .createdAt(r.getCreatedAt())
+                    .updatedAt(r.getUpdatedAt())
+                    .voucherType(v.getVoucherType().getKorean())
+                    .voucherCount(v.getCount())
+                    .reservationCount(usedCount + 1) // 예약 횟수
+                    .build();
+
+            if (r.getStatus() == ReservationStatus.SCHEDULED || r.getStatus() == ReservationStatus.COMPLETED) {
+                progressReservations.add(reservationDTO);
+            }
+        });
+
+        List<UserProfileDTO.CounselDTO> completedCounsels = counselRepository.findByClientIdAndState(sessionUser.getId(), CounselStateEnum.COMPLETED).stream()
+                .map(c -> {
+                    Voucher v = c.getVoucher();
+                    Integer useCount = counselRepository
+                            .countByClientIdAndVoucherIdAndBeforeDate(sessionUser.getId(), v.getId(), c.getCounselDate());
+                    Integer counselCount = counselRepository.findByClientIdAndStateCount(sessionUser.getId(), CounselStateEnum.COMPLETED);
+                    return UserProfileDTO.CounselDTO.builder()
+                            .id(c.getId())
+                            .expertId(c.getExpert().getId())
+                            .clientId(c.getClient().getId())
+                            .voucherId(c.getVoucher().getId())
+                            .counselDate(Formatter.formatDate(c.getCounselDate()))
+                            .state(c.getState().toString())
+                            .createdAt(c.getCreatedAt().toString())
+                            .updatedAt(c.getUpdatedAt().toString())
                             .voucherType(v.getVoucherType().getKorean())
-                            .voucherCount(v.getCount())
-                            .count(usedCount)
-                            .remainingCount(remainingCount)
+                            .voucherCount(v.getCount()) // 상담 완료 횟수
+                            .useCount(useCount+1)
                             .build();
+                })
+                .collect(Collectors.toList());
 
-                    if (r.getStatus() == ReservationStatus.SCHEDULED || r.getStatus() == ReservationStatus.COMPLETED) {
-                        progressReservations.add(reservationDTO);
-                    }
-                    if (r.getStatus() == ReservationStatus.CANCELLED) {
-                        cancelReservations.add(reservationDTO);
-                    }
-                });
+
+
         List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
                 .map(c -> new UserProfileDTO.Comm(
                         c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
                 .collect(Collectors.toList());
 
-        return new UserProfileDTO(userProfile, payments, progressReservations, cancelReservations, commPosts);
+        return new UserProfileDTO(userProfile, payments, progressReservations, completedCounsels, commPosts);
     }
 //    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
 //        User user = userRepository.findById(sessionUser.getId())
