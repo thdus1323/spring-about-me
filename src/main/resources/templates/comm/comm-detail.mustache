@@ -158,27 +158,25 @@
                     <br>
                     <h3 class="page-title mb-20">{{comm.commDTO.category}}의 다른 글 살펴보기</h3>
                     <!-- 다른 글 -->
-                    {{#comm}}
+                    {{#comm.relatedComms}}
                         <div class="c-card">
                             <div class="c-card-body detail">
-                                <a href="/comm-detail/{{commDTO.id}}">
-                                    <h4 class="card-title mb-10">{{commDTO.title}}</h4>
+                                <a href="/comm-detail/{{id}}">
+                                    <h4 class="card-title mb-10">{{title}}</h4>
                                     <div class="community-cartegory">
-                                        <div class="category main-color">{{commDTO.category}}</div>
+                                        <div class="category main-color">{{category}}</div>
                                         <div class="user-info">
-                                            <figure><img src="{{commDTO.writerProfileImage}}" alt="회원이미지"></figure>
-                                            <span>{{commDTO.writerName}}</span>
+                                            <figure><img src="{{writerProfileImage}}" alt="회원이미지"></figure>
+                                            <span>{{writerName}}</span>
                                         </div>
                                     </div>
-                                    <p class="card-text mb-20">{{commDTO.content}}</p>
+                                    <p class="card-text mb-20">{{content}}</p>
                                 </a>
                                 <div class="link-wrapper">
                                     <a href="#" class="card-link like">❤<em class="count">1</em></a>
                                     <a href="#" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
-
-                                {{#relatedComms}}
-                                    {{#expertReplies}}
+                                {{#expertReplies}}
                                     <div class="expert-reply">
                                         <div class="expert-reply-info mb-10">
                                             <figure><img src="{{writerProfileImage}}" alt="전문가 이미지가 들어갈 자리"></figure>
@@ -188,12 +186,10 @@
                                             {{solution}}
                                         </p>
                                     </div>
-                                    {{/expertReplies}}
-                                {{/relatedComms}}
+                                {{/expertReplies}}
                             </div>
-
                         </div>
-                    {{/comm}}
+                    {{/comm.relatedComms}}
                 </div>
                 <!--답변 중 전문가가 리플 달아준 것 시작-->
 
