@@ -3,7 +3,8 @@ INSERT INTO reservation_tb (expert_id, client_id, voucher_id, schedule_id, statu
                             day_of_week, created_at, updated_at)
 VALUES
     -- Expert 21 (월요일과 금요일)에서 4개 스케줄
-    (21, 1, 1, 1, 'COMPLETED', '09:00', '2024-06-24', '월', NOW(), NOW());
+    (21, 1, 1, 1, 'COMPLETED', '09:00', '2024-06-24', '월', NOW(), NOW()),
+    (21, 1, 1, 1, 'COMPLETED', '09:00', '2024-06-28', '금', NOW(), NOW());
 --
 --     -- Expert 21 (화요일과 수요일)에서 4개 스케줄
 --     (21, 5, 2, 2, 'COMPLETED', '09:00', '2024-06-25', '화', NOW(), NOW()),
