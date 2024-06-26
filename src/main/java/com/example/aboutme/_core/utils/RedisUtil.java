@@ -20,11 +20,8 @@ public class RedisUtil {
     private static final String SESSIONUSER = "sessionUser";
 
     public void saveSessionUser(SessionUser sessionUser) {
-        log.info("sessionUser {} " , sessionUser);
         try {
             String sessionUserJson = objectMapper.writeValueAsString(sessionUser);
-            log.info("sessionUserJson {} " , sessionUserJson);
-
             redisTemplate.opsForValue().set(SESSIONUSER, sessionUserJson);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Redis 저장 중 오류 발생: " + e.getMessage(), e);
@@ -44,7 +41,6 @@ public class RedisUtil {
         Object sessionUserJson = redisTemplate.opsForValue().get(SESSIONUSER);
         if (sessionUserJson != null) {
             try {
-                log.info("Retrieved sessionUserJson: {}" , sessionUserJson.toString());
                 SessionUser sessionUser = objectMapper.readValue(sessionUserJson.toString(), SessionUser.class);
                 sessionUser.determineRoles(); // 역할 설정
                 return sessionUser;
