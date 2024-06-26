@@ -9,8 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.Collectors;
 
 public class CommResponse {
 
@@ -81,44 +80,45 @@ public class CommResponse {
     }
 
     @Data
-    public static class CommAndReplyDTO {
+    public static class CommWithRepliesDTO {
         private Integer id;
+        private String writerName;
         private String content;
         private String title;
         private String category;
         private int replies;
         private List<ExpertReplyDTO> expertReplies = new ArrayList<>();
 
-        public CommAndReplyDTO(Comm comm) {
+        public CommWithRepliesDTO(Comm comm) {
             this.id = comm.getId();
+            this.writerName = comm.getUser().getName();
             this.content = comm.getContent();
             this.title = comm.getTitle();
             this.category = comm.getCategory().getKorean();
-            this.replies = (int) comm.getReplies().stream()
-                    .filter(reply -> !reply.getUser().getUserRole().equals(UserRole.CLIENT))
-                    .count();
-            this.expertReplies = comm.getReplies().stream()
-                    .filter(reply -> reply.getUser().getUserRole().equals(UserRole.EXPERT))
+            this.replies = (int) comm.getReplies().stream().count();
+            this.expertReplies = comm.getReplies() == null ? new ArrayList<>() : comm.getReplies().stream()
+                    .filter(reply -> reply.getUser() != null)
                     .map(ExpertReplyDTO::new)
-                    .collect(toList());
+                    .collect(Collectors.toList());
         }
 
         @Data
         public static class ExpertReplyDTO {
             private Integer id;
             private String solution;
-            private String name;
             private String profileImage;
+            private String expertName;
+            private boolean userRole;
 
             public ExpertReplyDTO(Reply reply) {
                 this.id = reply.getId();
                 this.solution = reply.getSolution();
-                this.name = reply.getUser().getName();
                 this.profileImage = reply.getUser().getProfileImage();
+                this.expertName = reply.getUser().getName();
+                this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
             }
         }
     }
-
 
     // 모든 글, 댓글 받아와서 아이디 당 하나, 전문가 댓글 있는지 없는지 필터링 하는 DTO
 //    @Data

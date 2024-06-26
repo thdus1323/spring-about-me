@@ -29,10 +29,10 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
                     """)
     List<UserResponse.ClientMainDTO.CommDTO> findCommsWithReply();
 
-    // /comm 출력하려고 뽑은 쿼리
+    // /com 출력하려고 뽑은 쿼리
     @Query("""
                SELECT c FROM Comm c LEFT JOIN FETCH c.replies r
             """)
-    List<CommResponse.CommAndReplyDTO> findAllCommsWithReply();
+    List<CommResponse.CommWithRepliesDTO> findAllCommWithReplies();
 
 }
