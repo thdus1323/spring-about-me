@@ -51,8 +51,9 @@ public class CommService {
         );
     }
 
-    public List<CommResponse.CommAndReplyDTO> findAllCommWithReply() {
-        return commRepository.findAllCommsWithReply();
+    @Transactional
+    public List<CommResponse.CommWithRepliesDTO> findAllCommWithReply() {
+        return commRepository.findAllCommWithReplies();
     }
 
     public Comm findById(Integer id) {
