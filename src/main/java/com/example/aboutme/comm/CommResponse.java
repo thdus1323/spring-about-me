@@ -3,9 +3,12 @@ package com.example.aboutme.comm;
 import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.enums.UserRole;
+import kotlin.jvm.Transient;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -79,19 +82,92 @@ public class CommResponse {
         }
     }
 
+    // 게시글 디테일 DTO -> Comm, Reply
     @Data
     public static class CommWithRepliesDTO {
         private Integer id;
         private String writerName;
+        private String writerImage;
+        private String content;
+        private String title;
+        private String category;
+        private Timestamp createdAt;
+        private List<BothReplyDTO> replies = new ArrayList<>();
+        @Transient
+        private String timeAgo;
+
+        public CommWithRepliesDTO(Comm comm) {
+            this.id = comm.getId();
+            this.writerName = comm.getUser().getName();
+            this.writerImage = comm.getUser().getProfileImage();
+            this.content = comm.getContent();
+            this.title = comm.getTitle();
+            this.category = comm.getCategory().getKorean();
+            this.createdAt = comm.getCreatedAt();
+            this.replies = comm.getReplies() == null ? new ArrayList<>() : comm.getReplies().stream()
+                    .filter(reply -> reply.getUser() != null)
+                    .map(BothReplyDTO::new)
+                    .collect(Collectors.toList());
+        }
+
+        public void calculateTimeAgo() {
+            Duration duration = Duration.between(this.createdAt.toInstant(), Instant.now());
+            long seconds = duration.getSeconds();
+
+            if (seconds < 60) {
+                this.timeAgo = seconds + "초 전";
+            } else if (seconds < 3600) {
+                this.timeAgo = (seconds / 60) + "분 전";
+            } else if (seconds < 86400) {
+                this.timeAgo = (seconds / 3600) + "시간 전";
+            } else {
+                this.timeAgo = (seconds / 86400) + "일 전";
+            }
+        }
+
+        @Data
+        public static class BothReplyDTO {
+            private Integer id;
+            private String profileImage;
+            private String name;
+            private boolean userRole;
+            private String content; // 일반인 답글
+            private String introduction; // 소개글
+            private String summary; // 사연 요약
+            private String causeAnalysis; // 원인 분석
+            private String solution; // 대처 방향
+
+
+            public BothReplyDTO(Reply reply) {
+                this.id = reply.getId();
+                this.profileImage = reply.getUser().getProfileImage();
+                this.name = reply.getUser().getName();
+                this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
+                this.introduction = reply.getIntroduction();
+                this.summary = reply.getSummary();
+                this.causeAnalysis = reply.getCauseAnalysis();
+                this.solution = reply.getSolution();
+                this.content = reply.getContent();
+            }
+        }
+    }
+
+    // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO
+    @Data
+    public static class ALLCommWithRepliesDTO {
+        private Integer id;
+        private String writerName;
+        private String writerImage;
         private String content;
         private String title;
         private String category;
         private int replies;
         private List<ExpertReplyDTO> expertReplies = new ArrayList<>();
 
-        public CommWithRepliesDTO(Comm comm) {
+        public ALLCommWithRepliesDTO(Comm comm) {
             this.id = comm.getId();
             this.writerName = comm.getUser().getName();
+            this.writerImage = comm.getUser().getProfileImage();
             this.content = comm.getContent();
             this.title = comm.getTitle();
             this.category = comm.getCategory().getKorean();
@@ -119,29 +195,5 @@ public class CommResponse {
             }
         }
     }
-
-    // 모든 글, 댓글 받아와서 아이디 당 하나, 전문가 댓글 있는지 없는지 필터링 하는 DTO
-//    @Data
-//    public static class UniqueCommAndReplyDTOFilter {
-//
-//        public List<CommResponse.CommAndReplyDTO> filterUnique(List<CommResponse.CommAndReplyDTO> commAndReplyDTOList) {
-//            Map<Integer, CommResponse.CommAndReplyDTO> filteredMap = new HashMap<>();
-//
-//            for (CommResponse.CommAndReplyDTO dto : commAndReplyDTOList) {
-//                // 이미 해당 Comm ID에 대한 DTO가 존재하는 경우
-//                if (filteredMap.containsKey(dto.getId())) {
-//                    // 기존 DTO와 현재 DTO 중 userRole이 true인 것을 선택
-//                    if (!filteredMap.get(dto.getId()).isUserRole() && dto.isUserRole()) {
-//                        filteredMap.put(dto.getId(), dto);
-//                    }
-//                } else {
-//                    // 처음 추가되는 경우
-//                    filteredMap.put(dto.getId(), dto);
-//                }
-//            }
-//
-//            return new ArrayList<>(filteredMap.values());
-//        }
-//    }
 
 }

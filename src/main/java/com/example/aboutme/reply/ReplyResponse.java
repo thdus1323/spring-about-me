@@ -5,7 +5,7 @@ import lombok.Data;
 
 public class ReplyResponse {
 
-    // 전문가 댓글 작성 폼에서 받아온 데이터 저장할 객체
+    // 전문가 댓글 작성 폼에서 받아온 데이터 DTO
     @Data
     public static class ReplyDataDTO {
         private String id;
@@ -22,10 +22,18 @@ public class ReplyResponse {
             this.analysis = analysis;
             this.solution = solution;
         }
+    }
 
-        public ReplyDataDTO() {
-            // 기본 생성자
+    // 일반인 댓글 작성 DTO
+    @Data
+    public static class ClientReplyDataDTO {
+        private String id;
+        private String content;
+
+        @Builder
+        public ClientReplyDataDTO(String id, String content) {
+            this.id = id;
+            this.content = content;
         }
-
     }
 }

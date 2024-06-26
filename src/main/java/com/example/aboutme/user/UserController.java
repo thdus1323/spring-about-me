@@ -7,8 +7,6 @@ import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORe
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
-//import com.example.aboutme.user.oauth.KakaoOAuthService;
-//import com.example.aboutme.user.oauth.NaverOAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +54,9 @@ public class UserController {
     }
 
     @GetMapping("/expert/reply")
-    public String expertReply(Model model) {
+    public String expertReply() {
         return "expert/expert-reply";
     }
-
-//    @PostMapping("expert/reply-save")
-
 
     @GetMapping("/join")
     public String joinForm() {
@@ -162,7 +157,7 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
     @GetMapping("/")
-    public String index( Model model) {
+    public String index(Model model) {
         model.addAttribute("sessionUser", redisUtil.getSessionUser());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
