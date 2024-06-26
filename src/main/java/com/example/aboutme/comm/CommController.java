@@ -43,16 +43,9 @@ public class CommController {
     @GetMapping("/comm")
     public String community(HttpServletRequest request) {
 
+        List<CommResponse.CommWithRepliesDTO> commsWithReplyList = commService.findAllCommWithReply();
+        request.setAttribute("commsWithReplyList", commsWithReplyList);
 
-        List<CommResponse.CommAndReplyDTO> commsWithReplyList = commService.findAllCommsWithReply();
-
-
-        // 필터링 예시: 고유한 Comm에 대해 하나의 DTO만 추가하기
-        CommResponse.UniqueCommAndReplyDTOFilter filter = new CommResponse.UniqueCommAndReplyDTOFilter();
-        List<CommResponse.CommAndReplyDTO> filteredList = filter.filterUnique(commsWithReplyList);
-
-        request.setAttribute("filteredList", filteredList);
-
-        return "comm/comm-main";
+        return "/comm/comm-main";
     }
 }

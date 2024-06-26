@@ -30,9 +30,9 @@ public class ReplyController {
                 orElseThrow(() -> new ResourceNotFoundException("Comm not found with id " + newReply.getId()));
 
         // Reply 객체 생성 및 설정
-        Reply reply = new Reply(user, comm, newReply);
+//        Reply reply = new Reply(user, comm, newReply);
 
-        replyService.saveReply(reply);
+//        replyService.saveReply(reply);
 
         return "redirect:/comm-detail/" + comm.getId();
     }
