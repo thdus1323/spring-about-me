@@ -4,6 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
@@ -202,11 +203,14 @@ public class UserController {
 
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
-    public String clientMypage() {
+    public String clientMypage(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser == null) {
             return "oauth/login";
         } else {
+            UserProfileDTO respDTO = userService.마이페이지정보(sessionUser);
+            model.addAttribute("model", respDTO);
+
             return "client/mypage";
         }
     }

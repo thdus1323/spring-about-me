@@ -22,12 +22,12 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
+
     public String detail(@PathVariable("id") Integer id, Model model) {
 
         CommResponse.CommWithRepliesDTO comm = commService.findByIdDetail(id);
         model.addAttribute("comm", comm);
 
-        return "comm/comm-detail";
     }
 
     // 전문답변이 있는지 확인
@@ -40,8 +40,10 @@ public class CommController {
     @GetMapping("/comm")
     public String community(HttpServletRequest request) {
 
+
         List<CommResponse.ALLCommWithRepliesDTO> allCommsWithReplyList = commService.findAllCommWithReply();
         request.setAttribute("allCommsWithReplyList", allCommsWithReplyList);
+
 
         return "/comm/comm-main";
     }

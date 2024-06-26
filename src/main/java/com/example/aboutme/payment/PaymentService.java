@@ -2,6 +2,7 @@ package com.example.aboutme.payment;
 
 import com.example.aboutme.payment.PaymentRequestRecord.PaymentPortOneReqDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentPortOneRespDTO;
+import com.example.aboutme.payment.enums.PaymentMethods;
 import com.example.aboutme.payment.enums.PaymentStatus;
 import com.example.aboutme.reservation.Reservation;
 import com.example.aboutme.reservation.ReservationRepository;
@@ -37,7 +38,7 @@ public class PaymentService {
 
         Payment payment = Payment.builder()
                 .amount(reqDTO.amount())
-                .paymentMethod(reqDTO.paymentMethod())
+                .paymentMethod(PaymentMethods.fromKorean(reqDTO.paymentMethod()))
                 .client(client)
                 .voucher(voucher)
                 .status(PaymentStatus.PENDING)
@@ -51,7 +52,7 @@ public class PaymentService {
                 payment.getImpUid(),
                 payment.getMerchantUid(),
                 payment.getAmount(),
-                payment.getPaymentMethod(),
+                payment.getPaymentMethod().getKorean(),
                 client.getName(),
                 client.getPhone(),
                 payment.getStatus().name()
@@ -94,7 +95,7 @@ public class PaymentService {
                         payment.getImpUid(),
                         payment.getMerchantUid(),
                         payment.getAmount(),
-                        payment.getPaymentMethod(),
+                        payment.getPaymentMethod().getKorean(),
                         payment.getClient().getName(),
                         payment.getClient().getPhone(),
                         payment.getStatus().name()

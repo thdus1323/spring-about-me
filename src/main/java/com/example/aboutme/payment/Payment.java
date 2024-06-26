@@ -1,5 +1,6 @@
 package com.example.aboutme.payment;
 
+import com.example.aboutme.payment.enums.PaymentMethods;
 import com.example.aboutme.payment.enums.PaymentStatus;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
@@ -23,8 +24,9 @@ public class Payment {
     @Column(nullable = false)
     private double amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String paymentMethod;
+    private PaymentMethods paymentMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
@@ -43,11 +45,11 @@ public class Payment {
 
     private String impUid; // 아임포트 거래 고유 ID
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String merchantUid; // 상점 거래 고유 ID
 
     @Builder
-    public Payment(Integer id, double amount, String paymentMethod, User client, Voucher voucher, Timestamp paymentDate, PaymentStatus status, String impUid, String merchantUid) {
+    public Payment(Integer id, double amount, PaymentMethods paymentMethod, User client, Voucher voucher, Timestamp paymentDate, PaymentStatus status, String impUid, String merchantUid) {
         this.id = id;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
