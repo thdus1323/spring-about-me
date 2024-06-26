@@ -17,6 +17,7 @@ public class SessionUser {
     private UserRole userRole;
     private OauthProvider provider;
     private String accessToken;
+    private String profileImage;
 
     // 추가 필드
     private boolean isClient;
@@ -28,7 +29,7 @@ public class SessionUser {
     }
 
     @Builder
-    public SessionUser(Integer id, String name, String email, String expertTitle, UserRole userRole, OauthProvider provider, String accessToken) {
+    public SessionUser(Integer id, String name, String email, String expertTitle, UserRole userRole, OauthProvider provider, String accessToken, String profileImage) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,12 +37,14 @@ public class SessionUser {
         this.userRole = userRole;
         this.provider = provider;
         this.accessToken = accessToken;
+        this.profileImage = profileImage;
     }
 
     public SessionUser(User user, String accessToken) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
+        this.profileImage = user.getProfileImage();
         this.expertTitle = user.getExpertTitle();
         this.userRole = user.getUserRole();
         this.provider = user.getProvider();
@@ -53,6 +56,7 @@ public class SessionUser {
         this.name = user.getName();
         this.email = user.getEmail();
         this.expertTitle = user.getExpertTitle();
+        this.profileImage = user.getProfileImage();
         this.userRole = user.getUserRole();
         this.provider = user.getProvider();
     }
