@@ -94,6 +94,7 @@ public class UserService {
                     return UserProfileDTO.PaymentDTO.builder()
                             .id(payment.getId())
                             .voucherType(v.getVoucherType().getKorean())
+                            .voucherId(v.getId())
                             .expertId(v.getExpert().getId())
                             .clientId(payment.getClient().getId())
                             .paymentMethod(payment.getPaymentMethod().getKorean())

@@ -1,7 +1,7 @@
 package com.example.aboutme.reservation;
 
 import com.example.aboutme._core.utils.RedisUtil;
-import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
+import com.example.aboutme.reservation.reservationRequest.ReservationRepDTO;
 import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.user.SessionUser;
 import lombok.RequiredArgsConstructor;
@@ -35,17 +35,28 @@ public class ReservationController {
 
 
     @PostMapping("/client/reservations/temp")
-    public String saveTempReservation(ReservationTempRepDTO reqDTO) {
+    public String saveTempReservation(ReservationRepDTO reqDTO) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         Reservation tempReservation = reservationService.createTempReservation(reqDTO, sessionUser);
         return "redirect:/client/findExpert/payment/" + tempReservation.getId();
     }
 
 
-    @GetMapping("/client/reservation/make")
-    public String makeReservation(@RequestParam("clientId") Integer clientId) {
-        log.info("😊😊😊😊😊Saving  : {}", clientId);
-        return null;
+    @GetMapping("/client/myPage/reservation")
+    public String makeReservation(@RequestParam(name = "voucherId", required = false) Integer voucherId,
+                                  @RequestParam(name = "expertId", required = false) Integer expertId, Model model) {
+        log.info("😊😊😊😊😊예약만들기  : {}, {}", voucherId, expertId);
+        ReservationDetailsDTO reservationDetailsDTO = reservationService.getReservationDetails(voucherId, expertId);
+        model.addAttribute("model", reservationDetailsDTO);
+        return "client/makeReservation";
+    }
+
+    @PostMapping("/client/myPage/reservation")
+    public String makeReservation(ReservationRepDTO reqDTO) {
+        log.info("😊😊😊😊😊예약만들기  : {}", reqDTO);
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        reservationService.makeReservation(reqDTO, sessionUser);
+        return "redirect:/client/myPage";
     }
 
 

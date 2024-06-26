@@ -1,24 +1,23 @@
-
 /* 기존 CSS */
-.user-mypage .profile-container {
+.user-myPage .profile-container {
     display: flex;
     align-items: center;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.user-mypage .profile-edit-container {
+.user-myPage .profile-edit-container {
     display: flex;
     align-items: flex-start;
     margin-bottom: 20px;
 }
 
-.user-mypage .profile-image-wrapper {
+.user-myPage .profile-image-wrapper {
     position: relative;
     margin-right: 20px;
 }
 
-.user-mypage .profile-image {
+.user-myPage .profile-image {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -26,7 +25,7 @@
     cursor: pointer;
 }
 
-.user-mypage .edit-icon {
+.user-myPage .edit-icon {
     position: absolute;
     bottom: 5px;
     right: 5px;
@@ -39,58 +38,58 @@
     cursor: pointer;
 }
 
-.user-mypage .profile-details {
+.user-myPage .profile-details {
     width: 100%;
     border: 1px solid #e0e0e0;
     padding: 20px;
     border-radius: 5px;
 }
 
-.user-mypage .profile-container .row>div,
-.user-mypage .profile-edit-container .row>div {
+.user-myPage .profile-container .row > div,
+.user-myPage .profile-edit-container .row > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.user-mypage .profile-container .row>div .font-weight-bold,
-.user-mypage .profile-edit-container .row>div .font-weight-bold {
+.user-myPage .profile-container .row > div .font-weight-bold,
+.user-myPage .profile-edit-container .row > div .font-weight-bold {
     width: 30%;
     text-align: right;
     padding-right: 10px;
 }
 
-.user-mypage .profile-container .row>div>div,
-.user-mypage .profile-edit-container .row>div input,
-.user-mypage .profile-edit-container .row>div p,
-.user-mypage .profile-edit-container .row>div select,
-.user-mypage .profile-edit-container .row>div .form-check {
+.user-myPage .profile-container .row > div > div,
+.user-myPage .profile-edit-container .row > div input,
+.user-myPage .profile-edit-container .row > div p,
+.user-myPage .profile-edit-container .row > div select,
+.user-myPage .profile-edit-container .row > div .form-check {
     margin: 0;
 }
 
-.user-mypage .btn-container {
+.user-myPage .btn-container {
     text-align: center;
     margin-top: 20px;
 }
 
-.user-mypage .form-control {
+.user-myPage .form-control {
     width: 100%;
 }
 
-.user-mypage .tabs-container {
+.user-myPage .tabs-container {
     background: white;
     padding: 15px;
     margin-bottom: 20px;
 }
 
-.user-mypage .tabs {
+.user-myPage .tabs {
     display: flex;
     border-bottom: 1px solid #ddd;
     margin-bottom: 15px;
 }
 
-.user-mypage .tab {
+.user-myPage .tab {
     flex: 1;
     text-align: center;
     padding: 10px;
@@ -99,26 +98,26 @@
     font-weight: bold;
 }
 
-.user-mypage .tab.active {
+.user-myPage .tab.active {
     border-bottom: 2px solid black;
 }
 
-.user-mypage .tab-content {
+.user-myPage .tab-content {
     display: none;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 0 0 8px 8px;
 }
 
-.user-mypage .tab-content.active {
+.user-myPage .tab-content.active {
     display: block;
 }
 
-.user-mypage .table-container {
+.user-myPage .table-container {
     overflow-x: auto;
 }
 
-.user-mypage .table {
+.user-myPage .table {
     width: 100%;
     max-width: 100%;
     margin-bottom: 20px;
@@ -126,29 +125,30 @@
     border-collapse: collapse;
 }
 
-.user-mypage .table th,
-.user-mypage .table td {
+.user-myPage .table th,
+.user-myPage .table td {
     padding: 10px;
     border: 1px solid #dee2e6;
     text-align: left;
     vertical-align: top;
 }
 
-.user-mypage .table th {
+.user-myPage .table th {
     background-color: #f8f9fa;
 }
 
-.user-mypage .btn-small {
+.user-myPage .btn-small {
     padding: 5px 10px;
     font-size: 12px;
 }
 
-.user-mypage .btn-container .btn-secondary,
-.user-mypage .btn-container .btn-primary {
+.user-myPage .btn-container .btn-secondary,
+.user-myPage .btn-container .btn-primary {
     margin-right: 5px;
 }
+
 /* 커뮤니티 나의 사연 CSS */
-.user-mypage .post {
+.user-myPage .post {
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 15px;
@@ -157,25 +157,25 @@
     text-align: left; /* 텍스트를 왼쪽 정렬 */
 }
 
-.user-mypage .post-header {
+.user-myPage .post-header {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.user-mypage .post-header .post-category {
+.user-myPage .post-header .post-category {
     font-size: 14px;
     color: #6c757d;
     margin-right: 10px;
 }
 
-.user-mypage .post-header .username {
+.user-myPage .post-header .username {
     font-weight: bold;
     color: #007bff;
 }
 
 /* 프로필 이미지를 스타일링 */
-.user-mypage .post .post-header .post-profile-image {
+.user-myPage .post .post-header .post-profile-image {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -184,51 +184,51 @@
     vertical-align: middle;
 }
 
-.user-mypage .post-body {
+.user-myPage .post-body {
     margin-bottom: 10px;
     text-align: left; /* 게시물 내용 부분 왼쪽 정렬 */
 }
 
 
-.user-mypage .post-body .post-title {
+.user-myPage .post-body .post-title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.user-mypage .post-body .post-content {
+.user-myPage .post-body .post-content {
     font-size: 16px;
     color: #495057;
 }
 
-.user-mypage .post-footer {
+.user-myPage .post-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.user-mypage .post-footer .post-meta {
+.user-myPage .post-footer .post-meta {
     font-size: 14px;
     color: #6c757d;
 }
 
-.user-mypage .post-footer .post-meta i {
+.user-myPage .post-footer .post-meta i {
     margin-left: 5px;
     color: #ff6b6b;
 }
 
-.user-mypage .post-footer .post-actions {
+.user-myPage .post-footer .post-actions {
     display: flex;
     align-items: center;
 }
 
-.user-mypage .post-footer .post-actions i {
+.user-myPage .post-footer .post-actions i {
     cursor: pointer;
     color: #6c757d;
     margin-right: 15px;
 }
 
-.user-mypage .post-footer .post-actions i:hover {
+.user-myPage .post-footer .post-actions i:hover {
     color: #495057;
 }
     

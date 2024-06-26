@@ -8,11 +8,11 @@
 @import url(client/findExpert/detail.css);
 @import url(client/findExpert/experience.css);
 @import url(client/findExpert/voucher.css);
-@import url(expert/mypage.css);
+@import url(expert/myPage.css);
 @import url(client/findExpert/main.css);
 @import url(expert/voucher-form.css);
 @import url(expert/voucher-list.css);
-@import url(client/mypage.css);
+@import url(client/myPage.css);
 @import url(client/main.css);
 @import url(client/comm/comm.css);
 @import url(client/comm/comm-write.css);
@@ -23,5 +23,6 @@
 @import url(client/findExpert/payment.css);
 @import url(client/findExpert/reservation.css);
 @import url(expert/expert-reply.css);
+@import url(client/makeReservation.css);
 
 

@@ -8,8 +8,6 @@ import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
 import com.example.aboutme.user.enums.UserRole;
-//import com.example.aboutme.user.oauth.KakaoOAuthService;
-//import com.example.aboutme.user.oauth.NaverOAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,7 +161,7 @@ public class UserController {
     // 👻👻👻공통👻👻👻
     // 클라이언트 메인페이지
     @GetMapping("/")
-    public String index( Model model) {
+    public String index(Model model) {
         model.addAttribute("sessionUser", redisUtil.getSessionUser());
         ClientMainDTORecord clientMain = userService.getClientMain();
         model.addAttribute("clientMain", clientMain);
@@ -207,8 +205,8 @@ public class UserController {
     }
 
     //클라이언트 - 마이페이지
-    @GetMapping("/client/mypage")
-    public String clientMypage(Model model) {
+    @GetMapping("/client/myPage")
+    public String clientmyPage(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser == null) {
             return "oauth/login";
@@ -216,14 +214,14 @@ public class UserController {
             UserProfileDTO respDTO = userService.마이페이지정보(sessionUser);
             model.addAttribute("model", respDTO);
 
-            return "client/mypage";
+            return "client/myPage";
         }
     }
 
     //익스퍼트 - 마이페이지
-    @GetMapping("/expert/mypage")
-    public String expertMypage() {
-        return "expert/mypage";
+    @GetMapping("/expert/myPage")
+    public String expertmyPage() {
+        return "expert/myPage";
     }
     // 🩺🩺🩺expert🩺🩺🩺
 }
