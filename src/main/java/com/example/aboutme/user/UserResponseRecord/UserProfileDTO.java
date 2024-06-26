@@ -29,6 +29,7 @@ public record UserProfileDTO(
     public record PaymentDTO(
             Integer id,
             String voucherType,
+            Integer clientId,
             Integer expertId,
             String paymentMethod,
             String price,

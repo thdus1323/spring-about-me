@@ -11,7 +11,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,7 +24,6 @@ public class CounselController {
     @GetMapping("/counsel")
     public String counselDetails(CounselReqDTO counselReqDTO,
                                  Model model) {
-        System.out.println("counselReqDTO = " + counselReqDTO);
         if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.TEXT_THERAPY) {
 
             return "텍스트테라피경로"; // 상담 세부 정보 페이지로 이동}}

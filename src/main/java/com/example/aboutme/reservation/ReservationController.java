@@ -5,6 +5,7 @@ import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
 import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.user.SessionUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ReservationController {
@@ -38,5 +40,13 @@ public class ReservationController {
         Reservation tempReservation = reservationService.createTempReservation(reqDTO, sessionUser);
         return "redirect:/client/findExpert/payment/" + tempReservation.getId();
     }
+
+
+    @GetMapping("/client/reservation/make")
+    public String makeReservation(@RequestParam("clientId") Integer clientId) {
+        log.info("😊😊😊😊😊Saving  : {}", clientId);
+        return null;
+    }
+
 
 }

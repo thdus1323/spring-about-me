@@ -154,7 +154,14 @@
                                     <td>{{voucherType}}</td>
                                     <td>{{remainingCount}}회권</td>
                                     <td>{{counselCount}}회</td>
-                                    <td></td>
+                                    <td>
+                                        <form action="/client/reservation/make" method="GET">
+                                            <input type="hidden" name="clientId" value="{{clientId}}">
+                                            <button class="btn btn-outline-success btn-small"
+                                                    onclick="makeReservation({{id}})">예약하기
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             {{/payments}}
                             </tbody>
@@ -434,8 +441,12 @@
         alert('상담 일정을 변경합니다.');
     }
 
-    function writeReviw(id){
+    function writeReviw(id) {
         alert('리뷰를 작성하시겠습니까?')
+    }
+
+    function makeReservation(id) {
+        alert('예약하시겠습니까?')
     }
 
     function cancelReservation(id) {
