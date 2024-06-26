@@ -40,9 +40,6 @@ public class Voucher {
 
     private String imagePath;
 
-    @Column(nullable = false)
-    private LocalDateTime startDate;
-
     @CreationTimestamp
     private Timestamp createdAt;
 
@@ -50,7 +47,7 @@ public class Voucher {
     private Timestamp updatedAt;
 
     @Builder
-    public Voucher(Integer id, VoucherType voucherType, User expert, Double price, Integer count, Integer duration, String imagePath, LocalDateTime startDate, Timestamp createdAt, Timestamp updatedAt) {
+    public Voucher(Integer id, VoucherType voucherType, User expert, Double price, Integer count, Integer duration, String imagePath,  Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.voucherType = voucherType;
         this.expert = expert;
@@ -58,7 +55,6 @@ public class Voucher {
         this.count = count;
         this.duration = duration;
         this.imagePath = imagePath;
-        this.startDate = startDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
