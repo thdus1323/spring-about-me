@@ -56,7 +56,6 @@
                     <!--필터 끝-->
                     <!--컨텐츠 시작-->
                     <div class="c-card">
-
                         {{#commsWithReplyList}}
                             <div class="c-card-body">
                                 <a href="/comm-detail/{{id}}">
@@ -72,24 +71,27 @@
                                 </a>
                                 <div class="link-wrapper">
                                     <a href="#" class="card-link like">❤<em class="count">1</em></a>
-                                    <a href="#" class="card-link reply">💌<em class="count">2</em></a>
+                                    <a href="#" class="card-link reply">💌<em class="count">{{replies}}</em></a>
                                 </div>
 
-                                {{#userRole}}
-                                    <div class="expert-reply">
-                                        <div class="expert-reply-info mb-10">
-                                            <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
-                                            <span class="expert-reply-name active-color">{{expertName}}님의 전문답변</span>
+                                {{#expertReplies}}
+                                    {{#userRole}}
+                                        <div class="expert-reply">
+                                            <div class="expert-reply-info mb-10">
+                                                <figure><img src="/images/user.png" alt={{profileImage}}></figure>
+                                                <span class="expert-reply-name active-color">{{expertName}}
+                                                    님의 전문답변</span>
+                                            </div>
+                                            <p class="reply-content">
+                                                {{solution}}
+                                            </p>
                                         </div>
-                                        <p class="reply-content">
-                                            {{solution}}
-                                        </p>
-                                    </div>
-                                {{/userRole}}
+                                    {{/userRole}}
+                                {{/expertReplies}}
                             </div>
                         {{/commsWithReplyList}}
-
                     </div>
+
                     <!--컨텐츠 끝-->
 
                     <!--페이지네이션 시작-->
