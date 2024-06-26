@@ -2,21 +2,22 @@ package com.example.aboutme.chat;
 
 public class ChatMessage {
     private String sender;
-    private String recipient;
+    private String profileImage;
     private String content;
+    private Integer id;
+    private Integer voucherId;
 
-    // 기본 생성자
     public ChatMessage() {
     }
 
-    // 매개변수 생성자
-    public ChatMessage(String sender, String recipient, String content) {
+    public ChatMessage(String sender, String profileImage, String content, Integer id, Integer voucherId) {
         this.sender = sender;
-        this.recipient = recipient;
+        this.profileImage = profileImage;
         this.content = content;
+        this.id = id;
+        this.voucherId = voucherId;
     }
 
-    // getters and setters
     public String getSender() {
         return sender;
     }
@@ -25,12 +26,12 @@ public class ChatMessage {
         this.sender = sender;
     }
 
-    public String getRecipient() {
-        return recipient;
+    public String getProfileImage() {
+        return profileImage;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getContent() {
@@ -39,5 +40,21 @@ public class ChatMessage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getVoucherId() {
+        return voucherId;
+    }
+
+    public void setVoucherId(Integer voucherId) {
+        this.voucherId = voucherId;
     }
 }
