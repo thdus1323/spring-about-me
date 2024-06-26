@@ -61,6 +61,13 @@ public class UserService {
     private final Formatter formatter;
     private final RedisUtil redisUtil;
 
+    public SessionUser getUserById(Integer userId) {
+        // 사용자 ID를 통해 SessionUser를 반환하는 로직을 구현합니다.
+        // 예시로 간단히 하드코딩된 데이터를 반환합니다.
+        return new SessionUser(userId, "TestUser", "test@example.com", "Expert", UserRole.CLIENT, null, null, "/images/client01.jpg");
+    }
+
+
     public void updateUserProfile(UserProfileUpdateReqDTO reqDTO) {
         log.info("유저 프로필 수정 업데이트: {}", reqDTO);
 

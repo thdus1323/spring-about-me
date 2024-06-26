@@ -1,5 +1,6 @@
 package com.example.aboutme._core.error;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -47,5 +48,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private String getClientId(WebSocketSession session) {
         return session.getId();
+    }
+
+    private HttpSession getHttpSession(WebSocketSession session) {
+        return (HttpSession) session.getAttributes().get("HTTP_SESSION");
     }
 }
