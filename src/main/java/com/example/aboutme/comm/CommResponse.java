@@ -80,6 +80,7 @@ public class CommResponse {
         }
     }
 
+    //<--커뮤니티 detail 시작-->
     @Data
     public static class CommDetailDTO {
         private CommDTO commDTO;
@@ -177,6 +178,7 @@ public class CommResponse {
             }
         }
     }
+    //<--커뮤니티 detail 끝-->
 
 
     // 모든 글, 댓글 받아와서 아이디 당 하나, 전문가 댓글 있는지 없는지 필터링 하는 DTO
