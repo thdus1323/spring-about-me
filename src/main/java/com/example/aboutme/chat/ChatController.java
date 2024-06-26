@@ -3,6 +3,7 @@ package com.example.aboutme.chat;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -16,10 +17,10 @@ public class ChatController {
     }
 
     @MessageMapping("/sendMessage")
-    public void sendMessage(@Payload ChatMessage message) {
+    public void sendMessage(ChatMessage message, SimpMessageHeaderAccessor headerAccessor) {
         System.out.println("Received message: " + message.getContent());
-        // 메시지를 발신자와 수신자 모두에게 다시 전송
-        messagingTemplate.convertAndSendToUser(message.getRecipient(), "/queue/messages", message);
-        messagingTemplate.convertAndSendToUser(message.getSender(), "/queue/messages", message);
+
+        // 클라이언트로 메시지 전송
+        messagingTemplate.convertAndSend("/topic/messages", message);
     }
 }
