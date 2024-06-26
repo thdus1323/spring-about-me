@@ -28,7 +28,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     List<Reservation> findByExpertId(Integer expertId);
 
     //클라이언트의 예약현황 확인
-    List<Reservation> findByClientId(Integer clientId);
+    List<Reservation> findByClientIdOrderByIdDesc(Integer clientId);
 
 
 

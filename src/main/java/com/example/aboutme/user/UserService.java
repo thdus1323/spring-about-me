@@ -109,7 +109,7 @@ public class UserService {
         List<UserProfileDTO.ReservationDTO> progressReservations = new ArrayList<>();
         List<UserProfileDTO.ReservationDTO> cancelReservations = new ArrayList<>();
 
-        reservationRepository.findByClientId(sessionUser.getId()).stream()
+        reservationRepository.findByClientIdOrderByIdDesc(sessionUser.getId()).stream()
                 .forEach(r -> {
                     Voucher v = r.getVoucher();
                     Integer usedCount = counselRepository.findByClientIdAndState(sessionUser.getId(), CounselStateEnum.COMPLETED);
