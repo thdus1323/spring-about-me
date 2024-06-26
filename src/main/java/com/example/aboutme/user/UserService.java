@@ -1,6 +1,7 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme._core.error.exception.Exception403;
+import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
@@ -206,7 +207,7 @@ public class UserService {
         UserRecord userRecord = new UserRecord(user.getId(), user.getName(), user.getProfileImage());
 
         double price = voucherRepository.findLowestPriceByExpertId(expertId);
-        String lowestPrice = formatter.number((int) price); // 포맷터에서 가격을 포맷팅
+        String lowestPrice = Formatter.number((int) price); // 포맷터에서 가격을 포맷팅
 
         List<ReviewRecord> reviewRecords = reviewRepository.findByExpertId(expertId).stream().map(review -> new ReviewRecord(review.getId(), review.getContent())).collect(Collectors.toList());
 
