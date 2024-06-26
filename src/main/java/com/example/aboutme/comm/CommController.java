@@ -23,36 +23,19 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-    public String detail(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
-        // 세션에서 사용자 정보 가져오기
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("sessionUser");
-
+    public String detail(@PathVariable Integer id, HttpServletRequest request) {
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-//        request.setAttribute("comm", comm);
-
-        // userRole이 EXPERT인 경우에는 true, 그 외에는 false
-        boolean isUserRole = user.getUserRole() == UserRole.EXPERT;
-
-        model.addAttribute("comm", comm);
-        model.addAttribute("isUserRole", isUserRole);
-
+        request.setAttribute("comm", comm);
+        System.out.println("comm = " + comm);
         return "comm/comm-detail";
     }
 
     @GetMapping("/comm")
     public String community(HttpServletRequest request) {
 
+        List<CommResponse.CommWithRepliesDTO> commsWithReplyList = commService.findAllCommWithReply();
+        request.setAttribute("commsWithReplyList", commsWithReplyList);
 
-        List<CommResponse.CommAndReplyDTO> commsWithReplyList = commService.findAllCommsWithReply();
-
-
-        // 필터링 예시: 고유한 Comm에 대해 하나의 DTO만 추가하기
-        CommResponse.UniqueCommAndReplyDTOFilter filter = new CommResponse.UniqueCommAndReplyDTOFilter();
-        List<CommResponse.CommAndReplyDTO> filteredList = filter.filterUnique(commsWithReplyList);
-
-        request.setAttribute("filteredList", filteredList);
-
-        return "comm/comm-main";
+        return "/comm/comm-main";
     }
 }
