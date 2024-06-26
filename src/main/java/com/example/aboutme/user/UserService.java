@@ -7,6 +7,10 @@ import com.example.aboutme._core.utils.UserDefault;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
+import com.example.aboutme.counsel.enums.CounselStateEnum;
+import com.example.aboutme.payment.PaymentRepository;
+import com.example.aboutme.reservation.ReservationRepository;
+import com.example.aboutme.reservation.enums.ReservationStatus;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
@@ -17,6 +21,7 @@ import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.*;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
+import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.ExpertInfoRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.VoucherImageRecord;
@@ -42,6 +47,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -51,6 +57,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
     private final CommRepository commRepository;
     private final UserNativeRepository userNativeRepository;
     private final ReviewRepository reviewRepository;
@@ -58,8 +65,111 @@ public class UserService {
     private final SpecRepository specRepository;
     private final PRRepository prRepository;
     private final CounselRepository counselRepository;
-    private final Formatter formatter;
+    private final PaymentRepository paymentRepository;
     private final RedisUtil redisUtil;
+
+    @Transactional
+    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
+
+        UserProfileDTO.User userProfile = UserProfileDTO.User.builder()
+                .id(user.getId())
+                .userRole(user.getUserRole())
+                .name(user.getName())
+                .email(user.getEmail())
+                .birth(user.getBirth())
+                .gender(user.getGender().getKorean())
+                .profileImage(user.getProfileImage())
+                .build();
+
+        List<UserProfileDTO.PaymentDTO> payments = paymentRepository.findByClientId(sessionUser.getId()).stream()
+                .map(payment -> {
+                    Voucher v = payment.getVoucher();
+                    Integer usedCount = reservationRepository.countByVoucherIdAndStatus(v.getId(), ReservationStatus.COMPLETED);
+                    Integer remainingCount = v.getCount() - usedCount;
+                    return UserProfileDTO.PaymentDTO.builder()
+                            .id(payment.getId())
+                            .voucherType(v.getVoucherType().getKorean())
+                            .expertId(v.getExpert().getId())
+                            .paymentMethod(payment.getPaymentMethod().getKorean())
+                            .price(Formatter.number((int) v.getPrice()))
+                            .count(v.getCount())
+                            .remainingCount(remainingCount)  // 계산된 필드
+                            .duration(v.getDuration())
+                            .createdAt(Formatter.formatTimestamp(v.getCreatedAt()))
+                            .updatedAt(Formatter.formatTimestamp(v.getUpdatedAt()))
+                            .paymentDate(Formatter.formatTimestamp(payment.getPaymentDate()))
+                            .amount(Formatter.number((int) payment.getAmount()))
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        List<UserProfileDTO.ReservationDTO> progressReservations = new ArrayList<>();
+        List<UserProfileDTO.ReservationDTO> cancelReservations = new ArrayList<>();
+
+        reservationRepository.findByClientIdOrderByIdDesc(sessionUser.getId()).stream()
+                .forEach(r -> {
+                    Voucher v = r.getVoucher();
+                    Integer usedCount = counselRepository.findByClientIdAndState(sessionUser.getId(), CounselStateEnum.COMPLETED);
+                    Integer remainingCount = v.getCount() - usedCount;
+                    UserProfileDTO.ReservationDTO reservationDTO = UserProfileDTO.ReservationDTO.builder()
+                            .id(r.getId())
+                            .expertId(r.getExpert().getId())
+                            .clientId(r.getClient().getId())
+                            .voucherId(r.getVoucher().getId())
+                            .scheduleId(r.getSchedule().getId())
+                            .status(r.getStatus().getKorean())
+                            .startTime(r.getStartTime().toString())
+                            .reservationDate(r.getReservationDate().toString())
+                            .dayOfWeek(r.getDayOfWeek().toString())
+                            .createdAt(r.getCreatedAt())
+                            .updatedAt(r.getUpdatedAt())
+                            .voucherType(v.getVoucherType().getKorean())
+                            .voucherCount(v.getCount())
+                            .count(usedCount)
+                            .remainingCount(remainingCount)
+                            .build();
+
+                    if (r.getStatus() == ReservationStatus.SCHEDULED || r.getStatus() == ReservationStatus.COMPLETED) {
+                        progressReservations.add(reservationDTO);
+                    }
+                    if (r.getStatus() == ReservationStatus.CANCELLED) {
+                        cancelReservations.add(reservationDTO);
+                    }
+                });
+        List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
+                .map(c -> new UserProfileDTO.Comm(
+                        c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
+                .collect(Collectors.toList());
+
+        return new UserProfileDTO(userProfile, payments, progressReservations, cancelReservations, commPosts);
+    }
+//    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
+//        User user = userRepository.findById(sessionUser.getId())
+//                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
+//
+//        List<UserProfileDTO.VoucherDTO> vouchers = voucherRepository.findByUserId(sessionUser.getId()).stream()
+//                .map(v -> new UserProfileDTO.VoucherDTO(
+//                        v.getId(), v.getVoucherType().getKorean(), v.getExpert().getId(), formatter.number((int) v.getPrice()),
+//                        v.getCount(), v.getDuration(),
+//                        v.getCreatedAt(), v.getUpdatedAt()))
+//                .toList();
+//
+//        List<UserProfileDTO.ReservationDTO> reservations = reservationRepository.findByUserId(sessionUser.getId()).stream()
+//                .map(r -> new UserProfileDTO.ReservationDTO(
+//                        r.getId(), r.getExpert().getId(), r.getClient().getId(), r.getVoucher().getId(),
+//                        r.getSchedule().getId(), r.getStatus().getKorean(), r.getStartTime(), r.getReservationDate(),
+//                        r.getDayOfWeek(), r.getCreatedAt(), r.getUpdatedAt()))
+//                .toList();
+//
+//        List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
+//                .map(c -> new UserProfileDTO.Comm(
+//                        c.getId(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
+//                .toList();
+//
+//        return new UserProfileDTO(user, vouchers, reservations, commPosts);
+//    }
 
     public void updateUserProfile(UserProfileUpdateReqDTO reqDTO) {
         log.info("유저 프로필 수정 업데이트: {}", reqDTO);

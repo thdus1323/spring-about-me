@@ -17,13 +17,15 @@
                             <!-- <h4 class="card-title">1</h4> -->
                             <div class="breadcrumb mb-20">
                                 <a href="#">홈화면</a> > <a href="#">커뮤니티</a> > <a href="#"
-                                                                                class="active main-color">{{comm.category}}</a>
+                                                                                class="active main-color">{{comm.commDTO.category}}</a>
                             </div>
+
                             <h4 class="card-title">{{comm.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
                                     <figure><img src="{{comm.writerImage}}" alt="회원이미지"></figure>
                                     <span>{{comm.writerName}}</span><span class="time">{{comm.timeAgo}}</span></div>
+
                                 <div class="actions">
                                     <div class="right-actions">
                                         <button class=" defalut-btn" onclick="clip()"><i
@@ -115,7 +117,9 @@
                                 </div>
                                 <!--dropdown 시작..-->
 
+
                                 <!--dropdown 끝-->
+
                             </div>
                             <!--전문가 댓글 끝-->
                         {{/userRole}}
@@ -167,42 +171,40 @@
                     <!--댓글 섹션 시작-->
                     <!--같은 카테고리 다른 글 살펴보기 시작-->
                     <br>
-                    <h3 class="page-title mb-20">{{comm.category}}의 다른 글 살펴보기</h3>
+                    <h3 class="page-title mb-20">{{comm.commDTO.category}}의 다른 글 살펴보기</h3>
                     <!-- 다른 글 -->
-                    {{#comm.commsByCategory.일반고민}}
+                    {{#comm.relatedComms}}
                         <div class="c-card">
                             <div class="c-card-body detail">
                                 <a href="/comm-detail/{{id}}">
-                                    <h4 class="card-title mb-10">{{this.title}}</h4>
+                                    <h4 class="card-title mb-10">{{title}}</h4>
                                     <div class="community-cartegory">
-                                        <div class="category main-color">{{this.category}}</div>
+                                        <div class="category main-color">{{category}}</div>
                                         <div class="user-info">
-                                            <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
-                                            <span>{{comm.name}}</span>
+                                            <figure><img src="{{writerProfileImage}}" alt="회원이미지"></figure>
+                                            <span>{{writerName}}</span>
                                         </div>
                                     </div>
-                                    <p class="card-text mb-20">{{this.content}}</p>
+                                    <p class="card-text mb-20">{{content}}</p>
                                 </a>
                                 <div class="link-wrapper">
                                     <a href="#" class="card-link like">❤<em class="count">1</em></a>
                                     <a href="#" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
-
-                                {{#userRole}}
+                                {{#expertReplies}}
                                     <div class="expert-reply">
                                         <div class="expert-reply-info mb-10">
-                                            <figure><img src="/images/user.png" alt="전문가 이미지가 들어갈 자리"></figure>
-                                            <span class="expert-reply-name active-color">{{expertName}}님의 전문답변</span>
+                                            <figure><img src="{{writerProfileImage}}" alt="전문가 이미지가 들어갈 자리"></figure>
+                                            <span class="expert-reply-name active-color">{{writerName}}님의 전문답변</span>
                                         </div>
                                         <p class="reply-content">
                                             {{solution}}
                                         </p>
                                     </div>
-                                {{/userRole}}
+                                {{/expertReplies}}
                             </div>
-
                         </div>
-                    {{/comm.commsByCategory.일반고민}}
+                    {{/comm.relatedComms}}
                 </div>
                 <!--답변 중 전문가가 리플 달아준 것 시작-->
 
