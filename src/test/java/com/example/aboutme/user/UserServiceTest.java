@@ -3,6 +3,7 @@ package com.example.aboutme.user;
 import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.comm.CommRepository;
+import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.payment.PaymentRepository;
@@ -12,12 +13,15 @@ import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @DataJpaTest
 class UserServiceTest {
@@ -41,55 +45,34 @@ class UserServiceTest {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
-        List<UserProfileDTO.ReservationDTO> progressReservations = new ArrayList<>();
-        List<UserProfileDTO.ReservationDTO> cancelReservations = new ArrayList<>();
 
-        reservationRepository.findByClientId(id).stream()
-                .forEach(r -> {
-                    Voucher v = r.getVoucher();
-                    Integer usedCount = counselRepository.findByClientIdAndState(id, CounselStateEnum.COMPLETED);
-                    Integer remainingCount = v.getCount() - usedCount;
-                    UserProfileDTO.ReservationDTO reservationDTO = UserProfileDTO.ReservationDTO.builder()
-                            .id(r.getId())
-                            .expertId(r.getExpert().getId())
-                            .clientId(r.getClient().getId())
-                            .voucherId(r.getVoucher().getId())
-                            .scheduleId(r.getSchedule().getId())
-                            .status(r.getStatus().getKorean())
-                            .startTime(r.getStartTime())
-                            .reservationDate(r.getReservationDate())
-                            .dayOfWeek(r.getDayOfWeek())
-                            .createdAt(r.getCreatedAt())
-                            .updatedAt(r.getUpdatedAt())
-                            .voucherType(v.getVoucherType().getKorean())
-                            .voucherCount(v.getCount())
-                            .count(usedCount)
-                            .remainingCount(remainingCount)
-                            .build();
 
-                    if (r.getStatus() == ReservationStatus.SCHEDULED || r.getStatus() == ReservationStatus.COMPLETED) {
-                        progressReservations.add(reservationDTO);
-                    }
-                    if (r.getStatus() == ReservationStatus.CANCELLED) {
-                        cancelReservations.add(reservationDTO);
-                    }
-                });
-        progressReservations.forEach(p -> System.out.println("progressReservations = " + p));
-        cancelReservations.forEach(c -> System.out.println("cancelReservations = " + c));
-//        List<UserProfileDTO.ReservationDTO> reservations = reservationRepository.findByClientId(id).stream()
-//                .map(r -> new UserProfileDTO.ReservationDTO(
-//                        r.getId(), r.getExpert().getId(), r.getClient().getId(), r.getVoucher().getId(),
-//                        r.getSchedule().getId(), r.getStatus().getKorean(), r.getStartTime(), r.getReservationDate(),
-//                        r.getDayOfWeek(), r.getCreatedAt(), r.getUpdatedAt()))
-//                .toList();
-//
-//        List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(id).stream()
-//                .map(c -> new UserProfileDTO.Comm(
-//                        c.getId(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
-//                .toList();
-//
-//        UserProfileDTO userProfileDTO =  new UserProfileDTO(user, vouchers, reservations, commPosts);
-//        String json = new ObjectMapper().writeValueAsString(userProfileDTO);
-//        System.out.println("json = " + json);
+        List<UserProfileDTO.CounselDTO> completedCounsels = counselRepository.findByClientIdAndState(id, CounselStateEnum.COMPLETED).stream()
+                .map(c -> {
+                            Voucher v = c.getVoucher();
+                    Integer counselCount = counselRepository.findByClientIdAndStateCount(id, CounselStateEnum.COMPLETED);
+
+                    Integer aaa = counselRepository
+                            .countByClientIdAndVoucherIdAndBeforeDate(id, v.getId(), c.getCounselDate());
+
+
+                    return UserProfileDTO.CounselDTO.builder()
+                                    .id(c.getId())
+                                    .expertId(c.getExpert().getId())
+                                    .clientId(c.getClient().getId())
+                                    .voucherId(c.getVoucher().getId())
+                                    .counselDate(c.getCounselDate().toString())
+                                    .state(c.getState().toString())
+                                    .createdAt(c.getCreatedAt().toString())
+                                    .updatedAt(c.getUpdatedAt().toString())
+                                    .voucherType(v.getVoucherType().getKorean())
+                                    .build();
+                        }
+                )
+                .toList();
+
+
+        completedCounsels.forEach(counselDTO -> System.out.println("counselDTO = " + counselDTO));
+
     }
 }

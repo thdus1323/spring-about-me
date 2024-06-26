@@ -10,7 +10,7 @@ public record UserProfileDTO(
         User user,
         List<PaymentDTO> payments,
         List<ReservationDTO> progressReservations,
-        List<ReservationDTO> cecelReservations,
+        List<CounselDTO> completedCounsels,
         List<Comm> CommPosts
 ) {
     @Builder
@@ -34,6 +34,7 @@ public record UserProfileDTO(
             String price,
             Integer count,
             Integer remainingCount,  // 추가된 필드
+            Integer counselCount,  // 추가된 필드
             Integer duration,
             String createdAt,
             String updatedAt,
@@ -56,13 +57,30 @@ public record UserProfileDTO(
             Timestamp createdAt,
             Timestamp updatedAt,
             String voucherType,
-            Integer voucherCount,
-            Integer count,
-            Integer remainingCount  // 추가된 필드
-
+            Integer reservationCount,  // 추가된 필드
+            Integer usedCount,  // 추가된 필드
+            Integer voucherCount  // 추가된 필드
     ) {
     }
 
+    @Builder
+    public record CounselDTO(
+            Integer id,
+            Integer expertId,
+            Integer clientId,
+            Integer voucherId,
+            String counselDate,
+            String result,
+            String state,
+            String createdAt,
+            String updatedAt,
+            String voucherType,
+            Integer useCount,
+            Integer voucherCount  // 추가된 필드
+    ) {
+    }
+
+    @Builder
     public record Comm(
             Integer id,
             String name,
