@@ -1,7 +1,9 @@
 package com.example.aboutme.comm;
 
+import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme.comm.ResourceNotFoundException.ResourceNotFoundException;
 import com.example.aboutme.reply.Reply;
+import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.user.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,38 +20,22 @@ import java.util.stream.Collectors;
 public class CommService {
     private final CommRepository commRepository;
 //    private final CommNativeRepository commNativeRepository;
+    private final ReplyRepository replyRepository;
 
 
     @Transactional
     public CommResponse.CommDetailDTO getCommDetail(int id) {
-        Comm comm = commRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comm not found with id " + id));
+        // 주어진 ID로 게시글을 가져옵니다.
+        Comm comm = commRepository.findById(id)
+                .orElseThrow(() -> new Exception404("게시물을 찾을 수 없습니다"));
 
-        List<Comm> comms = commRepository.findByCategory(comm.getCategory());
-        System.out.println("comms = " + comms);
+        // 주어진 게시글의 댓글을 가져옵니다.
+        List<Reply> replies = replyRepository.findByCommId(comm.getId());
 
-        String userName = comm.getUser().getName();
-        String clientImage = comm.getUser().getProfileImage();
-        List<String> replyContents = comm.getReplies().stream()
-                .map(Reply::getContent)
-                .collect(Collectors.toList());
+        // 같은 카테고리의 다른 글들과 해당 글들의 댓글을 가져옵니다.
+        List<Comm> relatedComms = commRepository.findByCategoryWithRepliesAndExcludeId(comm.getCategory(), comm.getId());
 
-        Map<String, List<CommResponse.CommDTO>> commsByCategory = comms.stream()
-                .collect(Collectors.groupingBy(
-                        c -> c.getCategory().getKorean(),
-                        Collectors.mapping(c -> new CommResponse.CommDTO(c.getId(), c.getContent(), c.getTitle(), c.getCategory().getKorean(), c.getCreatedAt()), Collectors.toList())
-                ));
-
-        return new CommResponse.CommDetailDTO(
-                comm.getId(),
-                clientImage,
-                userName,
-                comm.getContent(),
-                comm.getTitle(),
-                comm.getCategory().getKorean(),
-                comm.getCreatedAt(),
-                replyContents,
-                commsByCategory
-        );
+        return new CommResponse.CommDetailDTO(comm, replies, relatedComms);
     }
 
     // 모든 글,댓글 가져오기

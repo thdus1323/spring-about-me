@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+    //이용권 조회
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.voucher.id = :voucherId AND r.status = :status")
+    Integer countByVoucherIdAndStatus(@Param("voucherId") Integer voucherId, @Param("status") ReservationStatus status);
+
+
+    @Query("SELECT r FROM Reservation r WHERE r.client.id = :clientId")
+    List<Reservation> findByUserId(@Param("clientId") Integer clientId);
 
     //예약대기를 SCHEDULED(확정예정)로 업데이트 하기
     Optional<Reservation> findByVoucherIdAndStatus(Integer voucherId, ReservationStatus status);
@@ -19,4 +26,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     //전문가의 예약현황 확인
     List<Reservation> findByExpertId(Integer expertId);
+
+    //클라이언트의 예약현황 확인
+    List<Reservation> findByClientIdOrderByIdDesc(Integer clientId);
+
+
+
 }

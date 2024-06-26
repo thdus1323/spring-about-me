@@ -8,6 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface VoucherRepository extends JpaRepository<Voucher, Integer> {
+
+    @Query("SELECT v FROM Voucher v WHERE v.expert.id = :expertId")
+    List<Voucher> findByUserId(@Param("expertId") Integer expertId);
+
     @Query("SELECT MIN(v.price) " +
             "FROM Voucher v " +
             "WHERE v.expert.id = :expertId")
