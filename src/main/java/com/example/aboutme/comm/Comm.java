@@ -24,7 +24,7 @@ public class Comm {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CommCategory category;
-    
+
     @Column(nullable = false)
     private String title;
 

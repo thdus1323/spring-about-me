@@ -19,10 +19,6 @@ public class CommService {
 //    private final CommNativeRepository commNativeRepository;
 
 
-    public List<CommResponse.CommAndReplyDTO> findAllCommsWithReply() {
-        return commRepository.findAllCommsWithReply();
-    }
-
     @Transactional
     public CommResponse.CommDetailDTO getCommDetail(int id) {
         Comm comm = commRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comm not found with id " + id));
@@ -55,12 +51,10 @@ public class CommService {
         );
     }
 
-//    public List<Comm> find() {
-//        List<Comm> commList = commRepository.findAll();
-//        List<Comm> replyList = commRepository.findByCommId(Integer commId);
-//
-//        return commOptional;
-//    }
+    @Transactional
+    public List<CommResponse.CommWithRepliesDTO> findAllCommWithReply() {
+        return commRepository.findAllCommWithReplies();
+    }
 
     public Comm findById(Integer id) {
         Optional<Comm> commOptional = commRepository.findById(id);
