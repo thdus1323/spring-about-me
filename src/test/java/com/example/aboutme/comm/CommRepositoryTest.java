@@ -13,8 +13,14 @@ class CommRepositoryTest {
     private CommRepository commRepository;
 
     @Test
-    void findAllCommsWithReply() {
-        List<CommResponse.CommWithRepliesDTO> commAndReplyDTOS = commRepository.findAllCommWithReplies();
+    void findAllCommsWithReply_test() {
+        List<CommResponse.ALLCommWithRepliesDTO> commAndReplyDTOS = commRepository.findAllCommWithReplies();
         commAndReplyDTOS.forEach(commAndReplyDTO -> System.out.println("commAndReplyDTO = " + commAndReplyDTO));
+    }
+
+    @Test
+    void detail_test() {
+        CommResponse.CommWithRepliesDTO comm = commRepository.findByIdDetail(1);
+        System.out.println(comm.toString());
     }
 }

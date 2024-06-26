@@ -1,4 +1,3 @@
-
 {{> layout/header}}
 
 <!--커뮤니티 시작-->
@@ -20,11 +19,11 @@
                                 <a href="#">홈화면</a> > <a href="#">커뮤니티</a> > <a href="#"
                                                                                 class="active main-color">{{comm.category}}</a>
                             </div>
-                            <h4 class="card-title">{{comm.title}} 아이디 : {{comm.commId}}</h4>
+                            <h4 class="card-title">{{comm.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
-                                    <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
-                                    <span>{{comm.name}}</span><span class="time">{{comm.createdAt}}</span></div>
+                                    <figure><img src="{{comm.writerImage}}" alt="회원이미지"></figure>
+                                    <span>{{comm.writerName}}</span><span class="time">{{comm.timeAgo}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
                                         <button class=" defalut-btn" onclick="clip()"><i
@@ -43,7 +42,7 @@
                             <!--dropdown 시작..-->
 
                             <!--dropdown 끝-->
-                            <p class="card-text">내용입니다.</p>
+                            <p class="card-text">{{comm.content}}</p>
                             <br>
                             <br>
                             <br>
@@ -64,90 +63,102 @@
                     <!--댓글 제목 시작-->
                     <hr>
                     <br>
-                    <h3 class="page-title mb-20">전문답변 <span class="main-color">1</span> 개가 달렸어요.</h3>
 
-                    <!--전문가 댓글 시작-->
-
-                    <div class="expert-answer mb-20">
-                        <div class="expert-answer-header main-background">
-                            <div class="info">
-                                <img src="/images/user.png" alt="상담사 사진">
-                                <div class="answer-text">
-                                    <div class="name">강지선 상담사</div>
-                                    <div class="details">2급 심리상담사 · 20분 전</div>
+                    {{#comm.replies}}
+                        {{#userRole}}
+                            <!--전문가 댓글 시작-->
+                            <div class="expert-answer mb-20">
+                                <h3 class="page-title mb-20">전문답변 <span class="main-color">1</span> 개가 달렸어요.</h3>
+                                <div class="expert-answer-header main-background">
+                                    <div class="info">
+                                        <img src="/images/user.png" alt="상담사 사진">
+                                        <div class="answer-text">
+                                            <div class="name">{{name}} 상담사</div>
+                                            <div class="details">2급 심리상담사 · 20분 전</div>
+                                        </div>
+                                    </div>
+                                    <button class="defalut-btn main-background active-background">상담 받아보기</button>
                                 </div>
-                            </div>
-                            <button class="defalut-btn main-background active-background">상담 받아보기</button>
-                        </div>
-                        <div class="content">
-                            <h3 class="page-title mb-20">각인효과</h3>
-                            <div class="tags mb-10">
-                                <span>#답변태그1</span>
-                                <span>#답변태그2</span>
-                                <span>#스트레스</span>
-                                <span>#상담</span>
-                                <span>#우울</span>
-                            </div>
-                            <br>
-                            <h5 class="page-title">소개글</h5>
-                            <p class="detail-answer-reply mb-20">소개글입니다.</p>
-                            <br>
-                            <h5 class="page-title">📝 사례 요약</h5>
-                            <p class="detail-answer-reply mb-20">내용입니다.</p>
-                            <br>
-                            <h5 class="page-title">💡 원인 분석</h5>
-                            <p class="detail-answer-reply mb-20">내용입니다.</p>
-                            <br>
-                            <h5 class="page-title">🔧 대처 방안 제시</h5>
-                            <p class="detail-answer-reply mb-20">내용입니다.</p>
-                            <div class="bottom-content">
-                                <div class="click-wrapper">
-                                    <button>💬 도움돼요</button>
-                                </div>
-                                <div class="actions">
-                                    <div class="right-actions" style="display: flex">
-                                        <button class=" defalut-btn" onclick="clip()"><i
-                                                class="fa-regular fa-share-nodes"></i><span>공유하기</span></button>
-                                        <div class="dropdown">
-                                            <button class="drop-toggle"><i class="fa-regular fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="dropdown-item">신고하기</button>
-                                                <button class="dropdown-item">북마크하기</button>
+                                <div class="content">
+                                    <br>
+                                    <h5 class="page-title">소개글</h5>
+                                    <p class="detail-answer-reply mb-20">{{introduction}}</p>
+                                    <br>
+                                    <h5 class="page-title">📝 사례 요약</h5>
+                                    <p class="detail-answer-reply mb-20">{{summary}}</p>
+                                    <br>
+                                    <h5 class="page-title">💡 원인 분석</h5>
+                                    <p class="detail-answer-reply mb-20">{{causeAnalysis}}</p>
+                                    <br>
+                                    <h5 class="page-title">🔧 대처 방안 제시</h5>
+                                    <p class="detail-answer-reply mb-20">{{solution}}</p>
+                                    <div class="bottom-content">
+                                        <div class="click-wrapper">
+                                            <button>💬 도움돼요</button>
+                                        </div>
+                                        <div class="actions">
+                                            <div class="right-actions" style="display: flex">
+                                                <button class=" defalut-btn" onclick="clip()"><i
+                                                        class="fa-regular fa-share-nodes"></i><span>공유하기</span></button>
+                                                <div class="dropdown">
+                                                    <button class="drop-toggle"><i
+                                                            class="fa-regular fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button class="dropdown-item">신고하기</button>
+                                                        <button class="dropdown-item">북마크하기</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!--dropdown 시작..-->
+                                <!--dropdown 시작..-->
 
-                        <!--dropdown 끝-->
-                    </div>
-                    <div class="c-card ">
-                        <div class="c-card-body detail mb-20">
-                            <div class="community-cartegory">
-                                <div class="user-info">
-                                    <figure><img src="{{comm.clientImage}}" alt="회원이미지"></figure>
-                                    <span>{{comm.name}}</span></div>
+                                <!--dropdown 끝-->
                             </div>
-                            <p class="card-text mb-20">여기는 일반인 댓글 출력 공간입니다</p>
+                            <!--전문가 댓글 끝-->
+                        {{/userRole}}
+                        {{^userRole}}
+                            <!--일반인 댓글 시작-->
+                            <div class="c-card ">
+                                <div class="c-card-body detail mb-20">
+                                    <div class="community-cartegory">
+                                        <div class="user-info">
+                                            <figure><img src="" alt="회원이미지">일반인 이미지</figure>
+                                            <span>{{name}}</span>
+                                        </div>
+                                    </div>
+                                    <p class="card-text mb-20">{{content}}</p>
 
-                            <div class="bottom-content">
-                                <div class="click-wrapper">
-                                    <button>💬 도움돼요</button>
+                                    <div class="bottom-content">
+                                        <div class="click-wrapper">
+                                            <button>💬 도움돼요</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <!--일반인 댓글 끝-->
+                        {{/userRole}}
+                    {{/comm.replies}}
+
                     <div class="comment-section mb-50">
                         <input type="text" placeholder="따뜻한 댓글을 남겨주세요">
-                        {{#isUserRole}}
-                            <button class="main-background defalut-btn" onclick="openNewWindow({{comm.commId}})"> 전문가 댓글 게시</button>
-                        {{/isUserRole}}
-                        {{^isUserRole}}
-                            <button class="main-background defalut-btn">게시</button>
-                        {{/isUserRole}}
+                        {{^sessionUser}}
+                            <button class="main-background defalut-btn" onclick="clientReplyAction({{comm.id}})">게시
+                            </button>
+                        {{/sessionUser}}
+                        {{#sessionUser}}
+                            {{#isExpert}}
+                                <button class="main-background defalut-btn" onclick="openNewWindow({{comm.id}})">
+                                    전문가 댓글
+                                    게시
+                                </button>
+                            {{/isExpert}}
+                            {{#isClient}}
+                                <button class="main-background defalut-btn">게시</button>
+                            {{/isClient}}
+                        {{/sessionUser}}
                     </div>
 
                     <hr>
@@ -226,14 +237,52 @@
 
     // 전문가 댓글 달기 창 열기
     function openNewWindow(id) {
-        // 새로운 창으로 열고자 하는 URL을 여기에 입력하세요.
-        var url = "/expert/reply?id=" + id;
-
-        // 새 창의 특성을 지정할 수 있습니다. (폭, 높이 등)
-        var windowFeatures = "width=600, height=850,scrollbars=yes";
-        // 새 창 열기
-        window.open(url, "_blank", windowFeatures);
+        fetch(`/comm-detail/${id}/has-expert-reply`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        alert('이미 전문답변이 달린 글입니다.');
+                    } else {
+                        var url = "/expert/reply?id=" + id;
+                        var windowFeatures = "width=600, height=900, scrollbars=yes";
+                        window.open(url, "_blank", windowFeatures);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking expert reply:', error);
+                    alert('전문답변을 확인하는 중 오류가 발생했습니다.');
+                });
     }
+
+    // TODO : 하자
+    // 일반인 댓글 달기
+    function clientReplyAction(id) {
+        const content = document.getElementById('commentContent').value;
+
+        fetch('/client-reply/complete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                content: content
+            }),
+        })
+                .then(response => {
+                    if (response.ok) {
+                        alert('댓글이 성공적으로 등록되었습니다.');
+                        // 페이지 새로고침 또는 추가적인 처리
+                    } else {
+                        alert('댓글 등록 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error posting client reply:', error);
+                    alert('댓글 등록 중 오류가 발생했습니다.');
+                });
+    }
+
 </script>
 <!--컨텐츠 끝-->
 </div>

@@ -1,9 +1,6 @@
 package com.example.aboutme.comm;
 
-import com.example.aboutme.user.User;
-import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,28 +20,25 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-    public String detail(@PathVariable("id") Integer id, HttpServletRequest request, Model model) {
-        // 세션에서 사용자 정보 가져오기
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("sessionUser");
+    public String detail(@PathVariable("id") Integer id, Model model) {
 
-        CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-//        request.setAttribute("comm", comm);
-
-        // userRole이 EXPERT인 경우에는 true, 그 외에는 false
-        boolean isUserRole = user.getUserRole() == UserRole.EXPERT;
-
+        CommResponse.CommWithRepliesDTO comm = commService.findByIdDetail(id);
         model.addAttribute("comm", comm);
-        model.addAttribute("isUserRole", isUserRole);
 
         return "comm/comm-detail";
+    }
+
+    // 전문답변이 있는지 확인
+    @GetMapping("/comm-detail/{id}/has-expert-reply")
+    public boolean hasExpertReply(@PathVariable("id") Integer id) {
+        return commService.hasExpertReply(id);
     }
 
     @GetMapping("/comm")
     public String community(HttpServletRequest request) {
 
-        List<CommResponse.CommWithRepliesDTO> commsWithReplyList = commService.findAllCommWithReply();
-        request.setAttribute("commsWithReplyList", commsWithReplyList);
+        List<CommResponse.ALLCommWithRepliesDTO> allCommsWithReplyList = commService.findAllCommWithReply();
+        request.setAttribute("allCommsWithReplyList", allCommsWithReplyList);
 
         return "/comm/comm-main";
     }
