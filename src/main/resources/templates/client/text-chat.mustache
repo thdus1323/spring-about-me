@@ -17,13 +17,15 @@
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 <script>
     var stompClient = null;
 
     function connect() {
-        var socket = new SockJS('/chat');
+        var socket = new SockJS('http://localhost:8080/chat');
         stompClient = Stomp.over(socket);
 
         // SEND 메시지 로그 출력을 비활성화
@@ -68,7 +70,7 @@
                             content: messageContent,
                             id: sessionUser.id, // sessionUser의 id를 사용
                             profileImage: sessionUser.profileImage,
-                            counselId: {{reservationId}}
+                            voucherId: 1 // 임의로 1로 지정
                         };
                         stompClient.send('/app/sendMessage', {}, JSON.stringify(message));
                         messageInput.value = '';
@@ -139,18 +141,6 @@
         if (stompClient !== null) {
             stompClient.disconnect(function () {
                 console.log('Disconnected');
-                fetch('/chat/complete', {
-                    method: 'POST',
-                    credentials: 'include' // 세션 쿠키 포함
-                }).then((response) => {
-                    if (response.ok) {
-                        window.location.href = '/client/myPage'; // 마이페이지로 리다이렉트
-                    } else {
-                        console.error('Failed to complete the chat session');
-                    }
-                }).catch((error) => {
-                    console.error('Error completing chat session:', error);
-                });
             });
             stompClient = null; // stompClient를 null로 설정하여 새로고침 후에도 다시 연결 가능
         }
