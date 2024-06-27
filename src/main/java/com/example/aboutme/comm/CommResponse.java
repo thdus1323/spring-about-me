@@ -11,12 +11,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-
 import static java.util.stream.Collectors.toList;
-
 
 public class CommResponse {
 
@@ -44,19 +41,23 @@ public class CommResponse {
         }
     }
 
+    // 용꺼
+    // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO
     @Data
-    public static class CommWithRepliesDTO {
+    public static class ALLCommWithRepliesDTO {
         private Integer id;
         private String writerName;
+        private String writerImage;
         private String content;
         private String title;
         private String category;
         private int replies;
         private List<ExpertReplyDTO> expertReplies = new ArrayList<>();
 
-        public CommWithRepliesDTO(Comm comm) {
+        public ALLCommWithRepliesDTO(Comm comm) {
             this.id = comm.getId();
             this.writerName = comm.getUser().getName();
+            this.writerImage = comm.getUser().getProfileImage();
             this.content = comm.getContent();
             this.title = comm.getTitle();
             this.category = comm.getCategory().getKorean();
@@ -67,12 +68,14 @@ public class CommResponse {
                     .collect(Collectors.toList());
         }
 
+        // 전문가 DTO v2 <- 전문가 답변 싹 다 출력할때 쓰는거임
         @Data
         public static class ExpertReplyDTO {
             private Integer id;
             private String solution;
             private String profileImage;
             private String expertName;
+
             private boolean userRole;
 
             public ExpertReplyDTO(Reply reply) {
@@ -152,8 +155,10 @@ public class CommResponse {
                 this.solution = reply.getSolution();
                 this.content = reply.getContent();
             }
+        }
+    }
 
-    //<--커뮤니티 detail 시작-->
+    //<--커뮤니티 detail 시작--> 소연님
     @Data
     public static class CommDetailDTO {
         private CommDTO commDTO;
@@ -168,53 +173,7 @@ public class CommResponse {
             this.relatedComms = relatedComms.stream()
                     .map(RelatedCommWithRepliesDTO::new)
                     .toList();
-
         }
-
-
-    // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO
-    @Data
-    public static class ALLCommWithRepliesDTO {
-        private Integer id;
-        private String writerName;
-        private String writerImage;
-        private String content;
-        private String title;
-        private String category;
-        private int replies;
-        private List<ExpertReplyDTO> expertReplies = new ArrayList<>();
-
-        public ALLCommWithRepliesDTO(Comm comm) {
-            this.id = comm.getId();
-            this.writerName = comm.getUser().getName();
-            this.writerImage = comm.getUser().getProfileImage();
-            this.content = comm.getContent();
-            this.title = comm.getTitle();
-            this.category = comm.getCategory().getKorean();
-            this.replies = (int) comm.getReplies().stream().count();
-            this.expertReplies = comm.getReplies() == null ? new ArrayList<>() : comm.getReplies().stream()
-                    .filter(reply -> reply.getUser() != null)
-                    .map(ExpertReplyDTO::new)
-                    .collect(Collectors.toList());
-        }
-
-        @Data
-        public static class ExpertReplyDTO {
-            private Integer id;
-            private String solution;
-            private String profileImage;
-            private String expertName;
-            private boolean userRole;
-
-            public ExpertReplyDTO(Reply reply) {
-                this.id = reply.getId();
-                this.solution = reply.getSolution();
-                this.profileImage = reply.getUser().getProfileImage();
-                this.expertName = reply.getUser().getName();
-                this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
-            }
-        }
-    }
 
         @Data
         public static class CommDTO {
