@@ -61,7 +61,7 @@ public class CounselService {
                     voucherType,
                     voucherTotal,
                     voucherRemain,
-                    counsel.getCounselDate().toLocalDate().toString() // applyDate는 Counsel의 counselDate를 사용
+                    counsel.getCounselDate() // applyDate는 Counsel의 counselDate를 사용
             );
 
         }).collect(Collectors.toList());

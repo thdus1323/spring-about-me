@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ReservationController {
     private final ReservationService reservationService;
     private final RedisUtil redisUtil;
-    private final RedisTemplate<String, Object> redisTemp;
-
 
     //    전문가 칮기 - 예약하기
     @GetMapping("/client/findExpert/reservation")
@@ -50,6 +48,7 @@ public class ReservationController {
         model.addAttribute("model", reservationDetailsDTO);
         return "client/makeReservation";
     }
+
 
     @PostMapping("/client/myPage/reservation")
     public String makeReservation(ReservationRepDTO reqDTO) {

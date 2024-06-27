@@ -1,6 +1,7 @@
 package com.example.aboutme.payment;
 
 import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.payment.PaymentRequestRecord.CompletePaymentAndCounselReqDTO;
 import com.example.aboutme.payment.PaymentRequestRecord.PaymentPortOneReqDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentPortOneRespDTO;
@@ -26,6 +27,7 @@ public class PaymentController {
     private final RedisTemplate<String, Object> redisTemp;
     private final RedisUtil redisUtil;
 
+
     //전문가 칮기 - 결제하기
     @GetMapping("/client/findExpert/payment/{reservationId}")
     public String findExpertPayment(@PathVariable("reservationId") Integer reservationId, Model model) {
@@ -45,8 +47,11 @@ public class PaymentController {
 
 
     @PostMapping("/payments/complete")
-    public ResponseEntity<String> completePayment(@RequestParam String impUid, @RequestParam String merchantUid, @RequestParam Integer reservationId) {
-        paymentService.completePayment(impUid, merchantUid, reservationId);
+    public ResponseEntity<String> completePayment(CompletePaymentAndCounselReqDTO reqDTO) {
+        log.info("결제완료됨 {}", reqDTO);
+        SessionUser sessionUser = redisUtil.getSessionUser();
+
+        paymentService.completePayment(reqDTO,sessionUser);
         return ResponseEntity.ok("/");
     }
 

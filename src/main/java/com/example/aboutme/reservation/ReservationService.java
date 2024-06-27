@@ -38,6 +38,13 @@ public class ReservationService {
 
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new Exception400("해당 예약정보를 찾을 수 없습니다."));
+
+        PaymentDetailsDTO.ReservationDTO reservationDTO = PaymentDetailsDTO.ReservationDTO.builder()
+                .reservationDate(reservation.getReservationDate())
+                .reservationTime(reservation.getReservationTime())
+                .reservationId(reservation.getId())
+                .build();
+
         log.info("Reservation found: {}", reservation);
 
         User expert = userRepository.findById(reservation.getExpert().getId())
@@ -50,6 +57,7 @@ public class ReservationService {
 
         String formattedPrice = Formatter.number((int) voucher.getPrice());
         log.info("Formatted price: {}", formattedPrice);
+
 
         PaymentDetailsDTO.VoucherDTO voucherDTO = new PaymentDetailsDTO.VoucherDTO(
                 voucher.getId(),
@@ -64,7 +72,7 @@ public class ReservationService {
                 expert.getLevel().getKorean()
         );
 
-        PaymentDetailsDTO paymentDetailsDTO = new PaymentDetailsDTO(voucherDTO, expertDTO, reservationId);
+        PaymentDetailsDTO paymentDetailsDTO = new PaymentDetailsDTO(voucherDTO, expertDTO, reservationDTO);
         log.info("PaymentDetailsDTO: {}", paymentDetailsDTO);
 
         return paymentDetailsDTO;
@@ -93,7 +101,7 @@ public class ReservationService {
                 .client(client)
                 .reservationDate(reqDTO.reservationDate())
                 .dayOfWeek(reqDTO.dayOfWeek())
-                .startTime(reqDTO.startTime())
+                .reservationTime(reqDTO.startTime())
                 .expert(expert)
                 .voucher(voucher)
                 .schedule(schedule)
@@ -125,7 +133,7 @@ public class ReservationService {
                 .client(client)
                 .reservationDate(reqDTO.reservationDate())
                 .dayOfWeek(reqDTO.dayOfWeek())
-                .startTime(reqDTO.startTime())
+                .reservationTime(reqDTO.startTime())
                 .expert(expert)
                 .voucher(voucher)
                 .schedule(schedule)

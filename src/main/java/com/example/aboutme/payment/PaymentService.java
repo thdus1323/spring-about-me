@@ -1,5 +1,9 @@
 package com.example.aboutme.payment;
 
+import com.example.aboutme.counsel.Counsel;
+import com.example.aboutme.counsel.CounselRepository;
+import com.example.aboutme.counsel.enums.CounselStateEnum;
+import com.example.aboutme.payment.PaymentRequestRecord.CompletePaymentAndCounselReqDTO;
 import com.example.aboutme.payment.PaymentRequestRecord.PaymentPortOneReqDTO;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentPortOneRespDTO;
 import com.example.aboutme.payment.enums.PaymentMethods;
@@ -27,6 +31,7 @@ public class PaymentService {
     private final UserRepository userRepository;
     private final VoucherRepository voucherRepository;
     private final ReservationRepository reservationRepository;
+    private final CounselRepository counselRepository;
 
     //결제데이터 받아서 임시저장
     @Transactional
@@ -38,7 +43,7 @@ public class PaymentService {
 
         Payment payment = Payment.builder()
                 .amount(reqDTO.amount())
-                .paymentMethod(PaymentMethods.fromKorean(reqDTO.paymentMethod()))
+                .paymentMethod(reqDTO.paymentMethod())
                 .client(client)
                 .voucher(voucher)
                 .status(PaymentStatus.PENDING)
@@ -52,7 +57,7 @@ public class PaymentService {
                 payment.getImpUid(),
                 payment.getMerchantUid(),
                 payment.getAmount(),
-                payment.getPaymentMethod().getKorean(),
+                payment.getPaymentMethod(),
                 client.getName(),
                 client.getPhone(),
                 payment.getStatus().name()
@@ -61,16 +66,32 @@ public class PaymentService {
 
     //임시 저장한 결제가 완료되면 'COMPLETED' 로 변경
     @Transactional
-    public String completePayment(String impUid, String merchantUid, Integer reservationId) {
-        Payment payment = paymentRepository.findByMerchantUid(merchantUid)
+    public String completePayment(CompletePaymentAndCounselReqDTO reqDTO,SessionUser sessionUser) {
+        Payment payment = paymentRepository.findByMerchantUid(reqDTO.merchantUid())
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 결제 내역이 없습니다."));
+        User client = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        User expert = userRepository.findById(reqDTO.expertId())
+                .orElseThrow(() -> new IllegalArgumentException("전문가를 찾을 수 없습니다."));
 
-        payment.setImpUid(impUid);
+
+        payment.setImpUid(reqDTO.impUid());
         payment.setStatus(PaymentStatus.COMPLETED);
         paymentRepository.save(payment);
 
+        //상담등록
+        Counsel counsel = Counsel.builder()
+                .counselDate(reqDTO.reservationDate())
+                .counselTime(reqDTO.reservationTime())
+                .client(client)
+                .expert(expert)
+                .state(CounselStateEnum.PENDING)
+                .build();
+        counselRepository.save(counsel);
+
+
         // 예약 상태를 변경하는 로직 추가
-        Reservation reservation = reservationRepository.findById(reservationId)
+        Reservation reservation = reservationRepository.findById(reqDTO.reservationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 예약 내역이 없습니다."));
         reservation.setStatus(ReservationStatus.COMPLETED);
         reservationRepository.save(reservation);
@@ -95,7 +116,7 @@ public class PaymentService {
                         payment.getImpUid(),
                         payment.getMerchantUid(),
                         payment.getAmount(),
-                        payment.getPaymentMethod().getKorean(),
+                        payment.getPaymentMethod(),
                         payment.getClient().getName(),
                         payment.getClient().getPhone(),
                         payment.getStatus().name()

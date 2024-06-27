@@ -24,9 +24,8 @@ public class Payment {
     @Column(nullable = false)
     private double amount;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentMethods paymentMethod;
+    private String paymentMethod;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
@@ -49,7 +48,7 @@ public class Payment {
     private String merchantUid; // 상점 거래 고유 ID
 
     @Builder
-    public Payment(Integer id, double amount, PaymentMethods paymentMethod, User client, Voucher voucher, Timestamp paymentDate, PaymentStatus status, String impUid, String merchantUid) {
+    public Payment(Integer id, double amount, String paymentMethod, User client, Voucher voucher, Timestamp paymentDate, PaymentStatus status, String impUid, String merchantUid) {
         this.id = id;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
