@@ -1,4 +1,4 @@
-package com.example.aboutme.payment.PaymentRequestRecord;
+package com.example.aboutme.counsel.CounselRequestRecord;
 
 public record CompletePaymentAndCounselReqDTO(
         Integer voucherId,
@@ -8,4 +8,5 @@ public record CompletePaymentAndCounselReqDTO(
         Integer reservationId,
         String reservationDate,
         String reservationTime
-) {}
+) {
+}

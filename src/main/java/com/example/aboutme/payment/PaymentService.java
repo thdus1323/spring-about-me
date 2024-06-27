@@ -2,15 +2,13 @@ package com.example.aboutme.payment;
 
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
-import com.example.aboutme.counsel.enums.CounselStateEnum;
-import com.example.aboutme.payment.PaymentRequestRecord.CompletePaymentAndCounselReqDTO;
-import com.example.aboutme.payment.PaymentRequestRecord.PaymentPortOneReqDTO;
+import com.example.aboutme.counsel.CounselRequestRecord.CompletePaymentAndCounselReqDTO;
+import com.example.aboutme.counsel.CounselRequestRecord.PaymentPortOneReqDTO;
+import com.example.aboutme.counsel.enums.CounselStatus;
+import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentPortOneRespDTO;
 import com.example.aboutme.payment.enums.PaymentMethods;
 import com.example.aboutme.payment.enums.PaymentStatus;
-import com.example.aboutme.reservation.Reservation;
-import com.example.aboutme.reservation.ReservationRepository;
-import com.example.aboutme.reservation.enums.ReservationStatus;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
@@ -30,8 +28,8 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
     private final VoucherRepository voucherRepository;
-    private final ReservationRepository reservationRepository;
     private final CounselRepository counselRepository;
+
 
     //결제데이터 받아서 임시저장
     @Transactional
@@ -43,11 +41,14 @@ public class PaymentService {
 
         Payment payment = Payment.builder()
                 .amount(reqDTO.amount())
-                .paymentMethod(reqDTO.paymentMethod())
+                .paymentMethod(PaymentMethods.fromKorean(reqDTO.paymentMethod()))
                 .client(client)
                 .voucher(voucher)
-                .status(PaymentStatus.PENDING)
+                .paymentStatus(PaymentStatus.PENDING)
                 .merchantUid(reqDTO.merchantUid())
+                .voucherPrice(reqDTO.price())
+                .voucherDuration(reqDTO.duration())
+                .voucherCount(reqDTO.count())
                 .build();
 
         paymentRepository.save(payment);
@@ -57,26 +58,29 @@ public class PaymentService {
                 payment.getImpUid(),
                 payment.getMerchantUid(),
                 payment.getAmount(),
-                payment.getPaymentMethod(),
+                payment.getPaymentMethod().getKorean(),
                 client.getName(),
                 client.getPhone(),
-                payment.getStatus().name()
+                payment.getPaymentStatus().getKorean()
         );
     }
 
     //임시 저장한 결제가 완료되면 'COMPLETED' 로 변경
     @Transactional
-    public String completePayment(CompletePaymentAndCounselReqDTO reqDTO,SessionUser sessionUser) {
+    public String completePayment(CompletePaymentAndCounselReqDTO reqDTO, SessionUser sessionUser) {
         Payment payment = paymentRepository.findByMerchantUid(reqDTO.merchantUid())
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 결제 내역이 없습니다."));
         User client = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         User expert = userRepository.findById(reqDTO.expertId())
                 .orElseThrow(() -> new IllegalArgumentException("전문가를 찾을 수 없습니다."));
+        Voucher voucher = voucherRepository.findById(reqDTO.voucherId())
+                .orElseThrow(() -> new IllegalArgumentException("전문가를 찾을 수 없습니다."));
 
 
         payment.setImpUid(reqDTO.impUid());
-        payment.setStatus(PaymentStatus.COMPLETED);
+        payment.setPaymentStatus(PaymentStatus.COMPLETED);
+        payment.setPaymentMethod(PaymentMethods.CREDIT_CARD);
         paymentRepository.save(payment);
 
         //상담등록
@@ -85,27 +89,28 @@ public class PaymentService {
                 .counselTime(reqDTO.reservationTime())
                 .client(client)
                 .expert(expert)
-                .state(CounselStateEnum.PENDING)
+                .voucher(voucher)
+                .counselStatus(CounselStatus.PENDING)
                 .build();
         counselRepository.save(counsel);
 
 
         // 예약 상태를 변경하는 로직 추가
-        Reservation reservation = reservationRepository.findById(reqDTO.reservationId())
+        Counsel reservation = counselRepository.findById(reqDTO.reservationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 예약 내역이 없습니다."));
-        reservation.setStatus(ReservationStatus.COMPLETED);
-        reservationRepository.save(reservation);
+        reservation.setReservationStatus(ReservationStatus.COMPLETED);
+        counselRepository.save(reservation);
 
         return "Payment completed: " + payment.getId();
     }
 
     private void updateReservationStatus(Payment payment) {
-        Reservation reservation = reservationRepository.findByVoucherIdAndStatus(
+        Counsel reservation = counselRepository.findByVoucherIdAndReservationStatus(
                         payment.getVoucher().getId(), ReservationStatus.PENDING)
                 .orElseThrow(() -> new IllegalArgumentException("예약 대기 상태의 예약을 찾을 수 없습니다."));
 
-        reservation.setStatus(ReservationStatus.SCHEDULED);
-        reservationRepository.save(reservation);
+        reservation.setReservationStatus(ReservationStatus.SCHEDULED);
+        counselRepository.save(reservation);
     }
 
     //결제내역 뷰에 반환
@@ -116,10 +121,10 @@ public class PaymentService {
                         payment.getImpUid(),
                         payment.getMerchantUid(),
                         payment.getAmount(),
-                        payment.getPaymentMethod(),
+                        payment.getPaymentMethod().getKorean(),
                         payment.getClient().getName(),
                         payment.getClient().getPhone(),
-                        payment.getStatus().name()
+                        payment.getPaymentStatus().getKorean()
                 ))
                 .collect(Collectors.toList());
     }
