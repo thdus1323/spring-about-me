@@ -60,6 +60,9 @@
                             <input type="hidden" id="reservationTime" value="{{reservation.reservationTime}}">
                             <input type="hidden" id="voucherId" name="voucherId" value="{{voucher.id}}">
                             <input type="hidden" id="expertId" name="expertId" value="{{voucher.expertId}}">
+                            <input type="hidden" id="price" name="price" value="{{voucher.price}}">
+                            <input type="hidden" id="count" name="count" value="{{voucher.count}}">
+                            <input type="hidden" id="duration" name="duration" value="{{voucher.duration}}">
                         </div>
                     </div>
                 </div>
@@ -112,6 +115,11 @@
             const voucherId = $('#voucherId').val();
             const reservationId = $('#reservationId').val();
             const expertId = $('#expertId').val();
+            const reservationDate = $('#reservationDate').val();
+            const reservationTime = $('#reservationTime').val();
+            const price = $('#price').val();
+            const duration = $('#duration').val();
+            const voucherType = $('#voucherType').val();
 
             const merchantUid = 'order_' + new Date().getTime(); // 유니크한 주문 ID 생성
 
@@ -122,9 +130,12 @@
                 contentType: 'application/json',
                 data: JSON.stringify({
                     amount: amount,
-                    paymentMethod: "card",
+                    price: price,
+                    paymentMethod: "카드",
                     voucherId: voucherId,
-                    merchantUid: merchantUid
+                    merchantUid: merchantUid,
+                    duration: duration,
+                    voucherType: voucherType
                 }),
                 success: function (response) {
                     console.log("서버에서 결제 요청 처리 완료:", response);
@@ -147,7 +158,9 @@
                                     merchantUid: rsp.merchant_uid,
                                     reservationId: reservationId,
                                     voucherId: voucherId,
-                                    expertId: expertId
+                                    expertId: expertId,
+                                    reservationDate: reservationDate,
+                                    reservationTime: reservationTime
                                 }, function (data) {
                                     alert("홈페이지로 이동합니다.");
                                     console.log("결제 완료 응답:", data);

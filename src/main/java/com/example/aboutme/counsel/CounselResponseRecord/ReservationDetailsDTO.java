@@ -1,4 +1,4 @@
-package com.example.aboutme.reservation.resrvationResponse;
+package com.example.aboutme.counsel.CounselResponseRecord;
 
 public record ReservationDetailsDTO(
         VoucherDTO voucher,

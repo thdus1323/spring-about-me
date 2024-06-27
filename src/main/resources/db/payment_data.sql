@@ -1,16 +1,17 @@
-
-
 -- payment_tb 테이블에 데이터 추가
-INSERT INTO payment_tb (amount, payment_method, client_id, voucher_id, payment_date, status, imp_uid, merchant_uid)
-VALUES
-    (50000, 'CREDIT_CARD', 1, 1, NOW(), 'COMPLETED', 'imp_123456789', 'merchant_123456789');
---     (30000, 'CREDIT_CARD', 2, 2, NOW(), 'PENDING', 'imp_987654321', 'merchant_987654321'),
---     (45000, 'CREDIT_CARD', 3, 3, NOW(), 'FAILED', 'imp_192837465', 'merchant_192837465'),
---     (20000, 'CREDIT_CARD', 4, 4, NOW(), 'COMPLETED', 'imp_564738291', 'merchant_564738291'),
---     (60000, 'CREDIT_CARD', 5, 5, NOW(), 'REFUNDED', 'imp_918273645', 'merchant_918273645'),
---     (35000, 'CREDIT_CARD', 6, 6, NOW(), 'COMPLETED', 'imp_736281940', 'merchant_736281940'),
---     (25000, 'CREDIT_CARD', 7, 7, NOW(), 'PENDING', 'imp_109283746', 'merchant_109283746'),
---     (55000, 'CREDIT_CARD', 8, 8, NOW(), 'COMPLETED', 'imp_283746591', 'merchant_283746591'),
---     (40000, 'CREDIT_CARD', 9, 9, NOW(), 'FAILED', 'imp_928374651', 'merchant_928374651'),
---     (15000, 'CREDIT_CARD', 10, 10, NOW(), 'REFUNDED', 'imp_847362910', 'merchant_847362910');
+INSERT INTO payment_tb (client_id, voucher_id, expert_id, voucher_price, amount, voucher_type, voucher_count,
+                        voucher_duration,
+                        payment_method, payment_date, payment_status,
+                        imp_uid,
+                        merchant_uid, created_at, updated_at)
+VALUES (1, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_123456789',
+        'merchant_123456789',
+        NOW(), NOW()),
+       (1, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_123456789',
+        'merchant_123456789',
+        NOW(), NOW()),
+       (1, 3, 21, 25000, 20000, 'VOICE_THERAPY', 4, 30, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_123456789',
+        'merchant_123456789',
+        NOW(), NOW());
+
 

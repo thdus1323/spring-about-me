@@ -1,12 +1,12 @@
-
 -- voucher_tb 테이블에 데이터 추가
-INSERT INTO voucher_tb (id, voucher_type, expert_id, price, count, duration, image_path,  created_at,
+INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_path, created_at,
                         updated_at)
 VALUES
     -- Expert 1 has 3 voucher types
-    (1, 'TEXT_THERAPY', 21, 10000, 8, 60, '/images/chat.png', NOW(), NOW()),
-    (2, 'VOICE_THERAPY', 21, 15000, 1, 30, '/images/call.png',NOW(), NOW()),
-    (3, 'VIDEO_THERAPY', 21, 20000, 1, 45, '/images/video.png', NOW(), NOW());
+    ('TEXT_THERAPY', 21, 15000, 1, 50, '/images/chat.png', NOW(), NOW()),
+    ('TEXT_THERAPY', 21, 15000, 4, 50, '/images/chat.png', NOW(), NOW()),
+    ('VOICE_THERAPY', 21, 25000, 1, 30, '/images/call.png', NOW(), NOW()),
+    ('VIDEO_THERAPY', 21, 15000, 1, 40, '/images/video.png', NOW(), NOW());
 
 --     -- Expert 1 has 3 voucher types
 --     (1, 'TEXT_THERAPY', 21, 10000, 1, 60, '/images/chat.png', NOW(), NOW()),

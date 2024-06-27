@@ -1,4 +1,4 @@
-package com.example.aboutme.reservation.enums;
+package com.example.aboutme.counsel.enums;
 
 
 public enum ReservationStatus {

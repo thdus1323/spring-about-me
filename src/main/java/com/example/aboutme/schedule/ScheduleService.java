@@ -1,7 +1,7 @@
 package com.example.aboutme.schedule;
 
-import com.example.aboutme.reservation.Reservation;
-import com.example.aboutme.reservation.ReservationRepository;
+import com.example.aboutme.counsel.Counsel;
+import com.example.aboutme.counsel.CounselRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
-    private final ReservationRepository reservationRepository;
+    private final CounselRepository counselRepository;
+
 
     // 전문가의 특정 날짜에 대한 예약 가능 시간을 찾는 메서드
     public List<String> getAvailableTimesForDate(int expertId, LocalDate date) {
@@ -43,11 +44,11 @@ public class ScheduleService {
 
         // 해당 날짜에 이미 예약된 시간을 조회
         String reservationDate = date.toString();
-        List<Reservation> reservations = reservationRepository.findByExpertIdAndReservationDate(expertId, reservationDate);
+        List<Counsel> reservations = counselRepository.findByExpertIdAndReservationDate(expertId, reservationDate);
 
         // 이미 예약된 시간대를 제거
-        for (Reservation reservation : reservations) {
-            availableTimes.remove(LocalTime.parse(reservation.getReservationTime()));
+        for (Counsel reservation : reservations) {
+            availableTimes.remove(LocalTime.parse(reservation.getCounselDate()));
         }
 
         // 예약 가능 시간을 정렬하여 반환
