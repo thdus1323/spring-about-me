@@ -64,6 +64,7 @@ public class Reply {
     }
 
     // 일반인 댓글 생성자
+    @Builder
     public Reply(User user, Comm comm, ReplyResponse.ClientReplyDataDTO newReply) {
         this.user = user;
         this.comm = comm;

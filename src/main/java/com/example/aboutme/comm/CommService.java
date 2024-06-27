@@ -1,7 +1,6 @@
 package com.example.aboutme.comm;
 
 import com.example.aboutme._core.error.exception.Exception404;
-import com.example.aboutme.comm.ResourceNotFoundException.ResourceNotFoundException;
 import com.example.aboutme.reply.Reply;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.user.enums.UserRole;
@@ -10,16 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
 @Service
 public class CommService {
     private final CommRepository commRepository;
-//    private final CommNativeRepository commNativeRepository;
+    //    private final CommNativeRepository commNativeRepository;
     private final ReplyRepository replyRepository;
 
 
@@ -35,7 +32,11 @@ public class CommService {
         // 같은 카테고리의 다른 글들과 해당 글들의 댓글을 가져옵니다.
         List<Comm> relatedComms = commRepository.findByCategoryWithRepliesAndExcludeId(comm.getCategory(), comm.getId());
 
-        return new CommResponse.CommDetailDTO(comm, replies, relatedComms);
+        // CommDetailDTO 생성 및 timeAgo 계산
+        CommResponse.CommDetailDTO commDetailDTO = new CommResponse.CommDetailDTO(comm, replies, relatedComms);
+        commDetailDTO.getCommDTO().calculateTimeAgo();  // timeAgo 계산
+
+        return commDetailDTO;
     }
 
 
