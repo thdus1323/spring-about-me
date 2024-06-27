@@ -35,13 +35,16 @@ public class Counsel {
     private Voucher voucher;
 
     @Column(nullable = false)
-    private LocalDateTime counselDate;
+    private String counselDate;
+
+    @Column(nullable = false)
+    private String counselTime;
 
     private String result; // 상담결과
 
     @CreationTimestamp
-
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 
@@ -49,12 +52,13 @@ public class Counsel {
     private CounselStateEnum state;
 
     @Builder
-    public Counsel(Integer id, User client, User expert, Voucher voucher, LocalDateTime counselDate, String result, Timestamp createdAt, Timestamp updatedAt, CounselStateEnum state) {
+    public Counsel(Integer id, User client, User expert, Voucher voucher, String counselDate, String counselTime, String result, Timestamp createdAt, Timestamp updatedAt, CounselStateEnum state) {
         this.id = id;
         this.client = client;
         this.expert = expert;
         this.voucher = voucher;
         this.counselDate = counselDate;
+        this.counselTime = counselTime;
         this.result = result;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

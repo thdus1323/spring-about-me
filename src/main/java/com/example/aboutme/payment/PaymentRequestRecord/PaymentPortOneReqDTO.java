@@ -5,5 +5,6 @@ public record PaymentPortOneReqDTO(
         String paymentMethod,
         Integer voucherId,
         String merchantUid
+
 ) {
 }

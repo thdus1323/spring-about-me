@@ -51,7 +51,7 @@ public class Reservation {
 
     // 예약 시작 시간
     @Column(nullable = false)
-    private String startTime;
+    private String reservationTime;
 
     // 예약 날짜
     @Column(nullable = false)
@@ -70,14 +70,14 @@ public class Reservation {
     private Timestamp updatedAt;
 
     @Builder
-    public Reservation(Integer id, User expert, User client, Voucher voucher, Schedule schedule, ReservationStatus status, String startTime, String reservationDate, String dayOfWeek, Timestamp createdAt, Timestamp updatedAt) {
+    public Reservation(Integer id, User expert, User client, Voucher voucher, Schedule schedule, ReservationStatus status, String reservationTime, String reservationDate, String dayOfWeek, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.expert = expert;
         this.client = client;
         this.voucher = voucher;
         this.schedule = schedule;
         this.status = status;
-        this.startTime = startTime;
+        this.reservationTime = reservationTime;
         this.reservationDate = reservationDate;
         this.dayOfWeek = dayOfWeek;
         this.createdAt = createdAt;

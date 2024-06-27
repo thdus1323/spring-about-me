@@ -1,11 +1,19 @@
 package com.example.aboutme.payment.PaymentResponseRecord;
 
+import lombok.Builder;
+
 public record PaymentDetailsDTO(
         VoucherDTO voucher,
         ExpertDTO user,
-        Integer reservationId
-) {
+        ReservationDTO reservation
 
+) {
+    @Builder
+    public record ReservationDTO(
+            Integer reservationId,
+            String reservationDate,
+            String reservationTime
+    ){}
     public record VoucherDTO(
             Integer id,
             String voucherType,

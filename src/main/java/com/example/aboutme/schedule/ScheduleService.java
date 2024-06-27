@@ -47,7 +47,7 @@ public class ScheduleService {
 
         // 이미 예약된 시간대를 제거
         for (Reservation reservation : reservations) {
-            availableTimes.remove(LocalTime.parse(reservation.getStartTime()));
+            availableTimes.remove(LocalTime.parse(reservation.getReservationTime()));
         }
 
         // 예약 가능 시간을 정렬하여 반환

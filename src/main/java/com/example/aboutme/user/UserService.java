@@ -99,7 +99,7 @@ public class UserService {
                             .voucherId(v.getId())
                             .expertId(v.getExpert().getId())
                             .clientId(payment.getClient().getId())
-                            .paymentMethod(payment.getPaymentMethod().getKorean())
+                            .paymentMethod(payment.getPaymentMethod())
                             .price(Formatter.number((int) v.getPrice()))
                             .count(v.getCount())
                             .remainingCount(remainingCount)  // 예약 가능한 횟수
@@ -129,7 +129,7 @@ public class UserService {
                             .voucherId(r.getVoucher().getId())
                             .scheduleId(r.getSchedule().getId())
                             .status(r.getStatus().getKorean())
-                            .startTime(r.getStartTime())
+                            .startTime(r.getReservationTime())
                             .reservationDate(r.getReservationDate())
                             .dayOfWeek(r.getDayOfWeek())
                             .createdAt(r.getCreatedAt())
@@ -152,7 +152,7 @@ public class UserService {
                             .expertId(c.getExpert().getId())
                             .clientId(c.getClient().getId())
                             .voucherId(c.getVoucher().getId())
-                            .counselDate(Formatter.formatDate(c.getCounselDate()))
+                            .counselDate(c.getCounselDate())
                             .state(c.getState().getKorean())
                             .createdAt(c.getCreatedAt().toString())
                             .updatedAt(c.getUpdatedAt().toString())
@@ -172,32 +172,6 @@ public class UserService {
         return new UserProfileDTO(userProfile, paymentAndVouchers, progressReservations, completedCounsels, commPosts);
     }
 
-
-//    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
-//        User user = userRepository.findById(sessionUser.getId())
-//                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
-//
-//        List<UserProfileDTO.VoucherDTO> vouchers = voucherRepository.findByUserId(sessionUser.getId()).stream()
-//                .map(v -> new UserProfileDTO.VoucherDTO(
-//                        v.getId(), v.getVoucherType().getKorean(), v.getExpert().getId(), formatter.number((int) v.getPrice()),
-//                        v.getCount(), v.getDuration(),
-//                        v.getCreatedAt(), v.getUpdatedAt()))
-//                .toList();
-//
-//        List<UserProfileDTO.ReservationDTO> reservations = reservationRepository.findByUserId(sessionUser.getId()).stream()
-//                .map(r -> new UserProfileDTO.ReservationDTO(
-//                        r.getId(), r.getExpert().getId(), r.getClient().getId(), r.getVoucher().getId(),
-//                        r.getSchedule().getId(), r.getStatus().getKorean(), r.getStartTime(), r.getReservationDate(),
-//                        r.getDayOfWeek(), r.getCreatedAt(), r.getUpdatedAt()))
-//                .toList();
-//
-//        List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
-//                .map(c -> new UserProfileDTO.Comm(
-//                        c.getId(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
-//                .toList();
-//
-//        return new UserProfileDTO(user, vouchers, reservations, commPosts);
-//    }
 
     public void updateUserProfile(UserProfileUpdateReqDTO reqDTO) {
         log.info("유저 프로필 수정 업데이트: {}", reqDTO);
