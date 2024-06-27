@@ -69,4 +69,5 @@ public class Reply {
         this.comm = comm;
         this.content = newReply.getContent();
     }
+
 }

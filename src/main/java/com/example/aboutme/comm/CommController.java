@@ -5,6 +5,7 @@ import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +33,10 @@ public class CommController {
     }
 
     // 전문답변이 있는지 확인
-    @GetMapping("/comm-detail/{id}/has-expert-reply")
-    public boolean hasExpertReply(@PathVariable("id") Integer id) {
-        return commService.hasExpertReply(id);
+    @GetMapping("/api/comm-detail/{id}/has-expert-reply")
+    public ResponseEntity<Boolean> hasExpertReply(@PathVariable("id") Integer id) {
+        boolean hasExpertReply = commService.hasExpertReply(id);
+        return ResponseEntity.ok(hasExpertReply);
     }
 
     @GetMapping("/comm")

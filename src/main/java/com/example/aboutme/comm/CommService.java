@@ -38,6 +38,7 @@ public class CommService {
         return new CommResponse.CommDetailDTO(comm, replies, relatedComms);
     }
 
+
     // 모든 글,댓글 가져오기
     @Transactional
     public List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReply() {
