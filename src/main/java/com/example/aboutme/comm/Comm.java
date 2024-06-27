@@ -50,4 +50,17 @@ public class Comm {
         this.replies = replies;
         this.createdAt = createdAt;
     }
+
+    public Comm(User user, CommRequest.RequestCommDTO commRequest) {
+        this.user = user;
+        this.title = commRequest.getTitle();
+        this.content = commRequest.getContent();
+
+        for (CommCategory category : CommCategory.values()) {
+            if (category.getKorean().equals(commRequest.getCategory())) { // getKorean() 메서드로 비교
+                this.category = category;
+                break;
+            }
+        }
+    }
 }
