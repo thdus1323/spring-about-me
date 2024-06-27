@@ -1,7 +1,6 @@
 package com.example.aboutme.comm;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +27,10 @@ public class CommController {
     public String detail(@PathVariable("id") Integer id, Model model) throws JsonProcessingException {
 
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-        String json = new ObjectMapper().writeValueAsString(comm);
-        log.info("디테일  {}", json);
+        
+//        String json = new ObjectMapper().writeValueAsString(comm);
+//        log.info("디테일  {}", json);
+
         model.addAttribute("comm", comm);
 
         return "comm/comm-detail";

@@ -8,7 +8,8 @@
             <div class="form-write-group">
                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                             일반 고민
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -16,50 +17,31 @@
                             <li><a class="dropdown-item" href="#">취업/진로</a></li>
                             <li><a class="dropdown-item" href="#">직장</a></li>
                             <li><a class="dropdown-item" href="#">연애</a></li>
-                            <li><a class="dropdown-item" href="#">성추행</a></li>
-                            <li><a class="dropdown-item" href="#">결혼/육아</a></li>
                             <li><a class="dropdown-item" href="#">대인관계</a></li>
-                            <li><a class="dropdown-item" href="#">외모</a></li>
-                            <li><a class="dropdown-item" href="#">가족</a></li>
-                            <li><a class="dropdown-item" href="#">학업/고시</a></li>
-                            <li><a class="dropdown-item" href="#">금전/사업</a></li>
-                            <li><a class="dropdown-item" href="#">성생활</a></li>
-                            <li><a class="dropdown-item" href="#">이별/이혼</a></li>
                             <li><a class="dropdown-item" href="#">중독/집착</a></li>
-                            <li><a class="dropdown-item" href="#">투병/신체</a></li>
-                            <li><a class="dropdown-item" href="#">정신건강</a></li>
-                            <li><a class="dropdown-item" href="#">LGBT</a></li>
-                            <li><a class="dropdown-item" href="#">자아/성격</a></li>
-                            <li><a class="dropdown-item" href="#">따돌림</a></li>
-                            <li><a class="dropdown-item" href="#">응원</a></li>
-                            <li><a class="dropdown-item" href="#">자유</a></li>
+                            <li><a class="dropdown-item" href="#">금전/사업</a></li>
                         </ul>
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="hideNickname">
-                        <label class="form-check-label" for="hideNickname">닉네임 비공개</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="privateView">
-                        <label class="form-check-label" for="privateView">나만 보기</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="noComments">
-                        <label class="form-check-label" for="noComments">댓글 받지 않기</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="noExpertReplies">
-                        <label class="form-check-label" for="noExpertReplies">전문답변 받지 않기</label>
-                    </div>
+
                 </div>
                 <textarea class="form-control mb-3" rows="5" placeholder="당신의 고민을 한줄로 요약해 주세요"></textarea>
                 <textarea class="form-control mb-3" rows="10" placeholder="전문가의 답변을 받기위해 자세하게 작성해 주세요"></textarea>
-                <input type="text" class="form-control mb-3" placeholder="해시태그를 남겨보세요 ex)#위로 #응원">
                 <button type="button" class="btn btn-primary">작성완료</button>
             </div>
         </div>
     </div>
 </div>
 <!-- 본문 끝 -->
+<script>
+    // JavaScript로 고민 카테고리 선택 이벤트 처리
+    $(document).ready(function () {
+        $('.dropdown-menu a').click(function () {
+            var selectedCategory = $(this).text();
+            $('.dropdown-toggle').text(selectedCategory);
+        });
+    });
+
+
+</script>
 
 {{> layout/footer}}
