@@ -1,10 +1,10 @@
 
 
 -- counsel_tb
-INSERT INTO counsel_tb ( client_id, expert_id, voucher_id, counsel_date, state, created_at, updated_at)
+INSERT INTO counsel_tb ( client_id, expert_id, voucher_id,reservation_id, counsel_date, state, created_at, updated_at)
 VALUES
-    (1, 21, 1, '2024-06-22 09:00:00', 'COMPLETED', NOW(), NOW()),
-    (1, 21, 1, '2024-06-23 10:00:00', 'COMPLETED', NOW(), NOW());
+    (1, 21, 1,1, '2024-06-22 09:00:00', 'COMPLETED', NOW(), NOW()),
+    (1, 21, 1,2, '2024-06-23 10:00:00', 'COMPLETED', NOW(), NOW());
 --        (2, 2, 22, 2, '2024-06-21 10:00:00', 'PENDING', NOW(), NOW()),
 --        (3, 3, 23, 6, '2024-06-22 10:00:00', 'PENDING', NOW(), NOW()),
 --        (4, 4, 24, 7, '2024-06-23 10:00:00', 'PENDING', NOW(), NOW()),

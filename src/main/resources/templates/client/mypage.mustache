@@ -202,6 +202,7 @@
                                     <td>{{status}}</td>
                                     <td>
                                         <form action="/counsel" method="GET">
+                                            <input type="hidden" name="reservationId" value="{{id}}">
                                             <input type="hidden" name="userId" value="{{clientId}}">
                                             <input type="hidden" name="voucherType" value="{{voucherType}}">
                                             <input type="hidden" name="reservationDate" value="{{reservationDate}}">
@@ -452,27 +453,7 @@
 
     function cancelReservation(id) {
         // 상담 예약 취소 로직을 여기에 추가
-        alert('상담실로 입장하시겠습니까?');
-        // 실제 예약 취소 로직을 여기에 추가
-        // $.ajax({
-        //     url: `/counsel/${id}`,
-        //     type: 'GET',
-        //     success: function (response) {
-        //         if (response.success) {
-        //             alert('예약이 취소되었습니다.');
-        //             location.reload();  // 페이지 새로고침
-        //         } else {
-        //             alert('예약 취소에 실패했습니다: ' + response.message);
-        //         }
-        //     },
-        //     error: function (xhr) {
-        //         let message = '예약 취소에 실패했습니다.';
-        //         if (xhr.responseJSON && xhr.responseJSON.message) {
-        //             message += ' ' + xhr.responseJSON.message;
-        //         }
-        //         alert(message);
-        //     }
-        // });
+        alert("상담실로 입장하시겠습니까?")
     }
 </script>
 
