@@ -17,13 +17,14 @@
                             <!-- <h4 class="card-title">1</h4> -->
                             <div class="breadcrumb mb-20">
                                 <a href="#">홈화면</a> > <a href="#">커뮤니티</a> > <a href="#"
-                                                                                class="active main-color">{{comm.category}}</a>
+                                                                                class="active main-color">{{comm.commDTO.category}}</a>
                             </div>
-                            <h4 class="card-title">{{comm.title}}</h4>
+                            <h4 class="card-title">{{comm.commDTO.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
-                                    <figure><img src="{{comm.writerImage}}" alt="회원이미지"></figure>
-                                    <span>{{comm.writerName}}</span><span class="time">{{comm.timeAgo}}</span></div>
+                                    <figure><img src="{{comm.commDTO.writerProfileImage}}" alt="회원이미지"></figure>
+                                    <span>{{comm.commDTO.writerName}}</span><span
+                                        class="time">{{comm.commDTO.timeAgo}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
                                         <button class=" defalut-btn" onclick="clip()"><i
@@ -42,7 +43,7 @@
                             <!--dropdown 시작..-->
 
                             <!--dropdown 끝-->
-                            <p class="card-text">{{comm.content}}</p>
+                            <p class="card-text">{{comm.commDTO.content}}</p>
                             <br>
                             <br>
                             <br>
@@ -143,20 +144,22 @@
                     {{/comm.replies}}
 
                     <div class="comment-section mb-50">
-                        <input type="text" placeholder="따뜻한 댓글을 남겨주세요">
+                        <input type="text" placeholder="따뜻한 댓글을 남겨주세요" name="content" id="content">
                         {{^sessionUser}}
-                            <button class="main-background defalut-btn" onclick="clientReplyAction({{comm.id}})">게시
-                            </button>
+                            <button class="main-background defalut-btn">게시</button>
                         {{/sessionUser}}
                         {{#sessionUser}}
                             {{#isExpert}}
-                                <button class="main-background defalut-btn" onclick="openNewWindow({{comm.id}})">
+                                <button class="main-background defalut-btn"
+                                        onclick="openNewWindow({{comm.commDTO.id}})">
                                     전문가 댓글
                                     게시
                                 </button>
                             {{/isExpert}}
                             {{#isClient}}
-                                <button class="main-background defalut-btn">게시</button>
+                                <button class="main-background defalut-btn"
+                                        onclick="clientReplyAction({{comm.commDTO.id}})">게시
+                                </button>
                             {{/isClient}}
                         {{/sessionUser}}
                     </div>
@@ -204,7 +207,6 @@
                     {{/comm.relatedComms}}
                 </div>
                 <!--답변 중 전문가가 리플 달아준 것 시작-->
-
             </div>
             <!--커뮤니티 상세보기 끝-->
         </div>
@@ -236,7 +238,7 @@
 
     // 전문가 댓글 달기 창 열기
     function openNewWindow(id) {
-        fetch(`/comm-detail/${id}/has-expert-reply`)
+        fetch(`/api/comm-detail/${id}/has-expert-reply`)
                 .then(response => response.json())
                 .then(data => {
                     if (data) {
@@ -253,25 +255,26 @@
                 });
     }
 
-    // TODO : 하자
     // 일반인 댓글 달기
     function clientReplyAction(id) {
-        const content = document.getElementById('commentContent').value;
+        const content = document.getElementById('content').value;
+
+        const newReply = {
+            id: id,
+            content: content
+        };
 
         fetch('/client-reply/complete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                id: id,
-                content: content
-            }),
+            body: JSON.stringify(newReply),
         })
                 .then(response => {
                     if (response.ok) {
                         alert('댓글이 성공적으로 등록되었습니다.');
-                        // 페이지 새로고침 또는 추가적인 처리
+                        window.location.reload();
                     } else {
                         alert('댓글 등록 중 오류가 발생했습니다.');
                     }

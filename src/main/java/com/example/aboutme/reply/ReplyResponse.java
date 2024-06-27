@@ -14,6 +14,9 @@ public class ReplyResponse {
         private String analysis;
         private String solution;
 
+        public ReplyDataDTO() {
+        }
+
         @Builder
         public ReplyDataDTO(String id, String introduction, String summary, String analysis, String solution) {
             this.id = id;
@@ -30,6 +33,9 @@ public class ReplyResponse {
         private String id;
         private String content;
 
+        public ClientReplyDataDTO() {
+        }
+        
         @Builder
         public ClientReplyDataDTO(String id, String content) {
             this.id = id;

@@ -89,6 +89,7 @@ public class CommResponse {
 
     // 게시글 디테일 DTO -> Comm, Reply
     @Data
+
     public static class CommWithRepliesDTO {
         private Integer id;
         private String writerName;
@@ -157,7 +158,8 @@ public class CommResponse {
         }
     }
 
-    //<--커뮤니티 detail 시작--> 소연님
+    //<--커뮤니티 detail 시작--> 
+    // 게시글, 댓글, 같은 카테고리 다른글 전부 가져오기
     @Data
     public static class CommDetailDTO {
         private CommDTO commDTO;
@@ -166,6 +168,7 @@ public class CommResponse {
 
         public CommDetailDTO(Comm comm, List<Reply> replies, List<Comm> relatedComms) {
             this.commDTO = new CommDTO(comm);
+            this.commDTO.calculateTimeAgo();
             this.replies = replies.stream()
                     .map(ReplyDTO::new)
                     .toList();
@@ -185,6 +188,7 @@ public class CommResponse {
             private Timestamp createdAt;
             //            private int likeCount;
             private int replyCount;
+            private String timeAgo;
 
             public CommDTO(Comm comm) {
                 this.id = comm.getId();
@@ -197,19 +201,46 @@ public class CommResponse {
 //                this.likeCount = comm.getLikes().size();
                 this.replyCount = comm.getReplies().size();
             }
+
+            public void calculateTimeAgo() {
+                Duration duration = Duration.between(this.createdAt.toInstant(), Instant.now());
+                long seconds = duration.getSeconds();
+
+                if (seconds < 60) {
+                    this.timeAgo = seconds + "초 전";
+                } else if (seconds < 3600) {
+                    this.timeAgo = (seconds / 60) + "분 전";
+                } else if (seconds < 86400) {
+                    this.timeAgo = (seconds / 3600) + "시간 전";
+                } else {
+                    this.timeAgo = (seconds / 86400) + "일 전";
+                }
+            }
         }
 
         @Data
         public static class ReplyDTO {
             private Integer id;
-            private String content;
-            private String solution;
+            private String profileImage;
+            private String name;
+            private boolean userRole;
+            private String content; // 일반인 답글
+            private String introduction; // 소개글
+            private String summary; // 사연 요약
+            private String causeAnalysis; // 원인 분석
+            private String solution; // 대처 방향
             private Timestamp createdAt;
 
             public ReplyDTO(Reply reply) {
                 this.id = reply.getId();
+                this.profileImage = reply.getUser().getProfileImage();
+                this.name = reply.getUser().getName();
+                this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
+                this.introduction = reply.getIntroduction();
+                this.summary = reply.getSummary();
+                this.causeAnalysis = reply.getCauseAnalysis();
+                this.solution = reply.getSolution();
                 this.content = reply.getContent();
-                this.content = reply.getSolution();
                 this.createdAt = reply.getCreatedAt();
             }
         }
