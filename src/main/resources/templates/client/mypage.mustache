@@ -1,7 +1,7 @@
 {{> layout/header}}
 {{#model}}
 
-    <div class="container mt-5 user-mypage">
+    <div class="container mt-5 user-myPage">
         <h1 class="text-center mb-5">마이페이지</h1>
         <!-- 프로필 보기 -->
         <div class="card mb-4" id="profile-view-card">
@@ -130,13 +130,54 @@
             </div>
         </div>
 
-        <!-- 예약관리 -->
-        <div class="card">
-            <div class="card-header">예약관리(예약 취소는 확정 예정일때만 가능합니다.)</div>
+        <div class="card mb-4">
+            <div class="card-header">내 이용권</div>
             <div class="card-body tabs-container">
                 <div class="tabs">
-                    <div class="tab active" data-tab="progress-reservation">일정</div>
-                    <div class="tab" data-tab="completed-reservation">취소 내역</div>
+                    <div class="tab active" data-tab="voucher-ticket">이용권</div>
+                    <!--                    <div class="tab" data-tab="completed-ticket">환불</div>-->
+                </div>
+                <div class="tab-content active" id="voucher-ticket">
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>이용권</th>
+                                <th>남은 횟수</th>
+                                <th>상담한 횟수</th>
+                                <th>상담예약</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#payments}}
+                                <tr>
+                                    <td>{{voucherType}}</td>
+                                    <td>{{remainingCount}}회권</td>
+                                    <td>{{counselCount}}회</td>
+                                    <td>
+                                        <form action="/client/myPage/reservation" method="GET">
+                                            <input type="hidden" name="expertId" value="{{expertId}}">
+                                            <input type="hidden" name="voucherId" value="{{voucherId}}">
+                                            <button class="btn btn-outline-success btn-small"
+                                                    onclick="makeReservation({{id}})">예약하기
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{/payments}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 상담 및 예약관 -->
+        <div class="card">
+            <div class="card-header">상담 및 예약관리</div>
+            <div class="card-body tabs-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="progress-reservation">상담 및 예약일정</div>
+                    <div class="tab" data-tab="completed-reservation">상담 내역</div>
                 </div>
                 <div class="tab-content active" id="progress-reservation">
                     <div class="table-container">
@@ -148,21 +189,27 @@
                                 <th>시작시간</th>
                                 <th>상담날짜</th>
                                 <th>상태</th>
-                                <th>변경/취소</th>
+                                <th>비고</th>
                             </tr>
                             </thead>
                             <tbody>
                             {{#progressReservations}}
                                 <tr>
                                     <td>{{voucherType}}</td>
-                                    <td>{{count}}회차/{{voucherCount}}회권</td>
+                                    <td>{{reservationCount}}회차/{{voucherCount}}회권</td>
                                     <td>{{startTime}}</td>
                                     <td>{{reservationDate}}</td>
                                     <td>{{status}}</td>
                                     <td>
-                                        <button class="btn btn-outline-danger btn-small"
-                                                onclick="cancelReservation({{id}})">취소
-                                        </button>
+                                        <form action="/counsel" method="GET">
+                                            <input type="hidden" name="userId" value="{{clientId}}">
+                                            <input type="hidden" name="voucherType" value="{{voucherType}}">
+                                            <input type="hidden" name="reservationDate" value="{{reservationDate}}">
+                                            <input type="hidden" name="startTime" value="{{startTime}}">
+                                            <button class="btn btn-outline-success btn-small"
+                                                    onclick="cancelReservation({{id}})">상담하기
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {{/progressReservations}}
@@ -178,16 +225,24 @@
                                 <th>이용권</th>
                                 <th>회차/횟수</th>
                                 <th>상담날짜</th>
+                                <th>상태</th>
+                                <th>리뷰</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{#cecelReservations}}
+                            {{#completedCounsels}}
                                 <tr>
                                     <td>{{voucherType}}</td>
-                                    <td>{{count}}회차/{{userCount}}회권</td>
-                                    <td>{{reservationDate}}</td>
+                                    <td>{{useCount}}회차/{{voucherCount}}회권</td>
+                                    <td>{{counselDate}}</td>
+                                    <td>{{state}}</td>
+                                    <td>
+                                        <button class="btn btn-outline-success btn-small"
+                                                onclick="writeReviw({{id}})">리뷰작성
+                                        </button>
+                                    </td>
                                 </tr>
-                            {{/cecelReservations}}
+                            {{/completedCounsels}}
                             </tbody>
                         </table>
                     </div>
@@ -196,7 +251,7 @@
         </div>
 
         <!-- 커뮤니티 나의 사연 -->
-        <div class="container mt-5 mb-5 user-mypage">
+        <div class="container mt-5 mb-5 user-myPage">
             <div class="card">
                 <div class="card-header">내 커뮤니티 활동</div>
                 <div class="card-body">
@@ -208,7 +263,7 @@
                         </div>
                         <div class="tab-content active" id="my-stories">
                             {{#CommPosts}}
-                                <div class="user-mypage post" data-post-id="my-board">
+                                <div class="user-myPage post" data-post-id="my-board">
                                     <div class="post-header">
                                 <span class="post-category">{{category}} ·
                                     <img src="{{user.profileImage}}" alt="Profile Picture" class="post-profile-image">
@@ -387,29 +442,37 @@
         alert('상담 일정을 변경합니다.');
     }
 
+    function writeReviw(id) {
+        alert('리뷰를 작성하시겠습니까?')
+    }
+
+    function makeReservation(id) {
+        alert('예약하시겠습니까?')
+    }
+
     function cancelReservation(id) {
         // 상담 예약 취소 로직을 여기에 추가
-        alert('상담 일정을 취소합니다.');
+        alert('상담실로 입장하시겠습니까?');
         // 실제 예약 취소 로직을 여기에 추가
-        $.ajax({
-            url: `/reservations/${id}/cancel`,
-            type: 'POST',
-            success: function (response) {
-                if (response.success) {
-                    alert('예약이 취소되었습니다.');
-                    location.reload();  // 페이지 새로고침
-                } else {
-                    alert('예약 취소에 실패했습니다: ' + response.message);
-                }
-            },
-            error: function (xhr) {
-                let message = '예약 취소에 실패했습니다.';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    message += ' ' + xhr.responseJSON.message;
-                }
-                alert(message);
-            }
-        });
+        // $.ajax({
+        //     url: `/counsel/${id}`,
+        //     type: 'GET',
+        //     success: function (response) {
+        //         if (response.success) {
+        //             alert('예약이 취소되었습니다.');
+        //             location.reload();  // 페이지 새로고침
+        //         } else {
+        //             alert('예약 취소에 실패했습니다: ' + response.message);
+        //         }
+        //     },
+        //     error: function (xhr) {
+        //         let message = '예약 취소에 실패했습니다.';
+        //         if (xhr.responseJSON && xhr.responseJSON.message) {
+        //             message += ' ' + xhr.responseJSON.message;
+        //         }
+        //         alert(message);
+        //     }
+        // });
     }
 </script>
 

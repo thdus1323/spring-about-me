@@ -1,6 +1,4 @@
-package com.example.aboutme.counsel.CounselResponseDTO.CounselDTO;
-
-import com.example.aboutme.voucher.enums.VoucherType;
+package com.example.aboutme.counsel.CounselResponseRecord.CounselDTO;
 
 public record UserRecord(
      Integer id,

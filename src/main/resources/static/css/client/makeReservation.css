@@ -1,0 +1,171 @@
+/* Calendar Container */
+.make-reservation-container .reservation-calendar {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Month Navigation */
+.make-reservation-container .reservation-month {
+    text-align: center;
+    width: 700px;
+    border: 1px solid #ddd;
+    padding: 50px;
+    border-radius: 5px;
+}
+
+.make-reservation-container .reservation-month h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.make-reservation-container .reservation-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.make-reservation-container .reservation-days div {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.make-reservation-container .reservation-days .reservation-selected {
+    color: #fff;
+}
+
+.make-reservation-container .reservation-days .reservation-selected:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #00bbba;
+    color: white;
+    z-index: -1;
+}
+
+/* Times */
+.make-reservation-container .reservation-times {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: calc((100% - 750px));
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 50px;
+    padding: 50px 20px;
+}
+
+.make-reservation-container .reservation-times h3 {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.make-reservation-container .reservation-times button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #bfe7e7;
+    cursor: pointer;
+    height: 40px;
+    width: calc((100% - 15px) / 3);
+    margin-right: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.make-reservation-container .reservation-times button:last-child {
+    margin-right: 0;
+}
+
+.make-reservation-container .reservation-times button:hover {
+    background-color: #00bbba;
+    color: white;
+}
+
+.make-reservation-container .reservation-times button.active {
+    background-color: #00bbba;
+    color: white;
+}
+
+.make-reservation-container .reservation-next-wrapper {
+    /*display: flex;*/
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.make-reservation-container .reservation-next-wrapper button {
+    width: calc(30%);
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.make-reservation-container .reservation-next-wrapper button#payButton.active {
+    background-color: #00bbba;
+    color: white;
+}
+
+.make-reservation-container .reservation-next-wrapper button#reservation-payButton.active {
+    background-color: #00bbba;
+    /* 활성화된 색상 */
+    color: white;
+}
+
+/* Styles for past dates */
+.make-reservation-past {
+    color: #999;
+    position: relative;
+}
+
+.make-reservation-past::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 1px;
+    background-color: #999;
+}
+
+/* Styles for selected date */
+.make-reservation .calendar .days .selected:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #00bbba;
+    color: white;
+    z-index: -1;
+}
+
+/* Month Navigation Buttons */
+.make-reservation-container .reservation-calendar .month-nav {
+    border: none;
+    background: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #00bbba;
+    padding: 0 15px;
+}
+
+.make-reservation-container .reservation-calendar .month-nav:hover {
+    color: #007f7f;
+}

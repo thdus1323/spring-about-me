@@ -1,4 +1,4 @@
-package com.example.aboutme.counsel.CounselResponseDTO.CounselDTO;
+package com.example.aboutme.counsel.CounselResponseRecord.CounselDTO;
 
 import java.util.List;
 

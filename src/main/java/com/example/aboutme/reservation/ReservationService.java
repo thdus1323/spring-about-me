@@ -5,7 +5,7 @@ import com.example.aboutme._core.utils.DayOfWeekConverter;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
 import com.example.aboutme.reservation.enums.ReservationStatus;
-import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
+import com.example.aboutme.reservation.reservationRequest.ReservationRepDTO;
 import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.schedule.ScheduleRepository;
@@ -32,7 +32,7 @@ public class ReservationService {
     private final VoucherRepository voucherRepository;
     private final ScheduleRepository scheduleRepository;
 
-
+    //결재완료전 결재대기생성
     public PaymentDetailsDTO getTempReservation(Integer reservationId) {
         log.info("예약조회하기 called with reservationId: {}", reservationId);
 
@@ -70,10 +70,41 @@ public class ReservationService {
         return paymentDetailsDTO;
     }
 
+    //마이페이지에서 예약생성
+    @Transactional
+    public void makeReservation(ReservationRepDTO reqDTO, SessionUser sessionUser) {
+
+        User client = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("고객을 찾을 수 없습니다."));
+        User expert = userRepository.findById(reqDTO.expertId())
+                .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
+        Voucher voucher = voucherRepository.findById(reqDTO.voucherId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
+
+        //이넘으로 변경
+        DayOfWeek dayOfWeekEnum = DayOfWeekConverter.toEnum(reqDTO.dayOfWeek());
+
+        // 해당 스케줄 조회
+        Schedule schedule = scheduleRepository.findByExpertIdAndDayOfWeekAndStartTime(
+                        reqDTO.expertId(), dayOfWeekEnum, reqDTO.startTime())
+                .orElseThrow(() -> new Exception400("해당 시간을 찾을 수 없습니다."));
+
+        Reservation reservation = Reservation.builder()
+                .client(client)
+                .reservationDate(reqDTO.reservationDate())
+                .dayOfWeek(reqDTO.dayOfWeek())
+                .startTime(reqDTO.startTime())
+                .expert(expert)
+                .voucher(voucher)
+                .schedule(schedule)
+                .status(ReservationStatus.SCHEDULED)
+                .build();
+        reservationRepository.save(reservation);
+    }
 
     //    결제 전까지 예약 임시 저장
     @Transactional
-    public Reservation createTempReservation(ReservationTempRepDTO reqDTO, SessionUser sessionUser) {
+    public Reservation createTempReservation(ReservationRepDTO reqDTO, SessionUser sessionUser) {
 
         User client = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception400("고객을 찾을 수 없습니다."));

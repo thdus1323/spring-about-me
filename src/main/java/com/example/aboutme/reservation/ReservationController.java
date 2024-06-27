@@ -1,10 +1,11 @@
 package com.example.aboutme.reservation;
 
 import com.example.aboutme._core.utils.RedisUtil;
-import com.example.aboutme.reservation.reservationRequest.ReservationTempRepDTO;
+import com.example.aboutme.reservation.reservationRequest.ReservationRepDTO;
 import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
 import com.example.aboutme.user.SessionUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ReservationController {
@@ -33,10 +35,29 @@ public class ReservationController {
 
 
     @PostMapping("/client/reservations/temp")
-    public String saveTempReservation(ReservationTempRepDTO reqDTO) {
+    public String saveTempReservation(ReservationRepDTO reqDTO) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         Reservation tempReservation = reservationService.createTempReservation(reqDTO, sessionUser);
         return "redirect:/client/findExpert/payment/" + tempReservation.getId();
     }
+
+
+    @GetMapping("/client/myPage/reservation")
+    public String makeReservation(@RequestParam(name = "voucherId", required = false) Integer voucherId,
+                                  @RequestParam(name = "expertId", required = false) Integer expertId, Model model) {
+        log.info("😊😊😊😊😊예약만들기  : {}, {}", voucherId, expertId);
+        ReservationDetailsDTO reservationDetailsDTO = reservationService.getReservationDetails(voucherId, expertId);
+        model.addAttribute("model", reservationDetailsDTO);
+        return "client/makeReservation";
+    }
+
+    @PostMapping("/client/myPage/reservation")
+    public String makeReservation(ReservationRepDTO reqDTO) {
+        log.info("😊😊😊😊😊예약만들기  : {}", reqDTO);
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        reservationService.makeReservation(reqDTO, sessionUser);
+        return "redirect:/client/myPage";
+    }
+
 
 }
