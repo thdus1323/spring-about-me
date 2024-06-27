@@ -55,12 +55,9 @@ public class UserController {
     }
 
     @GetMapping("/expert/reply")
-    public String expertReply(Model model) {
+    public String expertReply() {
         return "expert/expert-reply";
     }
-
-//    @PostMapping("expert/reply-save")
-
 
     @GetMapping("/join")
     public String joinForm() {
