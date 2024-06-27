@@ -68,7 +68,6 @@ public class CommResponse {
                     .collect(Collectors.toList());
         }
 
-        // 전문가 DTO v2 <- 전문가 답변 싹 다 출력할때 쓰는거임
         @Data
         public static class ExpertReplyDTO {
             private Integer id;
