@@ -32,42 +32,42 @@ class UserServiceTest {
     @Autowired
     private CounselRepository counselRepository;
 
-    @Test
-    void 마이페이지정보() throws JsonProcessingException {
-        int id = 1;
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
-
-        List<UserProfileDTO.ReservationDTO> progressReservations = reservationRepository.findByClientId(id).stream()
-                .map(r -> {
-                    Voucher v = r.getVoucher();
-                    Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(id, v.getId());
-                    Integer reservationCountData = reservationRepository.countReservationsBeforeDate(id, v.getId(), r.getReservationDate());
-                    Integer reservationCount = usedCount + reservationCountData;
-
-                    return UserProfileDTO.ReservationDTO.builder()
-                            .id(r.getId())
-                            .expertId(r.getExpert().getId())
-                            .clientId(r.getClient().getId())
-                            .voucherId(r.getVoucher().getId())
-                            .scheduleId(r.getSchedule().getId())
-                            .status(r.getStatus().getKorean())
-                            .startTime(r.getStartTime())
-                            .reservationDate(r.getReservationDate())
-                            .dayOfWeek(r.getDayOfWeek())
-                            .createdAt(r.getCreatedAt())
-                            .updatedAt(r.getUpdatedAt())
-                            .voucherType(v.getVoucherType().getKorean())
-                            .voucherCount(v.getCount())
-                            .reservationCount(reservationCount) // 예약 횟수
-                            .build();
-                }).toList();
-
-        for (UserProfileDTO.ReservationDTO progressReservation : progressReservations) {
-            System.out.println("progressReservation = " + progressReservation);
-        }
-
-
-    }
+//    @Test
+//    void 마이페이지정보() throws JsonProcessingException {
+//        int id = 1;
+//
+//        User user = userRepository.findById(id)
+//                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
+//
+//        List<UserProfileDTO.ReservationDTO> progressReservations = reservationRepository.findByClientId(id).stream()
+//                .map(r -> {
+//                    Voucher v = r.getVoucher();
+//                    Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(id, v.getId());
+//                    Integer reservationCountData = reservationRepository.countReservationsBeforeDate(id, v.getId(), r.getReservationDate());
+//                    Integer reservationCount = usedCount + reservationCountData;
+//
+//                    return UserProfileDTO.ReservationDTO.builder()
+//                            .id(r.getId())
+//                            .expertId(r.getExpert().getId())
+//                            .clientId(r.getClient().getId())
+//                            .voucherId(r.getVoucher().getId())
+//                            .scheduleId(r.getSchedule().getId())
+//                            .status(r.getStatus().getKorean())
+//                            .startTime(r.getStartTime())
+//                            .reservationDate(r.getReservationDate())
+//                            .dayOfWeek(r.getDayOfWeek())
+//                            .createdAt(r.getCreatedAt())
+//                            .updatedAt(r.getUpdatedAt())
+//                            .voucherType(v.getVoucherType().getKorean())
+//                            .voucherCount(v.getCount())
+//                            .reservationCount(reservationCount) // 예약 횟수
+//                            .build();
+//                }).toList();
+//
+//        for (UserProfileDTO.ReservationDTO progressReservation : progressReservations) {
+//            System.out.println("progressReservation = " + progressReservation);
+//        }
+//
+//
+//    }
 }

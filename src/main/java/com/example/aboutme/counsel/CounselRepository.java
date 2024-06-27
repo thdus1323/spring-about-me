@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface CounselRepository extends JpaRepository<Counsel, Integer> {
 
@@ -63,4 +64,8 @@ public interface CounselRepository extends JpaRepository<Counsel, Integer> {
             WHERE c.expert.id = :expertId
             """)
     List<CounselScheduleRecord> findCounselScheduleRecordsByExpertId(@Param("expertId") Integer expertId);
+
+
+    @Query("SELECT c FROM Counsel c WHERE c.reservation.id = :reservationId")
+    Counsel findByReservationId(@Param("reservationId") Integer reservationId);
 }

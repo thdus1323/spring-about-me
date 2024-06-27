@@ -5,6 +5,8 @@ import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.UserRecord;
 import com.example.aboutme.counsel.enums.CounselStateEnum;
+import com.example.aboutme.reservation.Reservation;
+import com.example.aboutme.reservation.ReservationRepository;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
@@ -21,8 +23,28 @@ import java.util.stream.Collectors;
 public class CounselService {
     private final CounselRepository counselRepository;
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
     private final VoucherRepository voucherRepository;
 
+    //상담업데이트
+    @Transactional
+    public void completeReservation(Integer reservationId, SessionUser sessionUser) {
+        // 0. 인증처리
+        if (sessionUser == null){
+            throw new Exception404("인증되지않은 유저입니다.");
+        }
+
+        Counsel counsel = counselRepository.findByReservationId(reservationId);
+
+        // 1. 권한처리
+        if (!sessionUser.getId().equals(counsel.getClient().getId()) && !sessionUser.getId().equals(counsel.getExpert().getId())) {
+            throw new Exception403("해당 상담을 업데이트 할 권한이 없습니다.");
+        }
+
+        // 2. 상담내용 업데이트
+        counsel.updateCounsel();
+
+    }
 
     //상담일정
     @Transactional
@@ -69,6 +91,7 @@ public class CounselService {
         // 최종적으로 CounselDTORecord를 반환
         return new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecords);
     }
+
 
 }
 

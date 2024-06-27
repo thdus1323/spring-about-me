@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="/static/js/sender.js"></script>
+
     <!-- 부트스트랩 cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
@@ -21,27 +21,27 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@6.1.0/umd/stomp.min.js"></script>
-    <script>
-        var stompClient;
+<!--    <script>-->
+<!--        var stompClient;-->
 
-        function connect() {
-            var socket = new SockJS('/chat');
-            stompClient = Stomp.over(socket);
+<!--        function connect() {-->
+<!--            var socket = new SockJS('/chat');-->
+<!--            stompClient = Stomp.over(socket);-->
 
-            stompClient.connect({}, function (frame) {
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/messages', function (messageOutput) {
-                    var message = JSON.parse(messageOutput.body);
-                    console.log('Received message in browser:', message); // 수신된 메시지 로그
-                    alert('Received message: ' + message.content); // 경고창 표시
-                });
-            });
-        }
+<!--            stompClient.connect({}, function (frame) {-->
+<!--                console.log('Connected: ' + frame);-->
+<!--                stompClient.subscribe('/topic/messages', function (messageOutput) {-->
+<!--                    var message = JSON.parse(messageOutput.body);-->
+<!--                    console.log('Received message in browser:', message); // 수신된 메시지 로그-->
+<!--                    alert('Received message: ' + message.content); // 경고창 표시-->
+<!--                });-->
+<!--            });-->
+<!--        }-->
 
-        window.onload = function() {
-            connect();
-        };
-    </script>
+<!--        window.onload = function() {-->
+<!--            connect();-->
+<!--        };-->
+<!--    </script>-->
 
 
 

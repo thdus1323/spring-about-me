@@ -16,15 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
-
+@RequiredArgsConstructor
 @Controller
 public class ChatController {
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-
-    @Autowired
-    private ChatService chatService;
+    private final SimpMessagingTemplate messagingTemplate;
+    private final ChatService chatService;
 
     @MessageMapping("/sendMessage")
     public void sendMessage(ChatMessage message, SimpMessageHeaderAccessor headerAccessor) {

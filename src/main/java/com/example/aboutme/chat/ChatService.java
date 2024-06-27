@@ -1,6 +1,8 @@
 package com.example.aboutme.chat;
 
 import com.example.aboutme._core.error.exception.Exception404;
+import com.example.aboutme.counsel.Counsel;
+import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.user.UserResponse;
@@ -11,33 +13,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+@RequiredArgsConstructor
 @Service
 public class ChatService {
 
-    @Autowired
-    private ChatRepository chatRepository;
+    private final ChatRepository chatRepository;
+    private final UserRepository userRepository;
+    private final CounselRepository counselRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private VoucherRepository voucherRepository;
 
     @Transactional
-    public Chat saveChatMessage(Integer userId, String content, Integer voucherId) {
+    public Chat saveChatMessage(Integer userId, String content, Integer counselId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("해당 유저를 찾을 수 없습니다."));
 
-        Voucher voucher = voucherRepository.findById(voucherId)
+        Counsel counsel = counselRepository.findById(counselId)
                 .orElseThrow(() -> new RuntimeException("해당 이용권을 찾을 수 없습니다."));
 
         Chat chat = Chat.builder()
                 .user(user)
                 .content(content)
-                .voucher(voucher)
+                .counsel(counsel)
                 .build();
 
         return chatRepository.save(chat);
     }
+
 }
