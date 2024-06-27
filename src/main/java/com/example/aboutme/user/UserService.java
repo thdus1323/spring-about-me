@@ -1,6 +1,7 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme._core.error.exception.Exception403;
+import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
@@ -10,7 +11,6 @@ import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.reservation.ReservationRepository;
-import com.example.aboutme.reservation.enums.ReservationStatus;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
@@ -47,7 +47,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -86,16 +85,21 @@ public class UserService {
         List<UserProfileDTO.PaymentDTO> payments = paymentRepository.findByClientId(sessionUser.getId()).stream()
                 .map(payment -> {
                     Voucher v = payment.getVoucher();
-                    Integer usedCount = reservationRepository.countByVoucherIdAndStatus(v.getId(), ReservationStatus.COMPLETED);
-                    Integer remainingCount = v.getCount() - usedCount;
+                    //상담 완료 횟수
+                    Integer counselCount = counselRepository.findByClientIdAndStateCount(sessionUser.getId(), CounselStateEnum.COMPLETED);
+                    Integer reservationCount = counselCount + 1;
+                    Integer remainingCount = v.getCount() - counselCount;
                     return UserProfileDTO.PaymentDTO.builder()
                             .id(payment.getId())
                             .voucherType(v.getVoucherType().getKorean())
+                            .voucherId(v.getId())
                             .expertId(v.getExpert().getId())
+                            .clientId(payment.getClient().getId())
                             .paymentMethod(payment.getPaymentMethod().getKorean())
                             .price(Formatter.number((int) v.getPrice()))
                             .count(v.getCount())
-                            .remainingCount(remainingCount)  // 계산된 필드
+                            .remainingCount(remainingCount)  // 남은횟수
+                            .counselCount(counselCount) // 상담완료 횟수
                             .duration(v.getDuration())
                             .createdAt(Formatter.formatTimestamp(v.getCreatedAt()))
                             .updatedAt(Formatter.formatTimestamp(v.getUpdatedAt()))
@@ -105,46 +109,66 @@ public class UserService {
                 })
                 .collect(Collectors.toList());
 
-        List<UserProfileDTO.ReservationDTO> progressReservations = new ArrayList<>();
-        List<UserProfileDTO.ReservationDTO> cancelReservations = new ArrayList<>();
 
-        reservationRepository.findByClientIdOrderByIdDesc(sessionUser.getId()).stream()
-                .forEach(r -> {
+        List<UserProfileDTO.ReservationDTO> progressReservations = reservationRepository.findByClientId(sessionUser.getId()).stream()
+                .map(r -> {
                     Voucher v = r.getVoucher();
-                    Integer usedCount = counselRepository.findByClientIdAndState(sessionUser.getId(), CounselStateEnum.COMPLETED);
-                    Integer remainingCount = v.getCount() - usedCount;
-                    UserProfileDTO.ReservationDTO reservationDTO = UserProfileDTO.ReservationDTO.builder()
+                    System.out.println("r.getReservationDate() = " + r.getReservationDate());
+                    Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(sessionUser.getId(), v.getId());
+                    Integer reservationCountData = reservationRepository.countReservationsBeforeDate(sessionUser.getId(), v.getId(), r.getId());
+                    Integer reservationCount = usedCount + reservationCountData;
+
+                    return UserProfileDTO.ReservationDTO.builder()
                             .id(r.getId())
                             .expertId(r.getExpert().getId())
                             .clientId(r.getClient().getId())
                             .voucherId(r.getVoucher().getId())
                             .scheduleId(r.getSchedule().getId())
                             .status(r.getStatus().getKorean())
-                            .startTime(r.getStartTime().toString())
-                            .reservationDate(r.getReservationDate().toString())
-                            .dayOfWeek(r.getDayOfWeek().toString())
+                            .startTime(r.getStartTime())
+                            .reservationDate(r.getReservationDate())
+                            .dayOfWeek(r.getDayOfWeek())
                             .createdAt(r.getCreatedAt())
                             .updatedAt(r.getUpdatedAt())
                             .voucherType(v.getVoucherType().getKorean())
                             .voucherCount(v.getCount())
-                            .count(usedCount)
-                            .remainingCount(remainingCount)
+                            .reservationCount(reservationCount) // 예약 횟수
                             .build();
+                }).toList();
 
-                    if (r.getStatus() == ReservationStatus.SCHEDULED || r.getStatus() == ReservationStatus.COMPLETED) {
-                        progressReservations.add(reservationDTO);
-                    }
-                    if (r.getStatus() == ReservationStatus.CANCELLED) {
-                        cancelReservations.add(reservationDTO);
-                    }
-                });
+
+        List<UserProfileDTO.CounselDTO> completedCounsels = counselRepository.findByClientIdAndState(sessionUser.getId(), CounselStateEnum.COMPLETED).stream()
+                .map(c -> {
+                    Voucher v = c.getVoucher();
+                    Integer useCount = counselRepository
+                            .countByClientIdAndVoucherIdAndBeforeDate(sessionUser.getId(), v.getId(), c.getCounselDate());
+                    Integer counselCount = counselRepository.findByClientIdAndStateCount(sessionUser.getId(), CounselStateEnum.COMPLETED);
+                    return UserProfileDTO.CounselDTO.builder()
+                            .id(c.getId())
+                            .expertId(c.getExpert().getId())
+                            .clientId(c.getClient().getId())
+                            .voucherId(c.getVoucher().getId())
+                            .counselDate(Formatter.formatDate(c.getCounselDate()))
+                            .state(c.getState().toString())
+                            .createdAt(c.getCreatedAt().toString())
+                            .updatedAt(c.getUpdatedAt().toString())
+                            .voucherType(v.getVoucherType().getKorean())
+                            .voucherCount(v.getCount()) // 상담 완료 횟수
+                            .useCount(useCount)
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+
         List<UserProfileDTO.Comm> commPosts = commRepository.findByUserId(sessionUser.getId()).stream()
                 .map(c -> new UserProfileDTO.Comm(
                         c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
                 .collect(Collectors.toList());
 
-        return new UserProfileDTO(userProfile, payments, progressReservations, cancelReservations, commPosts);
+        return new UserProfileDTO(userProfile, payments, progressReservations, completedCounsels, commPosts);
     }
+
+
 //    public UserProfileDTO 마이페이지정보(SessionUser sessionUser) {
 //        User user = userRepository.findById(sessionUser.getId())
 //                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
@@ -206,7 +230,7 @@ public class UserService {
         UserRecord userRecord = new UserRecord(user.getId(), user.getName(), user.getProfileImage());
 
         double price = voucherRepository.findLowestPriceByExpertId(expertId);
-        String lowestPrice = formatter.number((int) price); // 포맷터에서 가격을 포맷팅
+        String lowestPrice = Formatter.number((int) price); // 포맷터에서 가격을 포맷팅
 
         List<ReviewRecord> reviewRecords = reviewRepository.findByExpertId(expertId).stream().map(review -> new ReviewRecord(review.getId(), review.getContent())).collect(Collectors.toList());
 
