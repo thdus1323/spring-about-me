@@ -93,13 +93,12 @@
             </div>
         </div>
 
-        <!-- 내 이용권 -->
+        <!-- 결제 내역 -->
         <div class="card mb-4">
-            <div class="card-header">결제내역</div>
+            <div class="card-header">결제 내역</div>
             <div class="card-body tabs-container">
                 <div class="tabs">
                     <div class="tab active" data-tab="progress-ticket">결제 내역</div>
-                    <!--                    <div class="tab" data-tab="completed-ticket">환불</div>-->
                 </div>
                 <div class="tab-content active" id="progress-ticket">
                     <div class="table-container">
@@ -108,7 +107,8 @@
                             <tr>
                                 <th>이용권</th>
                                 <th>횟수</th>
-                                <th>이용시간</th>
+                                <th>상담 시간</th>
+                                <th>결제 방법</th>
                                 <th>결제 금액</th>
                                 <th>결제 날짜</th>
                             </tr>
@@ -117,8 +117,9 @@
                             {{#payments}}
                                 <tr>
                                     <td>{{voucherType}}</td>
-                                    <td>{{count}}회권</td>
-                                    <td>{{duration}}분</td>
+                                    <td>{{voucherCount}}</td>
+                                    <td>{{voucherDuration}}분</td>
+                                    <td>{{paymentMethod}}</td>
                                     <td>{{amount}}</td>
                                     <td>{{paymentDate}}</td>
                                 </tr>
@@ -130,12 +131,12 @@
             </div>
         </div>
 
+        <!-- 내 이용권 -->
         <div class="card mb-4">
             <div class="card-header">내 이용권</div>
             <div class="card-body tabs-container">
                 <div class="tabs">
                     <div class="tab active" data-tab="voucher-ticket">이용권</div>
-                    <!--                    <div class="tab" data-tab="completed-ticket">환불</div>-->
                 </div>
                 <div class="tab-content active" id="voucher-ticket">
                     <div class="table-container">
@@ -143,13 +144,13 @@
                             <thead>
                             <tr>
                                 <th>이용권</th>
-                                <th>남은 횟수</th>
+                                <th>예약 가능한 횟수</th>
                                 <th>상담한 횟수</th>
-                                <th>상담예약</th>
+                                <th>상담 예약</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{#payments}}
+                            {{#vouchers}}
                                 <tr>
                                     <td>{{voucherType}}</td>
                                     <td>{{remainingCount}}회권</td>
@@ -164,19 +165,20 @@
                                         </form>
                                     </td>
                                 </tr>
-                            {{/payments}}
+                            {{/vouchers}}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- 상담 및 예약관 -->
+
+        <!-- 상담 및 예약 관리 -->
         <div class="card">
-            <div class="card-header">상담 및 예약관리</div>
+            <div class="card-header" style="color: #ffa45b">상담 및 예약 관리</div>
             <div class="card-body tabs-container">
                 <div class="tabs">
-                    <div class="tab active" data-tab="progress-reservation">상담 및 예약일정</div>
+                    <div class="tab active" data-tab="progress-reservation">상담 및 예약 일정</div>
                     <div class="tab" data-tab="completed-reservation">상담 내역</div>
                 </div>
                 <div class="tab-content active" id="progress-reservation">
@@ -186,10 +188,10 @@
                             <tr>
                                 <th>이용권</th>
                                 <th>회차/횟수</th>
-                                <th>시작시간</th>
-                                <th>상담날짜</th>
+                                <th>시작 시간</th>
+                                <th>상담 날짜</th>
                                 <th>상태</th>
-                                <th>비고</th>
+                                <th>상담실</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -224,7 +226,7 @@
                             <tr>
                                 <th>이용권</th>
                                 <th>회차/횟수</th>
-                                <th>상담날짜</th>
+                                <th>상담 날짜</th>
                                 <th>상태</th>
                                 <th>리뷰</th>
                             </tr>
@@ -237,8 +239,8 @@
                                     <td>{{counselDate}}</td>
                                     <td>{{state}}</td>
                                     <td>
-                                        <button class="btn btn-outline-success btn-small"
-                                                onclick="writeReviw({{id}})">리뷰작성
+                                        <button class="btn btn-outline-success btn-small" onclick="writeReview({{id}})">
+                                            리뷰 작성
                                         </button>
                                     </td>
                                 </tr>
@@ -249,6 +251,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- 커뮤니티 나의 사연 -->
         <div class="container mt-5 mb-5 user-myPage">

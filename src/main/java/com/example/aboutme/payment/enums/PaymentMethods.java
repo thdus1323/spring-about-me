@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum PaymentMethods {
     CREDIT_CARD("카드");
+
     // 결제 완료
     private final String korean;
 
@@ -19,7 +20,7 @@ public enum PaymentMethods {
                 return paymentMethods;
             }
         }
-        throw new Exception400("올바르지 않는 성별입니다." + korean);
+        throw new Exception400("올바르지 않은 결제요청입니다." + korean);
     }
 
     public String getKorean() {
