@@ -43,7 +43,7 @@ class UserServiceTest {
                 .map(r -> {
                     Voucher v = r.getVoucher();
                     Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(id, v.getId());
-                    Integer reservationCountData = reservationRepository.countReservationsBeforeDate(id, v.getId(), r.getReservationDate());
+                    Integer reservationCountData = reservationRepository.countReservationsBeforeDate(id, v.getId(), r.getId());
                     Integer reservationCount = usedCount + reservationCountData;
 
                     return UserProfileDTO.ReservationDTO.builder()

@@ -25,14 +25,10 @@ public class CounselController {
     public String counselDetails(CounselReqDTO counselReqDTO,
                                  Model model) {
         if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.TEXT_THERAPY) {
-
             return "텍스트테라피경로"; // 상담 세부 정보 페이지로 이동}}
-
         } else if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.VIDEO_THERAPY) {
-
             return "화상테라피경로";
         } else {
-
             return "보이스테라피경로";
         }
     }
