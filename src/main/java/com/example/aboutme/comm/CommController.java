@@ -5,6 +5,7 @@ import com.example.aboutme.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +24,26 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-    public String detail(@PathVariable Integer id, HttpServletRequest request) {
-        CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-        request.setAttribute("comm", comm);
-        System.out.println("comm = " + comm);
+    public String detail(@PathVariable("id") Integer id, Model model) {
+
+        CommResponse.CommWithRepliesDTO comm = commService.findByIdDetail(id);
+        model.addAttribute("comm", comm);
+
         return "comm/comm-detail";
+    }
+
+    // 전문답변이 있는지 확인
+    @GetMapping("/api/comm-detail/{id}/has-expert-reply")
+    public ResponseEntity<Boolean> hasExpertReply(@PathVariable("id") Integer id) {
+        boolean hasExpertReply = commService.hasExpertReply(id);
+        return ResponseEntity.ok(hasExpertReply);
     }
 
     @GetMapping("/comm")
     public String community(HttpServletRequest request) {
 
-        List<CommResponse.CommWithRepliesDTO> commsWithReplyList = commService.findAllCommWithReply();
-        request.setAttribute("commsWithReplyList", commsWithReplyList);
+        List<CommResponse.ALLCommWithRepliesDTO> allCommsWithReplyList = commService.findAllCommWithReply();
+        request.setAttribute("allCommsWithReplyList", allCommsWithReplyList);
 
         return "/comm/comm-main";
     }
