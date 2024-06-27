@@ -2,8 +2,8 @@ package com.example.aboutme.counsel;
 
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
-import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.CounselDTORecord;
-import com.example.aboutme.counsel.CounselResponseDTO.CounselDTO.UserRecord;
+import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
+import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.UserRecord;
 import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
