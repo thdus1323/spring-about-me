@@ -182,13 +182,6 @@ public class UserController {
     public String findExpert(Model model) {
         FindWrapperRecord findWrapperRecord = userService.getExpertFind();
         model.addAttribute("expertList", findWrapperRecord);
-
-        SessionUser sessionUser = redisUtil.getSessionUser();
-        log.info("SessionUser: " + sessionUser);
-
-//        List<UserResponse.ExpertUserDTO> expertUserList = userService.getAllExpertUsers();
-//        session.setAttribute("expertUserList", expertUserList);
-
         return "client/findExpert/main";
     }
 
@@ -196,6 +189,7 @@ public class UserController {
     // 전문가 찾기 - 상세보기
     @GetMapping("/client/findExpert/detail/{expertId}")
     public String findExpertDetail(Model model, @PathVariable("expertId") Integer expertId) {
+        log.info("상세보기 {}", expertId);
         DetailDTORecord detailDTORecord = userService.getFindExpertDetails(expertId);
         model.addAttribute("model", detailDTORecord);
         return "client/findExpert/detail";
@@ -208,7 +202,7 @@ public class UserController {
         if (sessionUser == null) {
             return "oauth/login";
         } else {
-            UserProfileDTO respDTO = userService.마이페이지정보(sessionUser);
+            UserProfileDTO respDTO = userService.getMyPageInfo(sessionUser);
             model.addAttribute("model", respDTO);
 
             return "client/myPage";

@@ -5,7 +5,6 @@ import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.payment.PaymentRepository;
-import com.example.aboutme.reservation.ReservationRepository;
 import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
@@ -22,7 +21,7 @@ class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ReservationRepository reservationRepository;
+    private counselRepository counselRepository;
     @Autowired
     private CommRepository commRepository;
     @Autowired
@@ -39,11 +38,11 @@ class UserServiceTest {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
 
-        List<UserProfileDTO.ReservationDTO> progressReservations = reservationRepository.findByClientId(id).stream()
+        List<UserProfileDTO.ReservationDTO> progressReservations = counselRepository.findByClientId(id).stream()
                 .map(r -> {
                     Voucher v = r.getVoucher();
                     Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(id, v.getId());
-                    Integer reservationCountData = reservationRepository.countReservationsBeforeDate(id, v.getId(), r.getReservationDate());
+                    Integer reservationCountData = counselRepository.countReservationsBeforeDate(id, v.getId(), r.getId());
                     Integer reservationCount = usedCount + reservationCountData;
 
                     return UserProfileDTO.ReservationDTO.builder()

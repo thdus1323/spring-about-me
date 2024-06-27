@@ -2,8 +2,8 @@ package com.example.aboutme.reservation;
 
 import com.example.aboutme._core.error.exception.Exception400;
 import com.example.aboutme._core.utils.Formatter;
-import com.example.aboutme.reservation.enums.ReservationStatus;
-import com.example.aboutme.reservation.resrvationResponse.ReservationDetailsDTO;
+import com.example.aboutme.counsel.CounselResponseRecord.ReservationDetailsDTO;
+import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.voucher.Voucher;
@@ -24,7 +24,7 @@ class ReservationServiceTest {
     //테스트에서는 빈주입이 안되어서 직접 뉴~
     private Formatter formatter = new Formatter();
     @Autowired
-    private ReservationRepository reservationRepository;
+    private counselRepository counselRepository;
 
     @Test
     void getReservationDetails() {
@@ -69,7 +69,7 @@ class ReservationServiceTest {
         Reservation reservation = new Reservation();
         reservation.setExpert(expert);
         reservation.setVoucher(voucher);
-        reservation.setStartTime(startTime);
+        reservation.setReservationTime(startTime);
         String reservationDate = "1";
         reservation.setReservationDate(reservationDate);
         reservation.setStatus(ReservationStatus.PENDING);
@@ -80,7 +80,7 @@ class ReservationServiceTest {
     @Test
     void 예약조회하기() {
         int id = 16;
-        Reservation reservation = reservationRepository.findById(id).get();
+        Reservation reservation = counselRepository.findById(id).get();
         System.out.println("reservation = " + reservation);
     }
 }
