@@ -34,7 +34,6 @@ public class ReplyController {
         SessionUser sessionUser = redisUtil.getSessionUser();
         replyService.saveClientReply(newReply, sessionUser.getId());
 
-
         return ResponseEntity.ok("댓글이 성공적으로 저장되었습니다.");
     }
 }

@@ -1,10 +1,10 @@
 package com.example.aboutme.comm;
 
-import com.example.aboutme.user.User;
-import com.example.aboutme.user.enums.UserRole;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class CommController {
@@ -24,9 +25,11 @@ public class CommController {
     }
 
     @GetMapping("/comm-detail/{id}")
-    public String detail(@PathVariable("id") Integer id, Model model) {
+    public String detail(@PathVariable("id") Integer id, Model model) throws JsonProcessingException {
 
-        CommResponse.CommWithRepliesDTO comm = commService.findByIdDetail(id);
+        CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
+        String json = new ObjectMapper().writeValueAsString(comm);
+        log.info("디테일  {}", json);
         model.addAttribute("comm", comm);
 
         return "comm/comm-detail";
