@@ -26,8 +26,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat")
-                .setAllowedOriginPatterns("*")
+        registry.addEndpoint("http://localhost:8080/chat")
+                .setAllowedOriginPatterns("*")  // 모든 출처 허용
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .withSockJS()
                 .setInterceptors(new HttpSessionHandshakeInterceptor());
