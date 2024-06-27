@@ -10,6 +10,7 @@ import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.enums.CounselStateEnum;
 import com.example.aboutme.payment.PaymentRepository;
+import com.example.aboutme.reservation.Reservation;
 import com.example.aboutme.reservation.ReservationRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
@@ -82,13 +83,16 @@ public class UserService {
                 .profileImage(user.getProfileImage())
                 .build();
 
-        List<UserProfileDTO.PaymentDTO> payments = paymentRepository.findByClientId(sessionUser.getId()).stream()
+        List<UserProfileDTO.PaymentDTO> paymentAndVouchers = paymentRepository.findByClientId(sessionUser.getId()).stream()
                 .map(payment -> {
                     Voucher v = payment.getVoucher();
+                    Integer r = reservationRepository.findByClientIdAndVoucherIdAndLimitOen(sessionUser.getId(), v.getId());
                     //상담 완료 횟수
                     Integer counselCount = counselRepository.findByClientIdAndStateCount(sessionUser.getId(), CounselStateEnum.COMPLETED);
-                    Integer reservationCount = counselCount + 1;
-                    Integer remainingCount = v.getCount() - counselCount;
+
+                    //예약한 횟수
+                    Integer reservationCount = reservationRepository.countByClientIdAndVoucherIdAndReservationId(sessionUser.getId(), v.getId(), r);
+                    Integer remainingCount = counselCount + reservationCount;
                     return UserProfileDTO.PaymentDTO.builder()
                             .id(payment.getId())
                             .voucherType(v.getVoucherType().getKorean())
@@ -98,7 +102,7 @@ public class UserService {
                             .paymentMethod(payment.getPaymentMethod().getKorean())
                             .price(Formatter.number((int) v.getPrice()))
                             .count(v.getCount())
-                            .remainingCount(remainingCount)  // 남은횟수
+                            .remainingCount(remainingCount)  // 예약 가능한 횟수
                             .counselCount(counselCount) // 상담완료 횟수
                             .duration(v.getDuration())
                             .createdAt(Formatter.formatTimestamp(v.getCreatedAt()))
@@ -149,7 +153,7 @@ public class UserService {
                             .clientId(c.getClient().getId())
                             .voucherId(c.getVoucher().getId())
                             .counselDate(Formatter.formatDate(c.getCounselDate()))
-                            .state(c.getState().toString())
+                            .state(c.getState().getKorean())
                             .createdAt(c.getCreatedAt().toString())
                             .updatedAt(c.getUpdatedAt().toString())
                             .voucherType(v.getVoucherType().getKorean())
@@ -165,7 +169,7 @@ public class UserService {
                         c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
                 .collect(Collectors.toList());
 
-        return new UserProfileDTO(userProfile, payments, progressReservations, completedCounsels, commPosts);
+        return new UserProfileDTO(userProfile, paymentAndVouchers, progressReservations, completedCounsels, commPosts);
     }
 
 
