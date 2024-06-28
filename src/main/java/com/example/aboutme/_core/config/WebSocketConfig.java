@@ -26,8 +26,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat")
-                .setAllowedOriginPatterns("*")
+        registry.addEndpoint("/text-websocket")
+                .setAllowedOriginPatterns("*")  // 모든 출처 허용 (이거 이렇게 쓸려면 시큐리티 써야할껀데 사용함?)
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .withSockJS()
                 .setInterceptors(new HttpSessionHandshakeInterceptor());
