@@ -25,6 +25,13 @@ public class CommService {
     private final UserRepository userRepository;
 
 
+    //카테고리별로 조회
+    @Transactional
+    public List<CommResponse.CommMainByCategory> getCommMainByCategory(CommCategory category) {
+        List<CommResponse.CommMainByCategory> CommMain = commRepository.findCommMainByCategory(category);
+        return CommMain;
+    }
+
     @Transactional
     public CommResponse.CommDetailDTO getCommDetail(int id) {
         // 주어진 ID로 게시글을 가져옵니다.
@@ -101,10 +108,5 @@ public class CommService {
         commRepository.save(comm);
     }
 
-    //서비스
-    public void getCommsByCategory(CommCategory category) {
 
-        commRepository.findByCategory(CommCategory.GENERAL_CONCERNS);
-
-    }
 }

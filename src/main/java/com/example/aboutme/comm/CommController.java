@@ -74,11 +74,11 @@ public class CommController {
         return "/comm/comm-main";
     }
 
-    @GetMapping("comm/comm/category")
+    @GetMapping("/comm/category")
     public String communityByCategory(@RequestParam("category") CommCategory category, Model model) {
+        List<CommResponse.CommMainByCategory> allCommsWithReplyList = commService.getCommMainByCategory(category);
+        model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
 
-
-
-        return "/comm/comm-main-German";
+        return "/comm/comm-main";
     }
 }
