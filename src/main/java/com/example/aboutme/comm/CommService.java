@@ -1,13 +1,17 @@
 package com.example.aboutme.comm;
 
 import com.example.aboutme._core.error.exception.Exception404;
+import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.reply.Reply;
 import com.example.aboutme.reply.ReplyRepository;
+import com.example.aboutme.user.User;
+import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.user.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,7 @@ public class CommService {
     private final CommRepository commRepository;
     //    private final CommNativeRepository commNativeRepository;
     private final ReplyRepository replyRepository;
+    private final UserRepository userRepository;
 
 
     @Transactional
@@ -67,5 +72,32 @@ public class CommService {
     public Comm findById(Integer id) {
         Optional<Comm> commOptional = commRepository.findById(id);
         return commOptional.orElse(null); // orElse(null)을 사용하여 엔티티가 없을 경우 null 반환
+    }
+
+    public void saveComm(Integer id, CommRequest.RequestCommDTO commRequest) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Comm comm = new Comm(user, commRequest);
+        commRepository.save(comm);
+    }
+
+    // TODO : 수정 필요
+    public void updateComm(Integer id, CommRequest.UpdateRequestCommDTO updateRequestCommDTO) {
+        Comm comm = findById(id);
+
+        comm.setId(Integer.valueOf(updateRequestCommDTO.getId()));
+        comm.setTitle(updateRequestCommDTO.getTitle());
+        comm.setContent(updateRequestCommDTO.getContent());
+
+        String categoryKorean = updateRequestCommDTO.getCategory();
+        CommCategory category = Arrays.stream(CommCategory.values())
+                .filter(c -> c.getKorean().equals(categoryKorean))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No matching category for: " + categoryKorean));
+
+        comm.setCategory(category);
+
+        comm.setCategory(category);
+
+        commRepository.save(comm);
     }
 }
