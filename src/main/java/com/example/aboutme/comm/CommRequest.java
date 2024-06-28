@@ -1,11 +1,7 @@
 package com.example.aboutme.comm;
 
-import kotlin.jvm.Transient;
-import lombok.Data;
 
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.Instant;
+import lombok.Data;
 
 public class CommRequest {
 
@@ -16,6 +12,9 @@ public class CommRequest {
         private String content;
         private String category;
 
+        public RequestCommDTO() {
+        }
+
         public RequestCommDTO(String title, String content, String category) {
             this.title = title;
             this.content = content;
@@ -23,16 +22,18 @@ public class CommRequest {
         }
     }
 
-    // TODO : 수정 필요
     // 수정될 게시글 DTO
     @Data
     public static class UpdateRequestCommDTO {
-        private String id;
+        private Integer id;
         private String title;
         private String content;
         private String category;
 
-        public UpdateRequestCommDTO(String id, String title, String content, String category) {
+        public UpdateRequestCommDTO() {
+        }
+
+        public UpdateRequestCommDTO(Integer id, String title, String content, String category) {
             this.id = id;
             this.title = title;
             this.content = content;

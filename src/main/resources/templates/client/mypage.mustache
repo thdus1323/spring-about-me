@@ -153,15 +153,24 @@
                             {{#vouchers}}
                                 <tr>
                                     <td>{{voucherType}}</td>
-                                    <td>{{remainingCount}}회권</td>
+                                    <td>{{remainingCount}}회</td>
                                     <td>{{counselCount}}회</td>
                                     <td>
                                         <form action="/client/myPage/reservation" method="GET">
                                             <input type="hidden" name="expertId" value="{{expertId}}">
                                             <input type="hidden" name="voucherId" value="{{voucherId}}">
-                                            <button class="btn btn-outline-success btn-small"
-                                                    onclick="makeReservation({{id}})">예약하기
-                                            </button>
+                                            <input type="hidden" name="paymentId" value="{{paymentId}}">
+                                            {{#isRemainingCount}}
+
+                                                <button class="btn btn-outline-success btn-small"
+                                                        onclick="makeReservation({{id}})">예약하기
+                                                </button>
+                                            {{/isRemainingCount}}
+                                            {{^isRemainingCount}}
+                                                <button class="btn btn-outline-success btn-small" disabled>예약하기
+                                                </button>
+                                            {{/isRemainingCount}}
+
                                         </form>
                                     </td>
                                 </tr>
@@ -179,7 +188,8 @@
             <div class="card-body tabs-container">
                 <div class="tabs">
                     <div class="tab active" data-tab="progress-reservation">상담 및 예약 일정</div>
-                    <div class="tab" data-tab="completed-reservation">상담 내역</div>
+                    <div class="tab" data-tab="completed-counsel">상담 내역</div>
+                    <div class="tab" data-tab="consultation-journal">상담 일지</div>
                 </div>
                 <div class="tab-content active" id="progress-reservation">
                     <div class="table-container">
@@ -187,7 +197,6 @@
                             <thead>
                             <tr>
                                 <th>이용권</th>
-                                <th>회차/횟수</th>
                                 <th>시작 시간</th>
                                 <th>상담 날짜</th>
                                 <th>상태</th>
@@ -198,7 +207,6 @@
                             {{#progressReservations}}
                                 <tr>
                                     <td>{{voucherType}}</td>
-                                    <td>{{reservationCount}}회차/{{voucherCount}}회권</td>
                                     <td>{{startTime}}</td>
                                     <td>{{reservationDate}}</td>
                                     <td>{{status}}</td>
@@ -220,13 +228,12 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-content" id="completed-reservation">
+                <div class="tab-content" id="completed-counsel">
                     <div class="table-container">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>이용권</th>
-                                <th>회차/횟수</th>
                                 <th>상담 날짜</th>
                                 <th>상태</th>
                                 <th>리뷰</th>
@@ -236,7 +243,6 @@
                             {{#completedCounsels}}
                                 <tr>
                                     <td>{{voucherType}}</td>
-                                    <td>{{useCount}}회차/{{voucherCount}}회권</td>
                                     <td>{{counselDate}}</td>
                                     <td>{{state}}</td>
                                     <td>
@@ -248,6 +254,30 @@
                             {{/completedCounsels}}
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="consultation-journal">
+                    <div class="table-container">
+                        <div class="user-myPage post" data-post-id="my-board">
+                            <div class="post-header">
+                                <span class="post-category">텍스트 테라피
+                                    <img src="/images/expert21.jpg" alt="Profile Picture" class="post-profile-image">
+                                    <span class="username">1급)</span>
+                                    <span class="username">전문가21</span>
+                                    <span class="username">상담날짜(시간) </span>
+                                    <span class="username">: 2024-06-28</span>
+                                    <span class="username">(09:00)</span>
+                                </span>
+                            </div>
+                            <div class="post-body">
+                                <h5 class="post-title">AI 요약</h5>
+                                <p class="post-content">강하고 책임감이 강한사람입니다.</p>
+                            </div>
+                            <span class="username">더보기</span>
+                            <span class="username">상세내역</span>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,7 +296,7 @@
                             <div class="tab" data-tab="bookmark">북마크</div>
                         </div>
                         <div class="tab-content active" id="my-stories">
-                            {{#CommPosts}}
+                            {{#commPosts}}
                                 <div class="user-myPage post" data-post-id="my-board">
                                     <div class="post-header">
                                 <span class="post-category">{{category}} ·
@@ -291,15 +321,7 @@
                                 </span>
                                     </div>
                                 </div>
-                            {{/CommPosts}}
-                        </div>
-                        <div class="tab-content" id="my-comments">
-                            <!-- 나의 댓글 콘텐츠 -->
-                            <!-- 데이터를 여기에 추가 -->
-                        </div>
-                        <div class="tab-content" id="bookmark">
-                            <!-- 북마크 콘텐츠 -->
-                            <!-- 데이터를 여기에 추가 -->
+                            {{/commPosts}}
                         </div>
                     </div>
                 </div>
@@ -446,7 +468,7 @@
         alert('상담 일정을 변경합니다.');
     }
 
-    function writeReviw(id) {
+    function writeReview(id) {
         alert('리뷰를 작성하시겠습니까?')
     }
 
