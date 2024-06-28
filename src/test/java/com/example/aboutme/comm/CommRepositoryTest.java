@@ -1,5 +1,8 @@
 package com.example.aboutme.comm;
 
+import com.example.aboutme.comm.enums.CommCategory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -23,5 +26,12 @@ class CommRepositoryTest {
     void detail_test() {
         CommResponse.CommWithRepliesDTO comm = commRepository.findByIdDetail(1);
         System.out.println(comm.toString());
+    }
+
+    @Test
+    void findByCategoryTest() {
+        List<Comm> comms = commRepository.findByCategory(CommCategory.FINANCE_BUSINESS);
+        comms.forEach(comm -> System.out.println("comm = " + comm));
+
     }
 }

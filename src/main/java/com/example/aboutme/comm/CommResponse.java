@@ -17,29 +17,7 @@ import static java.util.stream.Collectors.toList;
 
 public class CommResponse {
 
-    @Data
-    public static class ClientMainCommListDTO {
-        private Integer communityId;
-        private String title;
-        private String content;
-        private String category;
-        private String writerImage;
-        private String writerName;
-        private String expertImage;
-        private String expertName;
 
-        public ClientMainCommListDTO(Integer communityId, String title, String content, CommCategory category,
-                                     String writerImage, String writerName, String expertImage, String expertName) {
-            this.communityId = communityId;
-            this.title = title;
-            this.content = content;
-            this.category = category.getKorean();
-            this.writerImage = writerImage;
-            this.writerName = writerName;
-            this.expertImage = expertImage;
-            this.expertName = expertName;
-        }
-    }
 
     // 용꺼
     // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO
@@ -89,7 +67,6 @@ public class CommResponse {
 
     // 게시글 디테일 DTO -> Comm, Reply
     @Data
-
     public static class CommWithRepliesDTO {
         private Integer id;
         private String writerName;

@@ -1,6 +1,7 @@
 package com.example.aboutme.comm;
 
 import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.user.SessionUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,5 +72,13 @@ public class CommController {
         request.setAttribute("allCommsWithReplyList", allCommsWithReplyList);
 
         return "/comm/comm-main";
+    }
+
+    @GetMapping("comm/comm/category")
+    public String communityByCategory(@RequestParam("category") CommCategory category, Model model) {
+
+
+
+        return "/comm/comm-main-German";
     }
 }

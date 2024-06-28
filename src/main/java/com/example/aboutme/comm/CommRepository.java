@@ -45,7 +45,6 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
 
     // /com 출력하려고 뽑은 쿼리
     @Query("""
-
                SELECT c FROM Comm c LEFT JOIN FETCH c.replies r ORDER BY c.id DESC
             """)
     List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReplies();
