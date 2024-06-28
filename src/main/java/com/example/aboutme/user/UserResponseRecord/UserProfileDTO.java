@@ -47,14 +47,17 @@ public record UserProfileDTO(
             Integer clientId,
             Integer expertId,
             Integer voucherId,
+            Integer paymentId,
             String price,
             Integer count,
             Integer remainingCount,
             Integer counselCount,
             Integer duration,
             String createdAt,
-            String updatedAt
+            String updatedAt,
+            boolean isRemainingCount
     ) {
+
     }
 
     @Builder
