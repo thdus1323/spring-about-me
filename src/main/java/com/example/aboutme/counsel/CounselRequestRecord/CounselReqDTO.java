@@ -1,7 +1,7 @@
 package com.example.aboutme.counsel.CounselRequestRecord;
 
 public record CounselReqDTO(
-        Integer reservationId,
+        Integer counselId,
         Integer userId,
         String voucherType,
         String reservationDate,

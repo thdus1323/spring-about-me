@@ -139,7 +139,7 @@ public interface CounselRepository extends JpaRepository<Counsel, Integer> {
             """)
     List<CounselScheduleRecord> findCounselScheduleRecordsByExpertId(@Param("expertId") Integer expertId);
 
-
-    @Query("SELECT c FROM Counsel c WHERE c.reservation.id = :reservationId")
-    Counsel findByReservationId(@Param("reservationId") Integer reservationId);
+//
+//    @Query("SELECT c FROM Counsel c WHERE c.reservation.id = :reservationId")
+//    Counsel findByReservationId(@Param("reservationId") Integer reservationId);
 }

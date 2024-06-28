@@ -66,7 +66,7 @@ public class CounselController {
     public String counselDetails(CounselReqDTO counselReqDTO,
                                  Model model) {
         if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.TEXT_THERAPY) {
-            return "텍스트테라피경로"; // 상담 세부 정보 페이지로 이동}}
+            return "redirect:/chat/"+ counselReqDTO.counselId(); // 상담 세부 정보 페이지로 이동}}
         } else if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.VIDEO_THERAPY) {
             return "화상테라피경로";
         } else {
@@ -85,21 +85,23 @@ public class CounselController {
         return "expert/schedule";
     }
 
+
+//
+//    //텍스트테라피 상담 업데이트
+//    @PostMapping("/chat/complete")
+//    public String therapyUpdate(@PathVariable("counselId") Integer counselId){
+//        SessionUser sessionUser = redisUtil.getSessionUser();
+////        counselService.completeCounsel(counselId,sessionUser);
+//
+//        return "redirect:/client/myPage";
+//    }
+
     //텍스트테라피 페이지
-    @GetMapping("/chat/{reservationId}")
-    public String therapy(@PathVariable("reservationId") Integer reservationId, Model model) {
-        model.addAttribute("reservationId", reservationId);
+    @GetMapping("/chat/{counselId}")
+    public String therapyText(@PathVariable(name = "counselId") Integer counselId, Model model) {
+        model.addAttribute("counselId", counselId);
 
-        return "/client/text-chat";
-    }
-
-    //텍스트테라피 상담 업데이트
-    @PostMapping("/chat/complete")
-    public String therapyUpdate(@PathVariable("counselId") Integer counselId){
-        SessionUser sessionUser = redisUtil.getSessionUser();
-//        counselService.completeCounsel(counselId,sessionUser);
-
-        return "redirect:/client/myPage";
+        return "client/text-chat";
     }
 
 }
