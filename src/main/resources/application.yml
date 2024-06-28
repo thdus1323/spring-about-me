@@ -47,6 +47,7 @@ spring:
         format_sql: true
         default_batch_fetch_size: 10
     defer-datasource-initialization: true
+#   서비스에서 레이지로딩을 끝내고 컨트롤러에 보낸다. 뭘로? DTO로
     open-in-view: false
 
 

@@ -2,6 +2,8 @@ package com.example.aboutme.reservation;
 
 import com.example.aboutme._core.error.exception.Exception400;
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme.counsel.Counsel;
+import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.CounselResponseRecord.ReservationDetailsDTO;
 import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.user.User;
@@ -24,7 +26,7 @@ class ReservationServiceTest {
     //테스트에서는 빈주입이 안되어서 직접 뉴~
     private Formatter formatter = new Formatter();
     @Autowired
-    private counselRepository counselRepository;
+    private CounselRepository counselRepository;
 
     @Test
     void getReservationDetails() {
@@ -66,21 +68,21 @@ class ReservationServiceTest {
         Voucher voucher = voucherRepository.findById(voucherId)
                 .orElseThrow(() -> new RuntimeException("바우처를 찾을 수 없습니다."));
 
-        Reservation reservation = new Reservation();
-        reservation.setExpert(expert);
-        reservation.setVoucher(voucher);
-        reservation.setReservationTime(startTime);
+        Counsel counsel = new Counsel();
+        counsel.setExpert(expert);
+        counsel.setVoucher(voucher);
+        counsel.setCounselTime(startTime);
         String reservationDate = "1";
-        reservation.setReservationDate(reservationDate);
-        reservation.setStatus(ReservationStatus.PENDING);
+        counsel.setCounselDate(reservationDate);
+        counsel.setReservationStatus(ReservationStatus.RESERVATION_PENDING);
 
-        System.out.println("reservation = " + reservation);
+        System.out.println("counsel = " + counsel);
     }
 
     @Test
     void 예약조회하기() {
         int id = 16;
-        Reservation reservation = counselRepository.findById(id).get();
-        System.out.println("reservation = " + reservation);
+        Counsel counsel = counselRepository.findById(id).get();
+        System.out.println("counsel = " + counsel);
     }
 }

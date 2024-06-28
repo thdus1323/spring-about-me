@@ -1,18 +1,14 @@
 package com.example.aboutme.counsel;
 
-import com.example.aboutme._core.error.exception.Exception404;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 public class CounselRepositoryTest {
@@ -52,20 +48,20 @@ public class CounselRepositoryTest {
         System.out.println(counselList.size());
     }
 
-    @Test
-    public void findByReservationId_test(){
-
-        //Given
-        Integer reservationId = 1;
-
-        //When
-        Counsel counsel = counselRepository.findByReservationId(reservationId);
-
-        //Eye
-        System.out.println(counsel);
-
-        //Then
-        assertNotNull(counsel);
-        assertEquals(reservationId, counsel.getReservation().getId());
-    }
+//    @Test
+//    public void findByReservationId_test(){
+//
+//        //Given
+//        Integer reservationId = 1;
+//
+//        //When
+//        Counsel counsel = CounselRepository.findByReservationId(reservationId);
+//
+//        //Eye
+//        System.out.println(counsel);
+//
+//        //Then
+//        assertNotNull(counsel);
+//        assertEquals(reservationId, counsel.getReservation().getId());
+//    }
 }

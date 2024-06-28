@@ -8,6 +8,7 @@ import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme.counsel.CounselRequestRecord.ReservationRepDTO;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.UserRecord;
+import com.example.aboutme.counsel.CounselResponseRecord.MakeReservationDetailsDTO;
 import com.example.aboutme.counsel.CounselResponseRecord.ReservationDetailsDTO;
 import com.example.aboutme.counsel.enums.CounselStatus;
 import com.example.aboutme.counsel.enums.ReservationStatus;
@@ -97,7 +98,7 @@ public class CounselService {
                 .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
         Voucher voucher = voucherRepository.findById(reqDTO.voucherId())
                 .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
-        Payment payment = paymentRepository.findById(client.getId())
+        Payment payment = paymentRepository.findById(reqDTO.paymentId())
                 .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
         //이넘으로 변경
         DayOfWeek dayOfWeekEnum = DayOfWeekConverter.toEnum(reqDTO.dayOfWeek());
@@ -113,12 +114,11 @@ public class CounselService {
                 .voucher(voucher)
                 .schedule(schedule)
                 .payment(payment)
-                .reservationStatus(ReservationStatus.SCHEDULED)
-                .counselStatus(CounselStatus.PENDING)
+                .reservationStatus(ReservationStatus.RESERVATION_SCHEDULED)
+                .counselStatus(CounselStatus.COUNSEL_PENDING)
                 .dayOfWeek(reqDTO.dayOfWeek())
                 .counselDate(reqDTO.reservationDate())
                 .counselTime(reqDTO.startTime())
-                .reservationStatus(ReservationStatus.PENDING)
                 .build();
 
         counselRepository.save(makeReservation);
@@ -152,7 +152,7 @@ public class CounselService {
                 .expert(expert)
                 .voucher(voucher)
                 .schedule(schedule)
-                .reservationStatus(ReservationStatus.PENDING)
+                .reservationStatus(ReservationStatus.RESERVATION_PENDING)
                 .build();
 
         return counselRepository.save(reservation);
@@ -160,7 +160,7 @@ public class CounselService {
 
 
     //예약 페이지의 바우처와 유저정보 조회
-    public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId) {
+    public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId ) {
 
         Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(() -> new Exception400("해당하는 이용권을 찾을 수 없습니다."));
         User user = userRepository.findById(expertId).orElseThrow(() -> new Exception400("해당하는 전문가를 찾을 수 없습니다."));
@@ -169,14 +169,15 @@ public class CounselService {
         String formattedPrice = Formatter.number((int) voucher.getPrice());
 
         // 엔티티를 DTO로 변환
-        ReservationDetailsDTO.VoucherDTO voucherDTO = new ReservationDetailsDTO.VoucherDTO(
-                voucher.getId(),
-                voucher.getVoucherType().getKorean(),
-                voucher.getExpert().getId(),
-                formattedPrice,
-                voucher.getCount(),
-                voucher.getDuration()
-        );
+        ReservationDetailsDTO.VoucherDTO voucherDTO = ReservationDetailsDTO.VoucherDTO.builder()
+                .id(voucher.getId()).
+                voucherType(voucher.getVoucherType().getKorean())
+                .price(formattedPrice)
+                .expertId(voucher.getExpert().getId())
+                .count(voucher.getCount())
+                .duration(voucher.getDuration())
+                .build();
+
         ReservationDetailsDTO.UserDTO userDTO = new ReservationDetailsDTO.UserDTO(
                 user.getId(),
                 user.getLevel().getKorean()
@@ -185,6 +186,34 @@ public class CounselService {
         return new ReservationDetailsDTO(voucherDTO, userDTO);
     }
 
+    //예약 페이지의 바우처와 유저정보 조회
+    public MakeReservationDetailsDTO getMakeReservationDetails(Integer voucherId, Integer expertId, Integer paymentId) {
+
+        Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(() -> new Exception400("해당하는 이용권을 찾을 수 없습니다."));
+        User user = userRepository.findById(expertId).orElseThrow(() -> new Exception400("해당하는 전문가를 찾을 수 없습니다."));
+        Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> new Exception400("해당하는 이용권 결제내역을 찾을 수 없습니다."));
+        System.out.println("payment = " + payment);
+        // 가격 포맷
+        String formattedPrice = Formatter.number((int) voucher.getPrice());
+
+        // 엔티티를 DTO로 변환
+        MakeReservationDetailsDTO.VoucherDTO voucherDTO = MakeReservationDetailsDTO.VoucherDTO.builder()
+                .id(voucher.getId()).
+                voucherType(voucher.getVoucherType().getKorean())
+                .price(formattedPrice)
+                .paymentId(payment.getId())
+                .expertId(payment.getExpert().getId())
+                .count(payment.getVoucherCount())
+                .duration(payment.getVoucherDuration())
+                .build();
+
+        MakeReservationDetailsDTO.UserDTO userDTO = new MakeReservationDetailsDTO.UserDTO(
+                user.getId(),
+                user.getLevel().getKorean()
+        );
+
+        return new MakeReservationDetailsDTO(voucherDTO, userDTO);
+    }
 
     @Transactional
     public void Reservation(Counsel reservation) {
@@ -221,7 +250,7 @@ public class CounselService {
             Integer voucherTotal = counselRepository.countAllByClientId(user.getId());
 
             // 5. Vocher 남은 카운트찾기
-            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), CounselStatus.PENDING);
+            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), CounselStatus.COUNSEL_PENDING);
 
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
