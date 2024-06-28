@@ -221,7 +221,7 @@ public class CounselService {
             Integer voucherTotal = counselRepository.countAllByClientId(user.getId());
 
             // 5. Vocher 남은 카운트찾기
-            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), CounselStateEnum.PENDING);
+            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), CounselStatus.PENDING);
 
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
