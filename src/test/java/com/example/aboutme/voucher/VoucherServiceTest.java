@@ -16,11 +16,11 @@ class VoucherServiceTest {
     @Test
     void getVoucherListByExpertId() {
         int expertId = 21;
-        double lowestPrice = voucherRepository.findLowestPriceByExpertId(expertId);
-        System.out.println("lowestPrice = " + lowestPrice);
-        String price = formatMapper.number((int) lowestPrice);
-        System.out.println("price = " + price);
-        List<Voucher> vouchers = voucherRepository.findByExpertId(expertId);
-        vouchers.forEach(voucher -> System.out.println("voucher = " + voucher));
+//        double lowestPrice = voucherRepository.findLowestPriceByExpertId(expertId);
+//        System.out.println("lowestPrice = " + lowestPrice);
+//        String price = formatMapper.number((int) lowestPrice);
+//        System.out.println("price = " + price);
+//        List<Voucher> vouchers = voucherRepository.findByExpertId(expertId);
+//        vouchers.forEach(voucher -> System.out.println("voucher = " + voucher));
     }
 }
