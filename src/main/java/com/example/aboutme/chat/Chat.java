@@ -1,5 +1,6 @@
 package com.example.aboutme.chat;
 
+import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.Voucher;
 import jakarta.persistence.*;
@@ -21,8 +22,8 @@ public class Chat {
     private Integer id; // Id
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "voucher_id")
-    private Voucher voucher; // 바우처
+    @JoinColumn(name = "counsel_id")
+    private Counsel counsel; // 바우처
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id" )
@@ -33,10 +34,10 @@ public class Chat {
     private String content; // 컨텐츠
 
     @Builder
-    public Chat(Integer id, User user,String content, Voucher voucher) {
+    public Chat(Integer id, User user,String content, Counsel counsel) {
         this.id = id;
         this.user = user;
-        this.voucher = voucher;
+        this.counsel = counsel;
         this.content = content;
     }
 
