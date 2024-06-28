@@ -29,7 +29,6 @@
         var socket = new SockJS('/text-websocket');
         stompClient = Stomp.over(socket);
 
-
         // SEND 메시지 로그 출력을 비활성화
         stompClient.debug = function (str) {
             if (str.startsWith('>>> SEND')) {
@@ -51,12 +50,12 @@
     }
 
     function sendMessage() {
-        console.log("입장 완료1");
+
         var messageInput = document.getElementById('message');
         var messageContent = messageInput.value.trim();
 
         if (messageContent && stompClient && stompClient.connected) {
-            console.log("입장 완료2");
+
             fetch('/api/sessionUser', {
                 method: 'GET',
                 credentials: 'include' // 세션 쿠키 포함
@@ -74,7 +73,7 @@
                             content: messageContent,
                             id: sessionUser.id, // sessionUser의 id를 사용
                             profileImage: sessionUser.profileImage,
-                            voucherId: 1 // 임의로 1로 지정
+                            counselId: {{counselId}}
                         };
                         stompClient.send('/app/sendMessage', {}, JSON.stringify(message));
                         messageInput.value = '';
@@ -148,19 +147,39 @@
             });
             stompClient = null; // stompClient를 null로 설정하여 새로고침 후에도 다시 연결 가능
         }
+
+        var counselId = {{counselId}};
+
+        // 동적으로 폼 생성
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/text/complete/${counselId}`;
+
+        document.body.appendChild(form);
+        form.submit();
+
     }
 
+
     window.addEventListener('load', function () {
+
         document.querySelector('.btn-primary').addEventListener('click', function (e) {
             e.preventDefault();
             sendMessage();
         });
+
         document.getElementById('message').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 sendMessage();
             }
         });
+
+        document.getElementById('closeChatBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            closeChat();
+        });
+
     });
 </script>
 

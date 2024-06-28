@@ -526,9 +526,10 @@ body {
     padding-top: 20px;
 }
 .modal-footer input {
-    width: calc(100% - 100px);
+    width: calc(100% - 100px) !important;
     margin: 0;
     height: 40px;
+    margin-bottom: 0 !important;
 }
 .modal-footer button {
     margin: 0;
