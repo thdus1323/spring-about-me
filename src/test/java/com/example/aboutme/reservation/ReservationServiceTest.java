@@ -74,7 +74,7 @@ class ReservationServiceTest {
         counsel.setCounselTime(startTime);
         String reservationDate = "1";
         counsel.setCounselDate(reservationDate);
-        counsel.setReservationStatus(ReservationStatus.PENDING);
+        counsel.setReservationStatus(ReservationStatus.RESERVATION_PENDING);
 
         System.out.println("counsel = " + counsel);
     }
