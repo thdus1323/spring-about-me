@@ -183,3 +183,57 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.spec-list{
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.spec-list > div{}
+.spec-list > .spec-type{
+    font-size:16px;
+}
+.spec-list > .spec-details{
+    font-size: 18px;
+    font-weight: 700;
+}
+.append-spec{
+    width: calc((20% - 10px));
+    margin-right: 10px;
+}
+.append-spec.text{
+    width: calc(60% - 50px);
+    margin-right: 10px;
+}
+.append-spec select{
+    height: 40px;
+    border-radius: 5px;
+}
+.append-spec label{
+    font-size: 14px;
+}
+.append-spec input{}
+.input-group-append button{
+    height: 40px;
+}
+.append-spec input#detail{
+    height: 40px;
+    margin-bottom: 0;
+    border-radius: 5px;
+    border-color: #ddd;
+}
+.expert-myPage .card-body .input-group{
+    align-items: flex-end !important;
+    margin-top: 30px;
+}
+.expert-myPage .card-body .input-group .remove{
+    width: 40px;
+    height: 40px;
+}
+.spec-year{
+    color: #999;
+}
+.spec-year span{
+    color: #999;
+}
