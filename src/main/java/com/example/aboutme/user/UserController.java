@@ -4,6 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertUserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
@@ -211,8 +212,20 @@ public class UserController {
 
     //익스퍼트 - 마이페이지
     @GetMapping("/expert/myPage")
-    public String expertmyPage() {
-        return "expert/myPage";
+    public String expertmyPage(Model model) {
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        if (sessionUser == null){
+            return "oauth/login";
+        } else{
+            ExpertUserProfileDTO respDTO = userService.getExpertPageInfo(sessionUser);
+            model.addAttribute("model",respDTO);
+            System.out.println(respDTO);
+            return "expert/myPage";
+        }
+
     }
     // 🩺🩺🩺expert🩺🩺🩺
+
+
+
 }

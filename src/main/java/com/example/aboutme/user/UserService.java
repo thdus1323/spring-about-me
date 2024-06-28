@@ -21,6 +21,7 @@ import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.*;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertUserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.ExpertInfoRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
@@ -52,6 +53,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -67,6 +70,69 @@ public class UserService {
     private final PaymentRepository paymentRepository;
     private final RedisUtil redisUtil;
 
+    // 전문가 마이페이지
+    @Transactional
+    public ExpertUserProfileDTO getExpertPageInfo(SessionUser sessionUser){
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다"));
+
+        ExpertUserProfileDTO.User userProfile = ExpertUserProfileDTO.User.builder()
+                .id(user.getId())
+                .userRole(user.getUserRole())
+                .name(user.getName())
+                .email(user.getEmail())
+                .birth(user.getBirth())
+                .gender(user.getGender().getKorean())
+                .profileImage(user.getProfileImage())
+                .expertLevel(user.getLevel().getKorean())
+                .build();
+
+        List<ExpertUserProfileDTO.SpecDTO> spec = getExpertPageSpec(sessionUser.getId());
+
+        return new ExpertUserProfileDTO(userProfile,spec);
+
+    }
+
+    private List<ExpertUserProfileDTO.SpecDTO> getExpertPageSpec(Integer expertId){
+
+
+        List<ExpertUserProfileDTO.SpecDTO.CareerDTO> career = getExpertPageCareer(expertId);
+        List<ExpertUserProfileDTO.SpecDTO.EducationDTO> education = getExpertPageEducation(expertId);
+
+
+        return List.of(new ExpertUserProfileDTO.SpecDTO(career, education));
+    }
+
+    private List<ExpertUserProfileDTO.SpecDTO.CareerDTO> getExpertPageCareer(Integer expertId){
+        return specRepository.findByExpertId(expertId).stream()
+                .filter(spec -> spec.getSpecType() == SpecType.CAREER) // 필터링
+                .map(spec -> ExpertUserProfileDTO.SpecDTO.CareerDTO.builder()
+                        .userId(spec.getUser().getId())
+                        .id(spec.getId())
+                        .details(spec.getDetails())
+                        .specType(spec.getSpecType())
+                        .startYear(spec.getStartYear())
+                        .endYear(spec.getEndYear())
+                        .build()).toList();
+
+    }
+
+    private List<ExpertUserProfileDTO.SpecDTO.EducationDTO> getExpertPageEducation(Integer expertId){
+        return specRepository.findByExpertId(expertId).stream()
+                .filter(spec -> spec.getSpecType() == SpecType.EDUCATION) // 필터링
+                .map(spec ->  ExpertUserProfileDTO.SpecDTO.EducationDTO.builder()
+                            .userId(spec.getUser().getId())
+                            .id(spec.getId())
+                            .details(spec.getDetails())
+                            .specType(spec.getSpecType())
+                            .endYear(spec.getEndYear())
+                            .startYear(spec.getStartYear())
+                            .build()).toList();
+    }
+
+
+
+    // 클라이언트 마이페이지
     @Transactional
     public UserProfileDTO getMyPageInfo(SessionUser sessionUser) {
         User user = userRepository.findById(sessionUser.getId())
@@ -93,7 +159,6 @@ public class UserService {
 
     private List<UserProfileDTO.ReservationDTO> getProgressReservations(Integer clientId) {
         return counselRepository.findByClientId(clientId).stream()
-                .filter(c -> c.getReservationStatus().equals(ReservationStatus.RESERVATION_SCHEDULED) || c.getReservationStatus().equals(ReservationStatus.RESERVATION_COMPLETED))
                 .map(r -> {
                     Voucher v = r.getVoucher();
                     Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(clientId, v.getId());
@@ -141,7 +206,7 @@ public class UserService {
 
                     Integer counselCount = counselRepository.findByClientIdAndStateCount(clientId, p.getId());
                     Integer reservationCount = counselRepository.countByClientIdAndVoucherIdAndReservationId(clientId, p.getVoucher().getId(), p.getId());
-                    Integer remainingCount = p.getVoucherCount() - (reservationCount + counselCount);
+                    Integer remainingCount = p.getVoucherCount() - reservationCount;
 
                     boolean isRemainingCount = remainingCount > 0;
                     return UserProfileDTO.VoucherDTO.builder()
