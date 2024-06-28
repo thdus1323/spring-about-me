@@ -17,27 +17,26 @@ import static java.util.stream.Collectors.toList;
 
 public class CommResponse {
 
+    //카테고리별 조회하는 dto
     @Data
-    public static class ClientMainCommListDTO {
-        private Integer communityId;
-        private String title;
-        private String content;
-        private String category;
-        private String writerImage;
+    public static class CommMainByCategory {
+        private Integer id;
         private String writerName;
-        private String expertImage;
-        private String expertName;
+        private String writerImage;
+        private String content;
+        private String title;
+        private String category;
+        private int replies;
 
-        public ClientMainCommListDTO(Integer communityId, String title, String content, CommCategory category,
-                                     String writerImage, String writerName, String expertImage, String expertName) {
-            this.communityId = communityId;
-            this.title = title;
-            this.content = content;
-            this.category = category.getKorean();
-            this.writerImage = writerImage;
+        public CommMainByCategory(Integer id, String writerName, String writerImage, String content, String title,
+                                     CommCategory category, int replies) {
+            this.id = id;
             this.writerName = writerName;
-            this.expertImage = expertImage;
-            this.expertName = expertName;
+            this.writerImage = writerImage;
+            this.content = content;
+            this.title = title;
+            this.category = category.getKorean();
+            this.replies = replies;
         }
     }
 
@@ -89,7 +88,6 @@ public class CommResponse {
 
     // 게시글 디테일 DTO -> Comm, Reply
     @Data
-
     public static class CommWithRepliesDTO {
         private Integer id;
         private String writerName;

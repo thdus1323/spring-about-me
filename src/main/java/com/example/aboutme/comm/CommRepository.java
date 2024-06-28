@@ -45,7 +45,6 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
 
     // /com 출력하려고 뽑은 쿼리
     @Query("""
-
                SELECT c FROM Comm c LEFT JOIN FETCH c.replies r ORDER BY c.id DESC
             """)
     List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReplies();
@@ -58,4 +57,22 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
     // 전문답변 있는지 확인하는 쿼리
     @Query("SELECT COUNT(r) > 0 FROM Comm c JOIN c.replies r WHERE c.id = :id AND r.user.userRole = com.example.aboutme.user.enums.UserRole.EXPERT")
     boolean existsExpertReply(@Param("id") Integer id);
+
+    //카테고리별 게시글 조회
+    @Query("""
+    SELECT new com.example.aboutme.comm.CommResponse$CommMainByCategory(
+        c.id,
+        c.user.name,
+        c.user.profileImage,
+        c.content,
+        c.title,
+        c.category,
+        SIZE(c.replies)
+    )
+    FROM Comm c
+    LEFT JOIN c.replies r
+    WHERE c.category = :category
+    ORDER BY c.id DESC
+""")
+    List<CommResponse.CommMainByCategory> findCommMainByCategory(@Param("category") CommCategory category);
 }
