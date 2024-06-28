@@ -183,6 +183,7 @@ public class CommResponse {
             private String title;
             private String content;
             private String category;
+            private Integer writerId;
             private String writerName;
             private String writerProfileImage;
             private Timestamp createdAt;
@@ -195,6 +196,7 @@ public class CommResponse {
                 this.title = comm.getTitle();
                 this.content = comm.getContent();
                 this.category = comm.getCategory().getKorean();
+                this.writerId = comm.getUser().getId();
                 this.writerName = comm.getUser().getName();
                 this.writerProfileImage = comm.getUser().getProfileImage();
                 this.createdAt = comm.getCreatedAt();
