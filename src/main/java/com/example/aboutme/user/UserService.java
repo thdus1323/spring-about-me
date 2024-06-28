@@ -9,6 +9,7 @@ import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.enums.CounselStatus;
+import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
@@ -92,6 +93,7 @@ public class UserService {
 
     private List<UserProfileDTO.ReservationDTO> getProgressReservations(Integer clientId) {
         return counselRepository.findByClientId(clientId).stream()
+                .filter(c -> c.getReservationStatus().equals(ReservationStatus.RESERVATION_SCHEDULED) || c.getReservationStatus().equals(ReservationStatus.RESERVATION_COMPLETED))
                 .map(r -> {
                     Voucher v = r.getVoucher();
                     Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(clientId, v.getId());
@@ -136,12 +138,15 @@ public class UserService {
     private List<UserProfileDTO.VoucherDTO> getVouchers(Integer clientId) {
         return paymentRepository.findByClientId(clientId).stream()
                 .map(p -> {
+
                     Integer counselCount = counselRepository.findByClientIdAndStateCount(clientId, p.getId());
                     Integer reservationCount = counselRepository.countByClientIdAndVoucherIdAndReservationId(clientId, p.getVoucher().getId(), p.getId());
-                    Integer remainingCount = p.getVoucherCount() - reservationCount;
+                    Integer remainingCount = p.getVoucherCount() - (reservationCount + counselCount);
 
+                    boolean isRemainingCount = remainingCount > 0;
                     return UserProfileDTO.VoucherDTO.builder()
                             .id(p.getId())
+                            .paymentId(p.getId())
                             .voucherType(p.getVoucherType().getKorean())
                             .clientId(p.getClient().getId())
                             .expertId(p.getExpert().getId())
@@ -153,12 +158,14 @@ public class UserService {
                             .duration(p.getVoucherDuration())
                             .createdAt(Formatter.formatTimestamp(p.getCreatedAt()))
                             .updatedAt(Formatter.formatTimestamp(p.getUpdatedAt()))
+                            .isRemainingCount(isRemainingCount)
                             .build();
                 }).collect(Collectors.toList());
     }
 
     private List<UserProfileDTO.CounselDTO> getCompletedCounsels(Integer clientId) {
-        return counselRepository.findByClientIdAndState(clientId, CounselStatus.COMPLETED).stream()
+        return counselRepository.findByClientId(clientId).stream()
+                .filter(c -> c.getCounselStatus().equals(CounselStatus.COUNSEL_COMPLETED))
                 .map(c -> {
                     Voucher v = c.getVoucher();
                     Integer useCount = counselRepository.countByClientIdAndVoucherIdAndBeforeDate(clientId, v.getId(), c.getCounselDate());
@@ -176,7 +183,10 @@ public class UserService {
                             .useCount(useCount)
                             .build();
                 }).collect(Collectors.toList());
+
+
     }
+
 
     private List<UserProfileDTO.Comm> getCommPosts(Integer userId) {
         return commRepository.findByUserId(userId).stream()

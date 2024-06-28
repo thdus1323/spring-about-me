@@ -4,6 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.counsel.CounselRequestRecord.CounselReqDTO;
 import com.example.aboutme.counsel.CounselRequestRecord.ReservationRepDTO;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
+import com.example.aboutme.counsel.CounselResponseRecord.MakeReservationDetailsDTO;
 import com.example.aboutme.counsel.CounselResponseRecord.ReservationDetailsDTO;
 import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.voucher.enums.VoucherType;
@@ -23,7 +24,7 @@ public class CounselController {
     private final RedisUtil redisUtil;
 
 
-    //    전문가 칮기 - 예약하기
+    //   전문가 칮기 - 예약하기
     @GetMapping("/client/findExpert/reservation")
     public String findExpertReservation(
             @RequestParam(name = "voucherId", required = false) Integer voucherId,
@@ -45,10 +46,11 @@ public class CounselController {
 
     @GetMapping("/client/myPage/reservation")
     public String makeReservation(@RequestParam(name = "voucherId", required = false) Integer voucherId,
+                                  @RequestParam(name = "paymentId", required = false) Integer paymentId,
                                   @RequestParam(name = "expertId", required = false) Integer expertId, Model model) {
-        log.info("😊😊😊😊😊예약만들기  : {}, {}", voucherId, expertId);
-        ReservationDetailsDTO reservationDetailsDTO = counselService.getReservationDetails(voucherId, expertId);
-        model.addAttribute("model", reservationDetailsDTO);
+        log.info("😊😊😊😊😊예약만들기  : {}, {},{}", voucherId, expertId,paymentId);
+        MakeReservationDetailsDTO respDTO = counselService.getMakeReservationDetails(voucherId, expertId,paymentId);
+        model.addAttribute("model", respDTO);
         return "client/makeReservation";
     }
 
