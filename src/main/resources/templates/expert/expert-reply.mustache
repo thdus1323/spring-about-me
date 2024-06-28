@@ -35,7 +35,7 @@
             <input type="hidden" id="urlId" name="id">
 
             <div class="form-group-button">
-                <button type="submit" >댓글 등록</button>
+                <button type="submit">댓글 등록</button>
             </div>
         </form>
     </div>
@@ -43,7 +43,7 @@
 
 <script>
     // 페이지 로드 시 실행되는 부분
-    window.onload = function() {
+    window.onload = function () {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
         document.getElementById('urlId').value = id; // hidden input에 URL의 id 값 설정
@@ -67,7 +67,7 @@
             solution: solution
         };
 
-        fetch('/reply/complete', {
+        fetch('/expert-reply/complete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,6 +78,7 @@
                     if (response.ok) {
                         alert('댓글이 성공적으로 등록되었습니다!');
                         window.close(); // 댓글 등록 성공 시 창 닫기
+                        opener.location.reload();
                     } else {
                         alert('댓글 등록에 실패했습니다. 다시 시도해주세요.');
                     }
