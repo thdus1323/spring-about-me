@@ -99,7 +99,7 @@ public class Counsel {
 
     // 상담내용 수정
     public void completeCounsel(){
-        this.counselStatus = CounselStatus.COMPLETED;
+        this.counselStatus = CounselStatus.COUNSEL_COMPLETED;
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
