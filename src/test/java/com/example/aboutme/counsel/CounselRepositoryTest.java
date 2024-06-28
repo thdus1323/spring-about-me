@@ -2,7 +2,7 @@ package com.example.aboutme.counsel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@SpringBootTest
+@DataJpaTest
 public class CounselRepositoryTest {
     @Autowired
     CounselRepository counselRepository;
@@ -47,4 +47,21 @@ public class CounselRepositoryTest {
         //Eye
         System.out.println(counselList.size());
     }
+
+//    @Test
+//    public void findByReservationId_test(){
+//
+//        //Given
+//        Integer reservationId = 1;
+//
+//        //When
+//        Counsel counsel = CounselRepository.findByReservationId(reservationId);
+//
+//        //Eye
+//        System.out.println(counsel);
+//
+//        //Then
+//        assertNotNull(counsel);
+//        assertEquals(reservationId, counsel.getReservation().getId());
+//    }
 }

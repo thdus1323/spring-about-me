@@ -26,12 +26,18 @@ public class CommController {
         return "comm/comm-write";
     }
 
-    // TODO : 수정 필요
+    // 게시글 삭제
+    @DeleteMapping("/comm/delete/{commId}")
+    public ResponseEntity<?> deleteComm(@PathVariable("commId") Integer commId) {
+        commService.deleteComm(commId);
+        return ResponseEntity.ok("게시글 삭제 성공");
+    }
+
     // 게시글 수정
     @PostMapping("/comm/update")
-    public ResponseEntity<?> communityUpdate(@RequestParam CommRequest.UpdateRequestCommDTO updateRequestCommDTO) {
+    public ResponseEntity<?> communityUpdate(@RequestBody CommRequest.UpdateRequestCommDTO updatedPost) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        commService.updateComm(sessionUser.getId(), updateRequestCommDTO);
+        commService.updateComm(sessionUser.getId(), updatedPost);
 
         return ResponseEntity.ok("게시글 수정 완료");
     }
@@ -49,7 +55,7 @@ public class CommController {
     public String detail(@PathVariable("id") Integer id, Model model) throws JsonProcessingException {
 
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-        
+
 //        String json = new ObjectMapper().writeValueAsString(comm);
 //        log.info("디테일  {}", json);
 

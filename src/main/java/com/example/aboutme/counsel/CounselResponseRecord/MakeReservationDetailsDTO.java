@@ -2,7 +2,7 @@ package com.example.aboutme.counsel.CounselResponseRecord;
 
 import lombok.Builder;
 
-public record ReservationDetailsDTO(
+public record MakeReservationDetailsDTO(
         VoucherDTO voucher,
         UserDTO user
 ) {
@@ -12,6 +12,7 @@ public record ReservationDetailsDTO(
             Integer id,
             String voucherType,
             Integer expertId,
+            Integer paymentId,
             String price,
             Integer count,
             Integer duration

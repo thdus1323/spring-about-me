@@ -353,7 +353,7 @@
 
 .expert-image figure {
     width: 120px;
-    max-height: 160px;
+    height: 150px;
     border-radius: 5px;
     overflow: hidden;
 }
