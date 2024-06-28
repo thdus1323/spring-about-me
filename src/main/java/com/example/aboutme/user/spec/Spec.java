@@ -26,14 +26,18 @@ public class Spec {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-//    @JsonIgnore
     private User user;
 
+    private String startYear; // 시작년도
+    private String endYear; // 최종년도
+
     @Builder
-    public Spec(Integer id, SpecType specType, String details, User user) {
+    public Spec(Integer id, SpecType specType, String details, User user, String startYear, String endYear) {
         this.id = id;
         this.specType = specType;
         this.details = details;
         this.user = user;
+        this.startYear = startYear;
+        this.endYear = endYear;
     }
 }

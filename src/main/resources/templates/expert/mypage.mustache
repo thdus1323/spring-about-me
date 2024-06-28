@@ -1,6 +1,6 @@
 {{> layout/header}}
 
-
+{{#model}}
 <div class="container mt-5 expert-myPage">
     <h1 class="text-center mb-5">마이페이지</h1>
 
@@ -12,21 +12,21 @@
         <div class="card-body">
             <div id="profile-view" class="profile-container">
                 <div class="profile-image-wrapper">
-                    <img src="./images/iu.png" alt="Profile Picture" class="profile-image" id="profileImageView">
+                    <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image" id="profileImageView">
                 </div>
                 <div class="profile-details ">
                     <div class="row">
                         <div class="col-md-6 mb-2">
                             <div class="font-weight-bold">상담사 :</div>
-                            <div id="username">kjh5848</div>
+                            <div id="username">{{user.name}}</div>
                         </div>
                         <div class="col-md-6 mb-2">
                             <div class="font-weight-bold">이메일 :</div>
-                            <div><i class="fas fa-envelope"></i> <span id="email">kjh5848@kakao.com</span></div>
+                            <div><i class="fas fa-envelope"></i> <span id="email">{{user.email}}</span></div>
                         </div>
                         <div class="col-md-6 mb-2">
                             <div class="font-weight-bold">명칭 :</div>
-                            <div id="title">1급 심리상담사</div>
+                            <div id="title">{{user.expertLevel}}</div>
                         </div>
                     </div>
                     <div class="text-center mt-3">
@@ -55,15 +55,16 @@
                     <div class="row">
                         <div class="col-md-6 mb-2">
                             <div class="font-weight-bold">상담사 :</div>
-                            <div>kjh5848</div> <!-- 상담사 이름은 텍스트로 표시 -->
+                            <div>{{user.name}}</div> <!-- 상담사 이름은 텍스트로 표시 -->
                         </div>
                         <div class="col-md-6 mb-2">
                             <div class="font-weight-bold">이메일 :</div>
-                            <p class="card-text"><i class="fas fa-envelope"></i> kjh5848@kakao.com</p>
+                            <p class="card-text"><i class="fas fa-envelope"></i>{{user.email}}</p>
                         </div>
                         <div class="col-md-6 mb-2">
                             <div class="font-weight-bold">명칭 :</div>
                             <select id="edit-title" class="form-control">
+                                <option>{{user.expertLevel}}</option>
                                 <option value="1급 심리상담사">1급 심리상담사</option>
                                 <option value="2급 심리상담사">2급 심리상담사</option>
                             </select>
@@ -77,7 +78,7 @@
             </div>
         </div>
     </div>
-
+    {{#userSpeclist}}
     <div class="form-group row">
         <div class="col-sm-12">
             <div class="card">
@@ -88,6 +89,13 @@
                 </div>
                 <div class="card-body">
                     <form id="career-form">
+                        {{#career}}
+                        <div class="spec-list expert">
+                            <div class="spec-type main-color mb-20">{{specType}}</div>
+                            <div class="spec-year mb-10"><span>{{startYear}}</span> ~ <span>{{endYear}}</span>까지</div>
+                            <div class="spec-details">{{details}}</div>
+                        </div>
+                        {{/career}}
                         <!-- 동적으로 추가되는 경력 항목 -->
                     </form>
                 </div>
@@ -105,13 +113,20 @@
                 </div>
                 <div class="card-body">
                     <form id="education-form">
+                        {{#education}}
+                            <div class="spec-list expert">
+                                <div class="spec-type main-color mb-20">{{specType}}</div>
+                                <div class="spec-year mb-10"><span>{{startYear}}</span> ~ <span>{{endYear}}</span>까지</div>
+                                <div class="spec-details">{{details}}</div>
+                            </div>
+                        {{/education}}
                         <!-- 동적으로 추가되는 학력 항목 -->
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+    {{/userSpeclist}}
     <!-- 확인 버튼 -->
     <div class="form-group row">
         <div class="col-sm-12 text-center mt-3">
@@ -122,3 +137,180 @@
 
 {{> layout/footer}}
 
+
+
+<script>
+    // static/expert-mypage.js
+    // static/expert-mypage.js
+    $(document).ready(function () {
+        // 프로필 수정 버튼 클릭 시
+        $('#editProfile').on('click', function () {
+            $('#profile-view-card').addClass('d-none');
+            $('#profile-edit-card').removeClass('d-none');
+        });
+        // 취소 버튼 클릭 시
+        $('#cancelEdit').on('click', function () {
+            $('#profile-edit-card').addClass('d-none');
+            $('#profile-view-card').removeClass('d-none');
+        });
+        // 저장 버튼 클릭 시
+        $('#saveProfile').on('click', function () {
+            const title = $('#edit-title').val();
+            const profileImageSrc = $('#profileImageEdit').attr('src');
+            // 보기 모드에 값 반영
+            $('#title').text(title);
+            $('#profileImageView').attr('src', profileImageSrc);
+            // 폼 전환
+            $('#profile-edit-card').addClass('d-none');
+            $('#profile-view-card').removeClass('d-none');
+            // 서버로 데이터 전송
+            $.ajax({
+                url: '/submit',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    title: title,
+                    profileImage: profileImageSrc
+                }),
+                success: function () {
+                    alert('프로필이 저장되었습니다.');
+                },
+                error: function () {
+                    alert('저장에 실패했습니다.');
+                }
+            });
+        });
+
+        const userId = {{sessionUser.id}};
+        // 경력 항목 추가 버튼 클릭 시
+        $('#addCareer').on('click', function () {
+            const yearOptions = generateYearOptions();
+            $('#career-form').append(`
+            <div class="input-group">
+                <input type="hidden" name="userId" value="${userId}">
+                <input type="hidden" name="specType" value="CAREER">
+                <div class="append-spec">
+                     <label for="startYear">시작일</label>
+                     <select id="startYear" class="form-control" name="startYear" >${yearOptions}</select>
+                </div>
+                <div class="append-spec">
+                     <label for="endYear">종료일</label>
+                     <select id="endYear" class="form-control" name="endYear">${yearOptions}</select>
+                </div>
+                <div class="append-spec text">
+                    <label for="detail">직무,자격증(허위로 작성시 법적 책임을 물을수 있습니다.)</label>
+                    <input id="detail" type="text" class="form-control" name="details" placeholder="직무, 자격증 등을 입력하세요">
+                </div>
+
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-danger remove"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <hr>
+        `);
+        });
+        // 학력 항목 추가 버튼 클릭 시
+        $('#addEducation').on('click', function () {
+            const yearOptions = generateYearOptions();
+            $('#education-form').append(`
+            <div class="input-group">
+                <input type="hidden" name="userId" value="${userId}">
+                <input type="hidden" name="specType" value="EDUCATION">
+                <div class="append-spec">
+                     <label for="startYear">시작일</label>
+                     <select id="startYear" class="form-control" name="startYear">${yearOptions}</select>
+                </div>
+                <div class="append-spec">
+                     <label for="endYear">종료일</label>
+                     <select id="endYear" class="form-control" name="endYear">${yearOptions}</select>
+                </div>
+                <div class="append-spec text">
+                    <label for="detail">학위,전공(허위로 작성시 법적 책임을 물을수 있습니다.)</label>
+                    <input id="detail" type="text" class="form-control" name="details" placeholder="학위,전공등을 입력하세요">
+                </div>
+
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-danger remove"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <hr>
+        `);
+        });
+
+        $('#submitForm').on('click', function () {
+            const careerData = [];
+            $('#career-form .input-group').each(function () {
+                const career = {
+                    userId: $(this).find('input[name="userId"]').val(),
+                    specType: $(this).find('input[name="specType"]').val(),
+                    startYear: $(this).find('select[name="startYear"]').val(),
+                    endYear: $(this).find('select[name="endYear"]').val(),
+                    details: $(this).find('input[name="details"]').val()
+                };
+                careerData.push(career);
+            });
+            console.log("여기까지 들어옴1")
+            console.log(careerData);
+            const educationData = [];
+            $('#education-form .input-group').each(function () {
+                const education = {
+                    userId: $(this).find('input[name="userId"]').val(),
+                    specType: $(this).find('input[name="specType"]').val(),
+                    startYear: $(this).find('select[name="startYear"]').val(),
+                    endYear: $(this).find('select[name="endYear"]').val(),
+                    details: $(this).find('input[name="details"]').val()
+                };
+                educationData.push(education);
+            });
+
+            const requestData = {};
+            if (careerData.length > 0) {
+                requestData.career = careerData;
+            }
+            if (educationData.length > 0) {
+                requestData.education = educationData;
+            }
+            console.log("여기까지 들어옴2")
+            console.log(careerData);
+            // 서버로 데이터 전송
+            $.ajax({
+                url: '/expert/specs',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function () {
+                    alert('데이터가 저장되었습니다.');
+                    // 페이지를 새로고침하거나 다른 페이지로 이동
+                    location.reload();
+                },
+                error: function () {
+                    alert('저장에 실패했습니다.');
+                }
+            });
+            console.log("여기까지 들어옴3")
+            console.log(careerData);
+        });
+
+
+
+        // 동적 폼 항목 삭제 기능
+        $(document).on('click', '.remove', function () {
+            $(this).closest('.input-group').next('hr').remove();
+            $(this).closest('.input-group').remove();
+        });
+        // 연도 선택 옵션 생성 함수
+        function generateYearOptions() {
+            const currentYear = new Date().getFullYear();
+            let options = '';
+            for (let year = currentYear; year >= 1900; year--) {
+                options += `<option value="${year}">${year}</option>`;
+            }
+            return options;
+        }
+        // 출생 연도 셀렉트 박스에 옵션 추가
+        const yearOptions = generateYearOptions();
+        $('#edit-birth-year').append(yearOptions);
+    });
+</script>
+
+{{/model}}

@@ -69,11 +69,10 @@ $(document).ready(function() {
             console.log(date);
 
             $.ajax({
-                url: `/users/times?date=${date}`,
+                url: `/expert/search/times?date=${date}`,
                 type: 'GET',
                 // data: { dateTime: dateTime },
                 success: function(data) {
-
 
                     const experts = data.response.experts;
 
@@ -113,13 +112,6 @@ $(document).ready(function() {
                 }
             });
         });
-
-
-
-
-
-
-
     }
 
     function disablePastDates() {
