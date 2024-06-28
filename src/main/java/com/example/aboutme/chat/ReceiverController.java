@@ -20,7 +20,7 @@ public class ReceiverController {
     }
 
     @PostMapping("/receive-data")
-    public String receiveData(@RequestBody ChatMessage message) {
+    public String receiveData(@RequestBody ChatReqDTO message) {
         System.out.println("Received data: " + message.getContent());
         messagingTemplate.convertAndSend("/topic/messages", message);
         return "Data received successfully";
