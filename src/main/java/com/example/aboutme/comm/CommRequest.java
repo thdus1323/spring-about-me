@@ -1,5 +1,6 @@
 package com.example.aboutme.comm;
 
+
 import lombok.Data;
 
 public class CommRequest {

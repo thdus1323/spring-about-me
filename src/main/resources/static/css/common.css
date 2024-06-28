@@ -386,3 +386,160 @@ body {
     margin-left: 20px;
     text-decoration: none;
 }
+
+/*채팅 테라피 관련 모달창 CSS*/
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: fit-content;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+.modal-body::-webkit-scrollbar {
+    display: none;
+}
+.modal-header button{
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background: #000;
+    color: #fff;
+    font-size: 14px;
+}
+.modal.on {
+    display: block;
+}
+.modal-header, .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+.modal-footer {
+    border-top: 1px solid #eee;
+    padding: 0;
+    padding-top: 20px;
+}
+.modal-footer input{
+    transition: 0.3s ease;
+}
+.modal-footer input:focus{
+    border-color: #FD780F;
+    outline: none;
+}
+.modal-body {
+    padding: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.message {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.message figure {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.message .chat-text {
+    width: calc(100% - 60px);
+}
+.modal-title{
+    font-size: 22px;
+    font-weight: 700;
+}
+.message.owner{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.message.owner figure{
+    margin-right: 0;
+    margin-left: 10px;
+}
+.message.owner .content:before{
+    left: inherit;
+    right: -3px;
+}
+.message.owner figure img{}
+.message.owner .chat-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.message.owner .chat-text .sender{
+    text-align: right;
+}
+.message.owner .chat-text .content{}
+
+.message figure img {
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.message .sender {
+    font-weight: bold;
+    display: block;
+    width: calc(100% - 60px);
+}
+.message .content {
+    display: block;
+    padding: 10px;
+    background: #ffe0c7;
+    width: fit-content;
+    border-radius: 5px;
+    margin-top: 5px;
+    position: relative;
+    font-size: 12px;
+}
+.message .content:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: #ffe0c7;
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: -3px;
+    transform: rotate(45deg);
+    border-radius: 1px;
+}
+.modal-footer {
+    padding: 0;
+    padding-top: 20px;
+}
+.modal-footer input {
+    width: calc(100% - 100px) !important;
+    margin: 0;
+    height: 40px;
+    margin-bottom: 0 !important;
+}
+.modal-footer button {
+    margin: 0;
+    width: 90px;
+    font-size: 14px;
+    border-radius: 50px;
+}
+#chatBox {
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 300px;
+    overflow: auto;
+}
