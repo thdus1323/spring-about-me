@@ -85,52 +85,11 @@ public class UserController {
     }
 
     @GetMapping("/oauth/callback/naver")
-    public String naverCallback(@RequestParam(value = "code") String code,
-                                @RequestParam("state") String state) {
+    public String naverCallback(@RequestParam(value = "code") String code, @RequestParam("state") String state) {
         SessionUser sessionUser = userService.loginNaver(code, state, redisTemp);
         redisTemp.opsForValue().set("sessionUser", sessionUser);
         return "redirect:/";
     }
-
-//    @GetMapping("/oauth/callback/kakao")
-//    public String kakaoCallback(@RequestParam("code") String code) {
-//        User sessionUser = kakaoOAuthService.login(code, null, session);
-//        session.setAttribute("sessionUser", sessionUser);
-//
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/oauth/callback/naver")
-//    public String oauthNaverCallback(
-//            @RequestParam(value = "code") String code,
-//            @RequestParam("state") String state) {
-//        User sessionUser = naverOAuthService.login(code, state, session);
-//        session.setAttribute("sessionUser", sessionUser);
-//
-//        return "redirect:/";
-//    }
-
-//    @GetMapping("/oauth/callback/{provider}")
-//    public String oauthCallback(
-//            @PathVariable("provider") OauthProvider provider,
-//            @RequestParam("code") String code,
-//            @RequestParam(value = "state", required = false) String state,
-//            HttpSession session) {
-//
-//        User sessionUser;
-//
-//        if (provider == OauthProvider.KAKAO) {
-//            sessionUser = kakaoOAuthService.login(code, null, session);
-//        } else if (provider == OauthProvider.NAVER) {
-//            sessionUser = naverOAuthService.login(code, state, session);
-//        } else {
-//            throw new IllegalArgumentException("Unsupported OAuth provider: " + provider);
-//        }
-//
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
-//    }
-
 
     @GetMapping("/logout")
     public String logout() {

@@ -4,21 +4,21 @@
 <div class="registration">
     <div class="registration-container">
         <h4>이용권 등록하기</h4>
-        <form method="post" id="voucherForm" class="voucher-form-tag">
+        <form action="/vouchers/save" method="post" id="voucherForm" class="voucher-form-tag">
             <div class="voucher-form">
                 <div class="voucher-type">
                     <label for="voucherType">이용권:</label>
                     <select class="form-select" id="voucherType" name="voucherType">
-                        <option selected>테라피 유형을 선택해 주세요.</option>
-                        <option value="voice">보이스 테라피</option>
-                        <option value="face">페이스 테라피</option>
-                        <option value="text">텍스트 테라피</option>
+                        <option selected disabled>테라피 유형을 선택해 주세요.</option>
+                        <option value="TEXT_THERAPY">텍스트 테라피</option>
+                        <option value="VOICE_THERAPY">보이스 테라피</option>
+                        <option value="VIDEO_THERAPY">비디오 테라피</option>
                     </select>
                 </div>
-                <div class="number">
-                    <label for="number">횟수:</label>
-                    <select class="form-select" id="number" name="number">
-                        <option selected>횟수를 선택해 주세요.</option>
+                <div class="count">
+                    <label for="count">횟수:</label>
+                    <select class="form-select" id="count" name="count">
+                        <option selected disabled>횟수를 선택해 주세요.</option>
                         <option value="1">1회</option>
                         <option value="4">4회</option>
                         <option value="8">8회</option>
@@ -27,7 +27,7 @@
                 <div class="duration">
                     <label for="duration">시간:</label>
                     <select class="form-select" id="duration" name="duration">
-                        <option selected>상담 시간을 선택해 주세요.</option>
+                        <option selected disabled>상담 시간을 선택해 주세요.</option>
                         <option value="30">30분</option>
                         <option value="50">50분</option>
                         <option value="80">80분</option>
