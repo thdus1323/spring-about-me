@@ -5,6 +5,7 @@ public record ReservationRepDTO(
         String dayOfWeek,
         String startTime,
         Integer expertId,
-        Integer voucherId
+        Integer voucherId,
+        Integer paymentId
 ) {
 }

@@ -22,7 +22,7 @@ public class CounselRestController {
         Counsel reservation = counselRepository.findById(reservationId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
 
-        if (reservation.getReservationStatus() == ReservationStatus.PENDING) {
+        if (reservation.getReservationStatus() == ReservationStatus.RESERVATION_PENDING) {
             counselRepository.delete(reservation);
         }
 

@@ -90,7 +90,7 @@ public class PaymentService {
                 .client(client)
                 .expert(expert)
                 .voucher(voucher)
-                .counselStatus(CounselStatus.PENDING)
+                .counselStatus(CounselStatus.COUNSEL_PENDING)
                 .build();
         counselRepository.save(counsel);
 
@@ -98,7 +98,7 @@ public class PaymentService {
         // 예약 상태를 변경하는 로직 추가
         Counsel reservation = counselRepository.findById(reqDTO.reservationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 예약 내역이 없습니다."));
-        reservation.setReservationStatus(ReservationStatus.COMPLETED);
+        reservation.setReservationStatus(ReservationStatus.RESERVATION_COMPLETED);
         counselRepository.save(reservation);
 
         return "Payment completed: " + payment.getId();
@@ -106,10 +106,10 @@ public class PaymentService {
 
     private void updateReservationStatus(Payment payment) {
         Counsel reservation = counselRepository.findByVoucherIdAndReservationStatus(
-                        payment.getVoucher().getId(), ReservationStatus.PENDING)
+                        payment.getVoucher().getId(), ReservationStatus.RESERVATION_PENDING)
                 .orElseThrow(() -> new IllegalArgumentException("예약 대기 상태의 예약을 찾을 수 없습니다."));
 
-        reservation.setReservationStatus(ReservationStatus.SCHEDULED);
+        reservation.setReservationStatus(ReservationStatus.RESERVATION_SCHEDULED);
         counselRepository.save(reservation);
     }
 
