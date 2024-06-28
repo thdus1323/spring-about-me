@@ -15,7 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("""
             SELECT new com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord(r.id, u.name, r.score, r.content) 
             FROM Review r  
-            JOIN r.user u  
+            JOIN r.client u  
             WHERE r.counsel.expert.id = :expertId
             """)
     List<RecentReviewRecord> findReviewRecordsByExpertId(@Param("expertId") Integer expertId);

@@ -246,9 +246,17 @@
                                     <td>{{counselDate}}</td>
                                     <td>{{state}}</td>
                                     <td>
-                                        <button class="btn btn-outline-success btn-small" onclick="writeReview({{id}})">
-                                            리뷰 작성
-                                        </button>
+                                        <form action="/reviewForm" method="get">
+                                            <input type="hidden" name="expertId" value="{{expertId}}">
+                                            <input type="hidden" name="clientId" value="{{clientId}}">
+                                            <input type="hidden" name="counselId" value="{{id}}">
+                                            <input type="hidden" name="voucherType" value="{{voucherType}}">
+                                            <input type="hidden" name="counselDate" value="{{counselDate}}">
+                                            <button class="btn btn-outline-success btn-small"
+                                                    onclick="writeReview({{id}})">
+                                                리뷰 작성
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             {{/completedCounsels}}
@@ -276,13 +284,11 @@
                             </div>
                             <span class="username">더보기</span>
                             <span class="username">상세내역</span>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <!-- 커뮤니티 나의 사연 -->
         <div class="container mt-5 mb-5 user-myPage">

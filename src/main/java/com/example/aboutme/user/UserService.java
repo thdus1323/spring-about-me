@@ -144,6 +144,7 @@ public class UserService {
                     Integer remainingCount = p.getVoucherCount() - (reservationCount + counselCount);
 
                     boolean isRemainingCount = remainingCount > 0;
+
                     return UserProfileDTO.VoucherDTO.builder()
                             .id(p.getId())
                             .paymentId(p.getId())
