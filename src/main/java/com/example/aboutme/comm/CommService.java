@@ -100,4 +100,11 @@ public class CommService {
 
         commRepository.save(comm);
     }
+
+    //서비스
+    public void getCommsByCategory(CommCategory category) {
+
+        commRepository.findByCategory(CommCategory.GENERAL_CONCERNS);
+
+    }
 }
