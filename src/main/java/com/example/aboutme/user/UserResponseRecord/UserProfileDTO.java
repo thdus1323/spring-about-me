@@ -23,8 +23,7 @@ public record UserProfileDTO(
             String birth,
             String gender,
             String profileImage
-    ) {
-    }
+    ) {}
 
     @Builder
     public record PaymentDTO(
