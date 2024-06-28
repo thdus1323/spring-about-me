@@ -46,7 +46,6 @@ textarea, input[type="text"] {
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
-    cursor: pointer;
 }
 .btn-primary:hover{
     background-color: #fd780f;

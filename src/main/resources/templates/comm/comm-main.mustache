@@ -6,6 +6,7 @@
         <div class="page-wrapper">
             <h3 class="page-title mb-20">
                 커뮤니티 사연보기
+
             </h3>
             <div class="page-content">
                 <div class="comm">
@@ -52,6 +53,7 @@
                         <button class="active black-background">✨최신순</button>
                         <button>👩‍⚕️전문답변</button>
                         <button>😍공감순</button>
+                        <a href="/comm/write" class="write-post-link" onclick="return checkLogin()">글쓰기</a>
                     </div>
                     <!--필터 끝-->
                     <!--컨텐츠 시작-->
@@ -125,5 +127,30 @@
 <!--컨텐츠 끝-->
 </div>
 <!--커뮤니티 끝-->
+
+<script>
+    const user = {{#sessionUser}}true{{/sessionUser}}{{^sessionUser}}false{{/sessionUser}};
+    const userRole = "{{#sessionUser}}{{userRole}}{{/sessionUser}}{{^sessionUser}}guest{{/sessionUser}}";
+
+    function checkLogin() {
+        if (!user) {
+            alert("로그인 후 이용해 주세요.");
+            return false;
+        } else if (userRole === "EXPERT") {
+            alert("전문가는 글쓰기를 할 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
+
+    $(document).ready(function() {
+        // userRole이 expert일 경우 글쓰기 링크 비활성화
+        if (userRole === "expert") {
+            $(".write-post-link").hide();
+        }
+    });
+
+</script>
+
 {{> layout/footer}}
 
