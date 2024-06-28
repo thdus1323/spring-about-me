@@ -80,24 +80,18 @@ public class CommService {
         commRepository.save(comm);
     }
 
-    // TODO : 수정 필요
+    @Transactional
     public void updateComm(Integer id, CommRequest.UpdateRequestCommDTO updateRequestCommDTO) {
-        Comm comm = findById(id);
-
-        comm.setId(Integer.valueOf(updateRequestCommDTO.getId()));
+        Comm comm = commRepository.findById(updateRequestCommDTO.getId()).orElseThrow(() -> new RuntimeException("User not found"));
         comm.setTitle(updateRequestCommDTO.getTitle());
         comm.setContent(updateRequestCommDTO.getContent());
-
-        String categoryKorean = updateRequestCommDTO.getCategory();
-        CommCategory category = Arrays.stream(CommCategory.values())
-                .filter(c -> c.getKorean().equals(categoryKorean))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No matching category for: " + categoryKorean));
-
-        comm.setCategory(category);
-
-        comm.setCategory(category);
+        comm.setCategory(CommCategory.fromKorean(updateRequestCommDTO.getCategory()));
 
         commRepository.save(comm);
+    }
+
+    @Transactional
+    public void deleteComm(Integer id) {
+        commRepository.deleteById(id);
     }
 }
