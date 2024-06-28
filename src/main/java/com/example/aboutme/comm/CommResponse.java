@@ -17,7 +17,28 @@ import static java.util.stream.Collectors.toList;
 
 public class CommResponse {
 
+    //카테고리별 조회하는 dto
+    @Data
+    public static class CommMainByCategory {
+        private Integer id;
+        private String writerName;
+        private String writerImage;
+        private String content;
+        private String title;
+        private String category;
+        private int replies;
 
+        public CommMainByCategory(Integer id, String writerName, String writerImage, String content, String title,
+                                     CommCategory category, int replies) {
+            this.id = id;
+            this.writerName = writerName;
+            this.writerImage = writerImage;
+            this.content = content;
+            this.title = title;
+            this.category = category.getKorean();
+            this.replies = replies;
+        }
+    }
 
     // 용꺼
     // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO

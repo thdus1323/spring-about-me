@@ -34,4 +34,10 @@ class CommRepositoryTest {
         comms.forEach(comm -> System.out.println("comm = " + comm));
 
     }
+
+    @Test
+    void findCommMainByCategory() {
+        List<CommResponse.CommMainByCategory> comms = commRepository.findCommMainByCategory(CommCategory.FINANCE_BUSINESS);
+        comms.forEach(comm -> System.out.println("comm = " + comm));
+    }
 }
