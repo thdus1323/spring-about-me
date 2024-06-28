@@ -1,10 +1,13 @@
 package com.example.aboutme.voucher;
 
 import com.example.aboutme._core.error.exception.Exception403;
+import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme.user.SessionUser;
 import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.user.UserService;
+import com.example.aboutme.voucher.VoucherRequestDTO.VoucherSaveDTO;
 import com.example.aboutme.voucher.VoucherResponseDTO.expertVouchers.ExpertVouchersRecord;
 import com.example.aboutme.voucher.VoucherResponseDTO.expertVouchers.VouchersRecord;
 import com.example.aboutme.voucher.VoucherResponseDTO.voucherList.VoucherListRecord;
@@ -14,6 +17,7 @@ import com.example.aboutme.voucher.enums.VoucherType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,5 +106,23 @@ public class VoucherService {
         System.out.println("videoVoucher = " + videoVoucher);
 
         return new ExpertVouchersRecord(expertId, user.getName(), textVoucher, voiceVoucher, videoVoucher);
+    }
+
+
+    @Transactional
+    public void saveVoucher(VoucherSaveDTO request, SessionUser sessionUser) {
+
+        User expert = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception404("해당하는 전문가가 없습니다."));
+
+        Voucher voucher = Voucher.builder()
+                .expert(expert)
+                .voucherType(request.voucherType())
+                .count(request.count())
+                .duration(request.duration())
+                .price(request.price())
+                .build();
+
+        voucherRepository.save(voucher);
     }
 }

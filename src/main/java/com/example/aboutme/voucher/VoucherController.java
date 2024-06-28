@@ -1,14 +1,16 @@
 package com.example.aboutme.voucher;
 
+import com.example.aboutme._core.utils.ApiUtil;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.user.SessionUser;
+import com.example.aboutme.voucher.VoucherRequestDTO.VoucherSaveDTO;
 import com.example.aboutme.voucher.VoucherResponseDTO.expertVouchers.ExpertVouchersRecord;
 import com.example.aboutme.voucher.VoucherResponseDTO.voucherList.VoucherListRecord;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -35,11 +37,15 @@ public class VoucherController {
         return "expert/voucher-list";
     }
 
-    @GetMapping("/vouchers/regi-form")
-    public String addVoucher(Model model) {
-        SessionUser sessionUser = redisUtil.getSessionUser();
-        model.addAttribute("expertId", sessionUser.getId());
-
+    @GetMapping("/vouchers/save-form")
+    public String voucherSaveForm() {
         return "expert/voucher-form";
+    }
+
+    @PostMapping("/vouchers/save")
+    public String saveVoucher(@ModelAttribute VoucherSaveDTO request){
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        voucherService.saveVoucher(request, sessionUser);
+        return "redirect:/voucher-list";
     }
 }
