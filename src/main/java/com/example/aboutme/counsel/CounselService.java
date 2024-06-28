@@ -12,6 +12,7 @@ import com.example.aboutme.counsel.CounselResponseRecord.MakeReservationDetailsD
 import com.example.aboutme.counsel.CounselResponseRecord.ReservationDetailsDTO;
 import com.example.aboutme.counsel.enums.CounselStatus;
 import com.example.aboutme.counsel.enums.ReservationStatus;
+import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.Payment;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
@@ -119,6 +120,7 @@ public class CounselService {
                 .dayOfWeek(reqDTO.dayOfWeek())
                 .counselDate(reqDTO.reservationDate())
                 .counselTime(reqDTO.startTime())
+                .reviewState(ReviewState.REVIEW_PENDING)
                 .build();
 
         counselRepository.save(makeReservation);
@@ -160,7 +162,7 @@ public class CounselService {
 
 
     //예약 페이지의 바우처와 유저정보 조회
-    public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId ) {
+    public ReservationDetailsDTO getReservationDetails(Integer voucherId, Integer expertId) {
 
         Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(() -> new Exception400("해당하는 이용권을 찾을 수 없습니다."));
         User user = userRepository.findById(expertId).orElseThrow(() -> new Exception400("해당하는 전문가를 찾을 수 없습니다."));
@@ -275,9 +277,9 @@ public class CounselService {
 
     //상담완료
     @Transactional
-    public void CounselComplete(SessionUser sessionUser, Integer counselId){
+    public void CounselComplete(SessionUser sessionUser, Integer counselId) {
         // 0. 인증처리
-        if (sessionUser == null){
+        if (sessionUser == null) {
             throw new Exception404("인증이 필요한 서비스입니다.");
         }
         // 1. 권한처리

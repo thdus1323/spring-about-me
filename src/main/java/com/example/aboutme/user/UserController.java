@@ -156,8 +156,8 @@ public class UserController {
     }
 
     //클라이언트 - 마이페이지
-    @GetMapping("/client/myPage")
-    public String clientmyPage(Model model) {
+    @GetMapping("/client/mypage")
+    public String clientmyPpage(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser == null) {
             return "oauth/login";
@@ -165,7 +165,7 @@ public class UserController {
             UserProfileDTO respDTO = userService.getMyPageInfo(sessionUser);
             model.addAttribute("model", respDTO);
 
-            return "client/myPage";
+            return "client/mypage";
         }
     }
 
@@ -173,18 +173,17 @@ public class UserController {
     @GetMapping("/expert/myPage")
     public String expertmyPage(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        if (sessionUser == null){
+        if (sessionUser == null) {
             return "oauth/login";
-        } else{
+        } else {
             ExpertUserProfileDTO respDTO = userService.getExpertPageInfo(sessionUser);
-            model.addAttribute("model",respDTO);
+            model.addAttribute("model", respDTO);
             System.out.println(respDTO);
             return "expert/myPage";
         }
 
     }
     // 🩺🩺🩺expert🩺🩺🩺
-
 
 
 }

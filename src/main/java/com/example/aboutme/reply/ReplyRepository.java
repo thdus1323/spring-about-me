@@ -13,6 +13,8 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
     List<Reply> findByCategory(@Param("category") CommCategory category);
 
 
+    List<Reply> findByUserId(@Param("userId") Integer userId);
+
 
     @Query("SELECT r FROM Reply r WHERE r.comm.id = :commId")
     List<Reply> findByCommId(@Param("commId") Integer commId);

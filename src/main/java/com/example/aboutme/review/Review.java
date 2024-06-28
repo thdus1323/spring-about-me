@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "review_tb")
-@ToString(exclude = {"client", "counsel","expert"})
+@ToString(exclude = {"client", "counsel", "expert"})
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Review {
     private Counsel counsel; // 외래 키로 상담 정보를 참조
 
     @JoinColumn(nullable = false)
-    private Double score;
+    private Integer score;
 
     @Column(nullable = false)
     private String content;
@@ -45,7 +45,7 @@ public class Review {
     private Timestamp updatedAt;
 
     @Builder
-    public Review(Integer id, User client, User expert, Counsel counsel, Double score, String content, Timestamp createdAt, Timestamp updatedAt) {
+    public Review(Integer id, User client, User expert, Counsel counsel, Integer score, String content, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.client = client;
         this.expert = expert;

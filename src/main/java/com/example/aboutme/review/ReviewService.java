@@ -5,7 +5,9 @@ import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
+import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.review.ReviewReqRecord.GetReviewReqDTO;
+import com.example.aboutme.review.ReviewReqRecord.WriteReviewReqDTO;
 import com.example.aboutme.review.ReviewRespRecord.ExpertReviewDTO.ReviewDTORecord;
 import com.example.aboutme.review.ReviewRespRecord.ExpertReviewDTO.ReviewRecord;
 import com.example.aboutme.review.ReviewRespRecord.ExpertReviewDTO.UserRecord;
@@ -46,12 +48,12 @@ public class ReviewService {
     }
 
     @Transactional
-    public GetReviewRespDTO 리뷰조회하기(GetReviewReqDTO reqDTO, SessionUser sessionUser) {
+    public GetReviewRespDTO getReview(GetReviewReqDTO reqDTO, SessionUser sessionUser) {
         Counsel counsel = counselRepository.findById(reqDTO.counselId()).orElseThrow(() -> new Exception404("상담이력을 찾을 수 없습니다."));
         User expert = userRepository.findById(reqDTO.expertId())
                 .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
 
-        return  GetReviewRespDTO.builder()
+        return GetReviewRespDTO.builder()
                 .profileImage(expert.getProfileImage())
                 .expertName(expert.getName())
                 .voucherType(counsel.getVoucher().getVoucherType().getKorean())
@@ -60,5 +62,28 @@ public class ReviewService {
                 .clientId(sessionUser.getId())
                 .counselId(counsel.getId())
                 .build();
+    }
+
+
+    //리뷰 생성
+    public void saveReview(WriteReviewReqDTO reqDTO, SessionUser sesstionUser) {
+        Counsel counsel = counselRepository.findById(reqDTO.counselId()).orElseThrow(() -> new Exception404("상담이력을 찾을 수 없습니다."));
+        User expert = userRepository.findById(reqDTO.expertId())
+                .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
+        User client = userRepository.findById(sesstionUser.getId())
+                .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
+
+        Review review = Review.builder()
+                .client(client)
+                .expert(expert)
+                .content(reqDTO.reviewCountent())
+                .counsel(counsel)
+                .score(reqDTO.reviewScore())
+                .build();
+
+        counsel.setReviewState(ReviewState.REVIEW_COMPLETED);
+
+        counselRepository.save(counsel);
+        reviewRepository.save(review);
     }
 }
