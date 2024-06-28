@@ -4,8 +4,7 @@
 <div class="registration">
     <div class="registration-container">
         <h4>이용권 등록하기</h4>
-        <form method="post" id="voucherForm" class="voucher-form-tag">
-            <input type="hidden" value="{{expertId}}" name="expertId">
+        <form action="/vouchers/save" method="post" id="voucherForm" class="voucher-form-tag">
             <div class="voucher-form">
                 <div class="voucher-type">
                     <label for="voucherType">이용권:</label>
@@ -19,7 +18,7 @@
                 <div class="count">
                     <label for="count">횟수:</label>
                     <select class="form-select" id="count" name="count">
-                        <option selected>횟수를 선택해 주세요.</option>
+                        <option selected disabled>횟수를 선택해 주세요.</option>
                         <option value="1">1회</option>
                         <option value="4">4회</option>
                         <option value="8">8회</option>
@@ -28,7 +27,7 @@
                 <div class="duration">
                     <label for="duration">시간:</label>
                     <select class="form-select" id="duration" name="duration">
-                        <option selected>상담 시간을 선택해 주세요.</option>
+                        <option selected disabled>상담 시간을 선택해 주세요.</option>
                         <option value="30">30분</option>
                         <option value="50">50분</option>
                         <option value="80">80분</option>
