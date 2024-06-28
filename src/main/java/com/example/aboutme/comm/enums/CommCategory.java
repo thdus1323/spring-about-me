@@ -15,6 +15,16 @@ public enum CommCategory {
         this.korean = korean;
     }
 
+    // 한글로 들어온 이름으로 enum 값 찾기
+    public static CommCategory fromKorean(String korean) {
+        for (CommCategory category : values()) {
+            if (category.getKorean().equals(korean)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("Unknown category: " + korean);
+    }
+
     public String getKorean() {
         return korean;
     }
