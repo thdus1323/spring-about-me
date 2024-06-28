@@ -6,13 +6,13 @@ import lombok.Builder;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 public record UserProfileDTO(
         User user,
         List<PaymentDTO> payments,
+        List<VoucherDTO> vouchers,  // 새로운 필드 추가
         List<ReservationDTO> progressReservations,
         List<CounselDTO> completedCounsels,
-        List<Comm> CommPosts
+        List<Comm> commPosts
 ) {
     @Builder
     public record User(
@@ -29,20 +29,31 @@ public record UserProfileDTO(
     @Builder
     public record PaymentDTO(
             Integer id,
+            String paymentMethod,
+            String amount,
+            String paymentDate,
+            Integer voucherCount,
+            Integer voucherDuration,
+            String voucherType,
+            String createdAt,
+            String updatedAt
+    ) {
+    }
+
+    @Builder
+    public record VoucherDTO(
+            Integer id,
             String voucherType,
             Integer clientId,
             Integer expertId,
             Integer voucherId,
-            String paymentMethod,
             String price,
             Integer count,
-            Integer remainingCount,  // 추가된 필드
-            Integer counselCount,  // 추가된 필드
+            Integer remainingCount,
+            Integer counselCount,
             Integer duration,
             String createdAt,
-            String updatedAt,
-            String paymentDate,
-            String amount
+            String updatedAt
     ) {
     }
 
@@ -60,9 +71,9 @@ public record UserProfileDTO(
             Timestamp createdAt,
             Timestamp updatedAt,
             String voucherType,
-            Integer reservationCount,  // 추가된 필드
-            Integer usedCount,  // 추가된 필드
-            Integer voucherCount  // 추가된 필드
+            Integer reservationCount,
+            Integer usedCount,
+            Integer voucherCount
     ) {
     }
 
@@ -79,7 +90,7 @@ public record UserProfileDTO(
             String updatedAt,
             String voucherType,
             Integer useCount,
-            Integer voucherCount  // 추가된 필드
+            Integer voucherCount
     ) {
     }
 
