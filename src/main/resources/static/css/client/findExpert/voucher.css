@@ -14,7 +14,7 @@
 }
 
 .voucher-session-card .card-header:hover {
-    background-color: #e9ecef;
+    background-color: #ffa45b;
     border-color: #ccc;
 }
 
@@ -49,7 +49,6 @@
 /* 호버 시 변경 사항 */
 .voucher-price-card:hover {
     background-color: #f8f9fa;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-5px);
 }
 
