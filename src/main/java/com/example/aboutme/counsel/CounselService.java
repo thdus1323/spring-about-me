@@ -272,6 +272,21 @@ public class CounselService {
         return new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecords);
     }
 
+
+    //상담완료
+    @Transactional
+    public void CounselComplete(SessionUser sessionUser, Integer counselId){
+        // 0. 인증처리
+        if (sessionUser == null){
+            throw new Exception404("인증이 필요한 서비스입니다.");
+        }
+        // 1. 권한처리
+        Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new Exception403("해당 상담을 처리할 권한이 없습니다."));
+
+        // 2. counsel 수정
+        counsel.completeCounsel();
+
+    }
 }
 
 
