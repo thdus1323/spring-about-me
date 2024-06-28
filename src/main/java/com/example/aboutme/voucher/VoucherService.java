@@ -115,12 +115,14 @@ public class VoucherService {
         User expert = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception404("해당하는 전문가가 없습니다."));
 
+        String defaultImagePath = request.voucherType().getDefaultImagePath();
         Voucher voucher = Voucher.builder()
                 .expert(expert)
                 .voucherType(request.voucherType())
                 .count(request.count())
                 .duration(request.duration())
                 .price(request.price())
+                .imagePath(defaultImagePath)
                 .build();
 
         voucherRepository.save(voucher);

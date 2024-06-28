@@ -2,16 +2,19 @@ package com.example.aboutme.voucher.enums;
 
 import com.example.aboutme._core.error.exception.Exception400;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.RequiredArgsConstructor;
 
 public enum VoucherType {
-    TEXT_THERAPY("텍스트 테라피"), // 텍스트 테라피
-    VOICE_THERAPY("보이스 테라피"), // 음성 테라피
-    VIDEO_THERAPY("화상 테라피"); // 화상 테라피
+    TEXT_THERAPY("텍스트 테라피", "/images/chat.png"), // 텍스트 테라피
+    VOICE_THERAPY("보이스 테라피", "/images/call.png"), // 음성 테라피
+    VIDEO_THERAPY("화상 테라피", "/images/video.png"); // 화상 테라피
 
     private final String korean;
+    private final String defaultImagePath;
 
-    VoucherType(String korean) {
+    VoucherType(String korean, String defaultImagePath) {
         this.korean = korean;
+        this.defaultImagePath = defaultImagePath;
     }
 
     @JsonCreator
@@ -26,5 +29,8 @@ public enum VoucherType {
 
     public String getKorean() {
         return korean;
+    }
+    public String getDefaultImagePath() {
+        return defaultImagePath;
     }
 }
