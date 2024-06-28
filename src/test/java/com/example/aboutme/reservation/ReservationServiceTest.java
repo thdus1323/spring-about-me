@@ -57,32 +57,32 @@ class ReservationServiceTest {
         System.out.println("voucherDTO = " + voucherDTO);
     }
 
-//    @Test
-//    void createTempReservation() {
-//        int expertId = 21;
-//        int voucherId = 1;
-//        String startTime = "12:00";
-//
-//        User expert = userRepository.findById(expertId)
-//                .orElseThrow(() -> new RuntimeException("전문가를 찾을 수 없습니다."));
-//        Voucher voucher = voucherRepository.findById(voucherId)
-//                .orElseThrow(() -> new RuntimeException("바우처를 찾을 수 없습니다."));
-//
-//        Counsel reservation = new Counsel();
-//        reservation.setExpert(expert);
-//        reservation.setVoucher(voucher);
-//        reservation.setR(startTime);
-//        String reservationDate = "1";
-//        reservation.setReservationDate(reservationDate);
-//        reservation.setStatus(ReservationStatus.PENDING);
-//
-//        System.out.println("reservation = " + reservation);
-//    }
-//
-//    @Test
-//    void 예약조회하기() {
-//        int id = 16;
-//        Reservation reservation = counselRepository.findById(id).get();
-//        System.out.println("reservation = " + reservation);
-//    }
+    @Test
+    void createTempReservation() {
+        int expertId = 21;
+        int voucherId = 1;
+        String startTime = "12:00";
+
+        User expert = userRepository.findById(expertId)
+                .orElseThrow(() -> new RuntimeException("전문가를 찾을 수 없습니다."));
+        Voucher voucher = voucherRepository.findById(voucherId)
+                .orElseThrow(() -> new RuntimeException("바우처를 찾을 수 없습니다."));
+
+        Counsel counsel = new Counsel();
+        counsel.setExpert(expert);
+        counsel.setVoucher(voucher);
+        counsel.setCounselTime(startTime);
+        String reservationDate = "1";
+        counsel.setCounselDate(reservationDate);
+        counsel.setReservationStatus(ReservationStatus.RESERVATION_PENDING);
+
+        System.out.println("counsel = " + counsel);
+    }
+
+    @Test
+    void 예약조회하기() {
+        int id = 16;
+        Counsel counsel = counselRepository.findById(id).get();
+        System.out.println("counsel = " + counsel);
+    }
 }

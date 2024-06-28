@@ -6,14 +6,13 @@
         <div class="page-wrapper">
             <h3 class="page-title mb-20">
                 커뮤니티 사연보기
-
             </h3>
             <div class="page-content">
                 <div class="comm">
                     <div class="comm-nav">
                         <div class="navbar navbar-expand-lg navbar-light bg-light">
                             <div class="container-fluid">
-                                <a class="navbar-brand" href="#">모든 사연</a>
+                                <a class="navbar-brand" href="/comm">모든 사연</a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                                         aria-expanded="false"
@@ -23,25 +22,25 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="#">일반고민</a>
+                                            <a class="nav-link" href="/comm/category?category=GENERAL_CONCERNS">일반고민</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">취업/진로</a>
+                                            <a class="nav-link" href="/comm/category?category=CAREER_JOBS">취업/진로</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">직장</a>
+                                            <a class="nav-link" href="/comm/category?category=WORK_LIFE">직장</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">연애</a>
+                                            <a class="nav-link" href="/comm/category?category=RELATIONSHIPS">연애</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">대인관계</a>
+                                            <a class="nav-link" href="/comm/category?category=SOCIAL_INTERACTIONS">대인관계</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">중독/집착</a>
+                                            <a class="nav-link" href="/comm/category?category=ADDICTION_OBSESSION">중독/집착</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">금전/사업</a>
+                                            <a class="nav-link" href="/comm/category?category=FINANCE_BUSINESS">금전/사업</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -53,21 +52,19 @@
                         <button class="active black-background">✨최신순</button>
                         <button>👩‍⚕️전문답변</button>
                         <button>😍공감순</button>
-                        <a href="/comm/write" class="write-post-link" onclick="return checkLogin()">글쓰기</a>
                     </div>
                     <!--필터 끝-->
                     <!--컨텐츠 시작-->
                     <div class="c-card">
 
                         {{#allCommsWithReplyList}}
-
                             <div class="c-card-body">
                                 <a href="/comm-detail/{{id}}">
                                     <h4 class="card-title mb-10">{{title}}</h4>
                                     <div class="community-cartegory">
                                         <div class="category main-color">{{category}}</div>
                                         <div class="user-info">
-                                            <figure><img src="/images/level1.png" alt="회원이미지"></figure>
+                                            <figure><img src="{{writerImage}}" alt="회원이미지"></figure>
                                             <span>{{writerName}}</span>
                                         </div>
                                     </div>
@@ -127,30 +124,5 @@
 <!--컨텐츠 끝-->
 </div>
 <!--커뮤니티 끝-->
-
-<script>
-    const user = {{#sessionUser}}true{{/sessionUser}}{{^sessionUser}}false{{/sessionUser}};
-    const userRole = "{{#sessionUser}}{{userRole}}{{/sessionUser}}{{^sessionUser}}guest{{/sessionUser}}";
-
-    function checkLogin() {
-        if (!user) {
-            alert("로그인 후 이용해 주세요.");
-            return false;
-        } else if (userRole === "EXPERT") {
-            alert("전문가는 글쓰기를 할 수 없습니다.");
-            return false;
-        }
-        return true;
-    }
-
-    $(document).ready(function() {
-        // userRole이 expert일 경우 글쓰기 링크 비활성화
-        if (userRole === "expert") {
-            $(".write-post-link").hide();
-        }
-    });
-
-</script>
-
 {{> layout/footer}}
 
