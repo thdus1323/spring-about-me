@@ -4,6 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertUserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.enums.OauthProvider;
@@ -84,52 +85,11 @@ public class UserController {
     }
 
     @GetMapping("/oauth/callback/naver")
-    public String naverCallback(@RequestParam(value = "code") String code,
-                                @RequestParam("state") String state) {
+    public String naverCallback(@RequestParam(value = "code") String code, @RequestParam("state") String state) {
         SessionUser sessionUser = userService.loginNaver(code, state, redisTemp);
         redisTemp.opsForValue().set("sessionUser", sessionUser);
         return "redirect:/";
     }
-
-//    @GetMapping("/oauth/callback/kakao")
-//    public String kakaoCallback(@RequestParam("code") String code) {
-//        User sessionUser = kakaoOAuthService.login(code, null, session);
-//        session.setAttribute("sessionUser", sessionUser);
-//
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/oauth/callback/naver")
-//    public String oauthNaverCallback(
-//            @RequestParam(value = "code") String code,
-//            @RequestParam("state") String state) {
-//        User sessionUser = naverOAuthService.login(code, state, session);
-//        session.setAttribute("sessionUser", sessionUser);
-//
-//        return "redirect:/";
-//    }
-
-//    @GetMapping("/oauth/callback/{provider}")
-//    public String oauthCallback(
-//            @PathVariable("provider") OauthProvider provider,
-//            @RequestParam("code") String code,
-//            @RequestParam(value = "state", required = false) String state,
-//            HttpSession session) {
-//
-//        User sessionUser;
-//
-//        if (provider == OauthProvider.KAKAO) {
-//            sessionUser = kakaoOAuthService.login(code, null, session);
-//        } else if (provider == OauthProvider.NAVER) {
-//            sessionUser = naverOAuthService.login(code, state, session);
-//        } else {
-//            throw new IllegalArgumentException("Unsupported OAuth provider: " + provider);
-//        }
-//
-//        session.setAttribute("sessionUser", sessionUser);
-//        return "redirect:/";
-//    }
-
 
     @GetMapping("/logout")
     public String logout() {
@@ -211,8 +171,20 @@ public class UserController {
 
     //익스퍼트 - 마이페이지
     @GetMapping("/expert/myPage")
-    public String expertmyPage() {
-        return "expert/myPage";
+    public String expertmyPage(Model model) {
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        if (sessionUser == null){
+            return "oauth/login";
+        } else{
+            ExpertUserProfileDTO respDTO = userService.getExpertPageInfo(sessionUser);
+            model.addAttribute("model",respDTO);
+            System.out.println(respDTO);
+            return "expert/myPage";
+        }
+
     }
     // 🩺🩺🩺expert🩺🩺🩺
+
+
+
 }

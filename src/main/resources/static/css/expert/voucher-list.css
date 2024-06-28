@@ -41,6 +41,10 @@
     background-color: #006f6b;
 }
 
+.voucher-header button a{
+    color: #fff;
+}
+
 .voucher-item {
     background-color: #fff;
     padding: 10px; /* Further reduced padding */
