@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
+import com.example.aboutme._core.utils.ImageUtil;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
@@ -9,9 +10,9 @@ import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.enums.CounselStatus;
-import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.review.ReviewRepository;
+import com.example.aboutme.user.UserRequestRecord.ExpertProfileUpdateReqDTO;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.CommDTORecord;
@@ -47,13 +48,12 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -275,6 +275,40 @@ public class UserService {
         user.setBirth(reqDTO.birthYear());
         user.setGender(Gender.fromKorean(reqDTO.gender()));
         user.setProfileImage(reqDTO.profileImage());
+
+        // DB 저장
+        userRepository.save(user);
+
+        // Redis 세션 정보 갱신
+        sessionUser.setName(reqDTO.username());
+        redisUtil.saveSessionUser(sessionUser);
+    }
+
+    @Transactional
+    public void updateExpertProfile(ExpertProfileUpdateReqDTO reqDTO) {
+        log.info("유저 프로필 수정 업데이트: {}", reqDTO);
+
+        // User ID가 세션에서 필요할 경우, RedisUtil에서 가져올 수 있음
+        SessionUser sessionUser = redisUtil.getSessionUser();
+
+        // 사용자 정보 갱신
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        user.setName(reqDTO.username());
+        user.setLevel(reqDTO.expertLevel());
+
+        // Base64 이미지 디코딩 및 저장
+        String base64Image = reqDTO.profileImage();
+        if (base64Image != null && !base64Image.isEmpty()) {
+            try {
+                String uploadsDir = "uploads/profiles";
+                String filePath = ImageUtil.saveBase64Image(base64Image, uploadsDir);
+                user.setProfileImage(filePath);
+            } catch (IOException e) {
+                throw new RuntimeException("이미지 저장에 실패했습니다.", e);
+            }
+        }
 
         // DB 저장
         userRepository.save(user);
