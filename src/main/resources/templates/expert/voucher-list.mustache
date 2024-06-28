@@ -2,10 +2,11 @@
 
 <!-- 이용권 목록 시작 -->
 <div class="voucher-list">
+
     <h1>이용권 목록</h1>
     <div class="voucher-header">
-        <span>홍길동 상담사님의 이용권 목록</span>
-        <button>등록하기</button>
+        <span>{{model.name}} 상담사님의 이용권 목록</span>
+        <button><a href="/vouchers/save-form">등록하기</a></button>
     </div>
     <div class="voucher-item">
         <h2>보이스 테라피</h2>
@@ -18,16 +19,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td >10회</td>
-                <td >10시간</td>
-                <td >100,000</td>
-            </tr>
-            <tr>
-                <td >5회</td>
-                <td >2시간</td>
-                <td >45,000</td>
-            </tr>
+            {{#model.textVoucher}}
+                <tr>
+                    <td>{{count}}회</td>
+                    <td>{{duration}}시간</td>
+                    <td>{{price}}</td>
+                </tr>
+            {{/model.textVoucher}}
             </tbody>
         </table>
     </div>
@@ -42,11 +40,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td >5회</td>
-                <td >2시간</td>
-                <td >45,000</td>
-            </tr>
+            {{#model.voiceVoucher}}
+                <tr>
+                    <td>{{count}}회</td>
+                    <td>{{duration}}시간</td>
+                    <td>{{price}}</td>
+                </tr>
+            {{/model.voiceVoucher}}
             </tbody>
         </table>
     </div>
@@ -60,39 +60,36 @@
                 <th>가격</th>
             </tr>
             </thead>
-            <tr>
-                <td >3회</td>
-                <td >3시간</td>
-                <td >33,000</td>
-            </tr>
+            {{#model.videoVoucher}}
+                <tr>
+                    <td>{{count}}회</td>
+                    <td>{{duration}}시간</td>
+                    <td>{{price}}</td>
+                </tr>
+            {{/model.videoVoucher}}
             <tbody>
-            <tr>
-                <td >1회</td>
-                <td >1시간</td>
-                <td >25,000</td>
-            </tr>
             </tbody>
         </table>
     </div>
-    <div class="voucher-item">
-        <h2>심리검사 & 해석상담</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>횟수</th>
-                <th>시간</th>
-                <th>가격</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td >2회</td>
-                <td >1시간</td>
-                <td >20,000</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <!--    <div class="voucher-item">-->
+    <!--        <h2>심리검사 & 해석상담</h2>-->
+    <!--        <table>-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--                <th>횟수</th>-->
+    <!--                <th>시간</th>-->
+    <!--                <th>가격</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr>-->
+    <!--                <td>2회</td>-->
+    <!--                <td>1시간</td>-->
+    <!--                <td>20,000</td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--        </table>-->
+    <!--    </div>-->
 </div>
 <!-- 이용권 목록 끝 -->
 {{> layout/footer}}
