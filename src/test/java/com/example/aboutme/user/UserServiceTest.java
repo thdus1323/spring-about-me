@@ -21,15 +21,14 @@ class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private counselRepository counselRepository;
+    private CounselRepository counselRepository;
     @Autowired
     private CommRepository commRepository;
     @Autowired
     private VoucherRepository voucherRepository;
     @Autowired
     private PaymentRepository paymentRepository;
-    @Autowired
-    private CounselRepository counselRepository;
+
 
     @Test
     void 마이페이지정보() throws JsonProcessingException {
@@ -51,9 +50,9 @@ class UserServiceTest {
                             .clientId(r.getClient().getId())
                             .voucherId(r.getVoucher().getId())
                             .scheduleId(r.getSchedule().getId())
-                            .status(r.getStatus().getKorean())
-                            .startTime(r.getStartTime())
-                            .reservationDate(r.getReservationDate())
+                            .status(r.getReservationStatus().getKorean())
+                            .startTime(r.getCounselTime())
+                            .reservationDate(r.getCounselDate())
                             .dayOfWeek(r.getDayOfWeek())
                             .createdAt(r.getCreatedAt())
                             .updatedAt(r.getUpdatedAt())
