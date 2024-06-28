@@ -27,7 +27,7 @@ public class ReviewController {
     @GetMapping("/review")
     public String review(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        log.info("sessionUser {}" , sessionUser);
+        log.info("sessionUser {}", sessionUser);
         ReviewDTORecord reviewDTORecord = reviewService.getExpertReview(sessionUser);
 
         model.addAttribute("reviewList", reviewDTORecord);
@@ -35,22 +35,21 @@ public class ReviewController {
     }
 
     @GetMapping("/reviewForm")
-    public String reviewForm(GetReviewReqDTO reqDTO,Model model) {
-        System.out.println("reqDTO = " + reqDTO);
+    public String reviewForm(GetReviewReqDTO reqDTO, Model model) {
+        log.info("리뷰폼 이동 {}", reqDTO);
         SessionUser sessionUser = redisUtil.getSessionUser();
-         GetReviewRespDTO respDTO = reviewService.리뷰조회하기(reqDTO, sessionUser);
-         model.addAttribute("model", respDTO);
-
+        GetReviewRespDTO respDTO = reviewService.getReview(reqDTO, sessionUser);
+        model.addAttribute("model", respDTO);
         return "client/review-form";
     }
+
 
     @PostMapping("/reviewForm")
     public String saveReview(WriteReviewReqDTO reqDTO, Model model) {
-        System.out.println("reqDTO = " + reqDTO);
-
-        return "client/review-form";
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        reviewService.saveReview(reqDTO, sessionUser);
+        return "redirect:client/mypage";
     }
-
 
 
 }

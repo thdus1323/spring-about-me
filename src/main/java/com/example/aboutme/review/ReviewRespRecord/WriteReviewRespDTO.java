@@ -1,16 +1,15 @@
-package com.example.aboutme.review.ReviewReqRecord;
+package com.example.aboutme.review.ReviewRespRecord;
 
 import lombok.Builder;
 
 @Builder
-public record WriteReviewReqDTO(
+public record WriteReviewRespDTO(
         String reviewCountent,
         Integer expertId,
         Integer clientId,
         Integer counselId,
         String voucherType,
         String counselDate,
-        String selectedRating,
-        Integer reviewScore
+        String reviewScore
 ) {
 }
