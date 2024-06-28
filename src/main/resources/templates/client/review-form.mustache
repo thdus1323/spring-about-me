@@ -1,0 +1,220 @@
+{{> layout/header}}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+    body {
+        font-family: 'Noto Sans KR', Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .review .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .review .header {
+        background-color: #ffa45b;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+    }
+
+    .review .header img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .review .header-info h1 {
+        margin: 0;
+        font-size: 1.5em;
+    }
+
+    .review .header-info p {
+        margin: 0;
+    }
+
+    .review .form-group {
+        margin: 15px 0;
+    }
+
+    .review .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .review .form-group input,
+    .review .form-group textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        height: auto;
+    }
+
+    .review .form-group-button {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .review .form-group textarea {
+        height: 120px;
+    }
+
+    .review .form-group-button button {
+        background-color: #ffa45b;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        width: auto;
+        margin-left: auto;
+    }
+
+    .review .form-group-button button:hover {
+        background-color: #fd780f;
+    }
+
+    .review .rating {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .review .rating input {
+        display: none;
+    }
+
+    .review .rating label {
+        font-size: 30px;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .review .rating input:checked ~ label {
+        color: #ddd;
+    }
+
+    .review .rating input#star1:checked ~ label[for="star1"],
+    .review .rating input#star2:checked ~ label[for="star1"],
+    .review .rating input#star2:checked ~ label[for="star2"],
+    .review .rating input#star3:checked ~ label[for="star1"],
+    .review .rating input#star3:checked ~ label[for="star2"],
+    .review .rating input#star3:checked ~ label[for="star3"],
+    .review .rating input#star4:checked ~ label[for="star1"],
+    .review .rating input#star4:checked ~ label[for="star2"],
+    .review .rating input#star4:checked ~ label[for="star3"],
+    .review .rating input#star4:checked ~ label[for="star4"],
+    .review .rating input#star5:checked ~ label[for="star1"],
+    .review .rating input#star5:checked ~ label[for="star2"],
+    .review .rating input#star5:checked ~ label[for="star3"],
+    .review .rating input#star5:checked ~ label[for="star4"],
+    .review .rating input#star5:checked ~ label[for="star5"] {
+        color: #ffa45b;
+    }
+
+    .review .rating input:not(:checked) + label:hover,
+    .review .rating input:not(:checked) + label:hover + label {
+        color: #ffa45b;
+    }
+
+    .review .rating label:before {
+        content: '\f005'; /* FontAwesome star icon */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+    }
+</style>
+
+{{#model}}
+    <div class="review">
+        <div class="container">
+            <div class="header">
+                <img src="{{profileImage}}" alt="Profile Picture">
+                <span>{{expertName}} 상담사</span>
+            </div>
+            <form id="reviewForm" method="POST" action="/reviewForm">
+                <div class="rating my-3">
+                    <input type="radio" id="star1" name="reviewScore" value="1">
+                    <label for="star1" title="1점"></label>
+                    <input type="radio" id="star2" name="reviewScore" value="2">
+                    <label for="star2" title="2점"></label>
+                    <input type="radio" id="star3" name="reviewScore" value="3">
+                    <label for="star3" title="3점"></label>
+                    <input type="radio" id="star4" name="reviewScore" value="4">
+                    <label for="star4" title="4점"></label>
+                    <input type="radio" id="star5" name="reviewScore" value="5">
+                    <label for="star5" title="5점"></label>
+                </div>
+                <div class="content">
+                    <div class="form-group">
+                        <label for="reviewCountent">리뷰 작성</label>
+                        <textarea id="reviewCountent" name="reviewCountent" placeholder="리뷰를 작성해주세요."></textarea>
+                    </div>
+
+                    <!-- URL의 id 값을 저장할 hidden input -->
+                    <input type="hidden" name="expertId" value="{{expertId}}">
+                    <input type="hidden" name="clientId" value="{{clientId}}">
+                    <input type="hidden" name="counselId" value="{{counselId}}">
+                    <input type="hidden" name="voucherType" value="{{voucherType}}">
+                    <input type="hidden" name="counselDate" value="{{counselDate}}">
+
+                    <div class="form-group-button">
+                        <button type="submit">댓글 등록</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    </div>
+{{/model}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ratingLabels = document.querySelectorAll('.rating label');
+        const reviewScoreInput = document.getElementById('reviewScore');
+
+        ratingLabels.forEach(label => {
+            label.addEventListener('mouseover', () => {
+                let currentLabel = label;
+                while (currentLabel) {
+                    currentLabel.style.color = '#ffa45b';
+                    currentLabel = currentLabel.previousElementSibling;
+                    if (currentLabel && currentLabel.tagName !== 'LABEL') {
+                        break;
+                    }
+                }
+            });
+
+            label.addEventListener('mouseout', () => {
+                const checkedInput = document.querySelector('.rating input:checked');
+                ratingLabels.forEach(label => {
+                    if (!checkedInput || label.htmlFor > checkedInput.id) {
+                        label.style.color = '#ddd';
+                    } else {
+                        label.style.color = '#ffa45b';
+                    }
+                });
+            });
+
+            label.addEventListener('click', () => {
+                const selectedRating = document.querySelector('.rating input:checked').value;
+                reviewScoreInput.value = selectedRating;
+            });
+        });
+    });
+</script>
+
+{{> layout/footer}}
