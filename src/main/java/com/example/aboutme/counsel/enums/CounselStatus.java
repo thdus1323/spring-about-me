@@ -3,7 +3,7 @@ package com.example.aboutme.counsel.enums;
 import lombok.Getter;
 
 @Getter
-public enum CounselStateEnum {
+public enum CounselStatus {
     COMPLETED("상담완료"), // 상담 완료
     CONFIRMED("상담확정"), // 상담 완료
     PENDING("상담대기"), // 상담 대기
@@ -11,7 +11,7 @@ public enum CounselStateEnum {
 
     private final String korean;
 
-    CounselStateEnum(String korean) {
+    CounselStatus(String korean) {
         this.korean = korean;
     }
 

@@ -1,7 +1,6 @@
 package com.example.aboutme.voucher;
 
 import com.example.aboutme.payment.Payment;
-import com.example.aboutme.reservation.Reservation;
 import com.example.aboutme.user.User;
 import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.persistence.*;
@@ -18,8 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "voucher_history_tb")
-@ToString(exclude = {"expert", "client", "reservation", "payments"})
+@ToString(exclude = {"expert", "client", "payments"})
 public class VoucherHistoty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,9 +32,6 @@ public class VoucherHistoty {
     @JoinColumn(name = "client_id", nullable = false)
     private User client;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -72,11 +69,10 @@ public class VoucherHistoty {
     private String imagePath;
 
     @Builder
-    public VoucherHistoty(Integer id, User expert, User client, Reservation reservation, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt, String imagePath) {
+    public VoucherHistoty(Integer id, User expert, User client, VoucherType voucherType, Integer price, Integer count, Integer duration, Double discount, LocalDateTime startDate, LocalDateTime endDate, Boolean isActive, List<Payment> payments, Timestamp createdAt, Timestamp updatedAt, String imagePath) {
         this.id = id;
         this.expert = expert;
         this.client = client;
-        this.reservation = reservation;
         this.voucherType = voucherType;
         this.price = price;
         this.count = count;
