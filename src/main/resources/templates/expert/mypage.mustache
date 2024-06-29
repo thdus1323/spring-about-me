@@ -197,8 +197,7 @@
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(requestData),
-                    success: function (e) {
-                        console.log("데이타", e.data);
+                    success: function () {
                         alert('프로필이 저장되었습니다.');
                         location.reload();
                     },
@@ -314,6 +313,8 @@
                         alert('저장에 실패했습니다.');
                     }
                 });
+                console.log("여기까지 들어옴3")
+                console.log(careerData);
             });
 
 

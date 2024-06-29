@@ -1,6 +1,6 @@
 {{> layout/header}}
-{{#model}}
 
+{{#model}}
     <div class="container mt-5 user-myPage">
         <h1 class="text-center mb-5">마이페이지</h1>
         <!-- 프로필 보기 -->
@@ -16,7 +16,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bold">닉네임 :</div>
-                                <div id="username">{{user.name}}</div>
+                                <div id="name">{{user.name}}</div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bold">이메일 :</div>
@@ -55,7 +55,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bold">닉네임 :</div>
-                                <input type="text" id="edit-username" class="form-control" value="{{user.name}}">
+                                <input type="text" id="edit-name" class="form-control" value="{{user.name}}">
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bold">이메일 :</div>
@@ -63,9 +63,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bold">출생 연도 :</div>
-                                <select id="edit-birth-year" class="form-control">
-                                    <!-- JavaScript를 통해 옵션 추가 -->
-                                </select>
+                                <div>{{user.birth}}</div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bold">성별 :</div>
@@ -161,7 +159,6 @@
                                             <input type="hidden" name="voucherId" value="{{voucherId}}">
                                             <input type="hidden" name="paymentId" value="{{paymentId}}">
                                             {{#isRemainingCount}}
-
                                                 <button class="btn btn-outline-success btn-small"
                                                         onclick="makeReservation({{id}})">예약하기
                                                 </button>
@@ -170,7 +167,6 @@
                                                 <button class="btn btn-outline-success btn-small" disabled>예약하기
                                                 </button>
                                             {{/isRemainingCount}}
-
                                         </form>
                                     </td>
                                 </tr>
@@ -263,19 +259,19 @@
                             <div class="post-header">
                                 <span class="post-category">텍스트 테라피
                                     <img src="/images/expert21.jpg" alt="Profile Picture" class="post-profile-image">
-                                    <span class="username">1급)</span>
-                                    <span class="username">전문가21</span>
-                                    <span class="username">상담날짜(시간) </span>
-                                    <span class="username">: 2024-06-28</span>
-                                    <span class="username">(09:00)</span>
+                                    <span class="name">1급)</span>
+                                    <span class="name">전문가21</span>
+                                    <span class="name">상담날짜(시간) </span>
+                                    <span class="name">: 2024-06-28</span>
+                                    <span class="name">(09:00)</span>
                                 </span>
                             </div>
                             <div class="post-body">
                                 <h5 class="post-title">AI 요약</h5>
                                 <p class="post-content">강하고 책임감이 강한사람입니다.</p>
                             </div>
-                            <span class="username">더보기</span>
-                            <span class="username">상세내역</span>
+                            <span class="name">더보기</span>
+                            <span class="name">상세내역</span>
 
                         </div>
                     </div>
@@ -301,7 +297,7 @@
                                     <div class="post-header">
                                 <span class="post-category">{{category}} ·
                                     <img src="{{user.profileImage}}" alt="Profile Picture" class="post-profile-image">
-                                    <span class="username">{{name}}</span>
+                                    <span class="name">{{name}}</span>
                                 </span>
                                     </div>
                                     <div class="post-body">
@@ -332,12 +328,6 @@
 
 <script>
     $(document).ready(function () {
-        // 출생 연도 셀렉트 박스에 옵션 추가
-        const currentYear = new Date().getFullYear();
-        for (let year = currentYear; year >= 1900; year--) {
-            $('#edit-birth-year').append(new Option(year, year));
-        }
-
         // 프로필 이미지 클릭 시 파일 입력 열기
         $('#profileImageEdit').on('click', function () {
             $('#profileImageInput').click();
@@ -347,17 +337,15 @@
         $('#profileImageInput').on('change', function (event) {
             const reader = new FileReader();
             reader.onload = function (e) {
+                const base64Image = e.target.result.split(',')[1];
                 $('#profileImageEdit').attr('src', e.target.result);
+                $('#profileImageEdit').data('base64', e.target.result); // 전체 base64 문자열 저장
             };
             reader.readAsDataURL(event.target.files[0]);
         });
 
         // 프로필 수정 버튼 클릭 시
         $('#editProfile').on('click', function () {
-            // 현재 표시된 연도를 셀렉트 박스에서 선택
-            const birthYear = $('#birth-year').text();
-            $('#edit-birth-year').val(birthYear);
-
             $('#profile-view-card').addClass('d-none');
             $('#profile-edit-card').removeClass('d-none');
         });
@@ -371,36 +359,30 @@
         // 저장 버튼 클릭 시
         $('#saveProfile').on('click', function () {
             // 수정된 값 가져오기
-            const username = $('#edit-username').val();
-            const birthYear = $('#edit-birth-year').val();
+            const name = $('#edit-name').val();
             const gender = $('input[name="gender"]:checked').val();
-            const profileImageSrc = $('#profileImageEdit').attr('src');
+            const base64Image = $('#profileImageEdit').data('base64');
 
-            // 보기 모드에 값 반영
-            $('#username').text(username);
-            $('#birth-year').text(birthYear);
-            $('#gender').text(gender);
-            $('#profileImageView').attr('src', profileImageSrc);
+            const requestData = {
+                name: name,
+                gender: gender === '남성' ? '남자' : gender === '여성' ? '여자' : '기타',
+                profileImage: base64Image // 전체 base64 문자열 전송
+            };
 
             // 폼 전환
             $('#profile-edit-card').addClass('d-none');
             $('#profile-view-card').removeClass('d-none');
 
-            // 실제 저장 로직은 여기에 추가
-            // 예: 서버로 데이터 전송
+            // 서버로 데이터 전송
             $.ajax({
                 url: '/client/profiles',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({
-                    username: username,
-                    birthYear: birthYear,
-                    gender: gender,
-                    profileImage: profileImageSrc // 이미지 URL
-                }),
+                data: JSON.stringify(requestData),
                 success: function (response) {
                     if (response.success) {
                         alert(response.message);
+                        location.reload(); // 프로필 저장 후 페이지 새로고침
                     } else {
                         alert('저장에 실패했습니다: ' + response.message);
                     }
