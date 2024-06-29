@@ -27,10 +27,7 @@ import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.ExpertInfoRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.VoucherImageRecord;
-import com.example.aboutme.user.enums.Gender;
-import com.example.aboutme.user.enums.OauthProvider;
-import com.example.aboutme.user.enums.SpecType;
-import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.user.enums.*;
 import com.example.aboutme.user.oauth.UserResponse;
 import com.example.aboutme.user.pr.PRRepository;
 import com.example.aboutme.user.spec.SpecRepository;
@@ -49,6 +46,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -295,16 +293,18 @@ public class UserService {
         User user = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        user.setName(reqDTO.username());
-        user.setLevel(reqDTO.expertLevel());
+        user.setLevel(ExpertLevel.fromKorean(reqDTO.expertLevel()));
 
         // Base64 이미지 디코딩 및 저장
         String base64Image = reqDTO.profileImage();
         if (base64Image != null && !base64Image.isEmpty()) {
             try {
-                String uploadsDir = "uploads/profiles";
+                String uploadsDir = "images/uploads"; // 상대 경로로 설정
                 String filePath = ImageUtil.saveBase64Image(base64Image, uploadsDir);
-                user.setProfileImage(filePath);
+
+                // 파일 경로 설정
+                String fullPath = "/images/uploads/" + Paths.get(filePath).getFileName().toString();
+                user.setProfileImage(fullPath);
             } catch (IOException e) {
                 throw new RuntimeException("이미지 저장에 실패했습니다.", e);
             }
@@ -314,7 +314,6 @@ public class UserService {
         userRepository.save(user);
 
         // Redis 세션 정보 갱신
-        sessionUser.setName(reqDTO.username());
         redisUtil.saveSessionUser(sessionUser);
     }
 

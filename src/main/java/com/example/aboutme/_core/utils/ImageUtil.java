@@ -18,7 +18,7 @@ public class ImageUtil {
 
         // 파일 저장 경로 설정
         String fileName = UUID.randomUUID().toString() + fileExtension;
-        String filePath = uploadsDir + "/" + fileName;
+        String filePath = Paths.get(uploadsDir, fileName).toString();
 
         // Base64 문자열을 디코딩하여 파일로 저장
         byte[] decodedBytes = Base64.getDecoder().decode(base64Image.split(",")[1]);
