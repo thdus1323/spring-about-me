@@ -12,13 +12,7 @@
                         <h2><img src="/images/icons8-bot-64.png"> AI가 요약한 후기</h2>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <p style="font-weight: bold;">다양한 문제를 다각도로 접근하고 공감하며 해결책을 제시하는 전문가.</p>
-                                <p>{{user.name}} 전문가는 깊이 있는 공감과 경청으로 감정을 잘 이해하고 조언해 주는 전문가입니다. {{user.name}} 전문가는 이야기를 귀
-                                    기울여 듣고 진심으로 깊이 공감해 주는 전문가예요. 마키님들이 간단하게 이야기한 내용에서도 감정을 잘 짚어내며 디테일한 부분에까지 이끌어가세요. 상태를
-                                    이해하는 데 도움이 되는 조언도 많이 해주시고, 문제점을 스스로 깨달을 수 있도록 인사이트를 주시는 점이 특히 인상적이에요. 긴 상담일지도 모안
-                                    마키님들을 잘 파헤쳐서 맞춤형 상담을 진행해 주시고, 해결되지 않는 감정에 대한 디테일한 분석도 알려주셔서 많은 도움이 되었다고 해요. 또한, 같은
-                                    신앙을 가진 마키님들에게는 더 편하게 말할 수 있는 점이 좋았다고 해요. {{user.name}} 전문기사의 상담에서 마키님들은 자신을 사랑하는 법을
-                                    배우고, 진심으로 걱정해주는 조언을 받으며 마음의 안정감을 느낄 수 있었다고 합니다.</p>
+                                <p>{{reviewSummary}}</p>
                             </div>
                         </div>
                         <div></div>
@@ -131,7 +125,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div >
+                        <div>
                             {{#reviews}}
                                 <div class="review-item">
                                     <div class="review-header">
@@ -155,7 +149,8 @@
                                     </div>
                                 </div>
                             {{/reviews}}
-                        </div>                        <div class="review-toggle btn-group">
+                        </div>
+                        <div class="review-toggle btn-group">
                             <button class="btn btn-toggle more " type="button">후기 더보기</button>
                             <button class="btn btn-toggle less mx-2" type="button" style="display: none;">접기</button>
                         </div>
@@ -201,43 +196,43 @@
                     <div class="row experience">
                         {{#prs}}
 
-                        <div class="col-md-6">
-                            <h5 class="fw-bold">심리상담을 망설이는 분에게</h5>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="content-container" id="content2">
-                                        {{intro}}
-                                        <div class="overlay"></div>
+                            <div class="col-md-6">
+                                <h5 class="fw-bold">심리상담을 망설이는 분에게</h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="content-container" id="content2">
+                                            {{intro}}
+                                            <div class="overlay"></div>
+                                        </div>
+                                        <span class="toggle-text" data-target="#content2">더보기</span>
                                     </div>
-                                    <span class="toggle-text" data-target="#content2">더보기</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 class="fw-bold">상담사님의 심리상담 효과</h5>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="content-container" id="content3">
-                                        {{effects}}
+                            <div class="col-md-6">
+                                <h5 class="fw-bold">상담사님의 심리상담 효과</h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="content-container" id="content3">
+                                            {{effects}}
 
-                                        <div class="overlay"></div>
+                                            <div class="overlay"></div>
+                                        </div>
+                                        <span class="toggle-text" data-target="#content3">더보기</span>
                                     </div>
-                                    <span class="toggle-text" data-target="#content3">더보기</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 class="fw-bold">상담사님의 심리상담 방식</h5>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="content-container" id="content4">
-                                        {{methods}}
-                                        <div class="overlay"></div>
+                            <div class="col-md-6">
+                                <h5 class="fw-bold">상담사님의 심리상담 방식</h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="content-container" id="content4">
+                                            {{methods}}
+                                            <div class="overlay"></div>
+                                        </div>
+                                        <span class="toggle-text" data-target="#content4">더보기</span>
                                     </div>
-                                    <span class="toggle-text" data-target="#content4">더보기</span>
                                 </div>
                             </div>
-                        </div>
                         {{/prs}}
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 {{> layout/header}}
 
 {{#model}}
-    <div class="container mt-5 expert-myPage">
+    <div class="container mt-5 expert-mypage">
         <h1 class="text-center mb-5">마이페이지</h1>
 
         <!-- 프로필 보기 -->
@@ -275,8 +275,6 @@
                     };
                     careerData.push(career);
                 });
-                console.log("여기까지 들어옴1")
-                console.log(careerData);
                 const educationData = [];
                 $('#education-form .input-group').each(function () {
                     const education = {
@@ -296,8 +294,7 @@
                 if (educationData.length > 0) {
                     requestData.education = educationData;
                 }
-                console.log("여기까지 들어옴2")
-                console.log(careerData);
+
                 // 서버로 데이터 전송
                 $.ajax({
                     url: '/expert/specs',
@@ -313,8 +310,6 @@
                         alert('저장에 실패했습니다.');
                     }
                 });
-                console.log("여기까지 들어옴3")
-                console.log(careerData);
             });
 
 

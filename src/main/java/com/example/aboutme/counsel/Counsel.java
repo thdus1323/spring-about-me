@@ -2,6 +2,7 @@ package com.example.aboutme.counsel;
 
 import com.example.aboutme.counsel.enums.CounselStatus;
 import com.example.aboutme.counsel.enums.ReservationStatus;
+import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.Payment;
 import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.user.User;
@@ -57,6 +58,7 @@ public class Counsel {
     @Column(nullable = false)
     private CounselStatus counselStatus;
 
+
     // 예약 요일
     @Column(nullable = false)
     private String dayOfWeek;  // 요일 (월요일, 화요일, 등)
@@ -71,6 +73,10 @@ public class Counsel {
 
     private String result; // 상담결과
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ReviewState reviewState; // 리뷰 상태
+
     @CreationTimestamp
     private Timestamp createdAt;
 
@@ -79,7 +85,7 @@ public class Counsel {
 
 
     @Builder
-    public Counsel(Integer id, User client, User expert, Voucher voucher, Payment payment, Schedule schedule, ReservationStatus reservationStatus, CounselStatus counselStatus, String dayOfWeek, String counselDate, String counselTime, String result, Timestamp createdAt, Timestamp updatedAt) {
+    public Counsel(Integer id, User client, User expert, Voucher voucher, Payment payment, Schedule schedule, ReservationStatus reservationStatus, CounselStatus counselStatus, String dayOfWeek, String counselDate, String counselTime, String result, ReviewState reviewState, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.client = client;
         this.expert = expert;
@@ -92,13 +98,14 @@ public class Counsel {
         this.counselDate = counselDate;
         this.counselTime = counselTime;
         this.result = result;
+        this.reviewState = reviewState;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
 
     // 상담내용 수정
-    public void completeCounsel(){
+    public void completeCounsel() {
         this.counselStatus = CounselStatus.COUNSEL_COMPLETED;
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }

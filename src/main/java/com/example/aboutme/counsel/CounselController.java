@@ -45,30 +45,30 @@ public class CounselController {
     }
 
 
-    @GetMapping("/client/myPage/reservation")
+    @GetMapping("/client/mypage/reservation")
     public String makeReservation(@RequestParam(name = "voucherId", required = false) Integer voucherId,
                                   @RequestParam(name = "paymentId", required = false) Integer paymentId,
                                   @RequestParam(name = "expertId", required = false) Integer expertId, Model model) {
-        log.info("😊😊😊😊😊예약만들기  : {}, {},{}", voucherId, expertId,paymentId);
-        MakeReservationDetailsDTO respDTO = counselService.getMakeReservationDetails(voucherId, expertId,paymentId);
+        log.info("😊😊😊😊😊예약만들기  : {}, {},{}", voucherId, expertId, paymentId);
+        MakeReservationDetailsDTO respDTO = counselService.getMakeReservationDetails(voucherId, expertId, paymentId);
         model.addAttribute("model", respDTO);
         return "client/makeReservation";
     }
 
 
-    @PostMapping("/client/myPage/reservation")
+    @PostMapping("/client/mypage/reservation")
     public String makeReservation(ReservationRepDTO reqDTO) {
         log.info("😊😊😊😊😊예약만들기  : {}", reqDTO);
         SessionUser sessionUser = redisUtil.getSessionUser();
         counselService.makeReservation(reqDTO, sessionUser);
-        return "redirect:/client/myPage";
+        return "redirect:/client/mypage";
     }
 
     @GetMapping("/counsel")
     public String counselDetails(CounselReqDTO counselReqDTO,
                                  Model model) {
         if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.TEXT_THERAPY) {
-            return "redirect:/chat/"+ counselReqDTO.counselId(); // 상담 세부 정보 페이지로 이동}}
+            return "redirect:/chat/" + counselReqDTO.counselId(); // 상담 세부 정보 페이지로 이동}}
         } else if (VoucherType.fromKorean(counselReqDTO.voucherType()) == VoucherType.VIDEO_THERAPY) {
             return "화상테라피경로";
         } else {
@@ -95,7 +95,7 @@ public class CounselController {
 //        SessionUser sessionUser = redisUtil.getSessionUser();
 ////        counselService.completeCounsel(counselId,sessionUser);
 //
-//        return "redirect:/client/myPage";
+//        return "redirect:/client/mypage";
 //    }
 
     //텍스트테라피 페이지

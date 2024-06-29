@@ -1,4 +1,4 @@
-package com.example.aboutme.review.ReviewResponseDTO.ExpertReviewDTO;
+package com.example.aboutme.review.ReviewRespRecord.ExpertReviewDTO;
 
 public record UserRecord(
         Integer id,

@@ -3,10 +3,8 @@ INSERT INTO voucher_tb (voucher_type, expert_id, price, count, duration, image_p
                         updated_at)
 VALUES
     -- Expert 1 has 3 voucher types
-    ('TEXT_THERAPY', 21, 15000, 1, 50, '/images/chat.png', NOW(), NOW()),
     ('TEXT_THERAPY', 21, 15000, 4, 50, '/images/chat.png', NOW(), NOW()),
-    ('VOICE_THERAPY', 21, 25000, 3, 30, '/images/call.png', NOW(), NOW()),
-    ('VIDEO_THERAPY', 21, 30000, 2, 40, '/images/video.png', NOW(), NOW()),
+
 
     -- Expert 22
     ('TEXT_THERAPY', 22, 15000, 1, 50, '/images/chat.png', NOW(), NOW()),

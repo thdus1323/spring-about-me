@@ -59,6 +59,7 @@ public class UserRestController {
             return ResponseEntity.status(500).body(new UserProfileUpdateRespDTO(false, "프로필 저장에 실패했습니다."));
         }
     }
+
     @PostMapping("/expert/specs")
     public ResponseEntity<?> updateExpertSpecs(@RequestBody ExpertSpecUpdateReqDTO request) {
         SessionUser sessionUser = redisUtil.getSessionUser();

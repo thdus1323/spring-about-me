@@ -1,4 +1,4 @@
-package com.example.aboutme.review.ReviewResponseDTO.ExpertReviewDTO;
+package com.example.aboutme.review.ReviewRespRecord.ExpertReviewDTO;
 
 import java.util.List;
 
