@@ -14,22 +14,26 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "review_tb")
-@ToString(exclude = {"user", "counsel"})
+@ToString(exclude = {"client", "counsel", "expert"})
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "client_id", nullable = false)
+    private User client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_id", nullable = false)
+    private User expert;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counsel_id", nullable = false)
     private Counsel counsel; // 외래 키로 상담 정보를 참조
 
     @JoinColumn(nullable = false)
-    private Double score;
+    private Integer score;
 
     @Column(nullable = false)
     private String content;
@@ -41,9 +45,10 @@ public class Review {
     private Timestamp updatedAt;
 
     @Builder
-    public Review(Integer id, User user, Counsel counsel, Double score, String content, Timestamp createdAt, Timestamp updatedAt) {
+    public Review(Integer id, User client, User expert, Counsel counsel, Integer score, String content, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
-        this.user = user;
+        this.client = client;
+        this.expert = expert;
         this.counsel = counsel;
         this.score = score;
         this.content = content;

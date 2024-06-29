@@ -1,7 +1,7 @@
 import './expert/main.js';
-import './expert/myPage.js';
+import './expert/mypage.js';
 import './client/findExpert/payment.js';
-import './client/myPage.js';
+import './client/mypage.js';
 import './client/main.js';
 import './expert/voucher-form.js';
 import './chat/chating.js';
