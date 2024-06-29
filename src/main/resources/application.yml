@@ -53,9 +53,10 @@ spring:
 
 openai:
   api:
-    key: ${OPENAI_API_KEY}
-    organization-id: ${OPENAI_ORGANIZATION_ID}
-    project-id: ${OPENAI_PROJECT_ID}
     url: ${OPENAI_API_URL}
-
+    key: ${OPENAI_API_KEY}
+  organization:
+    id: ${OPENAI_ORGANIZATION_ID}
+  project:
+    id: ${OPENAI_PROJECT_ID}
 
