@@ -28,6 +28,8 @@ public class UserController {
     @Autowired
     private RedisTemplate<String, Object> redisTemp;
 
+
+    //로그인
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO, Model model, RedirectAttributes redirectAttributes) {
         SessionUser sessionUser = userService.loginByName(reqDTO);
@@ -48,6 +50,7 @@ public class UserController {
         }
     }
 
+
     @GetMapping("/redis/test")
     public @ResponseBody String redisTest() {
         SessionUser sessionUser = redisUtil.getSessionUser();
@@ -55,10 +58,12 @@ public class UserController {
         return "redis test";
     }
 
+
     @GetMapping("/expert/reply")
     public String expertReply() {
         return "expert/expert-reply";
     }
+
 
     @GetMapping("/join")
     public String joinForm() {
@@ -71,11 +76,13 @@ public class UserController {
         return "oauth/login";
     }
 
+
     @PostMapping("/setUserRole")
     @ResponseBody
     public void setUserRole(@RequestParam("userRole") String userRoleStr) {
         redisUtil.saveUserRole(userRoleStr);
     }
+
 
     @GetMapping("/oauth/callback/kakao")
     public String kakaoCallback(@RequestParam("code") String code) {
@@ -84,12 +91,14 @@ public class UserController {
         return "redirect:/";
     }
 
+
     @GetMapping("/oauth/callback/naver")
     public String naverCallback(@RequestParam(value = "code") String code, @RequestParam("state") String state) {
         SessionUser sessionUser = userService.loginNaver(code, state, redisTemp);
         redisTemp.opsForValue().set("sessionUser", sessionUser);
         return "redirect:/";
     }
+
 
     @GetMapping("/logout")
     public String logout() {
@@ -155,6 +164,7 @@ public class UserController {
         return "client/findExpert/detail";
     }
 
+
     //클라이언트 - 마이페이지
     @GetMapping("/client/mypage")
     public String clientmyPpage(Model model) {
@@ -181,7 +191,6 @@ public class UserController {
             System.out.println(respDTO);
             return "expert/myPage";
         }
-
     }
     // 🩺🩺🩺expert🩺🩺🩺
 

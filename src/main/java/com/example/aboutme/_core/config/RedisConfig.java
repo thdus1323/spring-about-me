@@ -17,6 +17,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @Configuration
 @EnableRedisHttpSession
 public class RedisConfig {
+
     @Value("${spring.data.redis.host}")
     private String redisHost;
 
@@ -27,7 +28,7 @@ public class RedisConfig {
     private String redisPassword;
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory(){
+    public RedisConnectionFactory redisConnectionFactory() {
         System.out.println("서버 실행시 동작 : RedisConnectionFactory");
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(redisHost);
@@ -35,6 +36,7 @@ public class RedisConfig {
         config.setPassword(redisPassword);
         return new LettuceConnectionFactory(config);
     }
+
     @Bean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         return new GenericJackson2JsonRedisSerializer();

@@ -9,11 +9,10 @@ public class AboutMeApplication {
 
     public static void main(String[] args) {
 
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure().load();
 
         // Set environment variables
-        System.setProperty("REDIS_HOST", dotenv.get("REDIS_HOST"));
-        System.setProperty("REDIS_PORT", dotenv.get("REDIS_PORT"));
+        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
 
         SpringApplication.run(AboutMeApplication.class, args);
     }

@@ -13,6 +13,7 @@ import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.review.ReviewRepository;
+import com.example.aboutme.reviewSummary.ReviewSummaryService;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.CommDTORecord;
@@ -68,6 +69,8 @@ public class UserService {
     private final PaymentRepository paymentRepository;
     private final ReplyRepository replyRepository;
     private final RedisUtil redisUtil;
+    private final ReviewSummaryService reviewSummaryService;
+
 
     // 전문가 마이페이지
     @Transactional
@@ -369,7 +372,10 @@ public class UserService {
                 .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
-        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords, educationRecords);
+        // 리뷰 요약 추가
+        String reviewSummary = reviewSummaryService.summarizeReviews(expertId);
+        log.info(" 리뷰요약추가 {}", reviewSummary);
+        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords, educationRecords, reviewSummary);
     }
 
 
