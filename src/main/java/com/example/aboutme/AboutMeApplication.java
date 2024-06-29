@@ -11,14 +11,8 @@ public class AboutMeApplication {
 
         Dotenv dotenv = Dotenv.load();
 
-        // Set environment variables
-        System.setProperty("REDIS_HOST", dotenv.get("REDIS_HOST"));
-        System.setProperty("REDIS_PORT", dotenv.get("REDIS_PORT"));
-        System.setProperty("OPENAI_API_KEY", dotenv.get("OPENAI_API_KEY"));
-        System.setProperty("OPENAI_ORGANIZATION_ID", dotenv.get("OPENAI_ORGANIZATION_ID"));
-        System.setProperty("OPENAI_PROJECT_ID", dotenv.get("OPENAI_PROJECT_ID"));
-        System.setProperty("OPENAI_API_URL", dotenv.get("OPENAI_API_URL"));
-        
+        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+
         SpringApplication.run(AboutMeApplication.class, args);
     }
 
