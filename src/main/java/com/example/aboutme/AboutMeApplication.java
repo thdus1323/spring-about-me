@@ -9,9 +9,7 @@ public class AboutMeApplication {
 
     public static void main(String[] args) {
 
-        Dotenv dotenv = Dotenv.configure()
-                .directory("src/")
-                .load();
+        Dotenv dotenv = Dotenv.configure().load();
 
         // Set environment variables
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
