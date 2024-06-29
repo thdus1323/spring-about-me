@@ -37,6 +37,7 @@ spring:
         - classpath:db/payment_data.sql
         - classpath:db/counsel_data.sql
         - classpath:db/review_data.sql
+        - classpath:db/chat_data.sql
       schema-locations:
   jpa:
     hibernate:
@@ -47,8 +48,14 @@ spring:
         format_sql: true
         default_batch_fetch_size: 10
     defer-datasource-initialization: true
-#   서비스에서 레이지로딩을 끝내고 컨트롤러에 보낸다. 뭘로? DTO로
+    #   서비스에서 레이지로딩을 끝내고 컨트롤러에 보낸다. 뭘로? DTO로
     open-in-view: false
 
+openai:
+  api:
+    key: ${OPENAI_API_KEY}
+    organization-id: ${OPENAI_ORGANIZATION_ID}
+    project-id: ${OPENAI_PROJECT_ID}
+    url: ${OPENAI_API_URL}
 
 

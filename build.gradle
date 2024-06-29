@@ -32,7 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // 레디스 환경변수 사용
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
-
+    implementation 'io.github.cdimascio:dotenv-spring-boot:2.2.0'
     // 웹 소켓관련
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter'

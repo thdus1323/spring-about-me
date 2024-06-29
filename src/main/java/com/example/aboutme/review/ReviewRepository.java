@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
@@ -22,5 +23,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
             """)
     List<RecentReviewRecord> findReviewRecordsByExpertId(@Param("expertId") Integer expertId);
 
-
+    //    전문가한테 속한 최근 한달간의 리뷰 리스트
+    @Query("SELECT r FROM Review r WHERE r.counsel.expert.id = :expertId AND r.createdAt >= :oneMonthAgo")
+    List<Review> findByExpertIdAndCreatedAtAfter(@Param("expertId") Integer expertId, @Param("oneMonthAgo") Timestamp oneMonthAgo);
 }
