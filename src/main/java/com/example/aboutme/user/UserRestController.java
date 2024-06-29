@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import com.example.aboutme._core.utils.ApiUtil;
 import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.user.UserRequestRecord.ExpertProfileUpdateReqDTO;
 import com.example.aboutme.user.UserRequestRecord.ExpertSpecUpdateReqDTO;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.UserProfileUpdateRespDTO;
@@ -36,10 +37,22 @@ public class UserRestController {
     }
 
     @PostMapping("/client/profiles")
-    public ResponseEntity<?> updateProfile(@RequestBody UserProfileUpdateReqDTO request) {
+    public ResponseEntity<?> updateClientProfile(@RequestBody UserProfileUpdateReqDTO request) {
         try {
             log.info("유저 프로필 업데이트 컨트롤러: {}", request);
             userService.updateUserProfile(request);
+            return ResponseEntity.ok(new UserProfileUpdateRespDTO(true, "프로필이 저장되었습니다."));
+        } catch (Exception e) {
+            log.error("유저 프로필 업데이트 컨트롤러 에러 ", e);
+            return ResponseEntity.status(500).body(new UserProfileUpdateRespDTO(false, "프로필 저장에 실패했습니다."));
+        }
+    }
+
+    @PostMapping("/expert/profiles")
+    public ResponseEntity<?> updateExpertProfile(@RequestBody ExpertProfileUpdateReqDTO request) {
+        try {
+            log.info("유저 프로필 업데이트 컨트롤러: {}", request);
+            userService.updateExpertProfile(request);
             return ResponseEntity.ok(new UserProfileUpdateRespDTO(true, "프로필이 저장되었습니다."));
         } catch (Exception e) {
             log.error("유저 프로필 업데이트 컨트롤러 에러 ", e);

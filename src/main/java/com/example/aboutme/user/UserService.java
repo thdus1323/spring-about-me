@@ -2,6 +2,7 @@ package com.example.aboutme.user;
 
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
+import com.example.aboutme._core.utils.ImageUtil;
 import com.example.aboutme._core.utils.Formatter;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
@@ -13,6 +14,7 @@ import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.review.ReviewRepository;
+import com.example.aboutme.user.UserRequestRecord.ExpertProfileUpdateReqDTO;
 import com.example.aboutme.reviewSummary.ReviewSummaryService;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
@@ -28,10 +30,7 @@ import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.ExpertInfoRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.VoucherImageRecord;
-import com.example.aboutme.user.enums.Gender;
-import com.example.aboutme.user.enums.OauthProvider;
-import com.example.aboutme.user.enums.SpecType;
-import com.example.aboutme.user.enums.UserRole;
+import com.example.aboutme.user.enums.*;
 import com.example.aboutme.user.oauth.UserResponse;
 import com.example.aboutme.user.pr.PRRepository;
 import com.example.aboutme.user.spec.SpecRepository;
@@ -49,6 +48,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -96,11 +97,8 @@ public class UserService {
     }
 
     private List<ExpertUserProfileDTO.SpecDTO> getExpertPageSpec(Integer expertId) {
-
-
         List<ExpertUserProfileDTO.SpecDTO.CareerDTO> career = getExpertPageCareer(expertId);
         List<ExpertUserProfileDTO.SpecDTO.EducationDTO> education = getExpertPageEducation(expertId);
-
 
         return List.of(new ExpertUserProfileDTO.SpecDTO(career, education));
     }
@@ -269,7 +267,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-
     // 주석: 이 메서드는 특정 사용자 ID에 대한 답글 목록을 가져옵니다.
     private List<UserProfileDTO.Reply> getReplies(Integer userId) {
         return replyRepository.findByUserId(userId).stream()
@@ -311,6 +308,8 @@ public class UserService {
     }
 
 
+    // 클라이언트 마이페이지 수정
+    @Transactional
     public void updateUserProfile(UserProfileUpdateReqDTO reqDTO) {
         log.info("유저 프로필 수정 업데이트: {}", reqDTO);
 
@@ -321,16 +320,65 @@ public class UserService {
         User user = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        user.setName(reqDTO.username());
-        user.setBirth(reqDTO.birthYear());
+        user.setName(reqDTO.name());
         user.setGender(Gender.fromKorean(reqDTO.gender()));
-        user.setProfileImage(reqDTO.profileImage());
+
+        // Base64 이미지 디코딩 및 저장
+        String base64Image = reqDTO.profileImage();
+        if (base64Image != null && !base64Image.isEmpty()) {
+            try {
+                String uploadsDir = "images/uploads"; // 상대 경로로 설정
+                String filePath = ImageUtil.saveBase64Image(base64Image, uploadsDir);
+
+                // 파일 경로 설정
+                String fullPath = "/images/uploads/" + Paths.get(filePath).getFileName().toString();
+                user.setProfileImage(fullPath);
+            } catch (IOException e) {
+                throw new RuntimeException("이미지 저장에 실패했습니다.", e);
+            }
+        }
 
         // DB 저장
         userRepository.save(user);
 
         // Redis 세션 정보 갱신
-        sessionUser.setName(reqDTO.username());
+        sessionUser.setName(reqDTO.name());
+        redisUtil.saveSessionUser(sessionUser);
+    }
+
+    // 익스퍼트 마이페이지 수정
+    @Transactional
+    public void updateExpertProfile(ExpertProfileUpdateReqDTO reqDTO) {
+        log.info("유저 프로필 수정 업데이트: {}", reqDTO);
+
+        // User ID가 세션에서 필요할 경우, RedisUtil에서 가져올 수 있음
+        SessionUser sessionUser = redisUtil.getSessionUser();
+
+        // 사용자 정보 갱신
+        User user = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        user.setLevel(ExpertLevel.fromKorean(reqDTO.expertLevel()));
+
+        // Base64 이미지 디코딩 및 저장
+        String base64Image = reqDTO.profileImage();
+        if (base64Image != null && !base64Image.isEmpty()) {
+            try {
+                String uploadsDir = "images/uploads"; // 상대 경로로 설정
+                String filePath = ImageUtil.saveBase64Image(base64Image, uploadsDir);
+
+                // 파일 경로 설정
+                String fullPath = "/images/uploads/" + Paths.get(filePath).getFileName().toString();
+                user.setProfileImage(fullPath);
+            } catch (IOException e) {
+                throw new RuntimeException("이미지 저장에 실패했습니다.", e);
+            }
+        }
+
+        // DB 저장
+        userRepository.save(user);
+
+        // Redis 세션 정보 갱신
         redisUtil.saveSessionUser(sessionUser);
     }
 
@@ -459,6 +507,7 @@ public class UserService {
                     hasVoiceTherapy,
                     hasVideoTherapy);
         }).toList();
+
         return new ClientMainDTORecord(comms, experts);
     }
 

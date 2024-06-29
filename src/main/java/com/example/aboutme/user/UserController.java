@@ -1,6 +1,8 @@
 package com.example.aboutme.user;
 
 import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
+import com.example.aboutme.counsel.CounselService;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final CounselService counselService;
     private final RedisUtil redisUtil;
 
     @Autowired
@@ -136,12 +139,23 @@ public class UserController {
 
 
     // 익스퍼트 메인페이지
+//    @GetMapping("/experts")
+//    public String expertMain(Model model) {
+//        SessionUser sessionUser = redisUtil.getSessionUser();
+//        ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
+//        model.addAttribute("expertMain", expertMain);
+//        return "expert/main";
+//    }
+
+    //상담일정
     @GetMapping("/experts")
     public String expertMain(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        ExpertMainDTORecord expertMain = userService.getExpertMain(sessionUser);
-        model.addAttribute("expertMain", expertMain);
-        return "expert/main";
+        log.info("로그인한 유저 {} ", sessionUser);
+        CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser);
+        model.addAttribute("counselList", counselDTORecord);
+
+        return "expert/schedule";
     }
 
 
@@ -180,7 +194,7 @@ public class UserController {
     }
 
     //익스퍼트 - 마이페이지
-    @GetMapping("/expert/myPage")
+    @GetMapping("/expert/mypage")
     public String expertmyPage(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         if (sessionUser == null) {
@@ -189,7 +203,7 @@ public class UserController {
             ExpertUserProfileDTO respDTO = userService.getExpertPageInfo(sessionUser);
             model.addAttribute("model", respDTO);
             System.out.println(respDTO);
-            return "expert/myPage";
+            return "expert/mypage";
         }
     }
     // 🩺🩺🩺expert🩺🩺🩺
