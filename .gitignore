@@ -1,3 +1,4 @@
+# Ignore .env file
 .env
 HELP.md
 .gradle
