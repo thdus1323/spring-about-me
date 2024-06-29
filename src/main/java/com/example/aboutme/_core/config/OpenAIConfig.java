@@ -13,7 +13,6 @@ public class OpenAIConfig {
     @Value("${openai.api.key}")
     private String apiKey;
 
-
     @Value("${openai.api.url}")
     private String apiUrl;
 
