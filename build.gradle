@@ -32,7 +32,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // 레디스 환경변수 사용
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
-    implementation 'io.github.cdimascio:dotenv-spring-boot:2.2.0'
     // 웹 소켓관련
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -48,6 +47,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20240303'
+
 }
 
 tasks.named('test') {

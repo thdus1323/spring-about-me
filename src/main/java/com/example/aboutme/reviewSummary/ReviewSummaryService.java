@@ -3,10 +3,9 @@ package com.example.aboutme.reviewSummary;
 import com.example.aboutme._core.config.OpenAIConfig;
 import com.example.aboutme.review.Review;
 import com.example.aboutme.review.ReviewRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,6 +27,7 @@ public class ReviewSummaryService {
 
     private final ReviewRepository reviewRepository;
     private final OpenAIConfig openAIConfig;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String summarizeReviews(Integer expertId) {
         Timestamp oneMonthAgo = Timestamp.valueOf(LocalDateTime.now().minusMonths(1));
@@ -74,13 +74,8 @@ public class ReviewSummaryService {
         RestTemplate restTemplate = new RestTemplate();
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, entity, String.class);
-            // JSON 파싱
-            JSONObject jsonResponse = new JSONObject(response.getBody());
-            String reviewSummary = jsonResponse
-                    .getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .getString("content");
+            OpenAIRespDTO openAIResponse = objectMapper.readValue(response.getBody(), OpenAIRespDTO.class);
+            String reviewSummary = openAIResponse.choices().get(0).message().content();
 
             return reviewSummary;
         } catch (HttpClientErrorException e) {
@@ -88,11 +83,7 @@ public class ReviewSummaryService {
             throw e;
         } catch (Exception e) {
             log.error("OpenAI API 요청 중 오류 발생: {}", e.getMessage(), e);
-            try {
-                throw e;
-            } catch (JSONException ex) {
-                throw new RuntimeException(ex);
-            }
+            throw new RuntimeException(e);
         }
     }
 }

@@ -9,8 +9,11 @@ public class AboutMeApplication {
 
     public static void main(String[] args) {
 
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure()
+                .directory("src/")
+                .load();
 
+        // Set environment variables
         dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
 
         SpringApplication.run(AboutMeApplication.class, args);
