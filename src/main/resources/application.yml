@@ -53,10 +53,6 @@ spring:
 
 openai:
   api:
-    url: ${OPENAI_API_URL}
+    url: https://api.openai.com/v1/chat/completions
     key: ${OPENAI_API_KEY}
-  organization:
-    id: ${OPENAI_ORGANIZATION_ID}
-  project:
-    id: ${OPENAI_PROJECT_ID}
 

@@ -17,7 +17,8 @@ public class AboutMeApplication {
         System.setProperty("OPENAI_API_KEY", dotenv.get("OPENAI_API_KEY"));
         System.setProperty("OPENAI_ORGANIZATION_ID", dotenv.get("OPENAI_ORGANIZATION_ID"));
         System.setProperty("OPENAI_PROJECT_ID", dotenv.get("OPENAI_PROJECT_ID"));
-
+        System.setProperty("OPENAI_API_URL", dotenv.get("OPENAI_API_URL"));
+        
         SpringApplication.run(AboutMeApplication.class, args);
     }
 
