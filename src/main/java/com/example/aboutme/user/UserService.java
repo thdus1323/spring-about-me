@@ -1,5 +1,6 @@
 package com.example.aboutme.user;
 
+import com.example.aboutme._core.config.PagingSize;
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.Formatter;
@@ -10,6 +11,7 @@ import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.enums.CounselStatus;
+import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.reply.ReplyRepository;
@@ -40,6 +42,8 @@ import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -150,7 +154,7 @@ public class UserService {
         return UserProfileDTO.builder()
                 .user(userProfile)
                 .replies(getReplies(sessionUser.getId()))
-                .commPosts(getCommPosts(sessionUser.getId()))
+                .commPosts(getCommPosts(sessionUser.getId(), PagingSize.INITIAL_PAGE, PagingSize.MY_PAGE_COMMUNITY_SIZE)) // 페이징된 커뮤니티 게시물
                 .reviews(getReviews(sessionUser.getId()))
                 .payments(getPayments(sessionUser.getId()))
                 .progressReservations(getProgressReservations(sessionUser.getId()))
@@ -161,6 +165,7 @@ public class UserService {
 
     private List<UserProfileDTO.ReservationDTO> getProgressReservations(Integer clientId) {
         return counselRepository.findByClientId(clientId).stream()
+                .filter(c -> c.getReservationStatus() == ReservationStatus.RESERVATION_COMPLETED || c.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED)
                 .map(r -> {
                     Voucher v = r.getVoucher();
                     Integer usedCount = counselRepository.countCompletedCounselsByClientIdAndVoucherId(clientId, v.getId());
@@ -205,10 +210,9 @@ public class UserService {
     private List<UserProfileDTO.VoucherDTO> getVouchers(Integer clientId) {
         return paymentRepository.findByClientId(clientId).stream()
                 .map(p -> {
-
                     Integer counselCount = counselRepository.findByClientIdAndStateCount(clientId, p.getId());
                     Integer reservationCount = counselRepository.countByClientIdAndVoucherIdAndReservationId(clientId, p.getVoucher().getId(), p.getId());
-                    Integer remainingCount = p.getVoucherCount() - reservationCount;
+                    Integer remainingCount = p.getVoucherCount() - (counselCount + reservationCount);
 
                     boolean isRemainingCount = remainingCount > 0;
 
@@ -259,10 +263,19 @@ public class UserService {
 
     }
 
-    private List<UserProfileDTO.Comm> getCommPosts(Integer userId) {
-        return commRepository.findByUserId(userId).stream()
-                .map(c -> new UserProfileDTO.Comm(
-                        c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
+    @Transactional
+    public List<UserProfileDTO.Comm> getCommPosts(Integer userId, Integer page, int size) {
+        log.info("커뮤니티 서비스 {} ,{} ,{}", userId, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return commRepository.findByUserId(userId, pageable).stream()
+                .map(c -> UserProfileDTO.Comm.builder()
+                        .title(c.getTitle())
+                        .profileImage(c.getUser().getProfileImage())
+                        .name(c.getUser().getName())
+                        .content(c.getContent())
+                        .category(c.getCategory().getKorean())
+                        .id(c.getId())
+                        .build())
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,8 @@ package com.example.aboutme.comm;
 
 import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.user.UserResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +13,7 @@ import java.util.List;
 public interface CommRepository extends JpaRepository<Comm, Integer> {
 
     //클라이언트 게시물 조회
-    @Query("SELECT c FROM Comm c WHERE c.user.id = :userId")
-    List<Comm> findByUserId(@Param("userId") Integer userId);
+    Page<Comm> findByUserId(@Param("userId") Integer userId, Pageable pageable);
 
     // 현재 게시글 ID를 제외하고 같은 카테고리의 다른 게시글을 가져오는 쿼리
     List<Comm> findByCategoryAndIdNot(CommCategory category, Long id);
@@ -60,19 +61,19 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
 
     //카테고리별 게시글 조회
     @Query("""
-    SELECT new com.example.aboutme.comm.CommResponse$CommMainByCategory(
-        c.id,
-        c.user.name,
-        c.user.profileImage,
-        c.content,
-        c.title,
-        c.category,
-        SIZE(c.replies)
-    )
-    FROM Comm c
-    LEFT JOIN c.replies r
-    WHERE c.category = :category
-    ORDER BY c.id DESC
-""")
+                SELECT new com.example.aboutme.comm.CommResponse$CommMainByCategory(
+                    c.id,
+                    c.user.name,
+                    c.user.profileImage,
+                    c.content,
+                    c.title,
+                    c.category,
+                    SIZE(c.replies)
+                )
+                FROM Comm c
+                LEFT JOIN c.replies r
+                WHERE c.category = :category
+                ORDER BY c.id DESC
+            """)
     List<CommResponse.CommMainByCategory> findCommMainByCategory(@Param("category") CommCategory category);
 }

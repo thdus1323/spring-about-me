@@ -1,3 +1,26 @@
+<style>
+    .pagination button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .pagination button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    .pagination .page-number {
+        display: inline-block;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .pagination .page-number.active {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+</style>
 <div class="container mt-5 mb-5 user-mypage">
     <div class="card">
         <div class="card-header">내 커뮤니티 활동</div>
@@ -9,69 +32,175 @@
                     <div class="tab" data-tab="my-review">나의 리뷰</div>
                 </div>
                 <div class="tab-content active" id="my-stories">
-                    {{#commPosts}}
-                        <div class="user-mypage post" data-post-id="my-board">
-                            <div class="post-header">
-                                <span class="post-category">{{category}} ·
-                                    <img src="{{user.profileImage}}" alt="Profile Picture" class="post-profile-image">
-                                    <span class="username">{{name}}</span>
-                                </span>
+                    <div id="comm-posts-container">
+                        {{#model.commPosts}}
+                            <div class="user-mypage post" data-post-id="my-board">
+                                <div class="post-header">
+                                        <span class="post-category">{{category}} ·
+                                            <img src="{{user.profileImage}}" alt="Profile Picture"
+                                                 class="post-profile-image">
+                                            <span class="username">{{name}}</span>
+                                        </span>
+                                </div>
+                                <div class="post-body">
+                                    <h5 class="post-title">{{title}}</h5>
+                                    <p class="post-content">{{content}}</p>
+                                </div>
+                                <div class="post-footer">
+                                        <span class="post-meta">
+                                            <span class="like-count">
+                                                <i class="far fa-heart like-btn"></i>
+                                                <span>0</span>
+                                            </span>
+                                            <span>
+                                                <i class="far fa-comment"></i>
+                                                <span>0</span>
+                                            </span>
+                                        </span>
+                                </div>
                             </div>
-                            <div class="post-body">
-                                <h5 class="post-title">{{title}}</h5>
-                                <p class="post-content">{{content}}</p>
-                            </div>
-                            <div class="post-footer">
-                                <span class="post-meta">
-                                    <span class="like-count">
-                                        <i class="far fa-heart like-btn"></i>
-                                        <span>0</span>
-                                    </span>
-                                    <span>
-                                        <i class="far fa-comment"></i>
-                                        <span>0</span>
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    {{/commPosts}}
+                        {{/model.commPosts}}
+                    </div>
+                </div>
+                <!--                <div class="pagination">-->
+                <!--                    <button class="prev-page" onclick="changePage(-1)">Previous</button>-->
+                <!--                    <button class="next-page" onclick="changePage(1)">Next</button>-->
+                <!--                </div>-->
+
+                <div class="d-flex justify-content-center">
+                    <ul class="pagination my-3">
+                        <li class="page-item">
+                            <span class="prev-page" onclick="changePage(-1)">Previous</span>
+                        </li>
+                        <li class="page-item"><a class="page-link">1</a></li>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">2</span>
+                        </li>
+                        <li class="page-item"><a class="page-link">3</a></li>
+                        <li class="page-item">
+                            <a class="next-page" onclick="changePage(1)">Next</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="tab-content" id="my-comments">
-                    {{#replies}}
+                    {{#model.replies}}
                         <div class="user-mypage post" data-post-id="my-board">
                             <div class="post-header">
-                                <span class="post-category">{{category}} ·
-                                    <img src="{{profileImage}}" alt="Profile Picture" class="post-profile-image">
-                                    <span class="username">{{name}}</span>
-                                </span>
+                                    <span class="post-category">{{category}} ·
+                                        <img src="{{profileImage}}" alt="Profile Picture" class="post-profile-image">
+                                        <span class="username">{{name}}</span>
+                                    </span>
                             </div>
                             <div class="post-body">
                                 <p class="post-content">{{content}}</p>
                             </div>
-                            <div class="post-footer">
-                            </div>
+                            <div class="post-footer"></div>
                         </div>
-                    {{/replies}}
+                    {{/model.replies}}
                 </div>
                 <div class="tab-content" id="my-review">
-                    {{#reviews}}
+                    {{#model.reviews}}
                         <div class="user-mypage post" data-post-id="my-board">
                             <div class="post-header">
-                                <span class="post-category">
-                                    <img src="{{profileImage}}" alt="Profile Picture" class="post-profile-image">
-                                    <span class="username">{{expertName}}상담사·</span>
-                                    <span class="post-category">{{voucherCont}}회권·</span>
-                                    <span class="post-category">{{score}}점</span>
-                                </span>
+                                    <span class="post-category">
+                                        <img src="{{profileImage}}" alt="Profile Picture" class="post-profile-image">
+                                        <span class="username">{{expertName}}상담사·</span>
+                                        <span class="post-category">{{voucherCont}}회권·</span>
+                                        <span class="post-category">{{score}}점</span>
+                                    </span>
                             </div>
                             <div class="post-body">
                                 <h5 class="post-title">{{voucherType}}</h5>
                                 <p class="post-content">{{content}}</p>
                             </div>
                         </div>
-                    {{/reviews}}
+                    {{/model.reviews}}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    let currentPage = 0;
+    const userId = `{{model.user.id}}`; // 실제 사용자 ID로 교체
+    console.log(userId);
+
+    function changePage(direction) {
+        currentPage += direction;
+        fetchCommPosts(currentPage);
+    }
+
+    function fetchCommPosts(page) {
+        $.ajax({
+            url: `/client/mypage/commPosts`,
+            method: 'GET',
+            data: {
+                userId: userId,
+                page: page
+            },
+            success: function (data) {
+                updateCommPosts(data);
+            },
+            error: function (error) {
+                console.error('Error fetching page info:', error);
+            }
+        });
+    }
+
+    function updateCommPosts(commPosts) {
+        const container = $('#comm-posts-container');
+        container.empty();
+        commPosts.forEach(post => {
+            const postElement = `
+                    <div class="user-mypage post" data-post-id="my-board">
+                        <div class="post-header">
+                            <span class="post-category">${post.category} ·
+                                <img src="${post.profileImage}" alt="Profile Picture" class="post-profile-image">
+                                <span class="username">${post.name}</span>
+                            </span>
+                        </div>
+                        <div class="post-body">
+                            <h5 class="post-title">${post.title}</h5>
+                            <p class="post-content">${post.content}</p>
+                        </div>
+                        <div class="post-footer">
+                            <span class="post-meta">
+                                <span class="like-count">
+                                    <i class="far fa-heart like-btn"></i>
+                                    <span>0</span>
+                                </span>
+                                <span>
+                                    <i class="far fa-comment"></i>
+                                    <span>0</span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                `;
+            container.append(postElement);
+        });
+    }
+
+    function toggleButtons(pageData) {
+        const prevButton = $('#prev-button');
+        const nextButton = $('#next-button');
+
+        if (pageData.first) {
+            prevButton.hide();
+        } else {
+            prevButton.show();
+        }
+
+        if (pageData.last) {
+            nextButton.hide();
+        } else {
+            nextButton.show();
+        }
+    }
+
+    $(document).ready(function () {
+        fetchCommPosts(currentPage);
+    });
+
+</script>
