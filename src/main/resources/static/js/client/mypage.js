@@ -38,13 +38,13 @@ $(document).ready(function () {
     // 저장 버튼 클릭 시
     $('#saveProfile').on('click', function () {
         // 수정된 값 가져오기
-        const username = $('#edit-username').val();
+        const clientName = $('#edit-cline-name').val();
         const birthYear = $('#edit-birth-year').val();
         const gender = $('input[name="gender"]:checked').val();
         const profileImageSrc = $('#profileImageEdit').attr('src');
 
         // 보기 모드에 값 반영
-        $('#username').text(username);
+        $('#clientName').text(clientName);
         $('#birth-year').text(birthYear);
         $('#gender').text(gender);
         $('#profileImageView').attr('src', profileImageSrc);
@@ -60,7 +60,7 @@ $(document).ready(function () {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                username: username,
+                clientName: clientName,
                 birthYear: birthYear,
                 gender: gender,
                 profileImage: profileImageSrc // 이미지 URL

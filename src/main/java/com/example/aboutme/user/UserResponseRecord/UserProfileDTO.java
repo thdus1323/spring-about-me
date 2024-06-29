@@ -27,7 +27,8 @@ public record UserProfileDTO(
             String birth,
             String gender,
             String profileImage
-    ) {}
+    ) {
+    }
 
     @Builder
     public record PaymentDTO(
@@ -107,7 +108,9 @@ public record UserProfileDTO(
             String name,
             String content,
             String title,
-            String category
+            String category,
+            String profileImage
+
     ) {
     }
 
