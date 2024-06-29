@@ -4,8 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
 import com.example.aboutme.counsel.CounselService;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
-import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.DetailDTORecord;
-import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
+import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO;
 import com.example.aboutme.user.UserResponseRecord.ExpertUserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.UserProfileDTO;
 import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperRecord;
@@ -173,7 +172,7 @@ public class UserController {
     @GetMapping("/client/findExpert/detail/{expertId}")
     public String findExpertDetail(Model model, @PathVariable("expertId") Integer expertId) {
         log.info("상세보기 {}", expertId);
-        DetailDTORecord detailDTORecord = userService.getFindExpertDetails(expertId);
+        ExpertFindDetailDTO detailDTORecord = userService.getFindExpertDetails(expertId);
         model.addAttribute("model", detailDTORecord);
         return "client/findExpert/detail";
     }

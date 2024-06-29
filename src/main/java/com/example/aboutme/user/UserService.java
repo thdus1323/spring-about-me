@@ -2,8 +2,8 @@ package com.example.aboutme.user;
 
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
-import com.example.aboutme._core.utils.ImageUtil;
 import com.example.aboutme._core.utils.Formatter;
+import com.example.aboutme._core.utils.ImageUtil;
 import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme._core.utils.UserDefault;
 import com.example.aboutme.comm.CommRepository;
@@ -14,14 +14,14 @@ import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.review.ReviewRepository;
-import com.example.aboutme.user.UserRequestRecord.ExpertProfileUpdateReqDTO;
 import com.example.aboutme.reviewSummary.ReviewSummaryService;
+import com.example.aboutme.user.UserRequestRecord.ExpertProfileUpdateReqDTO;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.CommDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ExpertDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.VoucherDTORecord;
-import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO.*;
+import com.example.aboutme.user.UserResponseRecord.ExpertFindDetailDTO;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.ExpertMainDTORecord;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
@@ -259,7 +259,6 @@ public class UserService {
 
     }
 
-
     private List<UserProfileDTO.Comm> getCommPosts(Integer userId) {
         return commRepository.findByUserId(userId).stream()
                 .map(c -> new UserProfileDTO.Comm(
@@ -389,11 +388,24 @@ public class UserService {
     }
 
 
-    public DetailDTORecord getFindExpertDetails(Integer expertId) {
+    //상담사 상세보기
+    @Transactional
+    public ExpertFindDetailDTO getFindExpertDetails(Integer expertId) {
+
         log.info("상세보기서비스 {}", expertId);
         User user = userRepository.findById(expertId)
                 .orElseThrow(() -> new Exception403("유저정보를 찾을 수 없습니다."));
-        UserRecord userRecord = new UserRecord(user.getId(), user.getName(), user.getProfileImage());
+
+        // 총 리뷰 수 계산
+        Integer totalReviews = reviewRepository.countByExpertId(expertId);
+
+        ExpertFindDetailDTO.User userRecord = ExpertFindDetailDTO.User.builder()
+                .expertId(user.getId())
+                .name(user.getName())
+                .profileImage(user.getProfileImage())
+                .totalReviews(totalReviews)
+                .expertTitle(user.getExpertTitle())
+                .build();
 
         // price가 0일 때 0원을 반환하도록 로직 수정
         Optional<Double> optionalPrice = voucherRepository.findLowestPriceByExpertId(expertId);
@@ -401,33 +413,69 @@ public class UserService {
         String lowestPrice = Formatter.number((int) price); // 포맷터에서 가격을 포맷팅
         log.debug("최저 가격: {}", lowestPrice);
 
-        List<ReviewRecord> reviewRecords = reviewRepository.findByExpertId(expertId).stream()
-                .map(review -> new ReviewRecord(review.getId(), review.getContent()))
+        List<ExpertFindDetailDTO.Review> reviews = reviewRepository.findByExpertId(expertId).stream()
+                .map(review -> ExpertFindDetailDTO.Review.builder()
+                        .reviewScore(review.getScore())
+                        .reviewId(review.getId())
+                        .content(review.getContent())
+                        .voucherType(review.getCounsel().getVoucher().getVoucherType().getKorean())
+                        .voucherCount(review.getCounsel().getVoucher().getCount())
+                        .build())
                 .collect(Collectors.toList());
 
-        List<PRRecord> prRecords = prRepository.findByExpertId(expertId).stream()
-                .map(pr -> new PRRecord(pr.getUser().getId(), pr.getIntro(), pr.getEffects(), pr.getMethods()))
+        List<ExpertFindDetailDTO.PR> prs = prRepository.findByExpertId(expertId).stream()
+                .map(pr -> new ExpertFindDetailDTO.PR(pr.getUser().getId(), pr.getIntro(), pr.getEffects(), pr.getMethods()))
                 .collect(Collectors.toList());
 
         // 학력과 경력을 각각 나눔
-        List<SpecRecord> careerRecords = specRepository.findByExpertId(expertId).stream()
+        List<ExpertFindDetailDTO.Spec> careerSpecs = specRepository.findByExpertId(expertId).stream()
                 .filter(spec -> spec.getSpecType() == SpecType.CAREER)
-                .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
+                .map(spec -> new ExpertFindDetailDTO.Spec(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
-        List<SpecRecord> educationRecords = specRepository.findByExpertId(expertId).stream()
+        List<ExpertFindDetailDTO.Spec> educationSpecs = specRepository.findByExpertId(expertId).stream()
                 .filter(spec -> spec.getSpecType() == SpecType.EDUCATION)
-                .map(spec -> new SpecRecord(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
+                .map(spec -> new ExpertFindDetailDTO.Spec(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
+
+
+        List<ExpertFindDetailDTO.ReviewCount> reviewCounts = reviewRepository.countReviewByScore(expertId).stream()
+                .map(review -> {
+                    Integer score = (Integer) review[0];
+                    Long count = ((Number) review[1]).longValue(); // 수정된 부분
+                    Double percentage = (totalReviews > 0) ? (count.intValue() * 100.0 / totalReviews) : 0.0;
+                    return ExpertFindDetailDTO.ReviewCount.builder()
+                            .score(score)
+                            .count(count)
+                            .percentage(percentage)
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        //평균점수
+        Double averageScore = reviewRepository.findAverageScoreByExpertId(expertId);
+        averageScore = (averageScore != null) ? averageScore : 0.0;
 
         // 리뷰 요약 추가
         String reviewSummary = reviewSummaryService.summarizeReviews(expertId);
-        log.info(" 리뷰요약추가 {}", reviewSummary);
-        return new DetailDTORecord(userRecord, lowestPrice, reviewRecords, prRecords, careerRecords, educationRecords, reviewSummary);
+
+
+        return ExpertFindDetailDTO.builder()
+                .lowestPrice(lowestPrice)
+                .reviewSummary(reviewSummary)
+                .user(userRecord)
+                .reviews(reviews)
+                .prs(prs)
+                .careerSpecs(careerSpecs)
+                .educationSpecs(educationSpecs)
+                .averageScore(averageScore)
+                .reviewCounts(reviewCounts)
+                .build();
+
     }
 
 
-    // 상담가리스트 (record)
+    // 상담사리스트 (record)
     public FindWrapperRecord getExpertFind() {
 
         // 1. 모든 유저 찾기
@@ -453,7 +501,8 @@ public class UserService {
 
     }
 
-    // 상담가 검색
+
+    // 상담사 검색
     public FindWrapperRecord getExpertFindBySearch(LocalDateTime localDateTime) {
 
         // 1. 모든 유저 찾기
@@ -510,6 +559,7 @@ public class UserService {
 
         return new ClientMainDTORecord(comms, experts);
     }
+
 
     // 익스퍼트 메인
     @Transactional
@@ -653,6 +703,7 @@ public class UserService {
         }
     }
 
+
     public boolean logoutKakao(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -682,6 +733,7 @@ public class UserService {
             return false;
         }
     }
+
 
     public boolean logoutNaver(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
