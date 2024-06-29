@@ -6,13 +6,17 @@ import lombok.Builder;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Builder
 public record UserProfileDTO(
         User user,
         List<PaymentDTO> payments,
         List<VoucherDTO> vouchers,  // 새로운 필드 추가
         List<ReservationDTO> progressReservations,
         List<CounselDTO> completedCounsels,
-        List<Comm> commPosts
+        List<Comm> commPosts,
+        List<Reply> replies,
+        List<Review> reviews
+
 ) {
     @Builder
     public record User(
@@ -37,6 +41,7 @@ public record UserProfileDTO(
             String createdAt,
             String updatedAt
     ) {
+
     }
 
     @Builder
@@ -56,7 +61,6 @@ public record UserProfileDTO(
             String updatedAt,
             boolean isRemainingCount
     ) {
-
     }
 
     @Builder
@@ -92,7 +96,8 @@ public record UserProfileDTO(
             String updatedAt,
             String voucherType,
             Integer useCount,
-            Integer voucherCount
+            Integer voucherCount,
+            boolean isReview
     ) {
     }
 
@@ -103,6 +108,36 @@ public record UserProfileDTO(
             String content,
             String title,
             String category
+    ) {
+    }
+
+    @Builder
+    public record Reply(
+            Integer id,
+            Integer userId,
+            Integer commId,
+            String content,
+            String category,
+            String profileImage,
+            String name
+    ) {
+    }
+
+    @Builder
+    public record Review(
+            Integer id,
+            Integer clientId,
+            Integer expertId,
+            Integer counselId,
+            Integer score,
+            String content,
+            String voucherType,
+            Integer voucherCont,
+            String expertName,
+            String nickName,
+            String profileImage
+
+
     ) {
     }
 }

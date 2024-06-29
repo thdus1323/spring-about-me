@@ -1,0 +1,47 @@
+{{> layout/header}}
+
+{{#model}}
+    <div class="review">
+        <div class="container">
+            <div class="header">
+                <img src="{{profileImage}}" alt="Profile Picture">
+                <span>{{expertName}} 상담사</span>
+            </div>
+            <form id="reviewForm" method="POST" action="/reviewForm">
+                <div class="rating my-3">
+                    <input type="radio" id="star1" name="reviewScore" value="1">
+                    <label for="star1" title="1점"></label>
+                    <input type="radio" id="star2" name="reviewScore" value="2">
+                    <label for="star2" title="2점"></label>
+                    <input type="radio" id="star3" name="reviewScore" value="3">
+                    <label for="star3" title="3점"></label>
+                    <input type="radio" id="star4" name="reviewScore" value="4">
+                    <label for="star4" title="4점"></label>
+                    <input type="radio" id="star5" name="reviewScore" value="5">
+                    <label for="star5" title="5점"></label>
+                </div>
+                <div class="content">
+                    <div class="form-group">
+                        <label for="reviewCountent">리뷰 작성</label>
+                        <textarea id="reviewCountent" name="reviewCountent" placeholder="리뷰를 작성해주세요."></textarea>
+                    </div>
+
+                    <!-- URL의 id 값을 저장할 hidden input -->
+                    <input type="hidden" name="expertId" value="{{expertId}}">
+                    <input type="hidden" name="clientId" value="{{clientId}}">
+                    <input type="hidden" name="counselId" value="{{counselId}}">
+                    <input type="hidden" name="voucherType" value="{{voucherType}}">
+                    <input type="hidden" name="counselDate" value="{{counselDate}}">
+
+                    <div class="form-group-button">
+                        <button type="submit">댓글 등록</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    </div>
+{{/model}}
+
+
+
+{{> layout/footer}}
