@@ -85,7 +85,7 @@ public class UserRestController {
             @RequestParam("userId") Integer userId,
             @RequestParam("page") int page) {
         Page<UserProfileDTO.Review> reviews = userService.getReviews(userId, page, PagingSize.MY_PAGE_REVIEW_SIZE);
-        log.info("리턴값 {}", reviews.getContent());
+        log.info("리뷰리턴 {}", reviews.getContent());
         return ResponseEntity.ok(reviews);
     }
 
@@ -94,7 +94,7 @@ public class UserRestController {
             @RequestParam("userId") Integer userId,
             @RequestParam("page") int page) {
         Page<UserProfileDTO.Reply> replies = userService.getReplies(userId, page, PagingSize.MY_PAGE_REPLIES_SIZE);
-        log.info("리턴값 {}", replies.getContent());
+        log.info("댓글리턴 {}", replies.getContent());
         return ResponseEntity.ok(replies);
     }
 
