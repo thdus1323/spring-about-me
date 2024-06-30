@@ -73,30 +73,10 @@
     let currentPageReviews = 0;
     const userId = `{{model.user.id}}`; // 실제 사용자 ID로 교체
 
-    $(document).ready(function () {
-        $('.tab').click(function () {
-            const tab = $(this).data('tab');
-            $('.tab').removeClass('active');
-            $(this).addClass('active');
-            $('.tab-content').removeClass('active');
-            $(`#${tab}`).addClass('active');
-
-            // 탭 변경 시 페이지를 초기화하고 데이터를 로드합니다.
-            if (tab === 'my-stories') {
-                currentPageStories = 0;
-                fetchCommPosts(currentPageStories);
-            } else if (tab === 'my-comments') {
-                currentPageComments = 0;
-                fetchComments(currentPageComments);
-            } else if (tab === 'my-review') {
-                currentPageReviews = 0;
-                fetchReviews(currentPageReviews);
-            }
-        });
-
-        // 초기 로드
-        fetchCommPosts(currentPageStories);
-    });
+    // 초기 로드
+    fetchCommPosts(currentPageStories);
+    fetchComments(currentPageComments);
+    fetchReviews(currentPageReviews);
 
     function changePageStories(page) {
         if (page >= 0) {
@@ -178,41 +158,45 @@
         container.empty();
         commPosts.forEach(post => {
             const postElement = `
-                <div class="user-mypage post" data-post-id="my-board">
-                    <div class="post-header">
-                        <span class="post-category">${post.category} ·
-                            <img src="${post.profileImage}" alt="Profile Picture" class="post-profile-image">
-                            <span class="username">${post.name}</span>
-                        </span>
-                    </div>
-                    <div class="post-body">
-                        <h5 class="post-title">${post.title}</h5>
-                        <p class="post-content">${post.content}</p>
-                    </div>
-                    <div class="post-footer">
-                        <span class="post-meta">
-                            <span class="like-count">
-                                <i class="far fa-heart like-btn"></i>
-                                <span>0</span>
-                            </span>
-                            <span>
-                                <i class="far fa-comment"></i>
-                                <span>0</span>
-                            </span>
-                        </span>
-                    </div>
-                </div>
-            `;
+<form action="/comm-detail/${post.id}" method="GET" class="comm-delete-form">
+    <div class="user-mypage post" data-post-id="my-board" onclick="this.closest('form').submit();">
+        <div class="post-header">
+            <span class="post-category">${post.category} ·
+                <img src="${post.profileImage}" alt="Profile Picture" class="post-profile-image">
+                <span class="username">${post.name}</span>
+            </span>
+        </div>
+        <div class="post-body">
+            <h5 class="post-title">${post.title}</h5>
+            <p class="post-content">${post.content}</p>
+        </div>
+        <div class="post-footer">
+            <span class="post-meta">
+                <span class="like-count">
+                    <i class="far fa-heart like-btn"></i>
+                    <span>0</span>
+                </span>
+                <span>
+                    <i class="far fa-comment"></i>
+                    <span>0</span>
+                </span>
+            </span>
+        </div>
+    </div>
+</form>
+        `;
             container.append(postElement);
         });
     }
 
     function updateComments(comments) {
+        console.log('댓글', comments);
         const container = $('#comments-container');
         container.empty();
         comments.forEach(comment => {
             const commentElement = `
-                <div class="user-mypage post" data-post-id="my-board">
+<form action="/comm-detail/${comment.commId}" method="GET" class="comm-delete-form">
+                <div class="user-mypage post" data-post-id="my-board" onclick="this.closest('form').submit();">
                     <div class="post-header">
                         <span class="post-category">${comment.category} ·
                             <img src="${comment.profileImage}" alt="Profile Picture" class="post-profile-image">
@@ -223,17 +207,21 @@
                         <p class="post-content">${comment.content}</p>
                     </div>
                 </div>
+</form>
+
             `;
             container.append(commentElement);
         });
     }
 
     function updateReviews(reviews) {
+        console.log('리뷰', reviews);
         const container = $('#reviews-container');
         container.empty();
         reviews.forEach(review => {
             const reviewElement = `
-                <div class="user-mypage post" data-post-id="my-board">
+<form action="/client/findExpert/detail/${review.expertId}" method="GET" class="comm-delete-form">
+                <div class="user-mypage post" data-post-id="my-board" onclick="this.closest('form').submit();">
                     <div class="post-header">
                         <span class="post-category">
                             <img src="${review.profileImage}" alt="Profile Picture" class="post-profile-image">

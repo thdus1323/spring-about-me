@@ -25,10 +25,13 @@ import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
 
 import java.time.DayOfWeek;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -298,6 +301,61 @@ public class CounselService {
         counsel.setReservationStatus(status);
         counselRepository.save(counsel);
     }
+
+
+    @Transactional
+    public Page<CounselDTORecord> pagingCounsel(SessionUser sessionUser, int page, int size) {
+
+        // 0. 인증
+        if (sessionUser == null) {
+            throw new Exception403("인증되지 않은 유저입니다");
+        }
+        User expert = userRepository.findById(sessionUser.getId()).orElseThrow(() -> new Exception404("전문가를 찾을 수 없습니다."));
+
+        // 1. 상담사 리스트 찾기
+        List<Counsel> counselList = counselRepository.findAllCounselByExpertId(sessionUser.getId());
+
+        // 2. Transform Counsel list to UserRecord list
+        List<UserRecord> userRecords = counselList.stream().map(counsel -> {
+
+            // 3. 유저정보찾기
+            User user = userRepository.findById(counsel.getClient().getId())
+                    .orElseThrow(() -> new Exception404("해당 유저를 찾지 못했습니다"));
+
+            // 4. Voucher 전체카운트 찾기
+            Integer voucherTotal = counselRepository.countAllByClientId(user.getId());
+
+            // 5. Vocher 남은 카운트찾기
+            Integer voucherRemain = counselRepository.countByClientIdAndState(user.getId(), CounselStatus.COUNSEL_PENDING);
+
+            // 6. VoucherType 변환
+            String voucherType = counsel.getVoucher().getVoucherType().getKorean();
+
+            // UserRecord 생성
+            return new UserRecord(
+                    user.getId(),
+                    user.getName(),
+                    user.getProfileImage(),
+                    voucherType,
+                    voucherTotal,
+                    voucherRemain,
+                    counsel.getCounselDate() // applyDate는 Counsel의 counselDate를 사용
+            );
+
+        }).collect(Collectors.toList());
+
+        // 페이징 처리
+        int start = Math.min((int) PageRequest.of(page, size).getOffset(), userRecords.size());
+        int end = Math.min((start + PageRequest.of(page, size).getPageSize()), userRecords.size());
+        Page<UserRecord> userRecordPage = new PageImpl<>(userRecords.subList(start, end), PageRequest.of(page, size), userRecords.size());
+
+        // 최종적으로 CounselDTORecord를 반환
+        CounselDTORecord counselDTORecord = new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecordPage.getContent());
+
+        return new PageImpl<>(Collections.singletonList(counselDTORecord), PageRequest.of(page, size), userRecords.size());
+    }
+
+
 }
 
 

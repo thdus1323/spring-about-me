@@ -1,17 +1,21 @@
 package com.example.aboutme.schedule;
 
+import com.example.aboutme._core.error.exception.Exception400;
+import com.example.aboutme._core.utils.DayOfWeekConverter;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
+import com.example.aboutme.schedule.ScheduleReqRecord.ScheduleSaveReqDTO;
+import com.example.aboutme.user.SessionUser;
+import com.example.aboutme.user.User;
+import com.example.aboutme.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -20,6 +24,44 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final CounselRepository counselRepository;
+    private final UserRepository userRepository;
+
+    //상담가능 시간 조회해서 있으면 업데이트 없으면 저장
+    @Transactional
+    public void saveSchedule(ScheduleSaveReqDTO schedule, SessionUser sessionUser) {
+        User expert = userRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
+
+        Map<String, ScheduleSaveReqDTO.ScheduleDTO> scheduleMap = new HashMap<>();
+        scheduleMap.put("월", schedule.monday());
+        scheduleMap.put("화", schedule.tuesday());
+        scheduleMap.put("수", schedule.wednesday());
+        scheduleMap.put("목", schedule.thursday());
+        scheduleMap.put("금", schedule.friday());
+
+        for (Map.Entry<String, ScheduleSaveReqDTO.ScheduleDTO> entry : scheduleMap.entrySet()) {
+            DayOfWeek dayOfWeek = DayOfWeekConverter.toEnum(entry.getKey());
+            ScheduleSaveReqDTO.ScheduleDTO scheduleDTO = entry.getValue();
+            if (scheduleDTO.start() != null && !scheduleDTO.start().isEmpty() &&
+                    scheduleDTO.end() != null && !scheduleDTO.end().isEmpty()) {
+
+                Optional<Schedule> existingSchedule = scheduleRepository.findByExpertAndDayOfWeek(expert, dayOfWeek);
+                Schedule newSchedule;
+
+                if (existingSchedule.isPresent()) {
+                    newSchedule = existingSchedule.get();
+                } else {
+                    newSchedule = new Schedule();
+                    newSchedule.setExpert(expert);
+                    newSchedule.setDayOfWeek(dayOfWeek);
+                }
+
+                newSchedule.setStartTime(scheduleDTO.start());
+                newSchedule.setEndTime(scheduleDTO.end());
+                scheduleRepository.save(newSchedule);
+            }
+        }
+    }
 
 
     // 전문가의 특정 날짜에 대한 예약 가능 시간을 찾는 메서드
@@ -28,7 +70,7 @@ public class ScheduleService {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
 
         // 전문가의 요일별 스케줄을 조회
-        List<Schedule> schedules = scheduleRepository.findByExpertIdAndDayOfWeek(expertId, dayOfWeek);
+        List<Schedule> schedules = scheduleRepository.findByExpertIdAndDay(expertId, dayOfWeek);
 
         // 스케줄이 없는 경우 빈 리스트 반환
         if (schedules.isEmpty()) {
@@ -71,5 +113,6 @@ public class ScheduleService {
 
         return times;
     }
+
 
 }

@@ -1,116 +1,10 @@
 {{> layout/header}}
 
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 600px;
-        background: #fff;
-        padding: 20px;
-        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
-        border-radius: 8px;
-    }
-    .modal.on {
-        display: block;
-    }
-    .modal-header, .modal-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .modal-header {
-        border-bottom: 1px solid #eee;
-    }
-    .modal-footer {
-        border-top: 1px solid #eee;
-    }
-    .modal-body {
-        padding: 20px 0;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-    .message {
-        margin-bottom: 20px;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .message figure {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 10px;
-        overflow: hidden;
-        position: relative;
-    }
-    .message .chat-text {
-        width: calc(100% - 60px);
-    }
-    .message figure img {
-        width: 100%;
-        object-fit: cover;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .message .sender {
-        font-weight: bold;
-        display: block;
-        width: calc(100% - 60px);
-    }
-    .message .content {
-        display: block;
-        padding: 10px;
-        background: #ffe0c7;
-        width: fit-content;
-        border-radius: 5px;
-        margin-top: 5px;
-        position: relative;
-        font-size: 12px;
-    }
-    .message .content:before {
-        content: "";
-        width: 10px;
-        height: 10px;
-        background: #ffe0c7;
-        display: block;
-        position: absolute;
-        top: 9px;
-        left: -3px;
-        transform: rotate(45deg);
-        border-radius: 1px;
-    }
-    .modal-footer {
-        padding: 0;
-    }
-    .modal-footer input {
-        width: calc(100% - 100px);
-        margin: 0;
-        height: 40px;
-    }
-    .modal-footer button {
-        margin: 0;
-        width: 90px;
-        font-size: 14px;
-    }
-    #chatBox {
-        padding: 10px;
-        margin-bottom: 10px;
-        min-height: 300px;
-        overflow: auto;
-    }
-</style>
-
 <section id="section01">
     <div class="container">
         <div class="page-wrapper">
             <div class="line-up">
                 <button class="main-background defalut-btn">정렬</button>
-                <button onclick="openChat()">1:1 채팅시작</button>
             </div>
             <h3 class="page-title mb-50">
                 상담일정 확인
@@ -122,131 +16,165 @@
                         <span>이용권</span>
                         <span>횟수/이용횟수</span>
                         <span>신청날짜</span>
+                        <span>상담</span>
                     </div>
                     <ul class="schedule-list">
-                        {{#counselList.user}}
-                            <li>
-                                <div class="schedule-item">
-                                    <figure></figure>
-                                    <p>{{name}}</p>
-                                </div>
-                                <div class="schedule-item">
-                                    <p>{{voucherType}}</p>
-                                </div>
-                                <div class="schedule-item">
-                                    <p>{{remainCount}}회/{{totalCount}}회</p>
-                                </div>
-                                <div class="schedule-item">
-                                    <p>{{applyDate}}</p>
-                                </div>
-                            </li>
-                        {{/counselList.user}}
+
+                        <!-- Mustache 템플릿에서 사용되는 데이터 구조 확인 -->
+                    </ul>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <ul class="pagination my-3" id="pagination-stories">
+                        <!-- Pagination for '나의 사연' -->
                     </ul>
                 </div>
                 <!-- 페이지 네이션 -->
-                <div class="comm-pagination">
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <span class="page-link">Previous</span>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item active" aria-current="page">
-                                <span class="page-link">2</span>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                <ul id="pagenation" class="pagination my-3" style=" display: flex; justify-content: center;">
+
+                </ul>
+
+
             </div>
         </div>
     </div>
 </section>
-
-<!-- Chat Modal -->
-<div id="chatModal" class="modal">
-    <div class="modal-header">
-        <h5 class="modal-title">Chat</h5>
-        <a href="#" rel="modal:close">Close</a>
-    </div>
-    <div class="modal-body">
-        <div id="chatBox"></div>
-    </div>
-    <div class="modal-footer">
-        <input type="text" id="message" class="form-control" placeholder="Type a message...">
-        <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
 <script>
-    var stompClient;
-    var username = '{{counselList.expertId}}'; // 현재 사용자 ID (상담사)
+    let currentPage = 0;
+    const userId = '{{sessionUser.id}}'; // 실제 사용자 ID로 교체
+    const size = 5; // 페이지 당 항목 수
+    let totalPages = 0;
 
-    function openChat() {
-        $('#chatModal').modal({
-            addclass: 'on'
-        });
+    // 초기 로드
+    initializePagination();
 
-        var socket = new SockJS('/chat');
-        stompClient = Stomp.over(socket);
+    function changePage(page) {
+        if (page >= 0 && page < totalPages) {
+            currentPage = page;
+            fetchSchedules(currentPage);
+        }
+    }
 
-        stompClient.connect({}, function(frame) {
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/user/queue/messages', function(messageOutput) {
-                const message = JSON.parse(messageOutput.body);
-                console.log('Received message: ', message);
-                showMessage(message);
-            });
-        });
-
-        // 메시지 입력 필드에 keydown 이벤트 핸들러 추가
-        document.getElementById('message').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Enter 키의 기본 동작(줄 바꿈) 방지
-                sendMessage();
+    function fetchSchedules(page) {
+        $.ajax({
+            url: `/client/schedule`,
+            method: 'GET',
+            data: {
+                userId: userId,
+                page: page,
+                size: size
+            },
+            success: function (data) {
+                if (data.content.length > 0) {
+                    const scheduleData = data.content[0]; // CounselDTORecord 데이터
+                    updateScheduleList(scheduleData.user); // user 목록을 전달
+                } else {
+                    updateScheduleList([]); // 데이터가 없을 경우 빈 배열 전달
+                }
+                totalPages = data.totalPages; // 서버에서 제공한 totalPages 사용
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error('Error fetching schedules:', error);
             }
         });
     }
 
-    function sendMessage() {
-        var input = document.getElementById('message');
-        var message = {
-            sender: username, // 현재 사용자 ID (상담사)
-            recipient: 'client', // 상대방 사용자 ID (클라이언트)
-            content: input.value
-        };
-        stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
-        input.value = '';
-
-        // 내가 보낸 메시지를 chatBox에 추가
-        showMessage(message, true);
+    function updateScheduleList(users) {
+        const container = $('.schedule-list');
+        container.empty();
+        users.forEach(user => {
+            const scheduleElement = `
+            <li>
+                <div class="schedule-item">
+                    <figure></figure>
+                    <p>${user.name}</p>
+                </div>
+                <div class="schedule-item">
+                    <p>${user.voucherType}</p>
+                </div>
+                <div class="schedule-item">
+                    <p>${user.remainCount}회/${user.totalCount}회</p>
+                </div>
+                <div class="schedule-item">
+                    <p>${user.applyDate}</p>
+                </div>
+                <div class="schedule-item">
+                    <p><button class="schedule-btn">상담하러가기</button></p>
+                </div>
+            </li>
+        `;
+            container.append(scheduleElement);
+        });
     }
 
-    function showMessage(message, isSent = false) {
-        var chatBox = document.getElementById('chatBox');
-        var messageElement = document.createElement('div');
-        messageElement.classList.add('message', isSent ? 'sent' : 'received');
-        var isSender = message.sender === username;
-        console.log('Adding message to chatBox:', message);
-        messageElement.innerHTML = `
-            <figure>
-                <img src="${isSender ? '{{counselList.profileImage}}' : '/path/to/client/profileImage'}" alt="Profile Image" />
-            </figure>
-            <div class="chat-text">
-                <span class="sender">${isSender ? '상담사' : '클라이언트'} (${message.sender}):</span>
-                <span class="content">${message.content}</span>
-            </div>
-        `;
-        chatBox.appendChild(messageElement);
-        chatBox.scrollTop = chatBox.scrollHeight; // 자동 스크롤
+    function updatePagination(pageData) {
+        const pagination = $('#pagenation');
+        pagination.empty();
+
+        // 이전 페이지로 이동 버튼
+        const prevButton = $('<li>')
+                .addClass('page-item')
+                .append(
+                        $('<button>')
+                                .addClass('page-link')
+                                .html('Prev')
+                                .prop('disabled', pageData.first)
+                                .click(() => {
+                                    changePage(pageData.number - 1);
+                                })
+                );
+        pagination.append(prevButton);
+
+        // 페이지 번호 버튼들
+        for (let i = 0; i < pageData.totalPages; i++) {
+            const pageItem = $('<li>')
+                    .addClass('page-item')
+                    .toggleClass('active', i === pageData.number)
+                    .append(
+                            $('<button>')
+                                    .addClass('page-link')
+                                    .text(i + 1)
+                                    .click(() => {
+                                        changePage(i);
+                                    })
+                    );
+            pagination.append(pageItem);
+        }
+
+        // 다음 페이지로 이동 버튼
+        const nextButton = $('<li>')
+                .addClass('page-item')
+                .append(
+                        $('<button>')
+                                .addClass('page-link')
+                                .html('Next')
+                                .prop('disabled', pageData.last)
+                                .click(() => {
+                                    changePage(pageData.number + 1);
+                                })
+                );
+        pagination.append(nextButton);
+    }
+
+    function initializePagination() {
+        $.ajax({
+            url: `/client/schedule`,
+            method: 'GET',
+            data: {
+                userId: userId,
+                page: 0,
+                size: size
+            },
+            success: function (data) {
+                totalPages = data.totalPages;
+                updatePagination(data);
+                fetchSchedules(currentPage);
+            },
+            error: function (error) {
+                console.error('Error initializing pagination:', error);
+            }
+        });
     }
 </script>
-
 {{> layout/footer}}

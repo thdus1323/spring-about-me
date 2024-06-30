@@ -1,5 +1,6 @@
 package com.example.aboutme.schedule;
 
+import com.example.aboutme.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,10 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
+
     // 전문가 ID와 요일로 스케줄 조회
     @Query("SELECT s FROM Schedule s WHERE s.expert.id = :expertId AND s.dayOfWeek = :dayOfWeek")
-    List<Schedule> findByExpertIdAndDayOfWeek(@Param("expertId") Integer expertId, @Param("dayOfWeek") DayOfWeek dayOfWeek);
+    List<Schedule> findByExpertIdAndDay(@Param("expertId") Integer expertId, @Param("dayOfWeek") DayOfWeek dayOfWeek);
 
+    Optional<Schedule> findByExpertAndDayOfWeek(User expert, DayOfWeek dayOfWeek);
 
     @Query("SELECT s FROM Schedule s WHERE s.expert.id = :expertId AND s.dayOfWeek = :dayOfWeek AND s.startTime <= :startTime AND s.endTime >= :startTime")
     Optional<Schedule> findByExpertIdAndDayOfWeekAndStartTime(
