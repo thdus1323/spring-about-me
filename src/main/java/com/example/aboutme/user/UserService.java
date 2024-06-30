@@ -297,6 +297,7 @@ public class UserService {
     }
 
     // 주석: 이 메서드는 특정 사용자 ID에 대한 리뷰 목록을 가져옵니다.
+    @Transactional
     public Page<UserProfileDTO.Review> getReviews(Integer userId, Integer page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return reviewRepository.findByClientId(userId, pageable)
