@@ -3,9 +3,9 @@
 {{#model}}
     <div class="d-flex container">
         <div class="content col-md-8">
-            <div class="header">
-                <h1>내담자의 성장을 함께하고 싶은 상담자입니다.</h1>
-            </div>
+
+            <div class="header">{{user.expertTitle}}</div>
+
             <div class="row mb-4">
                 <div class="col-lg-12">
                     <div class="mb-4">
@@ -28,101 +28,62 @@
 
                         <div class="review-rating">
                             <i class="fas fa-star" style="color: #f5c518;"></i>
-                            <span>4.95</span>
+                            <span>{{averageScore}}</span>
                             <span style="font-size: large; font-weight: lighter;">/5</span>
                         </div>
 
                         <div class="container mb-4">
                             <div class="row align-items-start">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="d-flex flex-column justify-content-center">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="mr-2">5</span>
-                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                                <div class="progress-bar"
-                                                     style="width: 100%; background-color: #007D7C;" aria-valuenow="100"
-                                                     aria-valuemin="0" aria-valuemax="100"></div>
+                                        {{#reviewCounts}}
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="mr-2">{{score}}</span>
+                                                <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                    <div class="progress-bar"
+                                                         style="width: {{percentage}}%; background-color: #ffa75b;"
+                                                         aria-valuenow="{{percentage}}" aria-valuemin="0"
+                                                         aria-valuemax="100"></div>
+                                                </div>
+                                                <span>{{count}}</span>
                                             </div>
-                                            <span>186</span>
-                                        </div>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="mr-2">4</span>
-                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                                <div class="progress-bar" style="width: 3%; background-color: #007D7C;"
-                                                     aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <span>6</span>
-                                        </div>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="mr-2">3</span>
-                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                                <div class="progress-bar" style="background-color: #007D7C;"
-                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <span>0</span>
-                                        </div>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <span class="mr-2">2</span>
-                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                                <div class="progress-bar" style="background-color: #007D7C;"
-                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <span>0</span>
-                                        </div>
-                                        <div class="d-flex align-items-center my-2">
-                                            <span class="mr-2">1</span>
-                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">
-                                                <div class="progress-bar" style="background-color: #007D7C;"
-                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <span>0</span>
-                                        </div>
+                                        {{/reviewCounts}}
+                                        <!--                                        <div class="d-flex align-items-center mb-2">-->
+                                        <!--                                            <span class="mr-2">4</span>-->
+                                        <!--                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
+                                        <!--                                                <div class="progress-bar"-->
+                                        <!--                                                     style="width: 3%; background-color: #ffa75b;"-->
+                                        <!--                                                     aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <span>6</span>-->
+                                        <!--                                        </div>-->
+                                        <!--                                                                                <div class="d-flex align-items-center mb-2">-->
+                                        <!--                                                                                    <span class="mr-2">3</span>-->
+                                        <!--                                                                                    <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
+                                        <!--                                                                                        <div class="progress-bar" style="background-color: #ffa75b;"-->
+                                        <!--                                                                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--                                                                                    </div>-->
+                                        <!--                                                                                    <span>0</span>-->
+                                        <!--                                                                                </div>-->
+                                        <!--                                        <div class="d-flex align-items-center mb-2">-->
+                                        <!--                                            <span class="mr-2">2</span>-->
+                                        <!--                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
+                                        <!--                                                <div class="progress-bar" style="background-color: #ffa75b;"-->
+                                        <!--                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <span>0</span>-->
+                                        <!--                                        </div>-->
+                                        <!--                                        <div class="d-flex align-items-center my-2">-->
+                                        <!--                                            <span class="mr-2">1</span>-->
+                                        <!--                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
+                                        <!--                                                <div class="progress-bar" style="background-color: #ffa75b;"-->
+                                        <!--                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <span>0</span>-->
+                                        <!--                                        </div>-->
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="review-detail-item" style="--score: 4.7; height: 20px;">
-                                        <div class="item-info">
-                                            <i class="fas fa-heart icon-heart"></i>
-                                            <span>경청과 공감</span>
-                                        </div>
-                                        <span class="rating">4.7</span>
-                                    </div>
-                                    <div class="review-detail-item" style="--score: 4; height: 20px;">
-                                        <div class="item-info">
-                                            <i class="fas fa-lightbulb icon-solution"></i>
-                                            <span>적절한 해결책</span>
-                                        </div>
-                                        <span class="rating">4</span>
-                                    </div>
-                                    <div class="review-detail-item" style="--score: 4.7; height: 20px;">
-                                        <div class="item-info">
-                                            <i class="fas fa-eye icon-lightbulb"></i>
-                                            <span>객관적 시각</span>
-                                        </div>
-                                        <span class="rating">4.7</span>
-                                    </div>
-                                    <div class="review-detail-item" style="--score: 4.6; height: 20px;">
-                                        <div class="item-info">
-                                            <i class="fas fa-book icon-book"></i>
-                                            <span>유용한 심리지식</span>
-                                        </div>
-                                        <span class="rating">4.6</span>
-                                    </div>
-                                    <div class="review-detail-item" style="--score: 4.6; height: 20px;">
-                                        <div class="item-info">
-                                            <i class="fas fa-bolt icon-lightning"></i>
-                                            <span>신속한 대응</span>
-                                        </div>
-                                        <span class="rating">4.6</span>
-                                    </div>
-                                    <div class="review-detail-item" style="--score: 4.7; height: 20px;">
-                                        <div class="item-info">
-                                            <i class="fas fa-smile icon-smile"></i>
-                                            <span>친절한 설명</span>
-                                        </div>
-                                        <span class="rating">4.7</span>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div>
@@ -130,21 +91,21 @@
                                 <div class="review-item">
                                     <div class="review-header">
                                         <div class="review-score">
-                                            <i class="fas fa-star" style="color: #f5c518;"></i> 5.0
+                                            <i class="fas fa-star" style="color: #f5c518;"></i> {{reviewScore}}
                                         </div>
                                         <div class="review-best">
                                             BEST
                                         </div>
                                     </div>
                                     <div class="review-text">
-                                        {{content}} <a href="#">더 보기</a>
+                                        {{content}} <a href="#"></a>
                                     </div>
                                     <div class="review-footer">
                                         <div>
-                                            <i class="fas fa-comments"></i> 보이스 테라피
+                                            <i class="fas fa-comments"></i> {{voucherType}}
                                         </div>
                                         <div>
-                                            <i class="fas fa-user"></i> 8회기권 구매고객
+                                            <i class="fas fa-user"></i> {{voucherCount}}회기권 구매고객
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +121,7 @@
                 <div class="mb-4">
                     <div>
                         <i class="fa-regular fa-thumbs-up mt-5"></i>
-                        <h4 class="fw-bold border-bottom pb-2">이윤희 상담사님의 간단한 소개</h4>
+                        <h4 class="fw-bold border-bottom pb-2">{{user.name}} 상담사님의 간단한 소개</h4>
                     </div>
                     <div class="container mt-3">
                         <!-- 경력 및 학력 -->
@@ -191,7 +152,7 @@
                 <div class="mb-4">
                     <div>
                         <i class="fa-regular fa-thumbs-up mt-5"></i>
-                        <h4 class="fw-bold border-bottom pb-2">이윤희 상담사님에게 여쭤봤어요</h4>
+                        <h4 class="fw-bold border-bottom pb-2">{{user.name}} 상담사님에게 여쭤봤어요</h4>
                     </div>
                     <div class="row experience">
                         {{#prs}}
@@ -241,9 +202,9 @@
         </div>
         <div class="col-md-2" style="margin-left: auto; position: relative; width: 290px;">
             <div class="card-expert">
-                <img src="/images/{{user.profileImage}}" alt="상담사 사진">
+                <img src="{{user.profileImage}}" alt="상담사 사진">
                 <div class="card-body">
-                    <h2>{{user.name}} <span class="rating">★ 4.91</span> (34)</h2>
+                    <h2>{{user.name}} <span class="rating">★ {{averageScore}}</span> ({{user.totalReviews}})</h2>
                     <p>1회 최저 가격</p>
                     <p class="price">{{lowestPrice}}</p>
                     <a href="/client/findExpert/voucher/{{user.expertId}}" class="button-container">이용권 선택하기</a>
