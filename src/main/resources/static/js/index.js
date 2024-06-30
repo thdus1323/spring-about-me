@@ -5,3 +5,4 @@ import './client/mypage.js';
 import './client/main.js';
 import './expert/voucher-form.js';
 import './chat/chating.js';
+import './sse/alarm.js';

@@ -38,4 +38,34 @@
         </div>
     </div>
 </header>
+<div id="expertEvent"></div>
+<script>
+    // 전문가에게 알림
+    function initializeExpertEventSource() {
+        console.log(1)
+        if (!window.expertEventSource) {
+            const expertEventSource = new EventSource("/expertEmitter");
+            console.log(expertEventSource)
+            expertEventSource.onmessage = (event) => {
+                console.log(event)
+                const div = document.createElement("div");
+                div.textContent = `Event received: ${event.data}`;
+                document.getElementById("expertEvent").appendChild(div);
+            };
+
+            expertEventSource.onerror = (error) => {
+                console.error("Error occurred:", error);
+                expertEventSource.close();
+                // 연결이 끊어졌을 때 재연결 시도 (백오프 전략 적용 가능)
+                setTimeout(() => {
+                    initializeExpertEventSource();
+                }, 3000); // 3초 후 재연결 시도
+            };
+
+            window.expertEventSource = expertEventSource;
+        }
+    }
+
+    initializeExpertEventSource();
+</script>
 <!-- 헤더 끝 -->
