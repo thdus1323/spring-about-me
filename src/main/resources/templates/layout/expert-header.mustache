@@ -45,7 +45,7 @@
         function initializeExpertEventSource() {
             console.log("Initializing expert event source");
             if (!window.expertEventSource) {
-                const expertId = $("#sessionUserId").val(); // 세션 유저의 아이디를 가져옴
+                const expertId = $("#sessionUserId").val();
                 console.log("Expert ID:", expertId);
                 if (!expertId) {
                     console.error("Expert ID is undefined");
@@ -53,6 +53,10 @@
                 }
                 const expertEventSource = new EventSource(`/sse/expert/${expertId}`);
                 console.log("EventSource created for expert");
+
+                expertEventSource.onopen = function(event) {
+                    console.log("Open:", event);
+                };
 
                 expertEventSource.onmessage = function(event) {
                     console.log("Event received:", event);

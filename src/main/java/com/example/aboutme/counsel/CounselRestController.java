@@ -14,15 +14,11 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class CounselRestController {
     private final CounselRepository counselRepository;
-    private final SseService sseService;
+    private final CounselService counselService;
 
-    @Autowired
-    public CounselRestController(CounselRepository counselRepository, SseService sseService) {
-        this.counselRepository = counselRepository;
-        this.sseService = sseService;
-    }
     @PostMapping("/client/reservations/temp/{reservationId}")
     public ResponseEntity<?> deleteTempReservation(@PathVariable("reservationId") Integer reservationId) {
         log.info("Delete temporary reservation      " + reservationId);
@@ -41,17 +37,7 @@ public class CounselRestController {
     @PatchMapping("/counsel/{id}/status")
     public ResponseEntity<String> updateStatus(@PathVariable("id") Integer id, @RequestBody Map<String, String> request) {
         ReservationStatus status = ReservationStatus.valueOf(request.get("status"));
-        Counsel counsel = counselRepository.findById(id).orElseThrow(() -> new RuntimeException("Counsel not found"));
-        counsel.setReservationStatus(status);
-        counselRepository.save(counsel);
-
-        // 상태 변경에 따른 이벤트 전송
-        if (status == ReservationStatus.RESERVATION_PENDING) {
-            sseService.notifyExpert(counsel.getExpert().getId(), "예약신청이 도착했습니다.");
-        } else if (status == ReservationStatus.RESERVATION_COMPLETED) {
-            sseService.notifyClient(counsel.getClient().getId(), "예약이 확정되었습니다.");
-        }
-
+        counselService.updateCounselStatus(id, status);
         return ResponseEntity.ok("Status updated");
     }
 }

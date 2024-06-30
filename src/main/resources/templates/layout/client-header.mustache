@@ -49,16 +49,20 @@
                     return;
                 }
                 const clientEventSource = new EventSource(`/sse/client/${clientId}`);
-                console.log("EventSource created for client");
 
-                clientEventSource.onmessage = function(event) {
+                clientEventSource.onopen = function (event) {
+                    console.log("Open:", event);
+                };
+
+                clientEventSource.onmessage = function (event) {
                     console.log("Event received:", event);
                     const div = $("<div>").text(`Event received: ${event.data}`);
                     $("#clientEvent").append(div);
                 };
 
-                clientEventSource.onerror = function(error) {
+                clientEventSource.onerror = function (error) {
                     console.error("Error occurred:", error);
+                    console.error("Error details:", error);
                     clientEventSource.close();
                     setTimeout(function () {
                         initializeClientEventSource();

@@ -289,6 +289,15 @@ public class CounselService {
         counsel.completeCounsel();
 
     }
+
+    // 업데이트 체크용
+    @Transactional
+    public void updateCounselStatus(Integer counselId, ReservationStatus status) {
+        Counsel counsel = counselRepository.findById(counselId)
+                .orElseThrow(() -> new RuntimeException("Counsel not found"));
+        counsel.setReservationStatus(status);
+        counselRepository.save(counsel);
+    }
 }
 
 
