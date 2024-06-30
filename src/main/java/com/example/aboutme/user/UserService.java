@@ -3,10 +3,7 @@ package com.example.aboutme.user;
 import com.example.aboutme._core.config.PagingSize;
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
-import com.example.aboutme._core.utils.Formatter;
-import com.example.aboutme._core.utils.ImageUtil;
-import com.example.aboutme._core.utils.RedisUtil;
-import com.example.aboutme._core.utils.UserDefault;
+import com.example.aboutme._core.utils.*;
 import com.example.aboutme.comm.CommRepository;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
@@ -17,6 +14,7 @@ import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.reviewSummary.ReviewSummaryService;
+import com.example.aboutme.schedule.ScheduleRepository;
 import com.example.aboutme.user.UserRequestRecord.ExpertProfileUpdateReqDTO;
 import com.example.aboutme.user.UserRequestRecord.UserProfileUpdateReqDTO;
 import com.example.aboutme.user.UserResponseRecord.ClientMainDTO.ClientMainDTORecord;
@@ -73,6 +71,7 @@ public class UserService {
     private final SpecRepository specRepository;
     private final PRRepository prRepository;
     private final PaymentRepository paymentRepository;
+    private final ScheduleRepository scheduleRepository;
     private final ReplyRepository replyRepository;
     private final RedisUtil redisUtil;
     private final ReviewSummaryService reviewSummaryService;
@@ -96,8 +95,9 @@ public class UserService {
                 .build();
 
         List<ExpertUserProfileDTO.SpecDTO> spec = getExpertPageSpec(sessionUser.getId());
+        List<ExpertUserProfileDTO.ScheduleDTO> schedules = getExpertPageSchedule(sessionUser.getId());
 
-        return new ExpertUserProfileDTO(userProfile, spec);
+        return new ExpertUserProfileDTO(userProfile, spec, schedules);
 
     }
 
@@ -107,6 +107,7 @@ public class UserService {
 
         return List.of(new ExpertUserProfileDTO.SpecDTO(career, education));
     }
+
 
     private List<ExpertUserProfileDTO.SpecDTO.CareerDTO> getExpertPageCareer(Integer expertId) {
         return specRepository.findByExpertId(expertId).stream()
@@ -133,6 +134,17 @@ public class UserService {
                         .endYear(spec.getEndYear())
                         .startYear(spec.getStartYear())
                         .build()).toList();
+    }
+
+
+    private List<ExpertUserProfileDTO.ScheduleDTO> getExpertPageSchedule(Integer expertId) {
+        return scheduleRepository.findByExpertId(expertId).stream()
+                .map(schedule -> ExpertUserProfileDTO.ScheduleDTO.builder()
+                        .dayOfWeek(DayOfWeekConverter.toKorean(schedule.getDayOfWeek()))
+                        .startTime(schedule.getStartTime())
+                        .endTime(schedule.getEndTime())
+                        .build())
+                .toList();
     }
 
 
@@ -213,7 +225,7 @@ public class UserService {
                 .map(p -> {
                     Integer counselCount = counselRepository.findByClientIdAndStateCount(clientId, p.getId());
                     Integer reservationCount = counselRepository.countByClientIdAndVoucherIdAndReservationId(clientId, p.getVoucher().getId(), p.getId());
-                    Integer remainingCount = p.getVoucherCount() - (counselCount + reservationCount);
+                    int remainingCount = p.getVoucherCount() - (counselCount + reservationCount);
 
                     boolean isRemainingCount = remainingCount > 0;
 
