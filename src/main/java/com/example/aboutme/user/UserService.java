@@ -343,6 +343,7 @@ public class UserService {
         redisUtil.saveSessionUser(sessionUser);
     }
 
+
     // 익스퍼트 마이페이지 수정
     @Transactional
     public void updateExpertProfile(ExpertProfileUpdateReqDTO reqDTO) {
@@ -569,6 +570,7 @@ public class UserService {
 
         return new ExpertMainDTORecord(recentReviewRecords, counselScheduleRecords);
     }
+
 
     // 오어스 회원가입
     @Transactional

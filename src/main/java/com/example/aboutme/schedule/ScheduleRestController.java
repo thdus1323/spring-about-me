@@ -1,21 +1,22 @@
 package com.example.aboutme.schedule;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.schedule.ScheduleReqRecord.ScheduleSaveReqDTO;
+import com.example.aboutme.user.SessionUser;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 public class ScheduleRestController {
 
     private final ScheduleService scheduleService;
-
-    public ScheduleRestController(ScheduleService scheduleService) {
-        this.scheduleService = scheduleService;
-    }
+    private final RedisUtil redisUtil;
 
     @GetMapping("/api/available-times")
     public List<String> getAvailableTimes(
@@ -24,4 +25,16 @@ public class ScheduleRestController {
         LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE);
         return scheduleService.getAvailableTimesForDate(expertId, date);
     }
+
+    @PostMapping("/save-schedule")
+    public ResponseEntity<String> saveSchedule(@RequestBody ScheduleSaveReqDTO schedule) {
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        try {
+            scheduleService.saveSchedule(schedule, sessionUser);
+            return ResponseEntity.ok("스케줄이 저장되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("스케줄 저장에 실패했습니다.");
+        }
+    }
+
 }

@@ -150,7 +150,6 @@ public class UserController {
     @GetMapping("/experts")
     public String expertMain(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        log.info("로그인한 유저 {} ", sessionUser);
         CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser);
         model.addAttribute("counselList", counselDTORecord);
 
@@ -171,7 +170,6 @@ public class UserController {
     // 전문가 찾기 - 상세보기
     @GetMapping("/client/findExpert/detail/{expertId}")
     public String findExpertDetail(Model model, @PathVariable("expertId") Integer expertId) {
-        log.info("상세보기 {}", expertId);
         ExpertFindDetailDTO detailDTORecord = userService.getFindExpertDetails(expertId);
         model.addAttribute("model", detailDTORecord);
         return "client/findExpert/detail";
@@ -202,7 +200,6 @@ public class UserController {
         } else {
             ExpertUserProfileDTO respDTO = userService.getExpertPageInfo(sessionUser);
             model.addAttribute("model", respDTO);
-            System.out.println(respDTO);
             return "expert/mypage";
         }
     }

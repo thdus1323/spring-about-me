@@ -150,7 +150,6 @@
     font-weight: bold;
 }
 
-
 .expert-mypage .card-body .input-group {
     display: flex;
     align-items: center;
@@ -184,7 +183,6 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
 
 .spec-list {
     width: 33%;
@@ -256,4 +254,50 @@
 
 .spec-year span {
     color: #999;
+}
+
+/* Schedule card styling */
+.schedule-card {
+    margin-top: 20px;
+}
+
+.schedule-card .card-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.schedule-card .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.schedule-card .form-group label {
+    width: 15%;
+    margin-bottom: 0;
+}
+
+.schedule-card .form-control {
+    width: 45%;
+    margin-right: 10px;
+}
+
+.schedule-card .btn-remove {
+    color: red;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.schedule-card .btn-remove:hover {
+    color: darkred;
+}
+
+.btn-save {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
