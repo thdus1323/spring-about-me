@@ -157,7 +157,7 @@
 }
 
 .expert-mypage .card-body .input-group .form-control {
-    flex: 1; /* 너비를 자동으로 조정하여 동일한 크기로 */
+    flex: 1;
     margin-right: 10px;
 }
 
@@ -185,7 +185,10 @@
 }
 
 .spec-list {
+<<<<<<< HEAD
     width: 33%;
+=======
+>>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -197,7 +200,18 @@
 }
 
 .spec-list > .spec-type {
+<<<<<<< HEAD
     font-size: 16px;
+=======
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+}
+
+.spec-list > .spec-year {
+    font-size: 14px;
+    color: #999;
+>>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
 }
 
 .spec-list > .spec-details {
@@ -206,31 +220,56 @@
 }
 
 .append-spec {
+<<<<<<< HEAD
     width: calc((20% - 10px));
+=======
+    width: 20%;
+>>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
     margin-right: 10px;
 }
 
 .append-spec.text {
+<<<<<<< HEAD
     width: calc(60% - 50px);
     margin-right: 10px;
 }
 
 .append-spec select {
+=======
+    width: 55%;
+    margin-right: 10px;
+}
+
+.append-spec select,
+.append-spec input {
+    width: 100%;
+>>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
     height: 40px;
     border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
 
 .append-spec label {
+<<<<<<< HEAD
     font-size: 14px;
 }
 
 .append-spec input {
 }
 
+=======
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+>>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
 .input-group-append button {
     height: 40px;
 }
 
+<<<<<<< HEAD
 .append-spec input#detail {
     height: 40px;
     margin-bottom: 0;
@@ -238,6 +277,8 @@
     border-color: #ddd;
 }
 
+=======
+>>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
 .expert-myPage .card-body .input-group {
     align-items: flex-end !important;
     margin-top: 30px;
