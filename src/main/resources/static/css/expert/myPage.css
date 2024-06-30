@@ -157,7 +157,7 @@
 }
 
 .expert-mypage .card-body .input-group .form-control {
-    flex: 1; /* 너비를 자동으로 조정하여 동일한 크기로 */
+    flex: 1;
     margin-right: 10px;
 }
 
@@ -184,56 +184,75 @@
     margin-bottom: 10px;
 }
 
-.spec-list{
+.spec-list {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 10px;
 }
-.spec-list > div{}
-.spec-list > .spec-type{
-    font-size:16px;
+
+.spec-list > div {
 }
-.spec-list > .spec-details{
+
+.spec-list > .spec-type {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+}
+
+.spec-list > .spec-year {
+    font-size: 14px;
+    color: #999;
+}
+
+.spec-list > .spec-details {
     font-size: 18px;
     font-weight: 700;
 }
-.append-spec{
-    width: calc((20% - 10px));
+
+.append-spec {
+    width: 20%;
     margin-right: 10px;
 }
-.append-spec.text{
-    width: calc(60% - 50px);
+
+.append-spec.text {
+    width: 55%;
     margin-right: 10px;
 }
-.append-spec select{
+
+.append-spec select,
+.append-spec input {
+    width: 100%;
     height: 40px;
     border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
-.append-spec label{
-    font-size: 14px;
+
+.append-spec label {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
 }
-.append-spec input{}
-.input-group-append button{
+
+.input-group-append button {
     height: 40px;
 }
-.append-spec input#detail{
-    height: 40px;
-    margin-bottom: 0;
-    border-radius: 5px;
-    border-color: #ddd;
-}
-.expert-myPage .card-body .input-group{
+
+.expert-myPage .card-body .input-group {
     align-items: flex-end !important;
     margin-top: 30px;
 }
-.expert-myPage .card-body .input-group .remove{
+
+.expert-myPage .card-body .input-group .remove {
     width: 40px;
     height: 40px;
 }
-.spec-year{
+
+.spec-year {
     color: #999;
 }
-.spec-year span{
+
+.spec-year span {
     color: #999;
 }

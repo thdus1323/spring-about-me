@@ -211,56 +211,59 @@
             // 경력 항목 추가 버튼 클릭 시
             $('#addCareer').on('click', function () {
                 const yearOptions = generateYearOptions();
-                $('#career-form').append(`
-            <div class="input-group">
-                <input type="hidden" name="userId" value="${userId}">
-                <input type="hidden" name="specType" value="CAREER">
-                <div class="append-spec">
-                     <label for="startYear">시작일</label>
-                     <select id="startYear" class="form-control" name="startYear" >${yearOptions}</select>
-                </div>
-                <div class="append-spec">
-                     <label for="endYear">종료일</label>
-                     <select id="endYear" class="form-control" name="endYear">${yearOptions}</select>
-                </div>
-                <div class="append-spec text">
-                    <label for="detail">직무,자격증(허위로 작성시 법적 책임을 물을수 있습니다.)</label>
-                    <input id="detail" type="text" class="form-control" name="details" placeholder="직무, 자격증 등을 입력하세요">
-                </div>
-
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-danger remove"><i class="fas fa-minus"></i></button>
-                </div>
+                const newCareerHtml = `
+        <div class="input-group">
+            <input type="hidden" name="userId" value="${userId}">
+            <input type="hidden" name="specType" value="CAREER">
+            <div class="append-spec">
+                 <label for="startYear">시작일</label>
+                 <select id="startYear" class="form-control" name="startYear">${yearOptions}</select>
             </div>
-            <hr>
-        `);
+            <div class="append-spec">
+                 <label for="endYear">종료일</label>
+                 <select id="endYear" class="form-control" name="endYear">${yearOptions}</select>
+            </div>
+            <div class="append-spec text">
+                <label for="detail">직무,자격증(허위로 작성시 법적 책임을 물을수 있습니다.)</label>
+                <input id="detail" type="text" class="form-control" name="details" placeholder="직무, 자격증 등을 입력하세요">
+            </div>
+
+            <div class="input-group-append">
+                <button type="button" class="btn btn-outline-danger remove"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <hr>
+    `;
+                $('#career-form').prepend(newCareerHtml); // 폼의 가장 위에 새로운 항목을 추가
             });
-            // 학력 항목 추가 버튼 클릭 시
+
+// 학력 항목 추가 버튼 클릭 시
             $('#addEducation').on('click', function () {
                 const yearOptions = generateYearOptions();
-                $('#education-form').append(`
-            <div class="input-group">
-                <input type="hidden" name="userId" value="${userId}">
-                <input type="hidden" name="specType" value="EDUCATION">
-                <div class="append-spec">
-                     <label for="startYear">시작일</label>
-                     <select id="startYear" class="form-control" name="startYear">${yearOptions}</select>
-                </div>
-                <div class="append-spec">
-                     <label for="endYear">종료일</label>
-                     <select id="endYear" class="form-control" name="endYear">${yearOptions}</select>
-                </div>
-                <div class="append-spec text">
-                    <label for="detail">학위,전공(허위로 작성시 법적 책임을 물을수 있습니다.)</label>
-                    <input id="detail" type="text" class="form-control" name="details" placeholder="학위,전공등을 입력하세요">
-                </div>
-
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-danger remove"><i class="fas fa-minus"></i></button>
-                </div>
+                const newEducationHtml = `
+        <div class="input-group">
+            <input type="hidden" name="userId" value="${userId}">
+            <input type="hidden" name="specType" value="EDUCATION">
+            <div class="append-spec">
+                 <label for="startYear">시작일</label>
+                 <select id="startYear" class="form-control" name="startYear">${yearOptions}</select>
             </div>
-            <hr>
-        `);
+            <div class="append-spec">
+                 <label for="endYear">종료일</label>
+                 <select id="endYear" class="form-control" name="endYear">${yearOptions}</select>
+            </div>
+            <div class="append-spec text">
+                <label for="detail">학위,전공(허위로 작성시 법적 책임을 물을수 있습니다.)</label>
+                <input id="detail" type="text" class="form-control" name="details" placeholder="학위,전공등을 입력하세요">
+            </div>
+
+            <div class="input-group-append">
+                <button type="button" class="btn btn-outline-danger remove"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <hr>
+    `;
+                $('#education-form').prepend(newEducationHtml); // 폼의 가장 위에 새로운 항목을 추가
             });
 
             $('#submitForm').on('click', function () {
