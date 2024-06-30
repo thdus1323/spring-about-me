@@ -1,6 +1,8 @@
 package com.example.aboutme.review;
 
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT r FROM Review r WHERE r.counsel.expert.id = :expertId")
     List<Review> findByExpertId(@Param("expertId") Integer expertId);
 
-    List<Review> findByClientId(@Param("clientId") Integer clientId);
+    Page<Review> findByClientId(@Param("clientId") Integer clientId, Pageable pageable);
 
     @Query("""
             SELECT new com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.RecentReviewRecord(r.id, u.name, r.score, r.content) 

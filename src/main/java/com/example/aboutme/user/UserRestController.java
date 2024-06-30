@@ -12,12 +12,12 @@ import com.example.aboutme.user.UserResponseRecord.expertFindDTO.FindWrapperReco
 import com.example.aboutme.user.spec.SpecService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -72,10 +72,30 @@ public class UserRestController {
     }
 
     @GetMapping("/client/mypage/commPosts")
-    public List<UserProfileDTO.Comm> getCommPosts(@RequestParam("userId") Integer userId, @RequestParam("page") int page) {
-        List<UserProfileDTO.Comm> comms = userService.getCommPosts(userId, page, PagingSize.MY_PAGE_COMMUNITY_SIZE);
-        log.info("리턴값 {}", comms.stream().toList());
-        return comms;
+    public ResponseEntity<Page<UserProfileDTO.Comm>> getCommPosts(
+            @RequestParam("userId") Integer userId,
+            @RequestParam("page") int page) {
+        Page<UserProfileDTO.Comm> comms = userService.getCommPosts(userId, page, PagingSize.MY_PAGE_COMMUNITY_SIZE);
+        log.info("리턴값 {}", comms.getContent());
+        return ResponseEntity.ok(comms);
+    }
+
+    @GetMapping("/client/mypage/reviews")
+    public ResponseEntity<Page<UserProfileDTO.Review>> getReviews(
+            @RequestParam("userId") Integer userId,
+            @RequestParam("page") int page) {
+        Page<UserProfileDTO.Review> reviews = userService.getReviews(userId, page, PagingSize.MY_PAGE_REVIEW_SIZE);
+        log.info("리턴값 {}", reviews.getContent());
+        return ResponseEntity.ok(reviews);
+    }
+
+    @GetMapping("/client/mypage/replies")
+    public ResponseEntity<Page<UserProfileDTO.Reply>> getReplies(
+            @RequestParam("userId") Integer userId,
+            @RequestParam("page") int page) {
+        Page<UserProfileDTO.Reply> replies = userService.getReplies(userId, page, PagingSize.MY_PAGE_REPLIES_SIZE);
+        log.info("리턴값 {}", replies.getContent());
+        return ResponseEntity.ok(replies);
     }
 
 }
