@@ -2,15 +2,21 @@ package com.example.aboutme.counsel;
 
 import com.example.aboutme.counsel.enums.CounselStatus;
 import com.example.aboutme.counsel.enums.ReservationStatus;
+import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserResponseRecord.ExpertMainDTO.CounselScheduleRecord;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface CounselRepository extends JpaRepository<Counsel, Integer> {
 
     // 특정 클라이언트가 특정 바우처로 특정 예약 ID 이전에 예약한 예약 수를 카운트
@@ -92,4 +98,9 @@ public interface CounselRepository extends JpaRepository<Counsel, Integer> {
 //
 //    @Query("SELECT c FROM Counsel c WHERE c.reservation.id = :reservationId")
 //    Counsel findByReservationId(@Param("reservationId") Integer reservationId);
+
+    Page<Counsel> findAllByExpert(User expert, Pageable pageable);
+    Integer countByClient(User client);
+    Integer countByClientAndCounselStatus(User client, CounselStatus state);
+
 }

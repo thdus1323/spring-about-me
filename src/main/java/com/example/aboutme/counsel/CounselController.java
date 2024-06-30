@@ -80,13 +80,12 @@ public class CounselController {
     @GetMapping("/schedule")
     public String schedule(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-        log.info("로그인한 유저 {} ", sessionUser);
-        CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser);
-        model.addAttribute("counselList", counselDTORecord);
+//        log.info("로그인한 유저 {} ", sessionUser);
+//        CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser);
+//        model.addAttribute("counselList", counselDTORecord);
 
         return "expert/schedule";
     }
-
 
 //
 //    //텍스트테라피 상담 업데이트

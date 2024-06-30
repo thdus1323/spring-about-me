@@ -126,7 +126,7 @@
     color: #fff;
     border-radius: 50px;
     width: 100%;
-    height: 60px;
+    height: 50px;
     position: relative;
     background: #ffeb00;
     margin-top: 10px;
@@ -138,8 +138,8 @@
 }
 .easy-login-wrapper a img{
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 10px;
+    left: 10px;
     width: 30px;
     height: 30px;
     object-fit: cover;
