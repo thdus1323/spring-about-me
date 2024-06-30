@@ -1,48 +1,132 @@
 {{> layout/header}}
 
-<div class="login-wrap">
-    <h1 class="login-title">로그인</h1>
+<!--<div class="login-wrap">-->
 
-    <form action="/login" method="post" id="loginForm">
-        <input type="hidden" id="userRole" name="userRole" value="CLIENT">
-        <div class="login-group mb-3">
-            <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>
-            <input type="email" id="inputUsername" name="email" class="form-control"
-                   placeholder="아이디(이메일)을 입력해 주세요" required value = "expert1@nate.com">
+
+<!--    <form action="/login" method="post" id="loginForm">-->
+<!--        <input type="hidden" id="userRole" name="userRole" value="CLIENT">-->
+<!--        <div class="login-group mb-3">-->
+<!--            <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>-->
+<!--            <input type="email" id="inputUsername" name="email" class="form-control"-->
+<!--                   placeholder="아이디(이메일)을 입력해 주세요" required value = "expert1@nate.com">-->
+<!--        </div>-->
+<!--        <div class="login-group mb-3">-->
+<!--            <label for="inputPassword" class="form-label">비밀번호 <span class="text-danger">*</span></label>-->
+<!--            <input type="password" id="inputPassword" name="password" class="form-control"-->
+<!--                   placeholder="비밀번호를 입력해 주세요" required value="1234">-->
+<!--        </div>-->
+<!--        <button type="submit" class="login-btn">로그인</button>-->
+<!--        <div class="login-links mt-3 d-flex justify-content-between">-->
+<!--            <a href="#" class="text-success">아이디 찾기</a>-->
+<!--            <a href="#" class="text-success">비밀번호 찾기</a>-->
+<!--            <a href="/join" class="text-success">회원가입</a>-->
+<!--        </div>-->
+<!--        <hr class="join-divider ">-->
+<!--        <div class="login-toggle mb-4">-->
+<!--            <button type="button" class="login-active btn btn-outline-success me-2" id="getClient" value="CLIENT">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                     class="bi bi-check-circle" viewBox="0 0 16 16">-->
+<!--                    <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>-->
+<!--                </svg>-->
+<!--                개인 회원-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-outline-secondary" id="getExpert" value="EXPERT">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--                     class="bi bi-check-circle" viewBox="0 0 16 16">-->
+<!--                    <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>-->
+<!--                </svg>-->
+<!--                상담사-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        <div class="join-social">-->
+<!--            <a href="#" id="NaverSignup" ><img src="./images/naver_oauth.png" alt="Naver Signup"></a>-->
+<!--            <a href="#" id="kakaoSignup"><img src="./images/kakao_oauth.png" alt="Kakao Signup"></a>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+
+<div class="login-modal">
+    <div class="login-modal-body">
+        <h1 class="login-title">로그인</h1>
+        <div class="login-slide-wrapper">
+
+            <div class="login-slide-content">
+                <div class="left login-form">
+                    <button class="back left-for-mid main-background"><i class="fa-solid fa-right-long"></i></button>
+                    <div class="login-type-head">
+                        클라이언트
+                    </div>
+                    <form action="/login" method="post" id="loginForm">
+                        <input type="hidden" id="userRole" name="userRole" value="CLIENT">
+                        <div class="login-group mb-3">
+                            <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>
+                            <input type="email" id="inputUsername" name="email" class="form-control"
+                                   placeholder="아이디(이메일)을 입력해 주세요" required value = "expert1@nate.com">
+                        </div>
+                        <div class="login-group mb-3">
+                            <label for="inputPassword" class="form-label">비밀번호 <span class="text-danger">*</span></label>
+                            <input type="password" id="inputPassword" name="password" class="form-control"
+                                   placeholder="비밀번호를 입력해 주세요" required value="1234">
+                        </div>
+                        <button type="submit" class="login-btn main-background">로그인</button>
+                        <div class="login-links mt-3 d-flex justify-content-between">
+                            <a href="#" class="text-success">아이디 찾기</a>
+                            <a href="#" class="text-success">비밀번호 찾기</a>
+                            <a href="/join" class="text-success">회원가입</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="mid">
+                    <button class="login-type client-login main-background">클라이언트 로그인</button>
+                    <button class="login-type counselor-login main-background">상담사 로그인</button>
+                    <div class="easy-login-wrapper">
+                        <a href="#" id="NaverSignup" class="naver"><img src="./images/naver_oauth.png" alt="Naver Signup">네이버 로그인</a>
+                        <a href="#" id="kakaoSignup" class="kakao"><img src="./images/kakao_oauth.png" alt="Kakao Signup">카카오 로그인</a>
+                    </div>
+                </div>
+                <div class="right login-form">
+                    <button class="back right-for-mid main-background"><i class="fa-solid fa-right-long"></i></button>
+                    <div class="login-type-head">
+                        상담사
+                    </div>
+                    <form action="/login" method="post" id="loginForm">
+                        <input type="hidden" id="userRole" name="userRole" value="CLIENT">
+                        <div class="login-group mb-3">
+                            <label for="inputUsername" class="form-label">아이디 <span class="text-danger">*</span></label>
+                            <input type="email" id="inputUsername" name="email" class="form-control"
+                                   placeholder="아이디(이메일)을 입력해 주세요" required value = "expert1@nate.com">
+                        </div>
+                        <div class="login-group mb-3">
+                            <label for="inputPassword" class="form-label">비밀번호 <span class="text-danger">*</span></label>
+                            <input type="password" id="inputPassword" name="password" class="form-control"
+                                   placeholder="비밀번호를 입력해 주세요" required value="1234">
+                        </div>
+                        <button type="submit" class="login-btn main-background">로그인</button>
+                        <div class="login-links mt-3 d-flex justify-content-between">
+                            <a href="#" class="text-success">아이디 찾기</a>
+                            <a href="#" class="text-success">비밀번호 찾기</a>
+                            <a href="/join" class="text-success">회원가입</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="login-group mb-3">
-            <label for="inputPassword" class="form-label">비밀번호 <span class="text-danger">*</span></label>
-            <input type="password" id="inputPassword" name="password" class="form-control"
-                   placeholder="비밀번호를 입력해 주세요" required value="1234">
-        </div>
-        <button type="submit" class="login-btn">로그인</button>
-        <div class="login-links mt-3 d-flex justify-content-between">
-            <a href="#" class="text-success">아이디 찾기</a>
-            <a href="#" class="text-success">비밀번호 찾기</a>
-            <a href="/join" class="text-success">회원가입</a>
-        </div>
-        <hr class="join-divider ">
-        <div class="login-toggle mb-4">
-            <button type="button" class="login-active btn btn-outline-success me-2" id="getClient" value="CLIENT">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-check-circle" viewBox="0 0 16 16">
-                    <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
-                </svg>
-                개인 회원
-            </button>
-            <button type="button" class="btn btn-outline-secondary" id="getExpert" value="EXPERT">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-check-circle" viewBox="0 0 16 16">
-                    <path d="M15.854 5.854a.5.5 0 0 0-.708-.708L7 13.293 2.854 9.146a.5.5 0 1 0-.708.708l4.5 4.5a.5.5 0 0 0 .708 0l8-8z"/>
-                </svg>
-                상담사
-            </button>
-        </div>
-        <div class="join-social">
-            <a href="#" id="NaverSignup" ><img src="./images/naver_oauth.png" alt="Naver Signup"></a>
-            <a href="#" id="kakaoSignup"><img src="./images/kakao_oauth.png" alt="Kakao Signup"></a>
-        </div>
-    </form>
+    </div>
 </div>
-
+<script>
+    $(document).ready(function(){
+        $('.client-login').click(function(){
+            $('.login-slide-content').animate({left: '0'}, 500);
+        });
+        $('.counselor-login').click(function(){
+            $('.login-slide-content').animate({left: '-800px'}, 500);
+        });
+        $('.right-for-mid').click(function(){
+            $('.login-slide-content').animate({left: '-400px'}, 500);
+        });
+        $('.left-for-mid').click(function(){
+            $('.login-slide-content').animate({left: '-400px'}, 500);
+        });
+    });
+</script>
 {{> layout/footer}}
