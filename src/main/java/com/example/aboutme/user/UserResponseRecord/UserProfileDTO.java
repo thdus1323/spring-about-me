@@ -2,6 +2,7 @@ package com.example.aboutme.user.UserResponseRecord;
 
 import com.example.aboutme.user.enums.UserRole;
 import lombok.Builder;
+import org.springframework.data.domain.Page;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -13,9 +14,9 @@ public record UserProfileDTO(
         List<VoucherDTO> vouchers,  // 새로운 필드 추가
         List<ReservationDTO> progressReservations,
         List<CounselDTO> completedCounsels,
-        List<Comm> commPosts,
-        List<Reply> replies,
-        List<Review> reviews
+        Page<Comm> commPosts,
+        Page<Reply> replies,
+        Page<Review> reviews
 
 ) {
     @Builder

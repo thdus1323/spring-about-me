@@ -10,13 +10,13 @@
         opacity: 0.5;
     }
 
-    .pagination .page-number {
+    .pagination .page-item {
         display: inline-block;
         margin: 0 5px;
         cursor: pointer;
     }
 
-    .pagination .page-number.active {
+    .pagination .page-item.active .page-link {
         font-weight: bold;
         text-decoration: underline;
     }
@@ -33,88 +33,34 @@
                 </div>
                 <div class="tab-content active" id="my-stories">
                     <div id="comm-posts-container">
-                        {{#model.commPosts}}
-                            <div class="user-mypage post" data-post-id="my-board">
-                                <div class="post-header">
-                                        <span class="post-category">{{category}} ·
-                                            <img src="{{user.profileImage}}" alt="Profile Picture"
-                                                 class="post-profile-image">
-                                            <span class="username">{{name}}</span>
-                                        </span>
-                                </div>
-                                <div class="post-body">
-                                    <h5 class="post-title">{{title}}</h5>
-                                    <p class="post-content">{{content}}</p>
-                                </div>
-                                <div class="post-footer">
-                                        <span class="post-meta">
-                                            <span class="like-count">
-                                                <i class="far fa-heart like-btn"></i>
-                                                <span>0</span>
-                                            </span>
-                                            <span>
-                                                <i class="far fa-comment"></i>
-                                                <span>0</span>
-                                            </span>
-                                        </span>
-                                </div>
-                            </div>
-                        {{/model.commPosts}}
+                        <!-- Content for '나의 사연' -->
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination my-3" id="pagination-stories">
+                            <!-- Pagination for '나의 사연' -->
+                        </ul>
                     </div>
                 </div>
-                <!--                <div class="pagination">-->
-                <!--                    <button class="prev-page" onclick="changePage(-1)">Previous</button>-->
-                <!--                    <button class="next-page" onclick="changePage(1)">Next</button>-->
-                <!--                </div>-->
 
-                <div class="d-flex justify-content-center">
-                    <ul class="pagination my-3">
-                        <li class="page-item">
-                            <span class="prev-page" onclick="changePage(-1)">Previous</span>
-                        </li>
-                        <li class="page-item"><a class="page-link">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">2</span>
-                        </li>
-                        <li class="page-item"><a class="page-link">3</a></li>
-                        <li class="page-item">
-                            <a class="next-page" onclick="changePage(1)">Next</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="tab-content" id="my-comments">
-                    {{#model.replies}}
-                        <div class="user-mypage post" data-post-id="my-board">
-                            <div class="post-header">
-                                    <span class="post-category">{{category}} ·
-                                        <img src="{{profileImage}}" alt="Profile Picture" class="post-profile-image">
-                                        <span class="username">{{name}}</span>
-                                    </span>
-                            </div>
-                            <div class="post-body">
-                                <p class="post-content">{{content}}</p>
-                            </div>
-                            <div class="post-footer"></div>
-                        </div>
-                    {{/model.replies}}
+                    <div id="comments-container">
+                        <!-- Content for '나의 댓글' -->
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination my-3" id="pagination-comments">
+                            <!-- Pagination for '나의 댓글' -->
+                        </ul>
+                    </div>
                 </div>
                 <div class="tab-content" id="my-review">
-                    {{#model.reviews}}
-                        <div class="user-mypage post" data-post-id="my-board">
-                            <div class="post-header">
-                                    <span class="post-category">
-                                        <img src="{{profileImage}}" alt="Profile Picture" class="post-profile-image">
-                                        <span class="username">{{expertName}}상담사·</span>
-                                        <span class="post-category">{{voucherCont}}회권·</span>
-                                        <span class="post-category">{{score}}점</span>
-                                    </span>
-                            </div>
-                            <div class="post-body">
-                                <h5 class="post-title">{{voucherType}}</h5>
-                                <p class="post-content">{{content}}</p>
-                            </div>
-                        </div>
-                    {{/model.reviews}}
+                    <div id="reviews-container">
+                        <!-- Content for '나의 리뷰' -->
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination my-3" id="pagination-reviews">
+                            <!-- Pagination for '나의 리뷰' -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,13 +68,55 @@
 </div>
 
 <script>
-    let currentPage = 0;
+    let currentPageStories = 0;
+    let currentPageComments = 0;
+    let currentPageReviews = 0;
     const userId = `{{model.user.id}}`; // 실제 사용자 ID로 교체
-    console.log(userId);
 
-    function changePage(direction) {
-        currentPage += direction;
-        fetchCommPosts(currentPage);
+    $(document).ready(function () {
+        $('.tab').click(function () {
+            const tab = $(this).data('tab');
+            $('.tab').removeClass('active');
+            $(this).addClass('active');
+            $('.tab-content').removeClass('active');
+            $(`#${tab}`).addClass('active');
+
+            // 탭 변경 시 페이지를 초기화하고 데이터를 로드합니다.
+            if (tab === 'my-stories') {
+                currentPageStories = 0;
+                fetchCommPosts(currentPageStories);
+            } else if (tab === 'my-comments') {
+                currentPageComments = 0;
+                fetchComments(currentPageComments);
+            } else if (tab === 'my-review') {
+                currentPageReviews = 0;
+                fetchReviews(currentPageReviews);
+            }
+        });
+
+        // 초기 로드
+        fetchCommPosts(currentPageStories);
+    });
+
+    function changePageStories(page) {
+        if (page >= 0) {
+            currentPageStories = page;
+            fetchCommPosts(currentPageStories);
+        }
+    }
+
+    function changePageComments(page) {
+        if (page >= 0) {
+            currentPageComments = page;
+            fetchComments(currentPageComments);
+        }
+    }
+
+    function changePageReviews(page) {
+        if (page >= 0) {
+            currentPageReviews = page;
+            fetchReviews(currentPageReviews);
+        }
     }
 
     function fetchCommPosts(page) {
@@ -140,7 +128,44 @@
                 page: page
             },
             success: function (data) {
-                updateCommPosts(data);
+                updateCommPosts(data.content);
+                updatePagination(data, 'stories');
+            },
+            error: function (error) {
+                console.error('Error fetching page info:', error);
+            }
+        });
+    }
+
+    function fetchComments(page) {
+        $.ajax({
+            url: `/client/mypage/replies`,
+            method: 'GET',
+            data: {
+                userId: userId,
+                page: page
+            },
+            success: function (data) {
+                updateComments(data.content);
+                updatePagination(data, 'comments');
+            },
+            error: function (error) {
+                console.error('Error fetching page info:', error);
+            }
+        });
+    }
+
+    function fetchReviews(page) {
+        $.ajax({
+            url: `/client/mypage/reviews`,
+            method: 'GET',
+            data: {
+                userId: userId,
+                page: page
+            },
+            success: function (data) {
+                updateReviews(data.content);
+                updatePagination(data, 'reviews');
             },
             error: function (error) {
                 console.error('Error fetching page info:', error);
@@ -153,54 +178,129 @@
         container.empty();
         commPosts.forEach(post => {
             const postElement = `
-                    <div class="user-mypage post" data-post-id="my-board">
-                        <div class="post-header">
-                            <span class="post-category">${post.category} ·
-                                <img src="${post.profileImage}" alt="Profile Picture" class="post-profile-image">
-                                <span class="username">${post.name}</span>
-                            </span>
-                        </div>
-                        <div class="post-body">
-                            <h5 class="post-title">${post.title}</h5>
-                            <p class="post-content">${post.content}</p>
-                        </div>
-                        <div class="post-footer">
-                            <span class="post-meta">
-                                <span class="like-count">
-                                    <i class="far fa-heart like-btn"></i>
-                                    <span>0</span>
-                                </span>
-                                <span>
-                                    <i class="far fa-comment"></i>
-                                    <span>0</span>
-                                </span>
-                            </span>
-                        </div>
+                <div class="user-mypage post" data-post-id="my-board">
+                    <div class="post-header">
+                        <span class="post-category">${post.category} ·
+                            <img src="${post.profileImage}" alt="Profile Picture" class="post-profile-image">
+                            <span class="username">${post.name}</span>
+                        </span>
                     </div>
-                `;
+                    <div class="post-body">
+                        <h5 class="post-title">${post.title}</h5>
+                        <p class="post-content">${post.content}</p>
+                    </div>
+                    <div class="post-footer">
+                        <span class="post-meta">
+                            <span class="like-count">
+                                <i class="far fa-heart like-btn"></i>
+                                <span>0</span>
+                            </span>
+                            <span>
+                                <i class="far fa-comment"></i>
+                                <span>0</span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            `;
             container.append(postElement);
         });
     }
 
-    function toggleButtons(pageData) {
-        const prevButton = $('#prev-button');
-        const nextButton = $('#next-button');
-
-        if (pageData.first) {
-            prevButton.hide();
-        } else {
-            prevButton.show();
-        }
-
-        if (pageData.last) {
-            nextButton.hide();
-        } else {
-            nextButton.show();
-        }
+    function updateComments(comments) {
+        const container = $('#comments-container');
+        container.empty();
+        comments.forEach(comment => {
+            const commentElement = `
+                <div class="user-mypage post" data-post-id="my-board">
+                    <div class="post-header">
+                        <span class="post-category">${comment.category} ·
+                            <img src="${comment.profileImage}" alt="Profile Picture" class="post-profile-image">
+                            <span class="username">${comment.name}</span>
+                        </span>
+                    </div>
+                    <div class="post-body">
+                        <p class="post-content">${comment.content}</p>
+                    </div>
+                </div>
+            `;
+            container.append(commentElement);
+        });
     }
 
-    $(document).ready(function () {
-        fetchCommPosts(currentPage);
-    });
+    function updateReviews(reviews) {
+        const container = $('#reviews-container');
+        container.empty();
+        reviews.forEach(review => {
+            const reviewElement = `
+                <div class="user-mypage post" data-post-id="my-board">
+                    <div class="post-header">
+                        <span class="post-category">
+                            <img src="${review.profileImage}" alt="Profile Picture" class="post-profile-image">
+                            <span class="username">${review.expertName}상담사·</span>
+                            <span class="post-category">${review.voucherCont}회권·</span>
+                            <span class="post-category">${review.score}점</span>
+                        </span>
+                    </div>
+                    <div class="post-body">
+                        <h5 class="post-title">${review.voucherType}</h5>
+                        <p class="post-content">${review.content}</p>
+                    </div>
+                </div>
+            `;
+            container.append(reviewElement);
+        });
+    }
 
+    function updatePagination(pageData, type) {
+        const pagination = $(`#pagination-${type}`);
+        pagination.empty();
+
+        const prevButton = $('<li>')
+                .addClass('page-item')
+                .append(
+                        $('<button>')
+                                .addClass('page-link')
+                                .html('Previous')
+                                .prop('disabled', pageData.first)
+                                .click(() => {
+                                    if (type === 'stories') changePageStories(pageData.number - 1);
+                                    else if (type === 'comments') changePageComments(pageData.number - 1);
+                                    else if (type === 'reviews') changePageReviews(pageData.number - 1);
+                                })
+                );
+        pagination.append(prevButton);
+
+        for (let i = 0; i < pageData.totalPages; i++) {
+            const pageItem = $('<li>')
+                    .addClass('page-item')
+                    .toggleClass('active', i === pageData.number)
+                    .append(
+                            $('<button>')
+                                    .addClass('page-link')
+                                    .text(i + 1)
+                                    .click(() => {
+                                        if (type === 'stories') changePageStories(i);
+                                        else if (type === 'comments') changePageComments(i);
+                                        else if (type === 'reviews') changePageReviews(i);
+                                    })
+                    );
+            pagination.append(pageItem);
+        }
+
+        const nextButton = $('<li>')
+                .addClass('page-item')
+                .append(
+                        $('<button>')
+                                .addClass('page-link')
+                                .html('Next')
+                                .prop('disabled', pageData.last)
+                                .click(() => {
+                                    if (type === 'stories') changePageStories(pageData.number + 1);
+                                    else if (type === 'comments') changePageComments(pageData.number + 1);
+                                    else if (type === 'reviews') changePageReviews(pageData.number + 1);
+                                })
+                );
+        pagination.append(nextButton);
+    }
 </script>
