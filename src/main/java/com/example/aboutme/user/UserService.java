@@ -42,6 +42,7 @@ import com.example.aboutme.voucher.enums.VoucherType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -153,9 +154,9 @@ public class UserService {
 
         return UserProfileDTO.builder()
                 .user(userProfile)
-                .replies(getReplies(sessionUser.getId()))
+                .replies(getReplies(sessionUser.getId(), PagingSize.INITIAL_PAGE, PagingSize.MY_PAGE_REPLIES_SIZE))
                 .commPosts(getCommPosts(sessionUser.getId(), PagingSize.INITIAL_PAGE, PagingSize.MY_PAGE_COMMUNITY_SIZE)) // 페이징된 커뮤니티 게시물
-                .reviews(getReviews(sessionUser.getId()))
+                .reviews(getReviews(sessionUser.getId(), PagingSize.INITIAL_PAGE, PagingSize.MY_PAGE_REVIEW_SIZE))
                 .payments(getPayments(sessionUser.getId()))
                 .progressReservations(getProgressReservations(sessionUser.getId()))
                 .vouchers(getVouchers(sessionUser.getId()))
@@ -264,10 +265,9 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserProfileDTO.Comm> getCommPosts(Integer userId, Integer page, int size) {
-        log.info("커뮤니티 서비스 {} ,{} ,{}", userId, page, size);
+    public Page<UserProfileDTO.Comm> getCommPosts(Integer userId, Integer page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return commRepository.findByUserId(userId, pageable).stream()
+        return commRepository.findByUserId(userId, pageable)
                 .map(c -> UserProfileDTO.Comm.builder()
                         .title(c.getTitle())
                         .profileImage(c.getUser().getProfileImage())
@@ -275,48 +275,46 @@ public class UserService {
                         .content(c.getContent())
                         .category(c.getCategory().getKorean())
                         .id(c.getId())
-                        .build())
-                .collect(Collectors.toList());
+                        .build());
     }
 
     // 주석: 이 메서드는 특정 사용자 ID에 대한 답글 목록을 가져옵니다.
-    private List<UserProfileDTO.Reply> getReplies(Integer userId) {
-        return replyRepository.findByUserId(userId).stream()
-                .map(reply -> {
-                            return UserProfileDTO.Reply.builder()
-                                    .id(reply.getId())
-                                    .userId(reply.getUser().getId())
-                                    .commId(reply.getComm().getId())
-                                    .content(reply.getContent())
-                                    .category(reply.getComm().getCategory().getKorean())
-                                    .profileImage(reply.getUser().getProfileImage())
-                                    .name(reply.getUser().getName())
-                                    .build();
-                        }
-                )
-                .collect(Collectors.toList());
+    @Transactional
+    public Page<UserProfileDTO.Reply> getReplies(Integer userId, Integer page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return replyRepository.findByUserId(userId, pageable)
+                .map(reply ->
+                        UserProfileDTO.Reply.builder()
+                                .id(reply.getId())
+                                .userId(reply.getUser().getId())
+                                .commId(reply.getComm().getId())
+                                .content(reply.getContent())
+                                .category(reply.getComm().getCategory().getKorean())
+                                .profileImage(reply.getUser().getProfileImage())
+                                .name(reply.getUser().getName())
+                                .build());
+
     }
 
     // 주석: 이 메서드는 특정 사용자 ID에 대한 리뷰 목록을 가져옵니다.
-    private List<UserProfileDTO.Review> getReviews(Integer userId) {
-        return reviewRepository.findByClientId(userId).stream()
-                .map(review -> {
+    public Page<UserProfileDTO.Review> getReviews(Integer userId, Integer page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return reviewRepository.findByClientId(userId, pageable)
+                .map(review ->
+                        UserProfileDTO.Review.builder()
+                                .id(review.getId())
+                                .clientId(review.getClient().getId())
+                                .expertId(review.getExpert().getId())
+                                .counselId(review.getCounsel().getId())
+                                .score(review.getScore())
+                                .content(review.getContent())
+                                .voucherCont(review.getCounsel().getVoucher().getCount())
+                                .voucherType(review.getCounsel().getVoucher().getVoucherType().getKorean())
+                                .expertName(review.getExpert().getName())
+                                .nickName(review.getClient().getName())
+                                .profileImage(review.getExpert().getProfileImage())
+                                .build());
 
-                    return UserProfileDTO.Review.builder()
-                            .id(review.getId())
-                            .clientId(review.getClient().getId())
-                            .expertId(review.getExpert().getId())
-                            .counselId(review.getCounsel().getId())
-                            .score(review.getScore())
-                            .content(review.getContent())
-                            .voucherCont(review.getCounsel().getVoucher().getCount())
-                            .voucherType(review.getCounsel().getVoucher().getVoucherType().getKorean())
-                            .expertName(review.getExpert().getName())
-                            .nickName(review.getClient().getName())
-                            .profileImage(review.getExpert().getProfileImage())
-                            .build();
-                })
-                .collect(Collectors.toList());
     }
 
 
