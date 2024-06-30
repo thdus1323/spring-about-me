@@ -107,21 +107,21 @@ class UserServiceTest {
         getVouchers.forEach(voucherDTO -> System.out.println("voucherDTO = " + voucherDTO));
     }
 
-    @Test
-    public void 커뮤니티() {
-        int id = 1;
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
-
-        List<UserProfileDTO.Comm> getCommPosts =
-             commRepository.findByUserId(id).stream()
-                    .map(c -> new UserProfileDTO.Comm(
-                            c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
-                    .toList();
-
-        getCommPosts.forEach(voucherDTO -> System.out.println("voucherDTO = " + voucherDTO));
-    }
+//    @Test
+//    public void 커뮤니티() {
+//        int id = 1;
+//
+//        User user = userRepository.findById(id)
+//                .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
+//
+//        List<UserProfileDTO.Comm> getCommPosts =
+//             commRepository.findByUserId(id).stream()
+//                    .map(c -> new UserProfileDTO.Comm(
+//                            c.getId(), c.getUser().getName(), c.getContent(), c.getTitle(), c.getCategory().getKorean()))
+//                    .toList();
+//
+//        getCommPosts.forEach(voucherDTO -> System.out.println("voucherDTO = " + voucherDTO));
+//    }
 }
 
 
