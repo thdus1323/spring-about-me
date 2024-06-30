@@ -148,7 +148,7 @@ public class UserController {
 
     //상담일정
     @GetMapping("/experts")
-    public String expertMain(Model model) {
+    public String schedule(Model model) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         CounselDTORecord counselDTORecord = counselService.findCounsel(sessionUser);
         model.addAttribute("counselList", counselDTORecord);

@@ -24,6 +24,7 @@
                         <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
                         <li><a href="/expert/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
+                    <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
                 {{/sessionUser}}
                 {{^sessionUser}}
                     <ul>
@@ -38,4 +39,73 @@
         </div>
     </div>
 </header>
+<!-- 모달 시작 -->
+<div id="expertModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="expertModalMessage">예약신청이 도착했습니다.</p>
+        <div class="modal-buttons">
+            <button id="expertConfirmButton">마이페이지로 이동</button>
+            <button id="expertCloseButton">창 닫기</button>
+        </div>
+    </div>
+</div>
+<!-- 모달 끝 -->
+
+<div id="expertEvent"></div>
+<script>
+    $(document).ready(function () {
+        function initializeExpertEventSource() {
+            console.log("Initializing expert event source");
+            if (!window.expertEventSource) {
+                const expertId = $("#sessionUserId").val();
+                console.log("Expert ID:", expertId);
+                if (!expertId) {
+                    console.error("Expert ID is undefined");
+                    return;
+                }
+                const expertEventSource = new EventSource(`/sse/expert/${expertId}`);
+                console.log("EventSource created for expert");
+
+                expertEventSource.onopen = function(event) {
+                    console.log("Open:", event);
+                };
+
+                expertEventSource.onmessage = function(event) {
+                    console.log("Event received:", event);
+                    $("#expertModalMessage").html("예약신청이 도착했습니다.");
+                    $("#expertModal").css("display", "block");
+                };
+
+                expertEventSource.onerror = function(error) {
+                    console.error("Error occurred:", error);
+                    expertEventSource.close();
+                    setTimeout(function () {
+                        initializeExpertEventSource();
+                    }, 3000); // 3초 후 재연결 시도
+                };
+
+                window.expertEventSource = expertEventSource;
+            }
+        }
+
+        initializeExpertEventSource();
+
+        // 모달 제어
+        $(".close, #expertCloseButton").on("click", function () {
+            $("#expertModal").css("display", "none");
+        });
+
+        $("#expertConfirmButton").on("click", function () {
+            window.location.href = "/expert/mypage"; // 마이페이지로 이동
+        });
+
+        // 모달 창 외부 클릭 시 닫기
+        $(window).on("click", function (event) {
+            if ($(event.target).is("#expertModal")) {
+                $("#expertModal").css("display", "none");
+            }
+        });
+    });
+</script>
 <!-- 헤더 끝 -->

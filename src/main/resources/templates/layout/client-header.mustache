@@ -22,6 +22,7 @@
                         <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
                         <li><a href="/client/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
+                    <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
                 {{/sessionUser}}
                 {{^sessionUser}}
                     <ul>
@@ -35,4 +36,74 @@
         </div>
     </div>
 </header>
+<!-- 모달 시작 -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modalMessage">예약이 확정되었습니다.</p>
+        <div class="modal-buttons">
+            <button id="confirmButton">예약 보러 가기</button>
+            <button id="closeButton">창 닫기</button>
+        </div>
+    </div>
+</div>
+<!-- 모달 끝 -->
+
+<!-- 클라이언트 이벤트 -->
+<div id="clientEvent"></div>
+<script>
+    $(document).ready(function () {
+        function initializeClientEventSource() {
+            console.log("Initializing client event source");
+            if (!window.clientEventSource) {
+                const clientId = $("#sessionUserId").val();
+                console.log("Client ID:", clientId);
+                if (!clientId) {
+                    console.error("Client ID is undefined");
+                    return;
+                }
+                const clientEventSource = new EventSource(`/sse/client/${clientId}`);
+
+                clientEventSource.onopen = function (event) {
+                    console.log("Open:", event);
+                };
+
+                clientEventSource.onmessage = function (event) {
+                    console.log("Event received:", event);
+                    $("#modalMessage").html("예약이 확정되었습니다.");
+                    $("#modal").css("display", "block");
+                };
+
+                clientEventSource.onerror = function (error) {
+                    console.error("Error occurred:", error);
+                    console.error("Error details:", error);
+                    clientEventSource.close();
+                    setTimeout(function () {
+                        initializeClientEventSource();
+                    }, 3000);
+                };
+
+                window.clientEventSource = clientEventSource;
+            }
+        }
+
+        initializeClientEventSource();
+
+        // 모달 제어
+        $(".close, #closeButton").on("click", function () {
+            $("#modal").css("display", "none");
+        });
+
+        $("#confirmButton").on("click", function () {
+            window.location.href = "/your-confirmation-page"; // 예약 확인 페이지로 이동
+        });
+
+        // 모달 창 외부 클릭 시 닫기
+        $(window).on("click", function (event) {
+            if ($(event.target).is("#modal")) {
+                $("#modal").css("display", "none");
+            }
+        });
+    });
+</script>
 <!-- 헤더 끝 -->

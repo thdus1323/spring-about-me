@@ -14,12 +14,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "counsel_tb")
+@EntityListeners(CounselListener.class)
 @ToString(exclude = {"client", "expert", "voucher", "schedule", "payment"}) // 유효한 필드만 제외
 public class Counsel {
 
@@ -110,4 +112,16 @@ public class Counsel {
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Counsel counsel = (Counsel) o;
+        return id != null && id.equals(counsel.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

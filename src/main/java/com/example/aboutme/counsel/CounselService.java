@@ -293,6 +293,15 @@ public class CounselService {
 
     }
 
+    // 업데이트 체크용
+    @Transactional
+    public void updateCounselStatus(Integer counselId, ReservationStatus status) {
+        Counsel counsel = counselRepository.findById(counselId)
+                .orElseThrow(() -> new RuntimeException("Counsel not found"));
+        counsel.setReservationStatus(status);
+        counselRepository.save(counsel);
+    }
+
 
     @Transactional
     public Page<CounselDTORecord> pagingCounsel(SessionUser sessionUser, int page, int size) {

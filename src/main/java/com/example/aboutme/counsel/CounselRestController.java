@@ -7,22 +7,17 @@ import com.example.aboutme.user.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.data.domain.PageRequest;
 
-import java.awt.print.Pageable;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class CounselRestController {
     private final CounselRepository counselRepository;
     private final CounselService counselService;
@@ -54,5 +49,12 @@ public class CounselRestController {
         model.addAttribute("schedules", schedules);
 
         return ResponseEntity.ok(schedules);
+    }
+
+    @PatchMapping("/counsel/{id}/status")
+    public ResponseEntity<String> updateStatus(@PathVariable("id") Integer id, @RequestBody Map<String, String> request) {
+        ReservationStatus status = ReservationStatus.valueOf(request.get("status"));
+        counselService.updateCounselStatus(id, status);
+        return ResponseEntity.ok("Status updated");
     }
 }
