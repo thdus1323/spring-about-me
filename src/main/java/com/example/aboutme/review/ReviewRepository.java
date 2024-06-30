@@ -26,4 +26,16 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     //    전문가한테 속한 최근 한달간의 리뷰 리스트
     @Query("SELECT r FROM Review r WHERE r.counsel.expert.id = :expertId AND r.createdAt >= :oneMonthAgo")
     List<Review> findByExpertIdAndCreatedAtAfter(@Param("expertId") Integer expertId, @Param("oneMonthAgo") Timestamp oneMonthAgo);
+
+    //스코어랑 카운트 계산
+    @Query("SELECT r.score, COUNT(r) as count FROM Review r WHERE r.expert.id = :expertId GROUP BY r.score ORDER BY r.score DESC ")
+    List<Object[]> countReviewByScore(@Param("expertId") Integer expertId);
+
+    // 리뷰 평균점수 계산
+    @Query("SELECT AVG(r.score) FROM Review r WHERE r.expert.id = :expertId")
+    Double findAverageScoreByExpertId(@Param("expertId") Integer expertId);
+
+    // 리뷰총 갯수
+    @Query("SELECT count(r.score) FROM Review r WHERE r.expert.id = :expertId")
+    Integer countByExpertId(@Param("expertId") Integer expertId);
 }
