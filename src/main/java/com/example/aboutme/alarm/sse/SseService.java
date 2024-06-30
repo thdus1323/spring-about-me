@@ -1,45 +1,53 @@
 package com.example.aboutme.alarm.sse;
 
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class SseService {
-    private final List<SseEmitter> clientEmitters = new CopyOnWriteArrayList<>();
-    private final List<SseEmitter> expertEmitters = new CopyOnWriteArrayList<>();
+    private final Map<Integer, SseEmitter> clientEmitters = new ConcurrentHashMap<>();
+    private final Map<Integer, SseEmitter> expertEmitters = new ConcurrentHashMap<>();
 
-    public void addClientEmitter(SseEmitter emitter) {
-        clientEmitters.add(emitter);
-        emitter.onCompletion(() -> clientEmitters.remove(emitter));
-        emitter.onTimeout(() -> clientEmitters.remove(emitter));
-        emitter.onError((e) -> clientEmitters.remove(emitter));
+    public SseEmitter subscribeClient(Integer clientId) {
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        clientEmitters.put(clientId, emitter);
+        emitter.onCompletion(() -> clientEmitters.remove(clientId));
+        emitter.onTimeout(() -> clientEmitters.remove(clientId));
+        return emitter;
     }
 
-    public void addExpertEmitter(SseEmitter emitter) {
-        expertEmitters.add(emitter);
-        emitter.onCompletion(() -> expertEmitters.remove(emitter));
-        emitter.onTimeout(() -> expertEmitters.remove(emitter));
-        emitter.onError((e) -> expertEmitters.remove(emitter));
+    public SseEmitter subscribeExpert(Integer expertId) {
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        expertEmitters.put(expertId, emitter);
+        emitter.onCompletion(() -> expertEmitters.remove(expertId));
+        emitter.onTimeout(() -> expertEmitters.remove(expertId));
+        return emitter;
     }
 
-    @Scheduled(fixedRate = 1000) // 1초마다 이 메서드를 실행한다.
-    public void sendEvents() {
-        sendEventsToEmitters(clientEmitters, "Hello, Client!");
-        sendEventsToEmitters(expertEmitters, "Hello, Expert!");
-    }
-
-    private void sendEventsToEmitters(List<SseEmitter> emitters, String message) {
-        for (SseEmitter emitter : emitters) {
+    public void notifyClient(Integer clientId, String message) {
+        SseEmitter emitter = clientEmitters.get(clientId);
+        if (emitter != null) {
             try {
-                emitter.send(message);
+                emitter.send(SseEmitter.event().name("clientEvent").data(message));
             } catch (IOException e) {
-                emitter.complete();
-                emitters.remove(emitter);
+                emitter.completeWithError(e);
+                clientEmitters.remove(clientId);
+            }
+        }
+    }
+
+    public void notifyExpert(Integer expertId, String message) {
+        SseEmitter emitter = expertEmitters.get(expertId);
+        if (emitter != null) {
+            try {
+                emitter.send(SseEmitter.event().name("expertEvent").data(message));
+            } catch (IOException e) {
+                emitter.completeWithError(e);
+                expertEmitters.remove(expertId);
             }
         }
     }

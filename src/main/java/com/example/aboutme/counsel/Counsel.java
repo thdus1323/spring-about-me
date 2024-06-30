@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "counsel_tb")
+@EntityListeners(CounselListener.class)
 @ToString(exclude = {"client", "expert", "voucher", "schedule", "payment"}) // 유효한 필드만 제외
 public class Counsel {
 
@@ -109,5 +110,4 @@ public class Counsel {
         this.counselStatus = CounselStatus.COUNSEL_COMPLETED;
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
-
 }

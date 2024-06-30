@@ -24,6 +24,7 @@
                         <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
                         <li><a href="/expert/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
+                    <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
                 {{/sessionUser}}
                 {{^sessionUser}}
                     <ul>
@@ -40,32 +41,38 @@
 </header>
 <div id="expertEvent"></div>
 <script>
-    // 전문가에게 알림
-    function initializeExpertEventSource() {
-        console.log(1)
-        if (!window.expertEventSource) {
-            const expertEventSource = new EventSource("/expertEmitter");
-            console.log(expertEventSource)
-            expertEventSource.onmessage = (event) => {
-                console.log(event)
-                const div = document.createElement("div");
-                div.textContent = `Event received: ${event.data}`;
-                document.getElementById("expertEvent").appendChild(div);
-            };
+    $(document).ready(function () {
+        function initializeExpertEventSource() {
+            console.log("Initializing expert event source");
+            if (!window.expertEventSource) {
+                const expertId = $("#sessionUserId").val(); // 세션 유저의 아이디를 가져옴
+                console.log("Expert ID:", expertId);
+                if (!expertId) {
+                    console.error("Expert ID is undefined");
+                    return;
+                }
+                const expertEventSource = new EventSource(`/sse/expert/${expertId}`);
+                console.log("EventSource created for expert");
 
-            expertEventSource.onerror = (error) => {
-                console.error("Error occurred:", error);
-                expertEventSource.close();
-                // 연결이 끊어졌을 때 재연결 시도 (백오프 전략 적용 가능)
-                setTimeout(() => {
-                    initializeExpertEventSource();
-                }, 3000); // 3초 후 재연결 시도
-            };
+                expertEventSource.onmessage = function(event) {
+                    console.log("Event received:", event);
+                    const div = $("<div>").text(`Event received: ${event.data}`);
+                    $("#expertEvent").append(div);
+                };
 
-            window.expertEventSource = expertEventSource;
+                expertEventSource.onerror = function(error) {
+                    console.error("Error occurred:", error);
+                    expertEventSource.close();
+                    setTimeout(function () {
+                        initializeExpertEventSource();
+                    }, 3000); // 3초 후 재연결 시도
+                };
+
+                window.expertEventSource = expertEventSource;
+            }
         }
-    }
 
-    initializeExpertEventSource();
+        initializeExpertEventSource();
+    });
 </script>
 <!-- 헤더 끝 -->
