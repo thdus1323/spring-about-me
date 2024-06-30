@@ -1,17 +1,27 @@
 package com.example.aboutme.user.UserResponseRecord;
 
-import com.example.aboutme.user.enums.ExpertLevel;
 import com.example.aboutme.user.enums.SpecType;
 import com.example.aboutme.user.enums.UserRole;
-import com.example.aboutme.user.spec.Spec;
 import lombok.Builder;
 
 import java.util.List;
 
 public record ExpertUserProfileDTO(
         User user,
-        List<SpecDTO> userSpeclist
-){
+        List<SpecDTO> userSpeclist,
+        List<ScheduleDTO> schedules
+
+) {
+
+    @Builder
+    public record ScheduleDTO(
+            Integer id,
+            String dayOfWeek,
+            String startTime,
+            String endTime
+    ) {
+    }
+
     @Builder
     public record User(
             Integer id,
@@ -22,14 +32,16 @@ public record ExpertUserProfileDTO(
             String gender,
             String profileImage,
             String expertLevel
-    ){}
+    ) {
+    }
+
 
     @Builder
     public record SpecDTO(
             List<CareerDTO> career,
             List<EducationDTO> education
 
-    ){
+    ) {
         @Builder
         public record CareerDTO(
                 Integer id,
@@ -38,7 +50,8 @@ public record ExpertUserProfileDTO(
                 String details,
                 String startYear,
                 String endYear
-        ){}
+        ) {
+        }
 
         @Builder
         public record EducationDTO(
@@ -48,6 +61,7 @@ public record ExpertUserProfileDTO(
                 String details,
                 String startYear,
                 String endYear
-        ){}
+        ) {
+        }
     }
 }

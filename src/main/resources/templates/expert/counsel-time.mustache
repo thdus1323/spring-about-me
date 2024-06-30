@@ -1,0 +1,284 @@
+<style>
+    .expert-mypage .schedule-card {
+        margin-top: 20px;
+<<<<<<< HEAD
+<<<<<<< HEAD
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .expert-mypage .schedule-card .card-header {
+=======
+    }
+
+    .expert-mypage .schedule-card .card-header {
+        background-color: #f8f9fa;
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .expert-mypage .schedule-card .card-header {
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+        font-weight: bold;
+    }
+
+    .expert-mypage .schedule-card .form-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+<<<<<<< HEAD
+<<<<<<< HEAD
+        padding: 10px;
+=======
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        padding: 10px;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+    }
+
+    .expert-mypage .schedule-card .form-group label {
+        width: 100%;
+        margin-bottom: 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+        font-weight: bold;
+        font-size: 1.5rem;
+=======
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        font-weight: bold;
+        font-size: 1.5rem;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+    }
+
+    .expert-mypage .schedule-card .form-control {
+        width: 100%;
+        margin-right: 10px;
+<<<<<<< HEAD
+<<<<<<< HEAD
+        border-radius: 5px;
+        font-size: 0.9rem;
+=======
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        border-radius: 5px;
+        font-size: 0.9rem;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+    }
+
+    .expert-mypage .schedule-card .btn-remove {
+        color: red;
+        cursor: pointer;
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+<<<<<<< HEAD
+<<<<<<< HEAD
+        background-color: #f8d7da;
+=======
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        background-color: #f8d7da;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+    }
+
+    .expert-mypage .schedule-card .btn-remove:hover {
+        color: darkred;
+    }
+
+    .expert-mypage .btn-save {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+
+    .expert-mypage .btn-save .btn {
+        background-color: white;
+        color: #ffa45b;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .expert-mypage .btn-save .btn:hover {
+        background-color: #ffa45b;
+        color: white;
+    }
+
+    .expert-mypage .schedule-card .time-label {
+        font-weight: bold;
+        color: #ffa45b;
+        margin-bottom: 5px;
+        font-size: 1rem;
+    }
+<<<<<<< HEAD
+=======
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+</style>
+
+{{#model}}
+    <div class="card schedule-card mb-5">
+        <div class="card-header">
+<<<<<<< HEAD
+<<<<<<< HEAD
+            상담시간
+        </div>
+        <div class="card-body">
+            <form id="schedule-form">
+                {{#schedules}}
+                    <div class="form-group row schedule-entry">
+                        <div class="col-sm-2">
+                            <label for="{{dayOfWeek}}">{{dayOfWeek}}요일</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="time-label">현재 시작시간 : {{startTime}}</div>
+                            <select class="form-control" name="{{dayOfWeek}}-start">
+                                <option value="">변경 시간 선택</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="time-label">현재 종료시간 : {{endTime}}</div>
+                            <select class="form-control" name="{{dayOfWeek}}-end">
+                                <option value="">변경 시간 선택</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                            </select>
+                        </div>
+                    </div>
+                {{/schedules}}
+                <div class="btn-save">
+                    <button type="button" id="save-schedule" class="btn">저장</button>
+=======
+            나의 스케줄 조정
+=======
+            상담시간
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+        </div>
+        <div class="card-body">
+            <form id="schedule-form">
+                {{#schedules}}
+                    <div class="form-group row schedule-entry">
+                        <div class="col-sm-2">
+                            <label for="{{dayOfWeek}}">{{dayOfWeek}}요일</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="time-label">현재 시작시간 : {{startTime}}</div>
+                            <select class="form-control" name="{{dayOfWeek}}-start">
+                                <option value="">변경 시간 선택</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="time-label">현재 종료시간 : {{endTime}}</div>
+                            <select class="form-control" name="{{dayOfWeek}}-end">
+                                <option value="">변경 시간 선택</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                            </select>
+                        </div>
+                    </div>
+                {{/schedules}}
+                <div class="btn-save">
+<<<<<<< HEAD
+                    <button type="button" id="save-schedule" class="btn btn-primary">저장</button>
+>>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+                    <button type="button" id="save-schedule" class="btn">저장</button>
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
+                </div>
+            </form>
+        </div>
+    </div>
+{{/model}}
+
+<script>
+    $(document).ready(function () {
+        $('#save-schedule').on('click', function () {
+            const scheduleData = {
+                monday: {
+                    start: $('select[name="monday-start"]').val(),
+                    end: $('select[name="monday-end"]').val()
+                },
+                tuesday: {
+                    start: $('select[name="tuesday-start"]').val(),
+                    end: $('select[name="tuesday-end"]').val()
+                },
+                wednesday: {
+                    start: $('select[name="wednesday-start"]').val(),
+                    end: $('select[name="wednesday-end"]').val()
+                },
+                thursday: {
+                    start: $('select[name="thursday-start"]').val(),
+                    end: $('select[name="thursday-end"]').val()
+                },
+                friday: {
+                    start: $('select[name="friday-start"]').val(),
+                    end: $('select[name="friday-end"]').val()
+                }
+            };
+            console.log('scheduleData:', scheduleData); // For debugging purposes, you can log the scheduleData here before sending it to the server.
+
+            $.ajax({
+                url: '/save-schedule', // Your endpoint to handle the schedule data
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(scheduleData),
+                success: function (response) {
+                    alert('스케줄이 저장되었습니다.');
+                    console.log('성공: 스케줄이 저장되었습니다. 응답:', response);
+                    // Optionally, you can refresh the page or update the UI here
+                },
+                error: function (xhr, status, error) {
+                    alert('스케줄 저장에 실패했습니다.');
+                    console.error('오류: 스케줄 저장에 실패했습니다. 상태:', status, '오류:', error);
+                }
+            });
+        });
+    });
+</script>
