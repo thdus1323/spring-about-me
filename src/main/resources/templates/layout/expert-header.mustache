@@ -39,6 +39,19 @@
         </div>
     </div>
 </header>
+<!-- 모달 시작 -->
+<div id="expertModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="expertModalMessage">예약신청이 도착했습니다.</p>
+        <div class="modal-buttons">
+            <button id="expertConfirmButton">마이페이지로 이동</button>
+            <button id="expertCloseButton">창 닫기</button>
+        </div>
+    </div>
+</div>
+<!-- 모달 끝 -->
+
 <div id="expertEvent"></div>
 <script>
     $(document).ready(function () {
@@ -60,8 +73,8 @@
 
                 expertEventSource.onmessage = function(event) {
                     console.log("Event received:", event);
-                    const div = $("<div>").text(`Event received: ${event.data}`);
-                    $("#expertEvent").append(div);
+                    $("#expertModalMessage").html("예약신청이 도착했습니다.");
+                    $("#expertModal").css("display", "block");
                 };
 
                 expertEventSource.onerror = function(error) {
@@ -77,6 +90,22 @@
         }
 
         initializeExpertEventSource();
+
+        // 모달 제어
+        $(".close, #expertCloseButton").on("click", function () {
+            $("#expertModal").css("display", "none");
+        });
+
+        $("#expertConfirmButton").on("click", function () {
+            window.location.href = "/expert/mypage"; // 마이페이지로 이동
+        });
+
+        // 모달 창 외부 클릭 시 닫기
+        $(window).on("click", function (event) {
+            if ($(event.target).is("#expertModal")) {
+                $("#expertModal").css("display", "none");
+            }
+        });
     });
 </script>
 <!-- 헤더 끝 -->
