@@ -2,6 +2,7 @@
     .expert-mypage .schedule-card {
         margin-top: 20px;
 <<<<<<< HEAD
+<<<<<<< HEAD
         border: 1px solid #e0e0e0;
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -14,6 +15,14 @@
     .expert-mypage .schedule-card .card-header {
         background-color: #f8f9fa;
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .expert-mypage .schedule-card .card-header {
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
         font-weight: bold;
     }
 
@@ -23,29 +32,43 @@
         justify-content: center;
         margin-bottom: 15px;
 <<<<<<< HEAD
+<<<<<<< HEAD
         padding: 10px;
 =======
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        padding: 10px;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
     }
 
     .expert-mypage .schedule-card .form-group label {
         width: 100%;
         margin-bottom: 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
         font-weight: bold;
         font-size: 1.5rem;
 =======
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        font-weight: bold;
+        font-size: 1.5rem;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
     }
 
     .expert-mypage .schedule-card .form-control {
         width: 100%;
         margin-right: 10px;
 <<<<<<< HEAD
+<<<<<<< HEAD
         border-radius: 5px;
         font-size: 0.9rem;
 =======
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        border-radius: 5px;
+        font-size: 0.9rem;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
     }
 
     .expert-mypage .schedule-card .btn-remove {
@@ -56,9 +79,13 @@
         border-radius: 5px;
         text-align: center;
 <<<<<<< HEAD
+<<<<<<< HEAD
         background-color: #f8d7da;
 =======
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+        background-color: #f8d7da;
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
     }
 
     .expert-mypage .schedule-card .btn-remove:hover {
@@ -71,6 +98,9 @@
         margin-top: 20px;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
 
     .expert-mypage .btn-save .btn {
         background-color: white;
@@ -90,13 +120,17 @@
         margin-bottom: 5px;
         font-size: 1rem;
     }
+<<<<<<< HEAD
 =======
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
 </style>
 
 {{#model}}
     <div class="card schedule-card mb-5">
         <div class="card-header">
+<<<<<<< HEAD
 <<<<<<< HEAD
             상담시간
         </div>
@@ -145,192 +179,58 @@
                     <button type="button" id="save-schedule" class="btn">저장</button>
 =======
             나의 스케줄 조정
+=======
+            상담시간
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
         </div>
         <div class="card-body">
             <form id="schedule-form">
-                <!-- Monday -->
-                <div class="form-group row schedule-entry">
-                    <div class="col-sm-2">
-                        <label for="monday">월요일</label>
+                {{#schedules}}
+                    <div class="form-group row schedule-entry">
+                        <div class="col-sm-2">
+                            <label for="{{dayOfWeek}}">{{dayOfWeek}}요일</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="time-label">현재 시작시간 : {{startTime}}</div>
+                            <select class="form-control" name="{{dayOfWeek}}-start">
+                                <option value="">변경 시간 선택</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="time-label">현재 종료시간 : {{endTime}}</div>
+                            <select class="form-control" name="{{dayOfWeek}}-end">
+                                <option value="">변경 시간 선택</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="monday-start">
-                            <option value="">시작 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="monday-end">
-                            <option value="">종료 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Tuesday -->
-                <div class="form-group row schedule-entry">
-                    <div class="col-sm-2">
-                        <label for="tuesday">화요일</label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="tuesday-start">
-                            <option value="">시작 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="tuesday-end">
-                            <option value="">종료 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Wednesday -->
-                <div class="form-group row schedule-entry">
-                    <div class="col-sm-2">
-                        <label for="wednesday">수요일</label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="wednesday-start">
-                            <option value="">시작 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="wednesday-end">
-                            <option value="">종료 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Thursday -->
-                <div class="form-group row schedule-entry">
-                    <div class="col-sm-2">
-                        <label for="thursday">목요일</label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="thursday-start">
-                            <option value="">시작 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="thursday-end">
-                            <option value="">종료 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Friday -->
-                <div class="form-group row schedule-entry">
-                    <div class="col-sm-2">
-                        <label for="friday">금요일</label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="friday-start">
-                            <option value="">시작 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="friday-end">
-                            <option value="">종료 시간 선택</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>12:00</option>
-                            <option>13:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                            <option>16:00</option>
-                            <option>17:00</option>
-                            <option>18:00</option>
-                        </select>
-                    </div>
-                </div>
+                {{/schedules}}
                 <div class="btn-save">
+<<<<<<< HEAD
                     <button type="button" id="save-schedule" class="btn btn-primary">저장</button>
 >>>>>>> ae041e7 (상담시간 저장 완료)
+=======
+                    <button type="button" id="save-schedule" class="btn">저장</button>
+>>>>>>> 9bc6988 (상담시간 저장 후 디자인 수정)
                 </div>
             </form>
         </div>
