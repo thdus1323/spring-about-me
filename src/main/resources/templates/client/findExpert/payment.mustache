@@ -69,13 +69,12 @@
             </div>
         </div>
     </section>
-{{/model}}
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
     // parseInt($('#originalPrice').text().replace(/,/g, ''))
     $(document).ready(function () {
         let itemName = $('h3.page-title').text();
-        const originalPrice = 100; // 템플릿에서 JavaScript 변수로 전달
+        const originalPrice = parseInt('{{voucher.price}}'.replace(/,/g, ''), 10);
         let discountAmount = 0; // 할인 금액
         let finalAmount = originalPrice - discountAmount; // 최종 금액
         let paymentCompleted = false; // 결제 완료 상태 추적
@@ -194,4 +193,6 @@
         });
     });
 </script>
+{{/model}}
+
 {{> layout/footer}}
