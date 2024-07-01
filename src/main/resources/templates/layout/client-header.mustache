@@ -135,9 +135,27 @@
 
         // 알림 카운트 업데이트
         function updateNotificationCount() {
-            const currentCount = parseInt($('#notification-count').text());
-            $('#notification-count').text(currentCount + 1);
+            $.ajax({
+                url: '/sse/alarm-count',
+                type: 'GET',
+                success: function (count) {
+                    if (count > 0) {
+                        $('#notification-count').removeClass('count-hidden').text(count);
+                    } else {
+                        $('#notification-count').addClass('count-hidden');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch notification count:", error);
+                }
+            });
         }
+
+        // 페이지 로드 시 알림 카운트 업데이트
+        updateNotificationCount();
+
+        // 일정 시간 간격으로 알림 카운트 업데이트 (예: 1분마다)
+        setInterval(updateNotificationCount, 60000); // 1분 = 60000ms
     });
 
 </script>

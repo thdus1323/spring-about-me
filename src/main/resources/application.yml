@@ -38,6 +38,7 @@ spring:
         - classpath:db/counsel_data.sql
         - classpath:db/review_data.sql
         - classpath:db/chat_data.sql
+        - classpath:db/alarm_data.sql
       schema-locations:
   jpa:
     hibernate:

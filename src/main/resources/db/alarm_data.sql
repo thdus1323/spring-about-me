@@ -1,4 +1,4 @@
-INSERT INTO alarm_tb (message, receiver_id, sender_id, counsel_id, checked, created_at)
+INSERT INTO alarm_tb (message, receiver_id, sender_id, counsel_id, read, created_at)
 VALUES
     -- 1번 클라이언트 알림
     ('상담이 완료되었습니다.', 1, 21, 1, true, NOW()),

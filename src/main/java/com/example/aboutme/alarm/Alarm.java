@@ -25,22 +25,20 @@ public class Alarm {
     @Column(nullable = false)
     private String message;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counsel_id", nullable = false)
     private Counsel counsel;
 
-    private boolean checked; // 알림을 읽었냐 안 읽었냐
+    private boolean read; // 알림을 읽었냐 안 읽었냐
 
     @CreationTimestamp
     private Timestamp createdAt;
-
-
 }
