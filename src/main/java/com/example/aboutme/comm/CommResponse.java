@@ -5,6 +5,7 @@ import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.enums.UserRole;
 import kotlin.jvm.Transient;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -29,7 +30,7 @@ public class CommResponse {
         private int replies;
 
         public CommMainByCategory(Integer id, String writerName, String writerImage, String content, String title,
-                                     CommCategory category, int replies) {
+                                  CommCategory category, int replies) {
             this.id = id;
             this.writerName = writerName;
             this.writerImage = writerImage;
@@ -230,8 +231,10 @@ public class CommResponse {
             private String causeAnalysis; // 원인 분석
             private String solution; // 대처 방향
             private Timestamp createdAt;
+            private String level;
+            private Integer writerId;
 
-            public ReplyDTO(Reply reply) {
+            public ReplyDTO(@NotNull Reply reply) {
                 this.id = reply.getId();
                 this.profileImage = reply.getUser().getProfileImage();
                 this.name = reply.getUser().getName();
@@ -242,6 +245,13 @@ public class CommResponse {
                 this.solution = reply.getSolution();
                 this.content = reply.getContent();
                 this.createdAt = reply.getCreatedAt();
+                this.writerId = reply.getUser().getId();
+                // 널 체크
+                if (reply.getUser().getLevel() == null) {
+                    this.level = "";
+                } else {
+                    this.level = reply.getUser().getLevel().getKorean();
+                }
             }
         }
 

@@ -71,13 +71,18 @@
                         {{#userRole}}
                             <!--전문가 댓글 시작-->
                             <div class="expert-answer mb-20">
-                                <h3 class="page-title mb-20">전문답변 <span class="main-color">1</span> 개가 달렸어요.</h3>
+                                <!--                                <h3 class="page-title mb-20">전문답변 <span class="main-color">1</span> 개가 달렸어요.</h3>-->
                                 <div class="expert-answer-header main-background">
                                     <div class="info">
                                         <img src="/images/user.png" alt="상담사 사진">
                                         <div class="answer-text">
-                                            <div class="name">{{name}} 상담사</div>
-                                            <div class="details">2급 심리상담사 · 20분 전</div>
+                                            <a id="expert-link" class="name"
+                                               href="/client/findExpert/detail/{{writerId}}">{{name}}
+                                                상담사</a>
+                                            <br>
+                                            <br>
+                                            <div class="details">{{level}}
+                                            </div>
                                         </div>
                                     </div>
                                     <button class="defalut-btn main-background active-background">상담 받아보기</button>
@@ -135,9 +140,14 @@
                                     <p class="card-text mb-20">{{content}}</p>
 
                                     <div class="bottom-content">
-                                        <div class="click-wrapper">
-                                            <button>💬 도움돼요</button>
-                                        </div>
+                                        {{#sessionUser}}
+                                            <div class="click-wrapper">
+                                                <button id="replyDeleteButton"
+                                                        onclick="deleteReply({{writerId}}, {{id}})">
+                                                    삭제하기
+                                                </button>
+                                            </div>
+                                        {{/sessionUser}}
                                     </div>
                                 </div>
                             </div>
@@ -244,18 +254,6 @@
         // 페이지 로드 시 실행되는 코드
         checkPermission();
     });
-
-    function checkPermission() {
-        const sessionUserId = "{{sessionUser.id}}";
-        const writerId = "{{comm.commDTO.writerId}}";
-
-        if (sessionUserId !== writerId) {
-            // 세션 유저 아이디와 글 작성자 아이디가 다를 경우
-            const updateButton = document.getElementById('updateButton');
-            updateButton.disabled = true; // 버튼 비활성화
-            updateButton.classList.add('disabled'); // 스타일 추가 (옵션)
-        }
-    }
 
     // 전문가 댓글 달기 창 열기
     function openNewWindow(id) {
@@ -379,10 +377,9 @@
                 });
     }
 
-    // 삭제하기
+    // 게시글 삭제하기
     function deletePost() {
         const commId = "{{comm.commDTO.id}}"; // 삭제할 글의 ID
-
         if (confirm("정말로 이 글을 삭제하시겠습니까?")) {
             // 확인 버튼을 눌렀을 때 삭제 요청을 서버에 보냄
             fetch(`/comm/delete/${commId}`, {
@@ -403,6 +400,36 @@
         }
     }
 
+    // 댓글 삭제하기
+    function deleteReply(writerId, replyId) {
+        if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+            // 삭제 요청 시 서버로 전송할 데이터
+            const requestData = {
+                writerId: parseInt(writerId), // writerId를 숫자형으로 변환하여 전송
+                replyId: parseInt(replyId) // replyId를 숫자형으로 변환하여 전송
+            };
+
+            fetch(`/reply/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData) // JSON 형식으로 데이터 변환하여 전송
+            })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('댓글이 성공적으로 삭제되었습니다.');
+                            window.location.reload(); // 페이지 새로고침
+                        } else {
+                            alert('댓글 삭제 중 오류가 발생했습니다.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting reply:', error);
+                        alert('댓글 삭제 중 오류가 발생했습니다.');
+                    });
+        }
+    }
 
 </script>
 <!--컨텐츠 끝-->
