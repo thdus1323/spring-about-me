@@ -70,6 +70,21 @@
     text-decoration: none;
 }
 
+.alarm-count {
+    position: absolute;
+    top: -3px;
+    right: -13px;
+    padding: 2px 4px;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    font-size: 10px;
+}
+
+.count-hidden {
+    display: none;
+}
+
 /* 드롭다운 메뉴 수정 */
 ul.dropdown-menu {
     display: none;

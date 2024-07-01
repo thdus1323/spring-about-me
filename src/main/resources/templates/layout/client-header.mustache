@@ -21,6 +21,7 @@
                         <li><a href="/logout">로그아웃</a></li>
                         <li class="bell-dropdown">
                             <a href="#!" class="icon bell-icon"><i class="fa-regular fa-bell"></i></a>
+                            <span class="alarm-count count-hidden" id="notification-count">15</span>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" type="button">Action</a>
@@ -131,6 +132,12 @@
         $('.dropdown-menu').click(function (event) {
             event.stopPropagation();
         });
+
+        // 알림 카운트 업데이트
+        function updateNotificationCount() {
+            const currentCount = parseInt($('#notification-count').text());
+            $('#notification-count').text(currentCount + 1);
+        }
     });
 
 </script>
