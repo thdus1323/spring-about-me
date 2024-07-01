@@ -40,4 +40,8 @@ public class ReplyService {
         replyRepository.save(reply);
     }
 
+    @Transactional
+    public void deleteReply(Integer replyId) {
+        replyRepository.deleteById(replyId);
+    }
 }

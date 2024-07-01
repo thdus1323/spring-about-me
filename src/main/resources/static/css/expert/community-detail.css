@@ -1,26 +1,31 @@
-
 /* 전문가 디테일 CSS */
 
-.comm-detail .card{
+.comm-detail .card {
     border: none;
 }
-.comm-detail .card .card-body.comdetail{
+
+.comm-detail .card .card-body.comdetail {
     padding: 0;
 }
 
 
-.breadcrumb{}
-.breadcrumb > a{
+.breadcrumb {
+}
+
+.breadcrumb > a {
     font-weight: 400;
     color: #999;
 }
-.breadcrumb > a.active{
+
+.breadcrumb > a.active {
     color: #00bbba;
     font-weight: 600;
 }
 
-.click-wrapper{}
-.click-wrapper button{
+.click-wrapper {
+}
+
+.click-wrapper button {
     outline: none;
     border: 1px solid #ddd;
     background: none;
@@ -30,11 +35,12 @@
     margin-right: 5px;
     color: #000;
 }
-.click-wrapper button:hover{
-    background:#f8f8f8;
+
+.click-wrapper button:hover {
+    background: #f8f8f8;
 }
 
-.expert-answer-header{
+.expert-answer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,78 +49,94 @@
     border-top-left-radius: 10px;
 }
 
-.expert-answer-header .info{
+.expert-answer-header .info {
     display: flex;
 }
-.expert-answer-header .info img{
+
+.expert-answer-header .info img {
     width: 40px;
     height: 40px;
     object-fit: cover;
     border-radius: 50%;
 }
-.expert-answer-header .info .answer-text{
+
+.expert-answer-header .info .answer-text {
     margin-left: 10px;
 }
-.expert-answer-header .info .answer-text > div{
+
+.expert-answer-header .info .answer-text > div {
     color: #fff;
     font-size: 14px;
 }
-.expert-answer-header .info .answer-text .name{
+
+.expert-answer-header .info .answer-text .name {
     font-size: 15px;
     font-weight: 600;
 }
-.expert-answer-header .info .answer-text .details{}
+
+.expert-answer-header .info .answer-text .details {
+}
 
 
-.expert-answer-header button{
+.expert-answer-header button {
     font-size: 14px;
 }
 
-.page-title span.count{
+.page-title span.count {
     font-weight: 700;
 }
 
-.expert-answer .content{
+.expert-answer .content {
     padding: 20px;
     border: 1px solid #ddd;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background: #fff;
 }
-.expert-answer .content .page-title{
+
+.expert-answer .content .page-title {
     margin-top: 0;
 }
-.expert-answer .content .tags{}
-.expert-answer .content .tags span{
+
+.expert-answer .content .tags {
+}
+
+.expert-answer .content .tags span {
     padding: 10px;
     background: #f8f8f8;
     border-radius: 5px;
     font-size: 14px;
 }
-hr{
+
+hr {
     margin: 0 !important;
 }
 
+#expert-link {
+    color: white;
+    font-size: 14px;
+}
 
-.dropdown-menu button i{
+.dropdown-menu button i {
 
 }
 
-.right-actions button i{
+.right-actions button i {
     font-weight: 600;
 }
 
-.bottom-content{
+.bottom-content {
     display: flex;
     justify-content: space-between;
 }
 
-.comment-section{
+.comment-section {
     width: 100%;
     margin-top: 20px;
     display: flex;
 }
-.comment-section input{
+
+.comment-section input {
     width: 80%;
     margin-right: 20px;
     border: 1px solid #ddd;
@@ -123,11 +145,11 @@ hr{
     padding: 0 10px;
 }
 
-.comment-section button{
+.comment-section button {
     width: calc(20% - 20px);
 }
 
-.defalut-btn{
+.defalut-btn {
     width: 90px;
     height: 40px;
     border-radius: 5px;
@@ -136,11 +158,12 @@ hr{
     cursor: pointer;
     padding: 0;
 }
-.defalut-btn:hover{
+
+.defalut-btn:hover {
     background-color: #fd780f;
 }
 
-.c-card .c-card-body.detail{
+.c-card .c-card-body.detail {
     width: 100%;
     margin-bottom: 10px;
 }
