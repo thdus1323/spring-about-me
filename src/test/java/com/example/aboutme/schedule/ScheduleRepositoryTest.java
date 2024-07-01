@@ -17,7 +17,7 @@ class ScheduleRepositoryTest {
 
     @Test
     void findByExpertIdAndDayOfWeek() {
-        List<Schedule> schedules = scheduleRepository.findByExpertIdAndDayOfWeek(21, DayOfWeek.MONDAY);
+        List<Schedule> schedules = scheduleRepository.findByExpertIdAndDay(21, DayOfWeek.MONDAY);
         schedules.forEach(schedule -> System.out.println("schedule = " + schedule));
 //        assertFalse(schedules.isEmpty());
     }

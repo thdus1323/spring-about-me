@@ -60,9 +60,8 @@
 .c-card {
     border: none;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    max-height: 1000px;
     align-content: flex-start;
 }
 
@@ -71,11 +70,11 @@
     margin-right: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    height: -webkit-fill-available;
     margin-bottom: 20px;
     height: fit-content;
     padding: 20px;
     background: #fff;
+    height: 350px;
 }
 
 .c-card .c-card-body.comdetail {

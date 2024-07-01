@@ -7,6 +7,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,12 +75,14 @@ public class CommController {
     }
 
     @GetMapping("/comm")
-    public String community(HttpServletRequest request) {
-
-        List<CommResponse.ALLCommWithRepliesDTO> allCommsWithReplyList = commService.findAllCommWithReply();
-        request.setAttribute("allCommsWithReplyList", allCommsWithReplyList);
-
-        return "/comm/comm-main";
+    public String community(@RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "10") int size,
+                            Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        CommResponse.ALLCommWithRepliesPageDTO allCommsWithReplyList = commService.findAllCommWithReply(pageable);
+        System.out.println("allCommsWithReplyList.getTotalPages() = " + allCommsWithReplyList.getTotalPages());
+        model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
+        return "comm/comm-main";
     }
 
     @GetMapping("/comm/category")

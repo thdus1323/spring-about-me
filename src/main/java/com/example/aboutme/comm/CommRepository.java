@@ -1,9 +1,11 @@
 package com.example.aboutme.comm;
 
 import com.example.aboutme.comm.enums.CommCategory;
+import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +14,14 @@ import java.util.List;
 
 public interface CommRepository extends JpaRepository<Comm, Integer> {
 
+
+
+
+    @Query("SELECT c FROM Comm c")
+    Page<Comm> findAllCommPage(Pageable pageable);
+
+    @Query("SELECT r FROM Reply r JOIN FETCH r.user WHERE r.comm.id IN :commIds")
+    List<Reply> findRepliesByCommIds(@Param("commIds") List<Integer> commIds);
     //클라이언트 게시물 조회
     Page<Comm> findByUserId(@Param("userId") Integer userId, Pageable pageable);
 
@@ -49,6 +59,8 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
                SELECT c FROM Comm c LEFT JOIN FETCH c.replies r ORDER BY c.id DESC
             """)
     List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReplies();
+
+
 
     // detail 출력 쿼리
     @Query(" SELECT c FROM Comm c LEFT JOIN FETCH c.replies r WHERE c.id = :id ")
