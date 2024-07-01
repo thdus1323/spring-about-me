@@ -55,6 +55,7 @@
 
 .header-right ul li {
     margin-left: 20px;
+    position: relative;
 }
 
 .header-right ul li a {
@@ -67,4 +68,26 @@
     font-size: 20px;
     margin-left: 20px;
     text-decoration: none;
+}
+
+/* 드롭다운 메뉴 수정 */
+ul.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: -70px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    list-style-type: none;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+ul.dropdown-menu li {
+    margin-bottom: 10px;
+}
+
+ul.dropdown-menu li:last-child {
+    margin-bottom: 0;
 }

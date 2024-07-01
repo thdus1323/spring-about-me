@@ -19,7 +19,20 @@
                 {{#sessionUser}}
                     <ul>
                         <li><a href="/logout">로그아웃</a></li>
-                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                        <li class="bell-dropdown">
+                            <a href="#!" class="icon bell-icon"><i class="fa-regular fa-bell"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button class="dropdown-item" type="button">Action</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">Another action</button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" type="button">Something else here</button>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a href="/client/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
                     <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
@@ -104,6 +117,21 @@
                 $("#modal").css("display", "none");
             }
         });
+
+        // 드롭다운 메뉴 제어
+        $('.bell-icon').click(function (event) {
+            event.stopPropagation();
+            $(this).siblings('.dropdown-menu').toggle();
+        });
+
+        $(document).click(function () {
+            $('.dropdown-menu').hide();
+        });
+
+        $('.dropdown-menu').click(function (event) {
+            event.stopPropagation();
+        });
     });
+
 </script>
 <!-- 헤더 끝 -->
