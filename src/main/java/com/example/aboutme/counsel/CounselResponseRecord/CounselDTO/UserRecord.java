@@ -4,8 +4,11 @@ public record UserRecord(
      Integer id,
      String name,
      String imagePath,
+     String reservationStatus,
+     Integer counselId,
      String voucherType,
      Integer totalCount,
      Integer remainCount,
-     String applyDate
+     String applyDate,
+     boolean isComplete
 ) {}
