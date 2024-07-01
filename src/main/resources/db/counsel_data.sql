@@ -49,5 +49,9 @@ VALUES
      'REVIEW_COMPLETED', NOW(), NOW()),
     -- 10번 클라이언트 상담 완료 내역
     (10, 21, 1, 5, 10, 'COUNSEL_COMPLETED', 'COUNSEL_COMPLETED', '2024-06-29', '18:00', '금', '상담결과 테스트용',
-     'REVIEW_COMPLETED', NOW(), NOW());
+     'REVIEW_COMPLETED', NOW(), NOW()),
+    -- 11번 클라이언트 상담 전 내역
+    (1, 21, 1, 1, 1, 'COUNSEL_COMPLETED', 'COUNSEL_PENDING', '2024-06-21', '09:00', '화', '상담결과 테스트용',
+    'REVIEW_COMPLETED', NOW(), NOW());
+
 

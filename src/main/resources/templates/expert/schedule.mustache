@@ -3,9 +3,7 @@
 <section id="section01">
     <div class="container">
         <div class="page-wrapper">
-            <div class="line-up">
-                <button class="main-background defalut-btn">정렬</button>
-            </div>
+
             <h3 class="page-title mb-50">
                 상담일정 확인
             </h3>
@@ -16,6 +14,7 @@
                         <span>이용권</span>
                         <span>횟수/이용횟수</span>
                         <span>신청날짜</span>
+                        <span>예약일정</span>
                         <span>상담</span>
                     </div>
                     <ul class="schedule-list">
@@ -33,14 +32,13 @@
                 <ul id="pagenation" class="pagination my-3" style=" display: flex; justify-content: center;">
 
                 </ul>
-
-
             </div>
         </div>
     </div>
 </section>
 <script>
     let currentPage = 0;
+
     const userId = '{{sessionUser.id}}'; // 실제 사용자 ID로 교체
     const size = 5; // 페이지 당 항목 수
     let totalPages = 0;
@@ -67,9 +65,9 @@
             success: function (data) {
                 if (data.content.length > 0) {
                     const scheduleData = data.content[0]; // CounselDTORecord 데이터
-                    updateScheduleList(scheduleData.user); // user 목록을 전달
+                    updateScheduleList(scheduleData.user, scheduleData.reservationStatus); // user 목록과 reservationStatus 전달
                 } else {
-                    updateScheduleList([]); // 데이터가 없을 경우 빈 배열 전달
+                    updateScheduleList([], ''); // 데이터가 없을 경우 빈 배열과 빈 상태 전달
                 }
                 totalPages = data.totalPages; // 서버에서 제공한 totalPages 사용
                 updatePagination(data);
@@ -80,7 +78,7 @@
         });
     }
 
-    function updateScheduleList(users) {
+    function updateScheduleList(users, reservationStatus) {
         const container = $('.schedule-list');
         container.empty();
         users.forEach(user => {
@@ -98,6 +96,10 @@
                 </div>
                 <div class="schedule-item">
                     <p>${user.applyDate}</p>
+                </div>
+               <div class="schedule-item ">
+                    ${user.isComplete ? '<span>완료됨</span>' : `<button class="reservation-confirm" onclick="confirmed(${user.counselId}, this)">${user.reservationStatus}</button>`}
+                </div>
                 </div>
                 <div class="schedule-item">
                     <p><button class="schedule-btn">상담하러가기</button></p>
@@ -155,6 +157,36 @@
                                 })
                 );
         pagination.append(nextButton);
+    }
+
+    // 예약확정 버튼 --!!
+    function confirmed(counselId, element) {
+        if (confirm("예약을 확정하시겠습니까?")) {
+            $.ajax({
+                url: `/reservation/statusUpdate`,
+                method: 'POST',
+                data: JSON.stringify({
+                    counselId: counselId
+                }),
+                contentType: "application/json",
+                success: function (data) {
+                    console.log('데이터 들어왔다:', data);
+
+
+                    // fetchSchedules 호출 후 새로운 엘리먼트를 다시 추가
+                    fetchSchedules(currentPage, function() {
+                        var newElement = $('<div class="disabled"></div>');
+                        $(element).after(newElement);
+                        console.log('새로운 엘리먼트를 다시 추가됨:', newElement);
+                    });
+                },
+                error: function (error) {
+                    console.error('에러났다:', error);
+                }
+            });
+        } else {
+            console.log('Reservation update canceled');
+        }
     }
 
     function initializePagination() {

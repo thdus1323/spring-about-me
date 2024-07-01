@@ -1,6 +1,7 @@
 package com.example.aboutme.counsel;
 
 import com.example.aboutme._core.error.exception.Exception400;
+import com.example.aboutme._core.error.exception.Exception401;
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.DayOfWeekConverter;
@@ -158,6 +159,7 @@ public class CounselService {
                 .voucher(voucher)
                 .schedule(schedule)
                 .reservationStatus(ReservationStatus.RESERVATION_PENDING)
+                .counselStatus(CounselStatus.COUNSEL_PENDING)
                 .build();
 
         return counselRepository.save(reservation);
@@ -260,21 +262,26 @@ public class CounselService {
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
 
+            boolean isCompleted = counsel.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED;
+
             // UserRecord 생성
             return new UserRecord(
                     user.getId(),
                     user.getName(),
                     user.getProfileImage(),
+                    counsel.getReservationStatus().getKorean(),
+                    counsel.getId(),
                     voucherType,
                     voucherTotal,
                     voucherRemain,
-                    counsel.getCounselDate() // applyDate는 Counsel의 counselDate를 사용
+                    counsel.getCounselDate(), // applyDate는 Counsel의 counselDate를 사용
+                    isCompleted
             );
 
         }).collect(Collectors.toList());
 
         // 최종적으로 CounselDTORecord를 반환
-        return new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecords);
+        return new CounselDTORecord(expert.getId(), userRecords);
     }
 
 
@@ -290,6 +297,8 @@ public class CounselService {
 
         // 2. counsel 수정
         counsel.completeCounsel();
+
+        // 3. reservation 수정
 
     }
 
@@ -331,15 +340,20 @@ public class CounselService {
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
 
+           boolean isCompleted = counsel.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED;
+
             // UserRecord 생성
             return new UserRecord(
                     user.getId(),
                     user.getName(),
                     user.getProfileImage(),
+                    counsel.getReservationStatus().getKorean(),
+                    counsel.getId(),
                     voucherType,
                     voucherTotal,
                     voucherRemain,
-                    counsel.getCounselDate() // applyDate는 Counsel의 counselDate를 사용
+                    counsel.getCounselDate(), // applyDate는 Counsel의 counselDate를 사용
+                    isCompleted
             );
 
         }).collect(Collectors.toList());
@@ -350,12 +364,26 @@ public class CounselService {
         Page<UserRecord> userRecordPage = new PageImpl<>(userRecords.subList(start, end), PageRequest.of(page, size), userRecords.size());
 
         // 최종적으로 CounselDTORecord를 반환
-        CounselDTORecord counselDTORecord = new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecordPage.getContent());
+        CounselDTORecord counselDTORecord = new CounselDTORecord(expert.getId(),userRecordPage.getContent());
 
         return new PageImpl<>(Collections.singletonList(counselDTORecord), PageRequest.of(page, size), userRecords.size());
     }
 
+    @Transactional
+    public void reservationUpdate(Integer counselId, SessionUser sessionUser) {
+        // 0. 인증처리
+        if (sessionUser == null){
+            throw new Exception403("인증되지 않은 유저입니다.");
+        }
+        Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new Exception404("해당 상담내역을 찾을 수 없습니다."));
 
+        // 1. 권한처리
+        if (sessionUser.getId() != counsel.getExpert().getId()){
+            throw  new Exception401("해당 상담내역을 수정할 권한이 없습니다.");
+        }
+
+        counsel.completeReservation();
+    }
 }
 
 
