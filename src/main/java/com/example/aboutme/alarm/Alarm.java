@@ -1,8 +1,8 @@
 package com.example.aboutme.alarm;
 
+import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.user.User;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "alarm_tb")
-@ToString(exclude = "user")
+@ToString(exclude = {"receiver", "sender", "counsel"})
 public class Alarm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,18 +25,22 @@ public class Alarm {
     @Column(nullable = false)
     private String message;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private User receiver;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "counsel_id", nullable = false)
+    private Counsel counsel;
+
+    private boolean checked; // 알림을 읽었냐 안 읽었냐
 
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @Builder
-    public Alarm(Integer id, String message, User user, Timestamp createdAt) {
-        this.id = id;
-        this.message = message;
-        this.user = user;
-        this.createdAt = createdAt;
-    }
+
 }

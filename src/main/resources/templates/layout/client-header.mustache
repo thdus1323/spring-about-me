@@ -19,7 +19,21 @@
                 {{#sessionUser}}
                     <ul>
                         <li><a href="/logout">로그아웃</a></li>
-                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                        <li class="bell-dropdown">
+                            <a href="#!" class="icon bell-icon"><i class="fa-regular fa-bell"></i></a>
+                            <span class="alarm-count count-hidden" id="notification-count">15</span>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" type="button">Action</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" type="button">Another action</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" type="button">Something else here</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a href="/client/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
                     <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
@@ -104,6 +118,27 @@
                 $("#modal").css("display", "none");
             }
         });
+
+        // 드롭다운 메뉴 제어
+        $('.bell-icon').click(function (event) {
+            event.stopPropagation();
+            $(this).siblings('.dropdown-menu').toggle();
+        });
+
+        $(document).click(function () {
+            $('.dropdown-menu').hide();
+        });
+
+        $('.dropdown-menu').click(function (event) {
+            event.stopPropagation();
+        });
+
+        // 알림 카운트 업데이트
+        function updateNotificationCount() {
+            const currentCount = parseInt($('#notification-count').text());
+            $('#notification-count').text(currentCount + 1);
+        }
     });
+
 </script>
 <!-- 헤더 끝 -->
