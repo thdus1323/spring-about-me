@@ -166,6 +166,7 @@ hr {
 .c-card .c-card-body.detail {
     width: 100%;
     margin-bottom: 10px;
+    height: fit-content;
 }
 
 

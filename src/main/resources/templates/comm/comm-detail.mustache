@@ -139,7 +139,7 @@
                                 <div class="c-card-body detail mb-20">
                                     <div class="community-cartegory">
                                         <div class="user-info">
-                                            <figure><img src="" alt="회원이미지">일반인 이미지</figure>
+                                            <figure><img src="{{profileImage}}" alt="회원이미지">일반인 이미지</figure>
                                             <span>{{name}}</span>
                                         </div>
                                     </div>
@@ -254,6 +254,7 @@
             console.log(url);
         };
     });
+
 
     // 유저 아이디 검사해서 수정 삭제 버튼 숨기기
     $(document).ready(function () {
