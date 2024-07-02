@@ -33,8 +33,8 @@
 
 .container-fluid {
     background: #fff;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .comm-filter {
@@ -70,25 +70,30 @@
 .comm-filter #writeButton:hover {
     background-color: #f47821; /* 호버 시 배경색을 밝은 주황색으로 변경 */
 }
-
+.c-card.comm-detail{
+    height: fit-content;
+}
 .c-card {
     border: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     align-content: flex-start;
+    overflow: hidden;
+    height: 800px;
 }
 
 .c-card .c-card-body {
     width: calc((100% - 40px) / 3);
     margin-right: 20px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 20px;
     height: fit-content;
     padding: 20px;
     background: #fff;
-    height: 350px;
+    break-inside: avoid;
+    min-height: 208px;
 }
 
 .c-card .c-card-body.comdetail {
@@ -114,7 +119,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.2;
+    line-height: 1.5;
     margin-bottom: 20px;
 }
 
@@ -183,7 +188,7 @@
 
 .community-cartegory {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     align-items: center;
 }
 
@@ -323,7 +328,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.2;
+    line-height: 1.5;
 }
 
 .community-cartegory .actions .right-actions a {
