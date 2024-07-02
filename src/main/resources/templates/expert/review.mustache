@@ -3,9 +3,7 @@
 <section id="section01">
     <div class="container">
         <div class="page-wrapper">
-            <div class="line-up">
-                <button class="main-background defalut-btn">정렬</button>
-            </div>
+
             <h3 class="page-title mb-50">
                 후기보기
             </h3>
@@ -16,7 +14,7 @@
                             <li class="review-item">
                                 <div class="review-header">
                                     <figure>
-                                        <img src="/images/{{user.imagePath}}" alt="유저 이미지">
+                                        <img src="{{user.imagePath}}" alt="유저 이미지">
                                     </figure>
                                     <span>{{user.name}}(4점)</span>
                                 </div>
@@ -30,7 +28,7 @@
                 </div>
 
                 <!-- 페이지 네이션 -->
-                <div class="comm-pagination" >
+                <div class="comm-pagination">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li class="page-item disabled">
@@ -52,8 +50,8 @@
     </div>
 </section>
 <script>
-    $(document).ready(function() {
-        $('.more-btn').on('click', function() {
+    $(document).ready(function () {
+        $('.more-btn').on('click', function () {
             const txt = $(this).find('.txt');
             var reviewItem = $(this).closest('.review-item');
             reviewItem.toggleClass('expanded');

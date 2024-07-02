@@ -1,18 +1,25 @@
-// banner_swiper
+//banner_swiper
 let banner_swiper = new Swiper(".banner-container", {
+
   loop: true,
   autoplay: {
-    delay: 2000,
+    delay: 5000,
     disableOnInteraction: false,
+  },
+  speed:800,
+  pagination: {
+    el: ".pager",
+    bulletActiveClass: 'on',
+    clickable: true
   },
   slidesPerView: 1,
 });
 
-// pick_swiper
+//pick_swiper
 let pick_swiper = new Swiper(".pick-container", {
     loop: true,
     autoplay: {
-      delay: 2000,
+      delay: 4000,
       disableOnInteraction: false,
     },
     slidesPerView: 3,

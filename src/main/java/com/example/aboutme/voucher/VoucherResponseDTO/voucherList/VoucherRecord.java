@@ -8,5 +8,7 @@ public record VoucherRecord(
         String price,
         Integer count,
         Integer duration,
-        String imagePath
-) {}
+        String imagePath,
+        String totalAmount
+) {
+}

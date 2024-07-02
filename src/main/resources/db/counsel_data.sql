@@ -1,6 +1,7 @@
 -- RESERVATION_SCHEDULED("확정 예정"),
 --     RESERVATION_COMPLETED("예약 확정"),
 
+-- counsel_tb
 INSERT INTO counsel_tb (client_id, expert_id, voucher_id, schedule_id, payment_id, reservation_status, counsel_status,
                         counsel_date, counsel_time, day_of_week, result, review_state, created_at, updated_at)
 VALUES

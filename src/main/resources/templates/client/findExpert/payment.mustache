@@ -41,7 +41,9 @@
                             <div class="final-amount">
                                 <p>최종 결제금액</p>
                                 <div class="amount-details">
-                                    <p>정상가 <span id="originalPrice">{{voucher.price}}</span></p>
+<!--                                    //TODO: 토탈-->
+                                    <!-- 토탈 어마운트 넣어야 함 -->
+                                    <p>정상가 <span id="originalPrice">60000원</span></p>
                                     <p class="coupon-discount">쿠폰 할인 <span>0원</span></p>
                                     <p class="total">결제 예정 금액 <span>{{voucher.price}}</span></p>
                                 </div>
@@ -120,7 +122,11 @@
                 const voucherCount = $('#count').val();
 
                 const merchantUid = 'order_' + new Date().getTime(); // 유니크한 주문 ID 생성
-
+// 요일 계산
+//                 const date = new Date(reservationDate);
+//                 const daysOfWeek = ["월", "화", "수", "목", "금"];
+//                 const dayOfWeek = daysOfWeek[date.getUTCDay()];
+                // 결제 정보를 서버로 전달
                 $.ajax({
                     url: '/payments/request',
                     method: 'POST',
@@ -136,8 +142,8 @@
                         voucherCount: voucherCount,
                     }),
                     success: function (response) {
+                        console.log("서버에서 결제 요청 처리 완료:", response);
                         if (response && response.merchantUid) {
-                            console.log("리스폰스" , response)
                             IMP.request_pay({
                                 pg: "html5_inicis",
                                 pay_method: "card",
@@ -148,7 +154,9 @@
                                 buyer_tel: buyerTel,
                             }, function (rsp) {
                                 if (rsp.success) {
+                                    alert("결제가 완료되었습니다.");
                                     paymentCompleted = true; // 결제 완료 플래그 설정
+                                    // 서버에 결제 완료 정보 전송
                                     $.post('/payments/complete', {
                                         impUid: rsp.imp_uid,
                                         merchantUid: rsp.merchant_uid,

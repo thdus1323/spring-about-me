@@ -51,6 +51,13 @@
                 console.log('Received message in browser:', message);
                 displayMessage(message);
             });
+
+            // Subscribe to the join topic
+            stompClient.subscribe('/topic/join/chat', function (messageOutput) {
+                var joinMessage = messageOutput.body;
+                displayJoinMessage(joinMessage);
+            });
+
             displayWelcomeMessage(); // 웹소켓 연결 후 입장 메시지 표시
         }, function (error) {
             console.error('STOMP error:', error);
@@ -74,8 +81,19 @@
                     welcomeMessage.className = 'welcome';
                     welcomeMessage.textContent = `${sessionUser.name}님이 입장하셨습니다`;
                     chatBox.appendChild(welcomeMessage);
+
+                    // Notify other users
+                    stompClient.send('/app/join/chat', {}, JSON.stringify(sessionUser.name + "님이 입장하셨습니다"));
                 })
                 .catch((error) => console.error('Error fetching session user:', error));
+    }
+
+    function displayJoinMessage(joinMessage) {
+        var chatBox = document.getElementById('chatBox');
+        var joinMessageElement = document.createElement('div');
+        joinMessageElement.className = 'join-message';
+        joinMessageElement.textContent = joinMessage;
+        chatBox.appendChild(joinMessageElement);
     }
 
     function sendMessage() {
@@ -159,7 +177,6 @@
                 })
                 .catch((error) => console.error('Error fetching session user:', error));
     }
-
 
     function closeChat() {
         $('#chatModal').hide(); // 모달창 닫기

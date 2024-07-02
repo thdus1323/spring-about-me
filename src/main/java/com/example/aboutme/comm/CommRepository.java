@@ -5,7 +5,6 @@ import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +14,7 @@ import java.util.List;
 public interface CommRepository extends JpaRepository<Comm, Integer> {
 
 
-    @Query("SELECT c FROM Comm c")
+    @Query("SELECT c FROM Comm c order by c.id desc ")
     Page<Comm> findAllCommPage(Pageable pageable);
 
     @Query("SELECT r FROM Reply r JOIN FETCH r.user WHERE r.comm.id IN :commIds")
@@ -70,12 +69,12 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
 
 
     @Query("""
-    SELECT c FROM Comm c 
-    LEFT JOIN FETCH c.replies r 
-    LEFT JOIN FETCH r.user u 
-    WHERE c.category = :category
-    ORDER BY c.id DESC
-    """)
+            SELECT c FROM Comm c 
+            LEFT JOIN FETCH c.replies r 
+            LEFT JOIN FETCH r.user u 
+            WHERE c.category = :category
+            ORDER BY c.id DESC
+            """)
     Page<Comm> findCommMainByCategory(@Param("category") CommCategory category, Pageable pageable);
 //
 //    //카테고리별 게시글 조회
