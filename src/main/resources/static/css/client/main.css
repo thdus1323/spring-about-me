@@ -155,16 +155,22 @@
     object-fit: cover;
 }
 
+.pick-content {
+    height: 70px;
+}
+
 .pick-container .card-bottom {
     display: flex;
     padding-top: 10px;
     align-items: center;
     border-top: 1px solid #ddd;
 }
+
 .pick-container .card-bottom > div{
     color : #999;
     font-size: 14px;
 }
+
 .pick-container .card-bottom .expert-img {
     width: 20px;
     height: 20px;
@@ -246,7 +252,6 @@
     scroll-behavior: smooth;
     display: flex;
     transition: transform 0.5s ease;
-    padding: 10px 0;
 }
 
 .expert-container .card {
@@ -354,10 +359,12 @@
 .pick-container.swiper .swiper-rtl .swiper-button-prev {
     right: -20px;
 }
-.swiper-button-next:after, .swiper-button-prev:after{
+
+.swiper-button-next:after, .swiper-button-prev:after {
     font-size: 30px !important;
     color: #666;
 }
+
 .pick-container.swiper .swiper-scrollbar-drag {
     background-color: #fd8234;
 }
