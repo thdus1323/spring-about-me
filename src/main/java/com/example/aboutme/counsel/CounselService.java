@@ -208,7 +208,6 @@ public class CounselService {
         Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(() -> new Exception400("해당하는 이용권을 찾을 수 없습니다."));
         User user = userRepository.findById(expertId).orElseThrow(() -> new Exception400("해당하는 전문가를 찾을 수 없습니다."));
         Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> new Exception400("해당하는 이용권 결제내역을 찾을 수 없습니다."));
-        System.out.println("payment = " + payment);
         // 가격 포맷
         String formattedPrice = Formatter.number((int) voucher.getPrice());
 

@@ -1,5 +1,6 @@
 -- RESERVATION_SCHEDULED("확정 예정"),
 --     RESERVATION_COMPLETED("예약 확정"),
+
 -- counsel_tb
 INSERT INTO counsel_tb (client_id, expert_id, voucher_id, schedule_id, payment_id, reservation_status, counsel_status,
                         counsel_date, counsel_time, day_of_week, result, review_state, created_at, updated_at)
@@ -7,6 +8,7 @@ VALUES
     -- 1번 클라이언트 상담 완료 내역
     (1, 21, 1, 1, 1, 'COUNSEL_COMPLETED', 'COUNSEL_COMPLETED', '2024-06-20', '09:00', '월', '상담결과 테스트용',
      'REVIEW_COMPLETED', NOW(), NOW()),
+
     -- 2번 클라이언트 상담 완료 내역
     (2, 22, 1, 2, 2, 'COUNSEL_COMPLETED', 'COUNSEL_COMPLETED', '2024-06-21', '10:00', '화', '상담결과 테스트용',
      'REVIEW_COMPLETED', NOW(), NOW()),
