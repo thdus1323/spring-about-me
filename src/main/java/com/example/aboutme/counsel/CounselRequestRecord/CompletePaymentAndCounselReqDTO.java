@@ -7,6 +7,7 @@ public record CompletePaymentAndCounselReqDTO(
         String impUid,
         Integer reservationId,
         String reservationDate,
-        String reservationTime
+        String reservationTime,
+        String dayOfWeek
 ) {
 }

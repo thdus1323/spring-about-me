@@ -63,7 +63,7 @@ public class Payment {
     @Column(nullable = false)
     private Integer voucherDuration; //바우처 이용시간
 
-    @Column(nullable = false)
+    //임시저장할때는 널 이어야함.
     private String impUid; // 아임포트 거래 고유 ID
 
     @Column(nullable = false)

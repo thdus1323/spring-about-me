@@ -14,12 +14,13 @@ class ScheduleRepositoryTest {
     private ScheduleRepository scheduleRepository;
 
 
-//    @Test
-//    void findByExpertIdAndDayOfWeek() {
-//        List<Schedule> schedules = scheduleRepository.findByExpertIdAndDayOfWeek(21, DayOfWeek.MONDAY);
-//        schedules.forEach(schedule -> System.out.println("schedule = " + schedule));
-////        assertFalse(schedules.isEmpty());
-//    }
+
+    @Test
+    void findByExpertIdAndDayOfWeek() {
+        List<Schedule> schedules = scheduleRepository.findByExpertIdAndDay(21, DayOfWeek.MONDAY);
+        schedules.forEach(schedule -> System.out.println("schedule = " + schedule));
+//        assertFalse(schedules.isEmpty());
+    }
 
     @Test
     void findByExpertIdAndDayOfWeekAndStartTime() {

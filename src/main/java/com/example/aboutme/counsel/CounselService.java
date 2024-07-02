@@ -17,6 +17,8 @@ import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.Payment;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
+import com.example.aboutme.review.Review;
+import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.schedule.ScheduleRepository;
 import com.example.aboutme.user.SessionUser;
@@ -46,6 +48,7 @@ public class CounselService {
     private final CounselRepository counselRepository;
     private final ScheduleRepository scheduleRepository;
     private final PaymentRepository paymentRepository;
+    private final ReviewRepository reviewRepository;
 
     //결재완료전 결재대기생성
     public PaymentDetailsDTO getTempReservation(Integer reservationId) {
@@ -140,6 +143,10 @@ public class CounselService {
                 .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
         Voucher voucher = voucherRepository.findById(reqDTO.voucherId())
                 .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
+        Payment payment = paymentRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
+        Review  review = reviewRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
 
 
         //이넘으로 변경
@@ -160,6 +167,8 @@ public class CounselService {
                 .schedule(schedule)
                 .reservationStatus(ReservationStatus.RESERVATION_PENDING)
                 .counselStatus(CounselStatus.COUNSEL_PENDING)
+                .payment(payment)
+                .reviewState(ReviewState.REVIEW_PENDING)
                 .build();
 
         return counselRepository.save(reservation);

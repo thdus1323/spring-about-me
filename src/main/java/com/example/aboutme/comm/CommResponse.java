@@ -6,6 +6,7 @@ import com.example.aboutme.user.enums.UserRole;
 import kotlin.jvm.Transient;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Page;
 
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -41,8 +42,6 @@ public class CommResponse {
         }
     }
 
-    // 용꺼
-    // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO
     @Data
     public static class ALLCommWithRepliesDTO {
         private Integer id;
@@ -74,7 +73,6 @@ public class CommResponse {
             private String solution;
             private String profileImage;
             private String expertName;
-
             private boolean userRole;
 
             public ExpertReplyDTO(Reply reply) {
@@ -86,6 +84,80 @@ public class CommResponse {
             }
         }
     }
+
+    @Data
+    public static class ALLCommWithRepliesPageDTO {
+        private List<ALLCommWithRepliesDTO> comms;
+        private int currentPage;
+        private int nextPage;
+        private int previousPage;
+        private boolean hasPrevious;
+        private boolean hasNext;
+        private int totalPages;
+        private long totalElements;
+        private int size;
+
+        public ALLCommWithRepliesPageDTO(Page<Comm> commPage) {
+            this.comms = commPage.getContent().stream()
+                    .map(ALLCommWithRepliesDTO::new)
+                    .collect(Collectors.toList());
+            this.currentPage = commPage.getNumber();
+            this.nextPage = currentPage + 1;
+            this.previousPage = currentPage - 1;
+            this.hasPrevious = commPage.hasPrevious();
+            this.hasNext = commPage.hasNext();
+            this.totalPages = commPage.getTotalPages();
+            this.totalElements = commPage.getTotalElements();
+            this.size = commPage.getSize();
+        }
+    }
+
+    // 용꺼
+    // 모든 글과 댓글 가져와서 커뮤니티 메인에 뿌릴 DTO
+//    @Data
+//    public static class ALLCommWithRepliesDTO {
+//        private Integer id;
+//        private String writerName;
+//        private String writerImage;
+//        private String content;
+//        private String title;
+//        private String category;
+//        private int replies;
+//        private List<ExpertReplyDTO> expertReplies = new ArrayList<>();
+//
+//
+//        public ALLCommWithRepliesDTO(Comm comm) {
+//            this.id = comm.getId();
+//            this.writerName = comm.getUser().getName();
+//            this.writerImage = comm.getUser().getProfileImage();
+//            this.content = comm.getContent();
+//            this.title = comm.getTitle();
+//            this.category = comm.getCategory().getKorean();
+//            this.replies = (int) comm.getReplies().stream().count();
+//            this.expertReplies = comm.getReplies() == null ? new ArrayList<>() : comm.getReplies().stream()
+//                    .filter(reply -> reply.getUser() != null)
+//                    .map(ExpertReplyDTO::new)
+//                    .collect(Collectors.toList());
+//        }
+//
+//        @Data
+//        public static class ExpertReplyDTO {
+//            private Integer id;
+//            private String solution;
+//            private String profileImage;
+//            private String expertName;
+//
+//            private boolean userRole;
+//
+//            public ExpertReplyDTO(Reply reply) {
+//                this.id = reply.getId();
+//                this.solution = reply.getSolution();
+//                this.profileImage = reply.getUser().getProfileImage();
+//                this.expertName = reply.getUser().getName();
+//                this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
+//            }
+//        }
+//    }
 
     // 게시글 디테일 DTO -> Comm, Reply
     @Data
@@ -221,7 +293,7 @@ public class CommResponse {
 
         @Data
         public static class ReplyDTO {
-            private Integer id;
+            private Integer replyId;
             private String profileImage;
             private String name;
             private boolean userRole;
@@ -235,7 +307,7 @@ public class CommResponse {
             private Integer writerId;
 
             public ReplyDTO(@NotNull Reply reply) {
-                this.id = reply.getId();
+                this.replyId = reply.getId();
                 this.profileImage = reply.getUser().getProfileImage();
                 this.name = reply.getUser().getName();
                 this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
