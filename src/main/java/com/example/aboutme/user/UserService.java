@@ -590,8 +590,17 @@ public class UserService {
     // 오어스 회원가입
     @Transactional
     public SessionUser loginKakao(String code, RedisTemplate<String, Object> redisTemp) {
-        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
-        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+//        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
+//        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+
+        Object userRoleObj = redisTemp.opsForValue().get("userRole");
+        String userRoleStr = userRoleObj != null ? userRoleObj.toString().replaceAll("\"", "").trim() : "";
+        UserRole userRole;
+        try {
+            userRole = UserRole.valueOf(userRoleStr);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid user role: " + userRoleStr);
+        }
 
         RestTemplate restTemp = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -660,8 +669,17 @@ public class UserService {
 
     @Transactional
     public SessionUser loginNaver(String code, String state, RedisTemplate<String, Object> redisTemp) {
-        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
-        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+//        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
+//        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+
+        Object userRoleObj = redisTemp.opsForValue().get("userRole");
+        String userRoleStr = userRoleObj != null ? userRoleObj.toString().replaceAll("\"", "").trim() : "";
+        UserRole userRole;
+        try {
+            userRole = UserRole.valueOf(userRoleStr);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid user role: " + userRoleStr);
+        }
 
         RestTemplate restTemp = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
