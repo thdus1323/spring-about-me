@@ -35,9 +35,13 @@ public class ChatController {
     @PostMapping("text/complete/{counselId}")
     public String textTherapyComplete(@PathVariable Integer counselId) {
         SessionUser sessionUser = redisUtil.getSessionUser();
-
         counselService.CounselComplete(sessionUser, counselId);
 
-        return "redirect:/client/mypage";
+        switch (sessionUser.getUserRole()) {
+            case EXPERT:
+                return "redirect:/expert/mypage";
+            default:
+                return "redirect:/client/mypage";
+        }
     }
 }

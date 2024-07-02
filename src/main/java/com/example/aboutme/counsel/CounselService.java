@@ -349,7 +349,8 @@ public class CounselService {
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
 
-           boolean isCompleted = counsel.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED;
+            boolean isCompleted = counsel.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED;
+
 
             // UserRecord 생성
             return new UserRecord(
