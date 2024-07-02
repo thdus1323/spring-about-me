@@ -41,6 +41,7 @@
                             <div class="final-amount">
                                 <p>최종 결제금액</p>
                                 <div class="amount-details">
+<!--                                    //TODO: 토탈-->
                                     <!-- 토탈 어마운트 넣어야 함 -->
                                     <p>정상가 <span id="originalPrice">60000원</span></p>
                                     <p class="coupon-discount">쿠폰 할인 <span>0원</span></p>
@@ -73,16 +74,12 @@
     </section>
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script>
-        // parseInt($('#originalPrice').text().replace(/,/g, ''))
         $(document).ready(function () {
             let itemName = $('h3.page-title').text();
-            const originalPrice = 100;
-            //parseInt('{{!voucher.price}}'.replace(/,/g, ''), 10);
+            const originalPrice = parseInt($('#originalPrice').text().replace(/,/g, ''), 10);
             let discountAmount = 0; // 할인 금액
             let finalAmount = originalPrice - discountAmount; // 최종 금액
             let paymentCompleted = false; // 결제 완료 상태 추적
-            console.log("Original Price:", originalPrice);
-            console.log("Final Amount:", finalAmount);
 
             // 쿠폰 적용 버튼 클릭 시
             $('#applyCoupon').on('click', function () {
@@ -99,6 +96,7 @@
                 $('#payButton').text(finalAmount.toLocaleString() + '원 결제하기');
             }
 
+
             // 초기화
             updateFinalAmount();
 
@@ -107,9 +105,7 @@
             });
 
             function requestPay() {
-                console.log("Request Pay 함수 호출됨");
-
-                IMP.init("imp14397622");
+                IMP.init("imp44172423");
                 const amountFormatted = $('#price').val();
                 const amount = parseFloat(amountFormatted.replace(/,/g, '').replace('원', '')); // 쉼표와 "원"을 제거하고 숫자로 변환
 
@@ -127,9 +123,9 @@
 
                 const merchantUid = 'order_' + new Date().getTime(); // 유니크한 주문 ID 생성
 // 요일 계산
-                const date = new Date(reservationDate);
-                const daysOfWeek = ["월", "화", "수", "목", "금"];
-                const dayOfWeek = daysOfWeek[date.getUTCDay()];
+//                 const date = new Date(reservationDate);
+//                 const daysOfWeek = ["월", "화", "수", "목", "금"];
+//                 const dayOfWeek = daysOfWeek[date.getUTCDay()];
                 // 결제 정보를 서버로 전달
                 $.ajax({
                     url: '/payments/request',
@@ -149,7 +145,7 @@
                         console.log("서버에서 결제 요청 처리 완료:", response);
                         if (response && response.merchantUid) {
                             IMP.request_pay({
-                                pg: "html5_inicis.INIpayTest",
+                                pg: "html5_inicis",
                                 pay_method: "card",
                                 merchant_uid: response.merchantUid,
                                 name: "테스트 결제",
@@ -170,8 +166,7 @@
                                         reservationDate: reservationDate,
                                         reservationTime: reservationTime,
                                     }, function (data) {
-                                        alert("홈페이지로 이동합니다.");
-                                        console.log("결제 완료 응답:", data);
+                                        alert("결제가 완료되었습니다.");
                                         window.location.href = data; // 서버에서 받은 URL로 리다이렉트
                                     }).fail(function (xhr, status, error) {
                                         alert("서버로 전송 중 오류 발생: " + error);
@@ -185,7 +180,6 @@
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.error("서버 요청 중 오류 발생:", error);
                         alert("결제 요청 중 오류 발생: " + error);
                     }
                 });

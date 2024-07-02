@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
+
+    Payment findByImpUid(String impUid);
+
     //결제정보 검색
     Optional<Payment> findByMerchantUid(String merchantUid);
 
