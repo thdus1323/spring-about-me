@@ -3,6 +3,8 @@
 /* 페이지 내용 */
 .page-content {
     min-height: calc(100vh - 270px);
+    display: flex;
+    align-items: center;
 }
 
 /* 상세보기 */
