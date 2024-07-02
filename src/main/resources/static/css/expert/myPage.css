@@ -150,6 +150,7 @@
     font-weight: bold;
 }
 
+
 .expert-mypage .card-body .input-group {
     display: flex;
     align-items: center;
@@ -184,15 +185,9 @@
     margin-bottom: 10px;
 }
 
+
 .spec-list {
-<<<<<<< HEAD
-<<<<<<< HEAD
     width: 33%;
-=======
->>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
-=======
-    width: 33%;
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -204,22 +199,7 @@
 }
 
 .spec-list > .spec-type {
-<<<<<<< HEAD
-<<<<<<< HEAD
     font-size: 16px;
-=======
-    font-size: 14px;
-    color: #555;
-    font-weight: bold;
-}
-
-.spec-list > .spec-year {
-    font-size: 14px;
-    color: #999;
->>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
-=======
-    font-size: 16px;
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
 }
 
 .spec-list > .spec-details {
@@ -228,75 +208,31 @@
 }
 
 .append-spec {
-<<<<<<< HEAD
-<<<<<<< HEAD
     width: calc((20% - 10px));
-=======
-    width: 20%;
->>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
-=======
-    width: calc((20% - 10px));
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
     margin-right: 10px;
 }
 
 .append-spec.text {
-<<<<<<< HEAD
-<<<<<<< HEAD
     width: calc(60% - 50px);
     margin-right: 10px;
 }
 
 .append-spec select {
-=======
-    width: 55%;
-    margin-right: 10px;
-}
-
-.append-spec select,
-.append-spec input {
-    width: 100%;
->>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
-=======
-    width: calc(60% - 50px);
-    margin-right: 10px;
-}
-
-.append-spec select {
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
     height: 40px;
     border-radius: 5px;
 }
 
 .append-spec label {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
     font-size: 14px;
 }
 
 .append-spec input {
-<<<<<<< HEAD
 }
 
-=======
-    font-size: 12px;
-    display: block;
-    margin-bottom: 5px;
-=======
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
-}
-
->>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
 .input-group-append button {
     height: 40px;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
 .append-spec input#detail {
     height: 40px;
     margin-bottom: 0;
@@ -304,11 +240,6 @@
     border-color: #ddd;
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> d42c30c (경력과 학력을 추가 할떄 폼이 가장 최신으로 올라오게 수정)
-=======
->>>>>>> 93a923d (그리드로 3개씩 정렬 완료)
 .expert-myPage .card-body .input-group {
     align-items: flex-end !important;
     margin-top: 30px;
@@ -325,50 +256,4 @@
 
 .spec-year span {
     color: #999;
-}
-
-/* Schedule card styling */
-.schedule-card {
-    margin-top: 20px;
-}
-
-.schedule-card .card-header {
-    background-color: #f8f9fa;
-    font-weight: bold;
-}
-
-.schedule-card .form-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.schedule-card .form-group label {
-    width: 15%;
-    margin-bottom: 0;
-}
-
-.schedule-card .form-control {
-    width: 45%;
-    margin-right: 10px;
-}
-
-.schedule-card .btn-remove {
-    color: red;
-    cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.schedule-card .btn-remove:hover {
-    color: darkred;
-}
-
-.btn-save {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
 }
