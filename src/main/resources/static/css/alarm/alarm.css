@@ -11,11 +11,15 @@
     padding-top: 60px;
 }
 
+.alarm-modal {
+    width: 200px !important;
+}
+
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 화면 가운데 배치 */
     padding: 20px;
-    border: none!important;
+    border: none !important;
     width: 80%;
     max-width: 600px; /* 최대 너비 설정 */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */

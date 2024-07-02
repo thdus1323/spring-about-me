@@ -13,9 +13,10 @@
                             <div class="search-wrapper mb-20">
                                 <form action="#" method="#">
                                     <div class="input-wrapper search">
-                                        <button class="search-submit-btn black-color"><i class="fa-regular fa-magnifying-glass"></i></button>
+                                        <button class="search-submit-btn black-color"><i
+                                                class="fa-regular fa-magnifying-glass"></i></button>
                                         <input type="text" placeholder="이름,증상을 검색해주세요">
-                                        <button id="test">test</button>
+                                        <button id="test" class="test-btn">test</button>
                                     </div>
                                 </form>
                             </div>
@@ -25,9 +26,11 @@
                                         <p class="mb-10">가능일시</p>
                                         <div class="calendar option-list">
                                             <div class="month">
-                                                <button id="prevMonth"><i class="fa-regular fa-chevron-left"></i></button>
+                                                <button id="prevMonth"><i class="fa-regular fa-chevron-left"></i>
+                                                </button>
                                                 <h3>6월 2024년</h3>
-                                                <button id="nextMonth"><i class="fa-regular fa-chevron-right"></i></button>
+                                                <button id="nextMonth"><i class="fa-regular fa-chevron-right"></i>
+                                                </button>
                                             </div>
                                             <div class="days" id="days">
                                                 <!-- Days will be dynamically generated here -->
@@ -86,11 +89,13 @@
                                         <ul class="option-list check">
                                             <li>
                                                 <label for="counseling01">30분상담</label>
-                                                <input type="checkbox" id="counseling01" name="counseling" value="partTime">
+                                                <input type="checkbox" id="counseling01" name="counseling"
+                                                       value="partTime">
                                             </li>
                                             <li>
                                                 <label for="counseling02">보이스 테라피(전화 상담)</label>
-                                                <input type="checkbox" id="counseling02" name="counseling" value="voice">
+                                                <input type="checkbox" id="counseling02" name="counseling"
+                                                       value="voice">
                                             </li>
                                             <li>
                                                 <label for="counseling03">텍스트 테라피(채팅 상담)</label>
@@ -151,7 +156,8 @@
                                         <div class="expert-info">
                                             <div class="info-head mb-10">
                                                 <span class="head-name">{{name}}</span>
-                                                <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em class="evaluate-count">(110)</em></span>
+                                                <span class="head-star"><i class="fa-solid fa-star"></i>4.95<em
+                                                        class="evaluate-count">(110)</em></span>
                                             </div>
                                             <div class="expert-body">
                                                 <p class="body-title mb-10">{{title}}</p>
@@ -160,7 +166,8 @@
                                                         <li><img src="{{url}}" alt="상담 방식"></li>
                                                     {{/images}}
                                                 </ul>
-                                                <span class="active-color">전문가 프로필 보기<i class="fa-solid fa-chevron-right active-color"></i></span>
+                                                <span class="active-color">전문가 프로필 보기<i
+                                                        class="fa-solid fa-chevron-right active-color"></i></span>
                                             </div>
                                         </div>
                                         <div class="expert-image">
