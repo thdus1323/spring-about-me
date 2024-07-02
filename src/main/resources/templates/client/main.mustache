@@ -5,26 +5,23 @@
     <div class="banner-container  container swiper mySwiper">
         <div class="card-container swiper-wrapper">
             <a href="#!" class="card swiper-slide">
-                <img src="./images/banner01.jpg" alt="">
+                <img src="./images/main01.png" alt="">
             </a>
             <a href="#!" class="card swiper-slide">
-                <img src="./images/banner02.jpg" alt="">
+                <img src="./images/main02.png" alt="">
             </a>
             <a href="#!" class="card swiper-slide">
-                <img src="./images/banner03.jpg" alt="">
+                <img src="./images/main03.png" alt="">
             </a>
             <a href="#!" class="card swiper-slide">
-                <img src="./images/banner04.jpg" alt="">
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <img src="./images/banner05.jpg" alt="">
-            </a>
-            <a href="#!" class="card swiper-slide">
-                <img src="./images/banner06.jpg" alt="">
+                <img src="./images/main04.png" alt="">
             </a>
         </div>
+        <div class="pager"></div>
     </div>
+
 </div>
+
 <div class="container">
     <div class="categories mb-20">
         <ul>
@@ -36,47 +33,53 @@
     </div>
 </div>
 <!-- 픽 사연 시작 -->
-<div class="pick-ex">
-    <div class="pick-container container swiper mySwiper">
-        <div class="title">
-            <h2 class="page-title">About's PICK</h2>
-            <a href="#!" class="view-all">전체보기</a>
-        </div>
-        <div class="card-container swiper-wrapper">
-            {{#clientMain.comms}}
-                <a href="#!" class="card swiper-slide">
-                    <div class="card-top">
-                        <div class="pick-title mb-20">
-                            {{title}}
-                        </div>
-                        <div class="category-area mb-10">
-                            <div class="pick-category">{{category}}</div>
-                            <div class="dot"></div>
-                            <div>
-                                <div class="badge">
-                                    <img src=".{{writerImage}}" alt="">
+<section id="pick">
+    <div class="container">
+        <div class="pick-ex">
+            <div class="pick-container container swiper mySwiper">
+                <div class="title">
+                    <h2 class="page-title">About's PICK</h2>
+                    <a href="#!" class="view-all">전체보기</a>
+                </div>
+                <div class="card-container swiper-wrapper">
+                    {{#clientMain.comms}}
+                        <a href="#!" class="card swiper-slide">
+                            <div class="card-top">
+                                <div class="pick-title mb-20">
+                                    {{title}}
                                 </div>
-                                <div class="name">{{writerName}}</div>
+                                <div class="category-area mb-10">
+                                    <div class="pick-category">{{category}}</div>
+                                    <div class="dot"></div>
+                                    <div>
+                                        <div class="badge">
+                                            <img src=".{{writerImage}}" alt="">
+                                        </div>
+                                        <div class="name">{{writerName}}</div>
+                                    </div>
+                                </div>
+                                <div class="pick-content">
+                                    {{content}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="pick-content">
-                            {{content}}
-                        </div>
-                    </div>
-                    <div class="card-bottom">
-                        <div class="expert-img">
-                            <img src=".{{expertImage}}" alt="expert img">
-                        </div>
-                        <div>{{expertName}}님의 전문가답변</div>
-                    </div>
-                </a>
-            {{/clientMain.comms}}
+                            <div class="card-bottom">
+                                <div class="expert-img">
+                                    <img src=".{{expertImage}}" alt="expert img">
+                                </div>
+                                <div>{{expertName}}님의 전문가답변</div>
+                            </div>
+                        </a>
+                    {{/clientMain.comms}}
+                </div>
+                <!-- <div class="swiper-scrollbar"></div> -->
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <!-- <div class="swiper-scrollbar"></div> -->
     </div>
-</div>
+
+</section>
+
 <!-- 픽 사연 끝 -->
 <!-- 센터 위치 시작 -->
 <div class="center-ex">
@@ -147,39 +150,42 @@
 </div>
 <!-- 센터 위치 끝 -->
 <!-- 나에게 맞는 전문가 시작 -->
-<div class="expert-ex">
-    <div class="expert-container container swiper mySwiper">
-        <h2 class="page-title">나에게 딱 맞는 전문가</h2>
-        <p class="mb-10">공인 자격을 갖춘 검증된 전문가들이 여러분을 기다리고 있어요.</p>
-        <div class="card-container swiper-wrapper">
-            {{#clientMain.experts}}
-                <a href="#!" class="card swiper-slide">
-                    <div class="card-top">
-                        <div class="expert-img mb-10">
-                            <img src=".{{profileImage}}" alt="expert img">
-                        </div>
-                        <div class="expert-name mb-10">{{name}}</div>
-                        <div class="expert-title mb-10">{{expertTitle}}</div>
-                    </div>
-                    <div class="card-bottom contact">
-                        {{#hasTextTherapy}}
-                            <div class="chat"><img src="/images/chat.png"></div>
-                        {{/hasTextTherapy}}
-                        {{#hasVoiceTherapy}}
-                            <div class="call"><img src="/images/call.png"></div>
-                        {{/hasVoiceTherapy}}
-                        {{#hasVideoTherapy}}
-                            <div class="video"><img src="/images/video.png"></div>
-                        {{/hasVideoTherapy}}
-                    </div>
-                </a>
-            {{/clientMain.experts}}
-
-
+<section id="expert">
+    <div class="container">
+        <div class="expert-ex">
+            <div class="expert-container swiper mySwiper">
+                <h2 class="page-title">나에게 딱 맞는 전문가</h2>
+                <p class="mb-10">공인 자격을 갖춘 검증된 전문가들이 여러분을 기다리고 있어요.</p>
+                <div class="card-container swiper-wrapper">
+                    {{#clientMain.experts}}
+                        <a href="#!" class="card swiper-slide">
+                            <div class="card-top">
+                                <div class="expert-img mb-10">
+                                    <img src=".{{profileImage}}" alt="expert img">
+                                </div>
+                                <div class="expert-name mb-10">{{name}}</div>
+                                <div class="expert-title mb-10">{{expertTitle}}</div>
+                            </div>
+                            <div class="card-bottom contact">
+                                {{#hasTextTherapy}}
+                                    <div class="chat"><img src="/images/chat.png"></div>
+                                {{/hasTextTherapy}}
+                                {{#hasVoiceTherapy}}
+                                    <div class="call"><img src="/images/call.png"></div>
+                                {{/hasVoiceTherapy}}
+                                {{#hasVideoTherapy}}
+                                    <div class="video"><img src="/images/video.png"></div>
+                                {{/hasVideoTherapy}}
+                            </div>
+                        </a>
+                    {{/clientMain.experts}}
+                </div>
+            </div>
+            <div class="swiper-button-next .expert-ex"></div>
+            <div class="swiper-button-prev .expert-ex"></div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
     </div>
-</div>
+</section>
+
 
 {{> layout/footer}}
