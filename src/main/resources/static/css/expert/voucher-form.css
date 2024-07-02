@@ -12,15 +12,21 @@
 .registration h4 {
     margin: 50px 0 20px 0;
     text-align: left;
+    font-width: 700;
+    font-size: 22px;
 }
 
 .voucher-form {
     width: 500px;
     border: 1px solid #e6e6e6;
     border-radius: 10px;
-    padding: 100px 80px;
+    padding: 50px 20px;
+    background: #fff;
 }
-
+.voucher-form-tag .submit-btn-wrap button{
+    width: 100%;
+    color: #fff;
+}
 .voucher-form > div {
     display: flex;
     margin-bottom: 20px;
@@ -28,12 +34,19 @@
 }
 
 .voucher-form > div label {
-    width: 100px;
+    width: 50px;
+    text-align: right;
+    margin-right: 10px;
 }
 
 .voucher-form > div input,
 .voucher-form > div select {
-    width: calc(100% - 100px);
+    width: calc(100% - 60px);
+    height: 40px;
+    font-size: 14px;
+    border-color: #ddd;
+    border-radius: 5px !important;
+    margin-bottom: 0;
 }
 
 .voucher-form-tag .submit-btn-wrap {
