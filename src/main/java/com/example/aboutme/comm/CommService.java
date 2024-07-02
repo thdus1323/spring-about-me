@@ -29,13 +29,73 @@ public class CommService {
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
 
-
-    //카테고리별로 조회
     @Transactional
-    public List<CommResponse.CommMainByCategory> getCommMainByCategory(CommCategory category) {
-        List<CommResponse.CommMainByCategory> CommMain = commRepository.findCommMainByCategory(category);
-        return CommMain;
+    public CommResponse.ALLCommWithRepliesPageDTO findAllCommWithReply(Pageable pageable, CommCategory category) {
+        Page<Comm> commPage;
+
+        if (category != null) {
+            commPage = commRepository.findCommMainByCategory(category, pageable);
+        } else {
+            commPage = commRepository.findAllCommPage(pageable);
+        }
+
+        List<Integer> commIds = commPage.getContent().stream()
+                .map(Comm::getId)
+                .collect(Collectors.toList());
+
+        List<Reply> replies = commRepository.findRepliesByCommIds(commIds);
+
+        commPage.getContent().forEach(comm -> {
+            comm.setReplies(
+                    replies.stream()
+                            .filter(reply -> reply.getComm().getId().equals(comm.getId()))
+                            .collect(Collectors.toList())
+            );
+        });
+
+        return new CommResponse.ALLCommWithRepliesPageDTO(commPage);
     }
+    //카테고리별로 조회
+//    @Transactional
+//    public CommResponse.CommMainByCategoryPageDTO getCommMainByCategory(CommCategory category, Pageable pageable) {
+//        Page<Comm> commPage = commRepository.findCommMainByCategory(category, pageable);
+//        List<Integer> commIds = commPage.getContent().stream()
+//                .map(Comm::getId)
+//                .collect(Collectors.toList());
+//
+//        List<Reply> replies = commRepository.findRepliesByCommIds(commIds);
+//
+//        commPage.getContent().forEach(comm -> {
+//            comm.setReplies(
+//                    replies.stream()
+//                            .filter(reply -> reply.getComm().getId().equals(comm.getId()))
+//                            .collect(Collectors.toList())
+//            );
+//        });
+//
+//        return new CommResponse.CommMainByCategoryPageDTO(commPage);
+//    }
+//
+//    @Transactional()
+//    public CommResponse.ALLCommWithRepliesPageDTO findAllCommWithReply(Pageable pageable) {
+//        Page<Comm> commPage = commRepository.findAllCommPage(pageable);
+//        List<Integer> commIds = commPage.getContent().stream()
+//                .map(Comm::getId)
+//                .collect(Collectors.toList());
+//
+//        List<Reply> replies = commRepository.findRepliesByCommIds(commIds);
+//
+//        // 연관 데이터를 Comm 엔터티에 설정합니다.
+//        commPage.getContent().forEach(comm -> {
+//            comm.setReplies(
+//                    replies.stream()
+//                            .filter(reply -> reply.getComm().getId().equals(comm.getId()))
+//                            .collect(Collectors.toList())
+//            );
+//        });
+//
+//        return new CommResponse.ALLCommWithRepliesPageDTO(commPage);
+//    }
 
     @Transactional
     public CommResponse.CommDetailDTO getCommDetail(int id) {
@@ -75,26 +135,7 @@ public class CommService {
 //        return new PageImpl<>(dtos, PageRequest.of(page, size), commPage.getTotalElements());
 //    }
 
-    @Transactional()
-    public CommResponse.ALLCommWithRepliesPageDTO findAllCommWithReply(Pageable pageable) {
-        Page<Comm> commPage = commRepository.findAllCommPage(pageable);
-        List<Integer> commIds = commPage.getContent().stream()
-                .map(Comm::getId)
-                .collect(Collectors.toList());
 
-        List<Reply> replies = commRepository.findRepliesByCommIds(commIds);
-
-        // 연관 데이터를 Comm 엔터티에 설정합니다.
-        commPage.getContent().forEach(comm -> {
-            comm.setReplies(
-                    replies.stream()
-                            .filter(reply -> reply.getComm().getId().equals(comm.getId()))
-                            .collect(Collectors.toList())
-            );
-        });
-
-        return new CommResponse.ALLCommWithRepliesPageDTO(commPage);
-    }
 
     // 아이디로 검색해서 글,댓글 정보 받아오기
     @Transactional

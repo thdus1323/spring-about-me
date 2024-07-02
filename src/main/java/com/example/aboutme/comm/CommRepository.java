@@ -15,15 +15,15 @@ import java.util.List;
 public interface CommRepository extends JpaRepository<Comm, Integer> {
 
 
-
-
     @Query("SELECT c FROM Comm c")
     Page<Comm> findAllCommPage(Pageable pageable);
 
     @Query("SELECT r FROM Reply r JOIN FETCH r.user WHERE r.comm.id IN :commIds")
     List<Reply> findRepliesByCommIds(@Param("commIds") List<Integer> commIds);
+
     //클라이언트 게시물 조회
     Page<Comm> findByUserId(@Param("userId") Integer userId, Pageable pageable);
+
 
     // 현재 게시글 ID를 제외하고 같은 카테고리의 다른 게시글을 가져오는 쿼리
     List<Comm> findByCategoryAndIdNot(CommCategory category, Long id);
@@ -61,31 +61,39 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
     List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReplies();
 
 
-
     // detail 출력 쿼리
     @Query(" SELECT c FROM Comm c LEFT JOIN FETCH c.replies r WHERE c.id = :id ")
     CommResponse.CommWithRepliesDTO findByIdDetail(@Param("id") Integer id);
-
 
     // 전문답변 있는지 확인하는 쿼리
     @Query("SELECT COUNT(r) > 0 FROM Comm c JOIN c.replies r WHERE c.id = :id AND r.user.userRole = com.example.aboutme.user.enums.UserRole.EXPERT")
     boolean existsExpertReply(@Param("id") Integer id);
 
-    //카테고리별 게시글 조회
+
     @Query("""
-                SELECT new com.example.aboutme.comm.CommResponse$CommMainByCategory(
-                    c.id,
-                    c.user.name,
-                    c.user.profileImage,
-                    c.content,
-                    c.title,
-                    c.category,
-                    SIZE(c.replies)
-                )
-                FROM Comm c
-                LEFT JOIN c.replies r
-                WHERE c.category = :category
-                ORDER BY c.id DESC
-            """)
-    List<CommResponse.CommMainByCategory> findCommMainByCategory(@Param("category") CommCategory category);
+    SELECT c FROM Comm c 
+    LEFT JOIN FETCH c.replies r 
+    LEFT JOIN FETCH r.user u 
+    WHERE c.category = :category
+    ORDER BY c.id DESC
+    """)
+    Page<Comm> findCommMainByCategory(@Param("category") CommCategory category, Pageable pageable);
+//
+//    //카테고리별 게시글 조회
+//    @Query("""
+//                SELECT new com.example.aboutme.comm.CommResponse$CommMainByCategory(
+//                    c.id,
+//                    c.user.name,
+//                    c.user.profileImage,
+//                    c.content,
+//                    c.title,
+//                    c.category,
+//                    SIZE(c.replies)
+//                )
+//                FROM Comm c
+//                LEFT JOIN c.replies r
+//                WHERE c.category = :category
+//                ORDER BY c.id DESC
+//            """)
+//    Page<CommResponse.CommMainByCategory> findCommMainByCategory(@Param("category") CommCategory category);
 }
