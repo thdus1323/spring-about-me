@@ -41,7 +41,6 @@ public class CommController {
     public ResponseEntity<?> communityUpdate(@RequestBody CommRequest.UpdateRequestCommDTO updatedPost) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         commService.updateComm(sessionUser.getId(), updatedPost);
-
         return ResponseEntity.ok("게시글 수정 완료");
     }
 
@@ -50,20 +49,13 @@ public class CommController {
     public ResponseEntity<?> communityWriteComplete(@RequestBody CommRequest.RequestCommDTO commRequest) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         commService.saveComm(sessionUser.getId(), commRequest);
-
         return ResponseEntity.ok("게시글 등록 완료");
     }
 
     @GetMapping("/comm-detail/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) throws JsonProcessingException {
-
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
-
-//        String json = new ObjectMapper().writeValueAsString(comm);
-//        log.info("디테일  {}", json);
-
         model.addAttribute("comm", comm);
-
         return "comm/comm-detail";
     }
 
@@ -80,7 +72,6 @@ public class CommController {
                             Model model) {
         Pageable pageable = PageRequest.of(page, size);
         CommResponse.ALLCommWithRepliesPageDTO allCommsWithReplyList = commService.findAllCommWithReply(pageable);
-        System.out.println("allCommsWithReplyList.getTotalPages() = " + allCommsWithReplyList.getTotalPages());
         model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
         return "comm/comm-main";
     }

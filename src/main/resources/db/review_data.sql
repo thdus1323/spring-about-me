@@ -1,6 +1,7 @@
 -- review_tb
 INSERT INTO review_tb (client_id, expert_id, counsel_id, score, content, created_at, updated_at)
-VALUES (1, 21, 1, 5, '상담사가 매우 친절하고 도움이 많이 되었습니다.', NOW(), NOW()),
+VALUES
+        (1, 21, 1, 5, '상담사가 매우 친절하고 도움이 많이 되었습니다.', NOW(), NOW()),
        (2, 21, 2, 4, '상담사가 매우 이해심이 많았습니다.', NOW(), NOW()),
        (3, 21, 3, 3, '상담은 좋았지만 더 많은 시간이 필요했습니다.', NOW(), NOW()),
        (4, 21, 4, 5, '정말 유익한 상담이었습니다. 추천합니다!', NOW(), NOW()),
