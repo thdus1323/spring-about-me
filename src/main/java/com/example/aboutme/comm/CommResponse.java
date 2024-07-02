@@ -5,6 +5,7 @@ import com.example.aboutme.reply.Reply;
 import com.example.aboutme.user.enums.UserRole;
 import kotlin.jvm.Transient;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 
 import java.sql.Timestamp;
