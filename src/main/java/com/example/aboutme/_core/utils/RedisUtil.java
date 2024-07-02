@@ -1,8 +1,6 @@
 package com.example.aboutme._core.utils;
 
 import com.example.aboutme.user.SessionUser;
-import com.example.aboutme.user.User;
-import com.example.aboutme.user.enums.UserRole;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +33,10 @@ public class RedisUtil {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Redis 저장 중 오류 발생: " + e.getMessage(), e);
         }
+    }
+
+    public Object getUserRole() {
+        return redisTemplate.opsForValue().get("userRole");
     }
 
     public SessionUser getSessionUser() {
