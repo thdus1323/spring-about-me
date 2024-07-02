@@ -83,15 +83,17 @@ public class UserService {
         User user = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다"));
 
+        String defaultProfileImage = "/images/counselor01.webp";
+
         ExpertUserProfileDTO.User userProfile = ExpertUserProfileDTO.User.builder()
                 .id(user.getId())
                 .userRole(user.getUserRole())
                 .name(user.getName())
                 .email(user.getEmail())
                 .birth(user.getBirth())
-                .gender(user.getGender().getKorean())
-                .profileImage(user.getProfileImage())
-                .expertLevel(user.getLevel().getKorean())
+                .gender(Optional.ofNullable(user.getGender()).map(Gender::getKorean).orElse(""))
+                .profileImage(Optional.ofNullable(user.getProfileImage()).filter(image -> !image.isEmpty()).orElse(defaultProfileImage))
+                .expertLevel(Optional.ofNullable(user.getLevel()).map(ExpertLevel::getKorean).orElse(""))
                 .build();
 
         List<ExpertUserProfileDTO.SpecDTO> spec = getExpertPageSpec(sessionUser.getId());
@@ -154,14 +156,15 @@ public class UserService {
         User user = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
 
+        String defaultProfileImage = "/images/emotion04.webp";
         UserProfileDTO.User userProfile = UserProfileDTO.User.builder()
                 .id(user.getId())
                 .userRole(user.getUserRole())
                 .name(user.getName())
                 .email(user.getEmail())
                 .birth(user.getBirth())
-                .gender(user.getGender().getKorean())
-                .profileImage(user.getProfileImage())
+                .gender(Optional.ofNullable(user.getGender()).map(Gender::getKorean).orElse(""))
+                .profileImage(Optional.ofNullable(user.getProfileImage()).filter(image -> !image.isEmpty()).orElse(defaultProfileImage))
                 .build();
 
         return UserProfileDTO.builder()
@@ -655,7 +658,7 @@ public class UserService {
                     .email(email != null ? email : "kakao_" + kakaoId + "@kakao.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-                    .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
+//                    .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
@@ -725,7 +728,7 @@ public class UserService {
                     .email(email != null ? email : "naver_" + naverId + "@naver.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-                    .profileImage(UserDefault.getDefaultProfileImage())
+//                    .profileImage(UserDefault.getDefaultProfileImage())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.NAVER)
                     .build();
