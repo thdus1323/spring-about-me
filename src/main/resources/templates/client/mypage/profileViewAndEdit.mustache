@@ -1,10 +1,10 @@
+<!-- 프로필 카드 -->
 <div class="card mb-4" id="profile-view-card">
     <div class="card-header">프로필</div>
     <div class="card-body">
         <div id="profile-view" class="profile-container">
             <div class="profile-image-wrapper">
-                <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image"
-                     id="profileImageView">
+                <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image" id="profileImageView">
             </div>
             <div class="profile-details">
                 <div class="row">
@@ -26,24 +26,22 @@
                     </div>
                 </div>
                 <div class="text-center mt-3">
-                    <button class="btn btn-outline-secondary" id="editProfile"><i class="fas fa-edit"></i> 수정
-                    </button>
+                    <button class="btn btn-outline-secondary" id="editProfile"><i class="fas fa-edit"></i> 수정</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 프로필 수정 -->
+<!-- 프로필 수정 카드 -->
 <div class="card mb-4 d-none" id="profile-edit-card">
     <div class="card-header">프로필 수정</div>
     <div class="card-body">
         <div id="profile-edit" class="profile-edit-container">
             <div class="profile-image-wrapper">
                 <input type="file" id="profileImageInput" class="d-none">
-                <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image"
-                     id="profileImageEdit">
-                <span class="edit-icon"><i class="fas fa-pen"></i></span>
+                <img src="{{user.profileImage}}" alt="Profile Picture" class="profile-image" id="profileImageEdit">
+                <span class="edit-icon" id="editIcon"><i class="fas fa-pen"></i></span>
             </div>
             <div class="profile-details border">
                 <div class="row">
@@ -72,8 +70,7 @@
                             <label class="form-check-label" for="female">여성</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="gender" id="other" value="기타"
-                                   checked>
+                            <input type="radio" class="form-check-input" name="gender" id="other" value="기타" checked>
                             <label class="form-check-label" for="other">기타</label>
                         </div>
                     </div>
@@ -86,3 +83,88 @@
         </div>
     </div>
 </div>
+
+<!-- 이모티콘 선택 창 -->
+<div id="emojiModal" class="emoji-modal">
+    <div class="emoji-modal-content">
+        <span class="close">&times;</span>
+        <h5>이모티콘 선택</h5>
+        <div class="text-center">
+            <img src="/images/emotion01.webp" class="emoji-option" data-emoji="emotion01.webp" width="50">
+            <img src="/images/emotion02.webp" class="emoji-option" data-emoji="emotion02.webp" width="50">
+            <img src="/images/emotion03.webp" class="emoji-option" data-emoji="emotion03.webp" width="50">
+            <img src="/images/emotion04.webp" class="emoji-option" data-emoji="emotion04.webp" width="50">
+            <img src="/images/emotion05.webp" class="emoji-option" data-emoji="emotion05.webp" width="50">
+        </div>
+    </div>
+</div>
+
+<!-- jQuery 및 Bootstrap JS -->
+
+<!-- JavaScript 코드 -->
+<script>
+    $(document).ready(function () {
+        $('#editProfile').on('click', function () {
+            $('#profile-view-card').addClass('d-none');
+            $('#profile-edit-card').removeClass('d-none');
+        });
+
+        $('#cancelEdit').on('click', function () {
+            $('#profile-edit-card').addClass('d-none');
+            $('#profile-view-card').removeClass('d-none');
+        });
+
+        $('#editIcon').on('click', function () {
+            $('#emojiModal').show();
+        });
+
+        $('.emoji-option').on('click', function () {
+            var selectedEmoji = $(this).data('emoji');
+            $('#profileImageEdit').attr('src', `/images/${selectedEmoji}`);
+            $('#emojiModal').hide();
+        });
+
+        $('.close').on('click', function () {
+            $('#emojiModal').hide();
+        });
+    });
+</script>
+
+<!-- CSS -->
+<style>
+    .emoji-modal {
+        display: none;
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .emoji-modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>

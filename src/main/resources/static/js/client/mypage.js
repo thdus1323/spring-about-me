@@ -130,6 +130,32 @@ $(document).ready(function () {
     });
 });
 
+function cancelPayment(impUid) {
+    const data = {
+        impUid: impUid
+    };
+
+    fetch('/client/mypage/cancelPayment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('결제가 취소되었습니다.');
+            } else {
+                alert('결제 취소에 실패하였습니다: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('결제 취소 중 오류가 발생했습니다.');
+        });
+}
+
 function editReservation() {
     // 상담 예약 변경 로직을 여기에 추가
     alert('상담 일정을 변경합니다.');
@@ -140,6 +166,10 @@ function writeReview(id) {
 }
 
 function makeReservation(id) {
+    alert('예약하시겠습니까?')
+}
+
+function canselPayment(id) {
     alert('예약하시겠습니까?')
 }
 

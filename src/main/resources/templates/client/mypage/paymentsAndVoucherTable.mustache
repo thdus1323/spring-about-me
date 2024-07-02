@@ -29,7 +29,6 @@
                                     <input type="hidden" name="voucherId" value="{{voucherId}}">
                                     <input type="hidden" name="paymentId" value="{{paymentId}}">
                                     {{#isRemainingCount}}
-
                                         <button class="btn btn-outline-success btn-small"
                                                 onclick="makeReservation({{id}})">예약하기
                                         </button>
@@ -46,7 +45,7 @@
                 </table>
             </div>
         </div>
-        <div class="tab-content " id="progress-ticket">
+        <div class="tab-content" id="progress-ticket">
             <div class="table-container">
                 <table class="table">
                     <thead>
@@ -57,6 +56,7 @@
                         <th>결제 방법</th>
                         <th>결제 금액</th>
                         <th>결제 날짜</th>
+                        <th>취소/환불</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,6 +68,10 @@
                             <td>{{paymentMethod}}</td>
                             <td>{{amount}}</td>
                             <td>{{paymentDate}}</td>
+                            <td>
+                                <button class="btn btn-outline-success btn-small" name="cancel" onclick="cancelPayment('{{impUid}}')">취소하기</button>
+                                <button class="btn btn-outline-success btn-small" disabled>취소하기</button>
+                            </td>
                         </tr>
                     {{/payments}}
                     </tbody>
@@ -76,3 +80,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    function cancelPayment(impUid){
+        if (!confirm("취소하시겠습니까?")) return;
+
+        fetch('/client/mypage/cancelPayment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ impUid: impUid })
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('결제가 성공적으로 취소되었습니다.');
+                        location.reload();
+                    } else {
+                        alert('결제 취소에 실패하였습니다: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('결제 취소 중 오류가 발생했습니다.');
+                });
+    }
+</script>

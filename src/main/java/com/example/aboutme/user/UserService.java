@@ -216,6 +216,7 @@ public class UserService {
                         .voucherType(p.getVoucherType().getKorean())
                         .createdAt(Formatter.formatTimestamp(p.getCreatedAt()))
                         .updatedAt(Formatter.formatTimestamp(p.getUpdatedAt()))
+                        .impUid(p.getImpUid())
                         .build())
                 .collect(Collectors.toList());
     }

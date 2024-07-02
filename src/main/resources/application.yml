@@ -57,7 +57,17 @@ openai:
     url: https://api.openai.com/v1/chat/completions
     key: ${OPENAI_API_KEY}
 
+port:
+  api:
+    key: 2175014323317141
+    secret: YPmEkVDr9Kfo93SwHi3c3tOn6mJbNtkUIUazBd7hYSKK73B32sbcbjBvgSEf3JbVVYd9CurpuLLiLkY0
+
 review:
   summary:
     cache:
       duration: 60 # 캐시 지속 시간(분)
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
