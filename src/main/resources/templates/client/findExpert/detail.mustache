@@ -28,7 +28,8 @@
 
                         <div class="review-rating">
                             <i class="fas fa-star" style="color: #f5c518;"></i>
-                            <span>{{averageScore}}</span>
+                            <!-- TODO: averageScore다시 넣기 -->
+                            <span>4.95</span>
                             <span style="font-size: large; font-weight: lighter;">/5</span>
                         </div>
 
@@ -204,7 +205,8 @@
             <div class="card-expert">
                 <img src="{{user.profileImage}}" alt="상담사 사진">
                 <div class="card-body">
-                    <h2>{{user.name}} <span class="rating">★ {{averageScore}}</span> ({{user.totalReviews}})</h2>
+                    <!-- TODO: 4.95자리에 averageScore를 다시 넣기 -->
+                    <h2>{{user.name}} <span class="rating">★ 4.95</span> ({{user.totalReviews}})</h2>
                     <p>1회 최저 가격</p>
                     <p class="price">{{lowestPrice}}</p>
                     <a href="/client/findExpert/voucher/{{user.expertId}}" class="button-container">이용권 선택하기</a>

@@ -8,13 +8,13 @@ VALUES
 
     -- Expert 22
     ('TEXT_THERAPY', 22, 15000, 1, 50, '/images/chat.png', NOW(), NOW()),
-    ('TEXT_THERAPY', 22, 15000, 4, 50, '/images/chat.png', NOW(), NOW()),
-    ('VOICE_THERAPY', 22, 25000, 3, 30, '/images/call.png', NOW(), NOW()),
+    ('TEXT_THERAPY', 22, 60000, 4, 50, '/images/chat.png', NOW(), NOW()),
+    ('VOICE_THERAPY', 22, 75000, 3, 30, '/images/call.png', NOW(), NOW()),
 
     -- Expert 23
-    ('TEXT_THERAPY', 23, 15000, 2, 50, '/images/chat.png', NOW(), NOW()),
-    ('TEXT_THERAPY', 23, 15000, 4, 50, '/images/chat.png', NOW(), NOW()),
-    ('VIDEO_THERAPY', 23, 15000, 2, 40, '/images/video.png', NOW(), NOW()),
+    ('TEXT_THERAPY', 23, 30000, 2, 50, '/images/chat.png', NOW(), NOW()),
+    ('TEXT_THERAPY', 23, 60000, 4, 50, '/images/chat.png', NOW(), NOW()),
+    ('VIDEO_THERAPY', 23, 40000, 2, 40, '/images/video.png', NOW(), NOW()),
 
     -- Expert 24
     ('VOICE_THERAPY', 24, 25000, 3, 30, '/images/call.png', NOW(), NOW()),

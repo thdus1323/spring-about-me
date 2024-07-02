@@ -21,7 +21,7 @@
                 {{#sessionUser}}
                     <ul>
                         <li><a href="/logout">로그아웃</a></li>
-                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                        <a href="#!" class="icon bell-icon"><i class="fa-regular fa-bell"></i></a>
                         <li><a href="/expert/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
                     <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
@@ -67,17 +67,17 @@
                 const expertEventSource = new EventSource(`/sse/expert/${expertId}`);
                 console.log("EventSource created for expert");
 
-                expertEventSource.onopen = function(event) {
+                expertEventSource.onopen = function (event) {
                     console.log("Open:", event);
                 };
 
-                expertEventSource.onmessage = function(event) {
+                expertEventSource.onmessage = function (event) {
                     console.log("Event received:", event);
                     $("#expertModalMessage").html("예약신청이 도착했습니다.");
                     $("#expertModal").css("display", "block");
                 };
 
-                expertEventSource.onerror = function(error) {
+                expertEventSource.onerror = function (error) {
                     console.error("Error occurred:", error);
                     expertEventSource.close();
                     setTimeout(function () {
