@@ -4,7 +4,12 @@
     margin-left: 10px; /* Further reduced margin */
     text-decoration: none;
 }
-
+.page-content h1{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 50px;
+}
 .voucher-list {
     left: 50%;
     top: 50%;
@@ -12,7 +17,7 @@
     position: absolute;
     padding: 20px;
     background-color: white;
-    width: 900px;
+    width: 1164px;
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -32,7 +37,8 @@
 }
 
 .voucher-header span {
-    font-size: 14px; /* Further reduced font size */
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .voucher-header button {

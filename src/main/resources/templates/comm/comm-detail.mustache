@@ -12,14 +12,14 @@
                 <!--커뮤니티 상세보기 시작-->
                 <div class="comm-detail">
                     <!--상세보기 info 시작-->
-                    <div class="c-card">
+                    <div class="c-card comm-detail">
                         <div class="c-card-body comdetail">
                             <!-- <h4 class="card-title">1</h4> -->
                             <div class="breadcrumb mb-20">
                                 <a href="/">홈화면</a> > <a href="/comm">커뮤니티</a> > <a href="#"
                                                                                     class="active main-color">{{comm.commDTO.category}}</a>
                             </div>
-                            <h4 class="card-title">{{comm.commDTO.title}}</h4>
+                            <h4 class="card-title mb-10">{{comm.commDTO.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
                                     <figure><img src="{{comm.commDTO.writerProfileImage}}" alt="회원이미지"></figure>
@@ -191,7 +191,7 @@
                     <h3 class="page-title mb-20">{{comm.commDTO.category}}의 다른 글 살펴보기</h3>
                     <!-- 다른 글 -->
                     {{#comm.relatedComms}}
-                        <div class="c-card">
+                        <div class="c-card comm-detail">
                             <div class="c-card-body detail">
                                 <a href="/comm-detail/{{id}}">
                                     <h4 class="card-title mb-10">{{title}}</h4>

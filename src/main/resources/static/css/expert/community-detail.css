@@ -15,8 +15,12 @@
 .breadcrumb > a {
     font-weight: 400;
     color: #999;
+    margin: 0 10px;
+    font-size: 14px;
 }
-
+.breadcrumb > a:nth-child(1){
+    margin: 0 10px 0 0;
+}
 .breadcrumb > a.active {
     color: #00bbba;
     font-weight: 600;
