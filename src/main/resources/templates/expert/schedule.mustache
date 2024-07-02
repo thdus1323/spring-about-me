@@ -38,7 +38,6 @@
 </section>
 <script>
     let currentPage = 0;
-
     const userId = '{{sessionUser.id}}'; // 실제 사용자 ID로 교체
     const size = 5; // 페이지 당 항목 수
     let totalPages = 0;
@@ -51,6 +50,26 @@
             currentPage = page;
             fetchSchedules(currentPage);
         }
+    }
+
+    function initializePagination() {
+        $.ajax({
+            url: `/client/schedule`,
+            method: 'GET',
+            data: {
+                userId: userId,
+                page: 0,
+                size: size
+            },
+            success: function (data) {
+                totalPages = data.totalPages;
+                updatePagination(data);
+                fetchSchedules(currentPage);
+            },
+            error: function (error) {
+                console.error('Error initializing pagination:', error);
+            }
+        });
     }
 
     function fetchSchedules(page) {
@@ -66,6 +85,9 @@
                 if (data.content.length > 0) {
                     const scheduleData = data.content[0]; // CounselDTORecord 데이터
                     updateScheduleList(scheduleData.user, scheduleData.reservationStatus); // user 목록과 reservationStatus 전달
+
+
+
                 } else {
                     updateScheduleList([], ''); // 데이터가 없을 경우 빈 배열과 빈 상태 전달
                 }
@@ -78,15 +100,19 @@
         });
     }
 
+
     function updateScheduleList(users, reservationStatus) {
         const container = $('.schedule-list');
         container.empty();
         users.forEach(user => {
+            const isDisabled = user.reservationStatus.trim() !== '확정 예정' ? 'disabled' : '';
+            const isChatButtonVisible = user.reservationStatus.trim() === '예약 확정' ? 'block' : 'none';
+
             const scheduleElement = `
             <li>
                 <div class="schedule-item">
                     <figure>
-                        <img src = ${user.imagePath}>
+                        <img src="${user.imagePath}">
                     </figure>
                     <p>${user.name}</p>
                 </div>
@@ -100,10 +126,10 @@
                     <p>${user.applyDate}</p>
                 </div>
                 <div class="schedule-item">
-                    ${user.isComplete ? '<button class="reservation-confirm" disabled>예약확정</button>' : `<button class="reservation-confirm" onclick="confirmed(${user.counselId}, this)">확정대기</button>`}
+                    <button id="reservation-button-${user.counselId}" class="reservation-confirm" onclick="confirmed(${user.counselId}, this)" ${isDisabled}>${user.reservationStatus}</button>
                 </div>
                 <div class="schedule-item">
-                    <p><a href="/chat/${user.counselId}" class="schedule-btn">상담하러가기</a></p>
+                    <button id="chat-btn-${user.counselId}" class="schedule-btn" onclick="navigateToChat(${user.counselId})"  style="display: ${isChatButtonVisible};">상담하러가기</button>
                 </div>
             </li>
         `;
@@ -161,11 +187,12 @@
     }
 
     // 예약확정 버튼
-    // Reservation confirmation function
     function confirmed(counselId, element) {
         if (confirm("예약을 확정하시겠습니까?")) {
-            // UI immediately updates
-            $(element).prop('disabled', true).text('예약확정');
+            $(element).prop('disabled', true).text("예약 확정");
+
+            // 상담하러가기 버튼 활성화
+            $(`#chat-btn-${counselId}`).removeAttr('disabled');
 
             $.ajax({
                 url: `/reservation/statusUpdate`,
@@ -177,12 +204,10 @@
                 success: function (data) {
                     // Handle success case here
                     // Optionally, re-fetch data to ensure consistency
-                    fetchUpdatedData();
+                    fetchSchedules(currentPage);
                 },
                 error: function (error) {
                     console.error('에러났다:', error);
-                    // On failure, revert UI change
-                    $(element).prop('disabled', false).text('확정대기');
                 }
             });
         } else {
@@ -190,25 +215,20 @@
         }
     }
 
-
-    function initializePagination() {
-        $.ajax({
-            url: `/client/schedule`,
-            method: 'GET',
-            data: {
-                userId: userId,
-                page: 0,
-                size: size
-            },
-            success: function (data) {
-                totalPages = data.totalPages;
-                updatePagination(data);
-                fetchSchedules(currentPage);
-            },
-            error: function (error) {
-                console.error('Error initializing pagination:', error);
-            }
-        });
+    //상담하기
+    function navigateToChat(counselId) {
+        if (confirm("상담 페이지로 이동하시겠습니까?")) {
+            $.ajax({
+                url: `/chat/${counselId}`,
+                method: 'GET',
+                success: function (data) {
+                    window.location.href = `/chat/${counselId}`;
+                },
+                error: function (error) {
+                    console.error('Error navigating to chat page:', error);
+                }
+            });
+        }
     }
 </script>
 {{> layout/footer}}
