@@ -40,13 +40,12 @@
     </div>
 </header>
 <!-- 모달 시작 -->
-<div id="expertModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p id="expertModalMessage">예약신청이 도착했습니다.</p>
+<div id="expertModal" class="modal" style="width: 250px;">
+    <div class="modal-content d-flex align-item-center" style="border: none">
+        <p id="expertModalMessage" style="margin-bottom: 10px;">예약신청이 도착했습니다.</p>
         <div class="modal-buttons">
-            <button id="expertConfirmButton">마이페이지로 이동</button>
-            <button id="expertCloseButton">창 닫기</button>
+            <a href="/expert/mypage" class="btn btn-outline-success btn-sm" id="expertConfirmButton">마이페이지로 이동</a>
+            <a class="btn btn-outline-danger btn-sm" id="expertCloseButton">창 닫기</a>
         </div>
     </div>
 </div>
@@ -97,7 +96,7 @@
         });
 
         $("#expertConfirmButton").on("click", function () {
-            window.location.href = "/expert/mypage"; // 마이페이지로 이동
+            window.location.href = "/schedule"; // 스케쥴 확인 페이지로 이동
         });
 
         // 모달 창 외부 클릭 시 닫기
