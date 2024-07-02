@@ -19,9 +19,35 @@ import static java.util.stream.Collectors.toList;
 
 public class CommResponse {
 
-    //카테고리별 조회하는 dto
     @Data
-    public static class CommMainByCategory {
+    public static class CommMainByCategoryPageDTO {
+        private List<CommMainByCategoryDTO> comms;
+        private int currentPage;
+        private int nextPage;
+        private int previousPage;
+        private boolean hasPrevious;
+        private boolean hasNext;
+        private int totalPages;
+        private long totalElements;
+        private int size;
+
+        public CommMainByCategoryPageDTO(Page<Comm> commPage) {
+            this.comms = commPage.getContent().stream()
+                    .map(CommMainByCategoryDTO::new)
+                    .collect(Collectors.toList());
+            this.currentPage = commPage.getNumber();
+            this.nextPage = currentPage + 1;
+            this.previousPage = currentPage - 1;
+            this.hasPrevious = commPage.hasPrevious();
+            this.hasNext = commPage.hasNext();
+            this.totalPages = commPage.getTotalPages();
+            this.totalElements = commPage.getTotalElements();
+            this.size = commPage.getSize();
+        }
+    }
+
+    @Data
+    public static class CommMainByCategoryDTO {
         private Integer id;
         private String writerName;
         private String writerImage;
@@ -29,17 +55,39 @@ public class CommResponse {
         private String title;
         private String category;
         private int replies;
+        private List<ExpertReplyDTO> expertReplies = new ArrayList<>();
 
-        public CommMainByCategory(Integer id, String writerName, String writerImage, String content, String title,
-                                  CommCategory category, int replies) {
-            this.id = id;
-            this.writerName = writerName;
-            this.writerImage = writerImage;
-            this.content = content;
-            this.title = title;
-            this.category = category.getKorean();
-            this.replies = replies;
+        public CommMainByCategoryDTO(Comm comm) {
+            this.id = comm.getId();
+            this.writerName = comm.getUser().getName();
+            this.writerImage = comm.getUser().getProfileImage();
+            this.content = comm.getContent();
+            this.title = comm.getTitle();
+            this.category = comm.getCategory().getKorean();
+            this.replies = (int) comm.getReplies().stream().count();
+            this.expertReplies = comm.getReplies() == null ? new ArrayList<>() : comm.getReplies().stream()
+                    .filter(reply -> reply.getUser() != null)
+                    .map(ExpertReplyDTO::new)
+                    .collect(Collectors.toList());
         }
+
+        @Data
+        public static class ExpertReplyDTO {
+            private Integer id;
+            private String solution;
+            private String profileImage;
+            private String expertName;
+            private boolean userRole;
+
+            public ExpertReplyDTO(Reply reply) {
+                this.id = reply.getId();
+                this.solution = reply.getSolution();
+                this.profileImage = reply.getUser().getProfileImage();
+                this.expertName = reply.getUser().getName();
+                this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);
+            }
+        }
+
     }
 
     @Data
@@ -84,6 +132,7 @@ public class CommResponse {
             }
         }
     }
+
 
     @Data
     public static class ALLCommWithRepliesPageDTO {

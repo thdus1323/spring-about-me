@@ -69,19 +69,16 @@ public class CommController {
     // 메인 페이지
     @GetMapping("/comm")
     public String community(@RequestParam(name = "page", defaultValue = "0") int page,
-                            @RequestParam(name = "size", defaultValue = "10") int size,
+                            @RequestParam(name = "size", defaultValue = "9") int size,
+                            @RequestParam(name = "category", required = false) CommCategory category,
                             Model model) {
+
         Pageable pageable = PageRequest.of(page, size);
-        CommResponse.ALLCommWithRepliesPageDTO allCommsWithReplyList = commService.findAllCommWithReply(pageable);
+        CommResponse.ALLCommWithRepliesPageDTO allCommsWithReplyList = commService.findAllCommWithReply(pageable, category);
         model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
         return "comm/comm-main";
+
     }
 
-    @GetMapping("/comm/category")
-    public String communityByCategory(@RequestParam("category") CommCategory category, Model model) {
-        List<CommResponse.CommMainByCategory> allCommsWithReplyList = commService.getCommMainByCategory(category);
-        model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
 
-        return "/comm/comm-main";
-    }
 }
