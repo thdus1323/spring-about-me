@@ -6,6 +6,10 @@
 }
 
 .voucher-list {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
     padding: 20px;
     background-color: white;
     width: 900px;
@@ -71,17 +75,17 @@
 .voucher-item table th,
 .voucher-item table td {
     border: 1px solid #ddd;
-    padding: 7px; /* Maintain padding for height */
+    padding: 10px; /* Maintain padding for height */
     text-align: center;
+    font-size: 14px;
     vertical-align: middle; /* Align text vertically in the middle of the cell */
     width: 33.33%;
 }
 
 
 .voucher-item table th {
-    background: #333;
+    background: #FFA45B;
     color: #fff;
-
     border: none;
     font-size: 14px;
 }
