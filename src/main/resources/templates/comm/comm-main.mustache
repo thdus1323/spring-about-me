@@ -52,6 +52,9 @@
                         <button class="active black-background">✨최신순</button>
                         <button>👩‍⚕️전문답변</button>
                         <button>😍공감순</button>
+                        {{#sessionUser}}
+                            <button id="writeButton" onclick="openWrite()">글쓰기</button>
+                        {{/sessionUser}}
                     </div>
                     <!--필터 끝-->
                     <!--컨텐츠 시작-->
@@ -214,6 +217,10 @@
 
         loadPage(0, 9, null);
     });
+
+    function openWrite() {
+        window.location.href = '/comm/write';
+    }
 </script>
 
 {{> layout/footer}}

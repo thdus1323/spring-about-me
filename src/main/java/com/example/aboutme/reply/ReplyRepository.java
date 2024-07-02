@@ -17,6 +17,6 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
 
     Page<Reply> findByUserId(@Param("userId") Integer userId, Pageable pageable);
 
-    @Query("SELECT r FROM Reply r WHERE r.comm.id = :commId")
+    @Query("SELECT r FROM Reply r WHERE r.comm.id = :commId ORDER BY r.user.userRole DESC ")
     List<Reply> findByCommId(@Param("commId") Integer commId);
 }

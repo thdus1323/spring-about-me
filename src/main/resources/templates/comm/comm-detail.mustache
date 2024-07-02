@@ -27,18 +27,22 @@
                                         class="time">{{comm.commDTO.timeAgo}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
-                                        <button class=" defalut-btn" onclick="clip()"><i
-                                                class="fa-regular fa-share-nodes"></i><span>공유하기</span></button>
-                                        <div class="dropdown">
-                                            <button class="drop-toggle" id="updateButton"><i
-                                                    class="fa-regular fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="dropdown-item" onclick="openUpdateForm()">수정하기</button>
-                                                <button class="dropdown-item" onclick="deletePost()">삭제하기</button>
-
-                                            </div>
-                                        </div>
+                                        {{#sessionUser}}
+                                            <script>
+                                                if ({{sessionUser.id}} === {{comm.commDTO.writerId}})
+                                                {
+                                                    document.write(`
+                        <div class="dropdown">
+                            <button class="drop-toggle" id="updateButton"><i class="fa-regular fa-ellipsis-vertical"></i></button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item" onclick="openUpdateForm()">수정하기</button>
+                                <button class="dropdown-item" onclick="deletePost()">삭제하기</button>
+                            </div>
+                        </div>
+                    `);
+                                                }
+                                            </script>
+                                        {{/sessionUser}}
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +139,7 @@
                                 <div class="c-card-body detail mb-20">
                                     <div class="community-cartegory">
                                         <div class="user-info">
-                                            <figure><img src="" alt="회원이미지">일반인 이미지</figure>
+                                            <figure><img src="{{profileImage}}" alt="회원이미지">일반인 이미지</figure>
                                             <span>{{name}}</span>
                                         </div>
                                     </div>
@@ -201,7 +205,7 @@
                                     <p class="card-text mb-20">{{content}}</p>
                                 </a>
                                 <div class="link-wrapper">
-<!--                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>-->
+                                    <!--                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>-->
                                     <a href="/comm-detail/{{id}}" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
                                 {{#expertReplies}}
@@ -250,6 +254,7 @@
             console.log(url);
         };
     });
+
 
     // 유저 아이디 검사해서 수정 삭제 버튼 숨기기
     $(document).ready(function () {
