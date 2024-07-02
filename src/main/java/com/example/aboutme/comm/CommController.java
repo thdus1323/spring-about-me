@@ -77,7 +77,6 @@ public class CommController {
         CommResponse.ALLCommWithRepliesPageDTO allCommsWithReplyList = commService.findAllCommWithReply(pageable, category);
         model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
         return "comm/comm-main";
-
     }
 
 
