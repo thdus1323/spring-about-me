@@ -85,7 +85,9 @@
             const scheduleElement = `
             <li>
                 <div class="schedule-item">
-                    <figure></figure>
+                    <figure>
+                        <img src = ${user.imagePath}>
+                    </figure>
                     <p>${user.name}</p>
                 </div>
                 <div class="schedule-item">
@@ -97,12 +99,11 @@
                 <div class="schedule-item">
                     <p>${user.applyDate}</p>
                 </div>
-               <div class="schedule-item ">
-                    ${user.isComplete ? '<span>완료됨</span>' : `<button class="reservation-confirm" onclick="confirmed(${user.counselId}, this)">${user.reservationStatus}</button>`}
-                </div>
+                <div class="schedule-item">
+                    ${user.isComplete ? '<button class="reservation-confirm" disabled>예약확정</button>' : `<button class="reservation-confirm" onclick="confirmed(${user.counselId}, this)">확정대기</button>`}
                 </div>
                 <div class="schedule-item">
-                    <p><button class="schedule-btn">상담하러가기</button></p>
+                    <p><a href="/chat/${user.counselId}" class="schedule-btn">상담하러가기</a></p>
                 </div>
             </li>
         `;
@@ -159,9 +160,13 @@
         pagination.append(nextButton);
     }
 
-    // 예약확정 버튼 --!!
+    // 예약확정 버튼
+    // Reservation confirmation function
     function confirmed(counselId, element) {
         if (confirm("예약을 확정하시겠습니까?")) {
+            // UI immediately updates
+            $(element).prop('disabled', true).text('예약확정');
+
             $.ajax({
                 url: `/reservation/statusUpdate`,
                 method: 'POST',
@@ -170,24 +175,21 @@
                 }),
                 contentType: "application/json",
                 success: function (data) {
-                    console.log('데이터 들어왔다:', data);
-
-
-                    // fetchSchedules 호출 후 새로운 엘리먼트를 다시 추가
-                    fetchSchedules(currentPage, function() {
-                        var newElement = $('<div class="disabled"></div>');
-                        $(element).after(newElement);
-                        console.log('새로운 엘리먼트를 다시 추가됨:', newElement);
-                    });
+                    // Handle success case here
+                    // Optionally, re-fetch data to ensure consistency
+                    fetchUpdatedData();
                 },
                 error: function (error) {
                     console.error('에러났다:', error);
+                    // On failure, revert UI change
+                    $(element).prop('disabled', false).text('확정대기');
                 }
             });
         } else {
             console.log('Reservation update canceled');
         }
     }
+
 
     function initializePagination() {
         $.ajax({
