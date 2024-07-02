@@ -85,17 +85,14 @@ public class PaymentService {
                 .orElseThrow(() -> new IllegalArgumentException("바우처를 찾을 수 없습니다."));
         Counsel counsel = counselRepository.findById(sessionUser.getId()).orElseThrow(() -> new IllegalArgumentException("해당 예약을 찾을 수 없습니다."));
 
-
         payment.setImpUid(reqDTO.impUid());
         payment.setPaymentStatus(PaymentStatus.COMPLETED);
         payment.setPaymentMethod(PaymentMethods.CREDIT_CARD);
         paymentRepository.save(payment);
         counsel.setCounselStatus(CounselStatus.COUNSEL_PENDING);
+        counsel.setReservationStatus(ReservationStatus.RESERVATION_SCHEDULED);
 
-        // 예약 상태를 변경하는 로직 추가
-        Counsel reservation = counselRepository.findById(reqDTO.reservationId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 예약 내역이 없습니다."));
-        reservation.setReservationStatus(ReservationStatus.RESERVATION_COMPLETED);
+
 
         return "Payment completed: " + payment.getId();
     }

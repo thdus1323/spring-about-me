@@ -24,7 +24,6 @@ public interface CommRepository extends JpaRepository<Comm, Integer> {
     //클라이언트 게시물 조회
     Page<Comm> findByUserId(@Param("userId") Integer userId, Pageable pageable);
 
-
     // 현재 게시글 ID를 제외하고 같은 카테고리의 다른 게시글을 가져오는 쿼리
     List<Comm> findByCategoryAndIdNot(CommCategory category, Long id);
 
