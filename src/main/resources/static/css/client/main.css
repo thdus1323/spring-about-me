@@ -194,13 +194,13 @@
 }
 
 .center-container .card {
-    flex: 0 0 calc(25% - 10px);
+    flex: 0 0 calc(25% - 20px);
     /* flex: 0 0 calc(33.33% - 14px);  */
 
     box-sizing: border-box;
     margin-right: 14px;
     /* margin-right: 20px; */
-    margin: 0 5px;
+    margin: 0 10px;
 
     border: none;
     position: relative;
