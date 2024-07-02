@@ -1,6 +1,8 @@
 package com.example.aboutme.counsel;
 
+import com.example.aboutme._core.utils.ApiUtil;
 import com.example.aboutme._core.utils.RedisUtil;
+import com.example.aboutme.counsel.CounselRequestRecord.UpdateReservationReqDTO;
 import com.example.aboutme.counsel.CounselResponseRecord.CounselDTO.CounselDTORecord;
 import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.user.SessionUser;
@@ -39,7 +41,6 @@ public class CounselRestController {
 
     @GetMapping("/client/schedule")
     public ResponseEntity<Page<CounselDTORecord>> getSchedule(
-            @RequestParam("userId") Integer userId,
             @RequestParam("page") int page,
             @RequestParam("size") int size,
             Model model) {
@@ -56,5 +57,15 @@ public class CounselRestController {
         ReservationStatus status = ReservationStatus.valueOf(request.get("status"));
         counselService.updateCounselStatus(id, status);
         return ResponseEntity.ok("Status updated");
+    }
+
+    @PostMapping("/reservation/statusUpdate")
+    public ResponseEntity<?> reservationStatusUpdate(@RequestBody UpdateReservationReqDTO reqDTO) {
+
+        SessionUser sessionUser = redisUtil.getSessionUser();
+        counselService.reservationUpdate(reqDTO.counselId(),sessionUser);
+
+        return ResponseEntity.ok(new ApiUtil<>("들어왔어!!!"));
+
     }
 }

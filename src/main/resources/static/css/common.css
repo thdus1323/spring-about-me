@@ -2,7 +2,7 @@
 
 /* 페이지 내용 */
 .page-content {
-
+    min-height: calc(100vh - 270px);
 }
 
 /* 상세보기 */
@@ -54,7 +54,49 @@ a:hover{
     background-color: #999;
 }
 
-/* Margin */
+
+/* Margin Top */
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.mt-60 {
+    margin-top: 60px;
+}
+
+.mt-70 {
+    margin-top: 70px;
+}
+
+.mt-80 {
+    margin-top: 80px;
+}
+
+.mt-90 {
+    margin-top: 90px;
+}
+
+.mt-100 {
+    margin-top: 100px;
+}
+
+/*Margin Bottom*/
 .mb-10 {
     margin-bottom: 10px;
 }
@@ -94,6 +136,7 @@ a:hover{
 .mb-100 {
     margin-bottom: 100px;
 }
+
 
 /* Padding */
 
@@ -388,6 +431,23 @@ body {
 }
 
 /*채팅 테라피 관련 모달창 CSS*/
+
+.chat-modal {
+    display: block;
+    position: relative;
+    width: 600px;
+    height: fit-content;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+.chat-modal .modal-body::-webkit-scrollbar {
+    display: none;
+}
 
 .modal {
     display: none;

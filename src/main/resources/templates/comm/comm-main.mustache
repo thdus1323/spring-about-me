@@ -55,9 +55,9 @@
                     </div>
                     <!--필터 끝-->
                     <!--컨텐츠 시작-->
-                    <div class="c-card">
+                    <div class="c-card" id="comm-posts-container">
 
-                        {{#allCommsWithReplyList}}
+                        {{#allCommsWithReplyList.comms}}
                             <div class="c-card-body">
                                 <a href="/comm-detail/{{id}}">
                                     <h4 class="card-title mb-10">{{title}}</h4>
@@ -90,39 +90,27 @@
                                     {{/userRole}}
                                 {{/expertReplies}}
                             </div>
-
-                        {{/allCommsWithReplyList}}
+                        {{/allCommsWithReplyList.comms}}
 
                     </div>
-
-                    <!--컨텐츠 끝-->
-
-                    <!--페이지네이션 시작-->
-                    <div class="comm-pagination">
-                        <nav aria-label="...">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <span class="page-link">Previous</span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <span class="page-link">2</span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <!--페이지네이션 끝-->
+                </div>
+                <div class="comm-pagination d-flex justify-content-end">
+                    <ul class="pagination" id="pagination-container">
+                        {{#allCommsWithReplyList.hasPrevious}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{allCommsWithReplyList.previousPage}}&size={{allCommsWithReplyList.size}}">Previous</a>
+                            </li>
+                        {{/allCommsWithReplyList.hasPrevious}}
+                        {{#allCommsWithReplyList.hasNext}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{allCommsWithReplyList.nextPage}}&size={{allCommsWithReplyList.size}}">Next</a>
+                            </li>
+                        {{/allCommsWithReplyList.hasNext}}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!--컨텐츠 끝-->
-</div>
-<!--커뮤니티 끝-->
-{{> layout/footer}}
 
+{{> layout/footer}}

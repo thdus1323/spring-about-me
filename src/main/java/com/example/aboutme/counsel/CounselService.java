@@ -1,6 +1,7 @@
 package com.example.aboutme.counsel;
 
 import com.example.aboutme._core.error.exception.Exception400;
+import com.example.aboutme._core.error.exception.Exception401;
 import com.example.aboutme._core.error.exception.Exception403;
 import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme._core.utils.DayOfWeekConverter;
@@ -16,6 +17,8 @@ import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.Payment;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.payment.PaymentResponseRecord.PaymentDetailsDTO;
+import com.example.aboutme.review.Review;
+import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.schedule.Schedule;
 import com.example.aboutme.schedule.ScheduleRepository;
 import com.example.aboutme.user.SessionUser;
@@ -45,6 +48,7 @@ public class CounselService {
     private final CounselRepository counselRepository;
     private final ScheduleRepository scheduleRepository;
     private final PaymentRepository paymentRepository;
+    private final ReviewRepository reviewRepository;
 
     //결재완료전 결재대기생성
     public PaymentDetailsDTO getTempReservation(Integer reservationId) {
@@ -139,6 +143,10 @@ public class CounselService {
                 .orElseThrow(() -> new Exception400("전문가를 찾을 수 없습니다."));
         Voucher voucher = voucherRepository.findById(reqDTO.voucherId())
                 .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
+        Payment payment = paymentRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
+        Review  review = reviewRepository.findById(sessionUser.getId())
+                .orElseThrow(() -> new Exception400("바우처를 찾을 수 없습니다."));
 
 
         //이넘으로 변경
@@ -158,6 +166,9 @@ public class CounselService {
                 .voucher(voucher)
                 .schedule(schedule)
                 .reservationStatus(ReservationStatus.RESERVATION_PENDING)
+                .counselStatus(CounselStatus.COUNSEL_PENDING)
+                .payment(payment)
+                .reviewState(ReviewState.REVIEW_PENDING)
                 .build();
 
         return counselRepository.save(reservation);
@@ -260,21 +271,26 @@ public class CounselService {
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
 
+            boolean isCompleted = counsel.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED;
+
             // UserRecord 생성
             return new UserRecord(
                     user.getId(),
                     user.getName(),
                     user.getProfileImage(),
+                    counsel.getReservationStatus().getKorean(),
+                    counsel.getId(),
                     voucherType,
                     voucherTotal,
                     voucherRemain,
-                    counsel.getCounselDate() // applyDate는 Counsel의 counselDate를 사용
+                    counsel.getCounselDate(), // applyDate는 Counsel의 counselDate를 사용
+                    isCompleted
             );
 
         }).collect(Collectors.toList());
 
         // 최종적으로 CounselDTORecord를 반환
-        return new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecords);
+        return new CounselDTORecord(expert.getId(), userRecords);
     }
 
 
@@ -290,6 +306,8 @@ public class CounselService {
 
         // 2. counsel 수정
         counsel.completeCounsel();
+
+        // 3. reservation 수정
 
     }
 
@@ -331,15 +349,20 @@ public class CounselService {
             // 6. VoucherType 변환
             String voucherType = counsel.getVoucher().getVoucherType().getKorean();
 
+           boolean isCompleted = counsel.getReservationStatus() == ReservationStatus.RESERVATION_SCHEDULED;
+
             // UserRecord 생성
             return new UserRecord(
                     user.getId(),
                     user.getName(),
                     user.getProfileImage(),
+                    counsel.getReservationStatus().getKorean(),
+                    counsel.getId(),
                     voucherType,
                     voucherTotal,
                     voucherRemain,
-                    counsel.getCounselDate() // applyDate는 Counsel의 counselDate를 사용
+                    counsel.getCounselDate(), // applyDate는 Counsel의 counselDate를 사용
+                    isCompleted
             );
 
         }).collect(Collectors.toList());
@@ -350,12 +373,26 @@ public class CounselService {
         Page<UserRecord> userRecordPage = new PageImpl<>(userRecords.subList(start, end), PageRequest.of(page, size), userRecords.size());
 
         // 최종적으로 CounselDTORecord를 반환
-        CounselDTORecord counselDTORecord = new CounselDTORecord(expert.getId(), expert.getProfileImage(), userRecordPage.getContent());
+        CounselDTORecord counselDTORecord = new CounselDTORecord(expert.getId(),userRecordPage.getContent());
 
         return new PageImpl<>(Collections.singletonList(counselDTORecord), PageRequest.of(page, size), userRecords.size());
     }
 
+    @Transactional
+    public void reservationUpdate(Integer counselId, SessionUser sessionUser) {
+        // 0. 인증처리
+        if (sessionUser == null){
+            throw new Exception403("인증되지 않은 유저입니다.");
+        }
+        Counsel counsel = counselRepository.findById(counselId).orElseThrow(() -> new Exception404("해당 상담내역을 찾을 수 없습니다."));
 
+        // 1. 권한처리
+        if (sessionUser.getId() != counsel.getExpert().getId()){
+            throw  new Exception401("해당 상담내역을 수정할 권한이 없습니다.");
+        }
+
+        counsel.completeReservation();
+    }
 }
 
 

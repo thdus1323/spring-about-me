@@ -62,6 +62,7 @@
                             <input type="hidden" id="expertId" name="expertId" value="{{voucher.expertId}}">
                             <input type="hidden" id="price" name="price" value="{{voucher.price}}">
                             <input type="hidden" id="count" name="count" value="{{voucher.count}}">
+                            <input type="hidden" id="voucherType" name="voucherType" value="{{voucher.voucherType}}">
                             <input type="hidden" id="duration" name="duration" value="{{voucher.duration}}">
                         </div>
                     </div>
@@ -69,129 +70,137 @@
             </div>
         </div>
     </section>
-{{/model}}
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script>
-    // parseInt($('#originalPrice').text().replace(/,/g, ''))
-    $(document).ready(function () {
-        let itemName = $('h3.page-title').text();
-        const originalPrice = 100; // 템플릿에서 JavaScript 변수로 전달
-        let discountAmount = 0; // 할인 금액
-        let finalAmount = originalPrice - discountAmount; // 최종 금액
-        let paymentCompleted = false; // 결제 완료 상태 추적
-        console.log("Original Price:", originalPrice);
-        console.log("Final Amount:", finalAmount);
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script>
+        // parseInt($('#originalPrice').text().replace(/,/g, ''))
+        $(document).ready(function () {
+            let itemName = $('h3.page-title').text();
+            const originalPrice = 100;
+            //parseInt('{{!voucher.price}}'.replace(/,/g, ''), 10);
+            let discountAmount = 0; // 할인 금액
+            let finalAmount = originalPrice - discountAmount; // 최종 금액
+            let paymentCompleted = false; // 결제 완료 상태 추적
+            console.log("Original Price:", originalPrice);
+            console.log("Final Amount:", finalAmount);
 
-        // 쿠폰 적용 버튼 클릭 시
-        $('#applyCoupon').on('click', function () {
-            const selectedCoupon = $('#coupon').val();
-            discountAmount = selectedCoupon ? parseInt(selectedCoupon) : 0;
+            // 쿠폰 적용 버튼 클릭 시
+            $('#applyCoupon').on('click', function () {
+                const selectedCoupon = $('#coupon').val();
+                discountAmount = selectedCoupon ? parseInt(selectedCoupon) : 0;
+                updateFinalAmount();
+            });
+
+            // 최종 결제 금액 업데이트 함수
+            function updateFinalAmount() {
+                finalAmount = originalPrice - discountAmount;
+                $('.amount-details .total span').text(finalAmount.toLocaleString() + '원');
+                $('.amount-details .coupon-discount span').text('-' + discountAmount.toLocaleString() + '원');
+                $('#payButton').text(finalAmount.toLocaleString() + '원 결제하기');
+            }
+
+            // 초기화
             updateFinalAmount();
-        });
 
-        // 최종 결제 금액 업데이트 함수
-        function updateFinalAmount() {
-            finalAmount = originalPrice - discountAmount;
-            $('.amount-details .total span').text(finalAmount.toLocaleString() + '원');
-            $('.amount-details .coupon-discount span').text('-' + discountAmount.toLocaleString() + '원');
-            $('#payButton').text(finalAmount.toLocaleString() + '원 결제하기');
-        }
+            $('#payButton').on('click', function () {
+                requestPay();
+            });
 
-        // 초기화
-        updateFinalAmount();
+            function requestPay() {
+                console.log("Request Pay 함수 호출됨");
 
-        $('#payButton').on('click', function () {
-            requestPay();
-        });
+                IMP.init("imp14397622");
+                const amountFormatted = $('#price').val();
+                const amount = parseFloat(amountFormatted.replace(/,/g, '').replace('원', '')); // 쉼표와 "원"을 제거하고 숫자로 변환
 
-        function requestPay() {
-            console.log("Request Pay 함수 호출됨");
+                const buyerName = $('#buyerName').val();
+                const buyerTel = $('#buyerTel').val();
+                const voucherId = $('#voucherId').val();
+                const reservationId = $('#reservationId').val();
+                const expertId = $('#expertId').val();
+                const reservationDate = $('#reservationDate').val();
+                const reservationTime = $('#reservationTime').val();
+                const price = amount;
+                const duration = $('#duration').val();
+                const voucherType = $('#voucherType').val();
+                const voucherCount = $('#count').val();
 
-            IMP.init("imp14397622");
-
-            const amount = finalAmount;
-            const buyerName = $('#buyerName').val();
-            const buyerTel = $('#buyerTel').val();
-            const voucherId = $('#voucherId').val();
-            const reservationId = $('#reservationId').val();
-            const expertId = $('#expertId').val();
-            const reservationDate = $('#reservationDate').val();
-            const reservationTime = $('#reservationTime').val();
-            const price = $('#price').val();
-            const duration = $('#duration').val();
-            const voucherType = $('#voucherType').val();
-
-            const merchantUid = 'order_' + new Date().getTime(); // 유니크한 주문 ID 생성
-
-            // 결제 정보를 서버로 전달
-            $.ajax({
-                url: '/payments/request',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    amount: amount,
-                    price: price,
-                    paymentMethod: "카드",
-                    voucherId: voucherId,
-                    merchantUid: merchantUid,
-                    duration: duration,
-                    voucherType: voucherType
-                }),
-                success: function (response) {
-                    console.log("서버에서 결제 요청 처리 완료:", response);
-                    if (response && response.merchantUid) {
-                        IMP.request_pay({
-                            pg: "html5_inicis.INIpayTest",
-                            pay_method: "card",
-                            merchant_uid: response.merchantUid,
-                            name: "테스트 결제",
-                            amount: amount,
-                            buyer_name: buyerName,
-                            buyer_tel: buyerTel,
-                        }, function (rsp) {
-                            if (rsp.success) {
-                                alert("결제가 완료되었습니다.");
-                                paymentCompleted = true; // 결제 완료 플래그 설정
-                                // 서버에 결제 완료 정보 전송
-                                $.post('/payments/complete', {
-                                    impUid: rsp.imp_uid,
-                                    merchantUid: rsp.merchant_uid,
-                                    reservationId: reservationId,
-                                    voucherId: voucherId,
-                                    expertId: expertId,
-                                    reservationDate: reservationDate,
-                                    reservationTime: reservationTime
-                                }, function (data) {
-                                    alert("홈페이지로 이동합니다.");
-                                    console.log("결제 완료 응답:", data);
-                                    window.location.href = data; // 서버에서 받은 URL로 리다이렉트
-                                }).fail(function (xhr, status, error) {
-                                    alert("서버로 전송 중 오류 발생: " + error);
-                                });
-                            } else {
-                                alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
-                            }
-                        });
-                    } else {
-                        alert("서버에서 유효한 응답을 받지 못했습니다.");
+                const merchantUid = 'order_' + new Date().getTime(); // 유니크한 주문 ID 생성
+// 요일 계산
+                const date = new Date(reservationDate);
+                const daysOfWeek = [ "월", "화", "수", "목", "금"];
+                const dayOfWeek = daysOfWeek[date.getUTCDay()];
+                // 결제 정보를 서버로 전달
+                $.ajax({
+                    url: '/payments/request',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        amount: amount,
+                        price: price,
+                        paymentMethod: "카드",
+                        voucherId: voucherId,
+                        merchantUid: merchantUid,
+                        duration: duration,
+                        voucherType: voucherType,
+                        voucherCount: voucherCount,
+                    }),
+                    success: function (response) {
+                        console.log("서버에서 결제 요청 처리 완료:", response);
+                        if (response && response.merchantUid) {
+                            IMP.request_pay({
+                                pg: "html5_inicis.INIpayTest",
+                                pay_method: "card",
+                                merchant_uid: response.merchantUid,
+                                name: "테스트 결제",
+                                amount: 100,
+                                buyer_name: buyerName,
+                                buyer_tel: buyerTel,
+                            }, function (rsp) {
+                                if (rsp.success) {
+                                    alert("결제가 완료되었습니다.");
+                                    paymentCompleted = true; // 결제 완료 플래그 설정
+                                    // 서버에 결제 완료 정보 전송
+                                    $.post('/payments/complete', {
+                                        impUid: rsp.imp_uid,
+                                        merchantUid: rsp.merchant_uid,
+                                        reservationId: reservationId,
+                                        voucherId: voucherId,
+                                        expertId: expertId,
+                                        reservationDate: reservationDate,
+                                        reservationTime: reservationTime,
+                                    }, function (data) {
+                                        alert("홈페이지로 이동합니다.");
+                                        console.log("결제 완료 응답:", data);
+                                        window.location.href = data; // 서버에서 받은 URL로 리다이렉트
+                                    }).fail(function (xhr, status, error) {
+                                        alert("서버로 전송 중 오류 발생: " + error);
+                                    });
+                                } else {
+                                    alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+                                }
+                            });
+                        } else {
+                            alert("서버에서 유효한 응답을 받지 못했습니다.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("서버 요청 중 오류 발생:", error);
+                        alert("결제 요청 중 오류 발생: " + error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("서버 요청 중 오류 발생:", error);
-                    alert("결제 요청 중 오류 발생: " + error);
+                });
+            }
+
+            // 예약 대기 삭제 처리
+            window.addEventListener('unload', function (e) {
+                const reservationId = $('#reservationId').val(); // 예약 ID를 가져옵니다.
+                if (reservationId && !paymentCompleted) { // 결제가 완료되지 않은 경우에만 삭제
+                    navigator.sendBeacon('/client/reservations/temp/' + reservationId, JSON.stringify({
+                        _method: 'POST'
+                    }));
                 }
             });
-        }
-
-        // 예약 대기 삭제 처리
-        window.addEventListener('unload', function (e) {
-            const reservationId = $('#reservationId').val(); // 예약 ID를 가져옵니다.
-            if (reservationId && !paymentCompleted) { // 결제가 완료되지 않은 경우에만 삭제
-                navigator.sendBeacon('/client/reservations/temp/' + reservationId, JSON.stringify({
-                    _method: 'POST'
-                }));
-            }
         });
-    });
-</script>
+    </script>
+{{/model}}
+
 {{> layout/footer}}
