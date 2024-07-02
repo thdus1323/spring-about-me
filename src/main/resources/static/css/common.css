@@ -603,3 +603,14 @@ body {
     min-height: 300px;
     overflow: auto;
 }
+.welcome{
+    text-align: center;
+    padding: 10px 20px;
+    background: #FD780F;
+    width: fit-content;
+    border-radius: 50px;
+    font-size: 14px;
+    color: #fff;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}

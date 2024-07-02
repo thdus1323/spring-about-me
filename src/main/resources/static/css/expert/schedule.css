@@ -59,15 +59,16 @@
 .schedule-item figure {
     width: 80px;
     height: 80px;
-    background-image: url(/images/unknown_user.png);
     background-size: 100%;
     border-radius: 50%;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 
 .schedule-item figure img {
     /* 프로필 이미지 스타일 */
-
+    width: 100%;
+    object-fit: cover;
 }
 
 .schedule-item p{
@@ -163,6 +164,18 @@ ul.pagenation li.number span{
     transition: 0.2s ease;
 }
 
+button.reservation-confirm:disabled{
+    cursor: default;
+    color: #999;
+    background: none;
+    border-color: #999;
+}
+button.reservation-confirm:disabled:hover{
+    color:#999;
+    border-color: #999;
+    background: none;
+}
+
 button.reservation-confirm{
     width: 90px;
     height: 40px;
@@ -186,15 +199,5 @@ button.reservation-confirm.disabled:after{
     z-index: 2;
     cursor: default;
 }
-.disabled{
-    background: red;
-    width: 50px;
-    height: 50px;
-    position: relative;
 
-}
-.disabled {
-    background-color: grey;
-    cursor: not-allowed;
-}
 /* *************************** 전문가 스케줄 관련 CSS 끝 ***************************** */
