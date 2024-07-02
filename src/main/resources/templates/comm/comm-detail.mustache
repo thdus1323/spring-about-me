@@ -85,7 +85,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="defalut-btn main-background active-background">상담 받아보기</button>
+                                    <button class="defalut-btn main-background active-background"
+                                            onclick="openExpert({{writerId}})">상담 받아보기
+                                    </button>
                                 </div>
                                 <div class="content">
                                     <br>
@@ -143,7 +145,7 @@
                                         {{#sessionUser}}
                                             <div class="click-wrapper">
                                                 <button id="replyDeleteButton"
-                                                        onclick="deleteReply({{writerId}}, {{id}})">
+                                                        onclick="deleteReply({{writerId}}, {{replyId}})">
                                                     삭제하기
                                                 </button>
                                             </div>
@@ -421,14 +423,30 @@
                             alert('댓글이 성공적으로 삭제되었습니다.');
                             window.location.reload(); // 페이지 새로고침
                         } else {
-                            alert('댓글 삭제 중 오류가 발생했습니다.');
+                            return response.text().then(errorMsg => {
+                                if (errorMsg === "로그인이 필요합니다.") {
+                                    alert(errorMsg); // 로그인 필요 메시지
+                                } else if (errorMsg === "자신이 작성한 댓글만 삭제할 수 있습니다.") {
+                                    alert(errorMsg); // 자신의 댓글이 아닌 경우 메시지
+                                } else {
+                                    alert(`댓글 삭제 실패: ${errorMsg}`); // 기타 실패 메시지
+                                }
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Error deleting reply:', error);
                         alert('댓글 삭제 중 오류가 발생했습니다.');
                     });
+        } else {
+            alert('댓글 삭제가 취소되었습니다.');
         }
+    }
+
+    // 상담 받아보기 버튼
+    function openExpert(writerId) {
+        const expertDetailUrl = `/client/findExpert/detail/${writerId}`;
+        window.location.href = expertDetailUrl;
     }
 
 </script>

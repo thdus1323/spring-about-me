@@ -221,7 +221,7 @@ public class CommResponse {
 
         @Data
         public static class ReplyDTO {
-            private Integer id;
+            private Integer replyId;
             private String profileImage;
             private String name;
             private boolean userRole;
@@ -235,7 +235,7 @@ public class CommResponse {
             private Integer writerId;
 
             public ReplyDTO(@NotNull Reply reply) {
-                this.id = reply.getId();
+                this.replyId = reply.getId();
                 this.profileImage = reply.getUser().getProfileImage();
                 this.name = reply.getUser().getName();
                 this.userRole = reply.getUser().getUserRole().equals(UserRole.EXPERT);

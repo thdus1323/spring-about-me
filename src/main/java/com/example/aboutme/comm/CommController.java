@@ -4,6 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.user.SessionUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,8 +57,8 @@ public class CommController {
 
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
 
-//        String json = new ObjectMapper().writeValueAsString(comm);
-//        log.info("디테일  {}", json);
+        String json = new ObjectMapper().writeValueAsString(comm);
+        log.info("디테일  {}", json);
 
         model.addAttribute("comm", comm);
 
