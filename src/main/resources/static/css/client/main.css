@@ -4,10 +4,12 @@
     width: 100%;
     overflow: hidden;
     margin: 50px 0 20px 0;
+    border-radius: 20px;
 }
 
 .banner-container .card-container a img {
     width: 100%;
+    background-size: 100%;
 }
 
 .banner-container .card-container .card {
@@ -49,11 +51,14 @@
 }
 
 .pick-ex {
-    width: 100vw;
+    width: 100%;
     background-color: #EAF5F5;
     padding: 30px 0;
+    position: relative;
 }
 
+.pick-ex .swiper-button-next{}
+.pick-ex .swiper-button-prev{}
 .pick-container {
     position: relative;
     width: 100%;
@@ -75,6 +80,7 @@
     scroll-behavior: smooth;
     display: flex;
     transition: transform 0.5s ease;
+    padding: 10px 0;
 }
 
 .pick-container .card {
@@ -86,15 +92,19 @@
     box-sizing: border-box;
     /* margin-right: 20px; */
     margin: 0 20px 0 0;
-
+    display: flex;
+    min-height: 300px;
+    justify-content: space-between;
+    border: none;
 }
 
 .pick-container .card-top {
-    border-bottom: 1.5px solid #e6e6e6;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-}
 
+}
+.pick-content{
+    line-height: 1.5;
+    font-size: 14px;
+}
 .pick-container .card-top .category-area {
     display: flex;
     align-items: center;
@@ -105,7 +115,7 @@
 }
 
 .pick-container .card-top .pick-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -147,7 +157,9 @@
 
 .pick-container .card-bottom {
     display: flex;
+    padding-top: 10px;
     align-items: center;
+    border-top: 1px solid #ddd;
 }
 .pick-container .card-bottom > div{
     color : #999;
@@ -204,7 +216,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    padding: 15px;
+    padding: 20px;
 }
 
 .center-container .card .location > div,
@@ -214,12 +226,12 @@
 
 .center-container .card .location > div:first-child {
     display: inline-block;
-    padding: 4px 6px;
-    background-color: #000000;
-    opacity: 0.5;
+    padding: 8px 12px;
+    background-color: #333;
+    opacity: 0.6;
     border-radius: 5px;
-    font-size: 11px;
-
+    font-size: 10px;
+    margin-bottom: 10px;
 }
 
 /* 나에게 맞는 전문가 */
@@ -234,17 +246,21 @@
     scroll-behavior: smooth;
     display: flex;
     transition: transform 0.5s ease;
+    padding: 10px 0;
 }
 
 .expert-container .card {
-    flex: 0 0 calc(25% - 10px);
+    flex: 0 0 calc(25% - 20px);
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     box-sizing: border-box;
-    /* margin-right: 10px; */
-    margin: 0 10px 0 0;
+    margin-right: 20px;
+    display: flex;
+    height: 220px;
+    justify-content: space-between;
+    border: none;
 }
 
 .expert-container .card-top .expert-img {
@@ -268,7 +284,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
+    font-size: 12px;
     color: #999;
 }
 
@@ -471,3 +487,78 @@
     height: 12px;
 }
 
+/* 스와이퍼 관련 CSS */
+.swiper-pagination {
+    background-color: #333;
+    padding: 10px;
+}
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    opacity: 0.5;
+}
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
+.pager{
+    position:absolute;
+    bottom: 15px !important;
+    left: 50% !important;
+    z-index:101;
+    transform:translateX(-50%);
+    display: flex;
+    justify-content: center;
+}
+.pager span{opacity:.3;position:relative;width:29px;height:29px;margin:0 5px;background-color:transparent;transition:all .3s}
+.pager span.on{opacity:1}
+.pager span:before{opacity:0;display:block;content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:45px;height:45px;border:1px solid rgba(255,255,255,.3);border-radius:50%;transition:all .3s}
+.pager span.on:before{opacity:1;width:24px;height:24px}
+.pager span:after{display:block;content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:#fff}
+
+
+.banner-ex{
+    position:relative;
+}
+.expert-ex{
+    position: relative;
+}
+.swiper-button-next{
+    width: 40px !important;
+    height: 40px !important;
+    position: absolute !important;
+    left: -60px !important;
+    background: url(/images/arrow.png) no-repeat;
+    transform: translateY(30px);
+    background-size: 100% auto;
+    background-position: center;
+}
+
+.swiper-button-prev{
+    width: 40px !important;
+    height: 40px !important;
+    left: inherit !important;
+    right: -60px !important;
+    position: absolute !important;
+    background-size: 100% auto !important;
+    transform: rotateY(180deg) translateY(30px);
+
+    background-position: center;
+    background: url(/images/arrow.png) no-repeat;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    display: none;
+}
+#expert{
+    background: #EAF5F5;
+}
+.expert-ex{
+    width: 100%;
+    padding: 30px 0;
+    position: relative;
+}
+#pick{
+    background: #EAF5F5;
+}

@@ -35,4 +35,11 @@ public class ReceiverController {
         }
         return ResponseEntity.ok(sessionUser);
     }
+
+    @GetMapping("/join/chat")
+    public void userJoined() {
+        // This method would be called when a user joins
+        SessionUser sessionUser = redisUtil.getSessionUser();
+                messagingTemplate.convertAndSend("/topic/join/chat", sessionUser.getName() + "님이 입장하셨습니다");
+    }
 }

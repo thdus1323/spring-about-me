@@ -60,7 +60,7 @@ $(document).ready(function() {
         disablePastDates();
         setActiveDate();
 
-        $('#test').click(function() {
+        $('time-btn.active').click(function() {
 
             const year = '2024';
             const day = $('.day.selected').data('date');
