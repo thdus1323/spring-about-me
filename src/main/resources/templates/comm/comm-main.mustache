@@ -71,7 +71,6 @@
                                     <p class="card-text mb-20">{{content}}</p>
                                 </a>
                                 <div class="link-wrapper">
-                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>
                                     <a href="#" class="card-link reply">💌<em class="count">{{replies}}</em></a>
                                 </div>
                                 {{#expertReplies}}
@@ -154,7 +153,7 @@
                             <p class="card-text mb-20">${comm.content}</p>
                         </a>
                         <div class="link-wrapper">
-                            <a href="#" class="card-link like">❤<em class="count">1</em></a>
+                            <span class="post-meta">
                             <a href="#" class="card-link reply">💌<em class="count">${comm.replies}</em></a>
                         </div>
                         ${comm.expertReplies.map(reply => `
