@@ -4,6 +4,7 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.user.SessionUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,7 @@ public class CommController {
     @GetMapping("/comm-detail/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) throws JsonProcessingException {
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
+
         model.addAttribute("comm", comm);
         return "comm/comm-detail";
     }
