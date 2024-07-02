@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.DayOfWeek;
-import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
 class ScheduleRepositoryTest {
     @Autowired
     private ScheduleRepository scheduleRepository;
+
 
 
     @Test

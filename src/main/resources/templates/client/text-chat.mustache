@@ -1,20 +1,25 @@
 {{> layout/header}}
 
-<button onclick="openChat()">채팅시작</button>
-<!-- Chat Modal -->
-<div id="chatModal" class="modal">
-    <div class="modal-header">
-        <h5 class="modal-title">채팅 테라피</h5>
-        <button id="closeChatBtn" onclick="closeChat()">채팅 테라피 종료</button>
+
+<section>
+    <div class="page-content">
+        <!-- Chat Modal -->
+        <div id="chatModal" class="chat-modal mb-50 mt-50">
+            <div class="modal-header">
+                <h5 class="modal-title">채팅 테라피</h5>
+                <button onclick="openChat()">채팅시작</button>
+                <button id="closeChatBtn" onclick="closeChat()" style="display: none">채팅 테라피 종료</button>
+            </div>
+            <div class="modal-body">
+                <div id="chatBox"></div>
+            </div>
+            <div class="modal-footer">
+                <input type="text" id="message" placeholder="보낼 메시지를 입력해주세요">
+                <button type="button" class="btn btn-primary" onclick="sendMessage()">보내기</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-        <div id="chatBox"></div>
-    </div>
-    <div class="modal-footer">
-        <input type="text" id="message" placeholder="보낼 메시지를 입력해주세요">
-        <button type="button" class="btn btn-primary" onclick="sendMessage()">보내기</button>
-    </div>
-</div>
+</section>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -25,7 +30,6 @@
     var stompClient = null;
 
     function connect() {
-
         var socket = new SockJS('/text-websocket');
         stompClient = Stomp.over(socket);
 
@@ -50,12 +54,10 @@
     }
 
     function sendMessage() {
-
         var messageInput = document.getElementById('message');
         var messageContent = messageInput.value.trim();
 
         if (messageContent && stompClient && stompClient.connected) {
-
             fetch('/api/sessionUser', {
                 method: 'GET',
                 credentials: 'include' // 세션 쿠키 포함
@@ -133,10 +135,10 @@
     }
 
     function openChat() {
-        $('#chatModal').show(); // 모달창 열기
-        if (!stompClient) { // 이미 연결되어 있는지 확인
-            connect(); // WebSocket 연결
-        }
+        connect(); // WebSocket 연결
+
+        document.getElementById('startChatBtn').style.display = 'none';
+        document.getElementById('closeChatBtn').style.display = 'block';
     }
 
     function closeChat() {
@@ -158,11 +160,11 @@
         document.body.appendChild(form);
         form.submit();
 
+        document.getElementById('startChatBtn').style.display = 'block';
+        document.getElementById('closeChatBtn').style.display = 'none';
     }
 
-
     window.addEventListener('load', function () {
-
         document.querySelector('.btn-primary').addEventListener('click', function (e) {
             e.preventDefault();
             sendMessage();
@@ -179,7 +181,6 @@
             e.preventDefault();
             closeChat();
         });
-
     });
 </script>
 

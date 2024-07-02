@@ -38,7 +38,6 @@ public class ChatController {
 
         counselService.CounselComplete(sessionUser, counselId);
 
-
         return "redirect:/client/mypage";
     }
 }

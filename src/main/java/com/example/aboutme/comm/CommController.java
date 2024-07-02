@@ -66,6 +66,7 @@ public class CommController {
         return ResponseEntity.ok(hasExpertReply);
     }
 
+    // 메인 페이지
     @GetMapping("/comm")
     public String community(@RequestParam(name = "page", defaultValue = "0") int page,
                             @RequestParam(name = "size", defaultValue = "10") int size,

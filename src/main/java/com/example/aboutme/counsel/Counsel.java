@@ -109,6 +109,13 @@ public class Counsel {
     // 상담내용 수정
     public void completeCounsel() {
         this.counselStatus = CounselStatus.COUNSEL_COMPLETED;
+        this.reservationStatus = ReservationStatus.COUNSEL_COMPLETED;
+        this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    // 예약확정
+    public void completeReservation(){
+        this.reservationStatus =  ReservationStatus.RESERVATION_COMPLETED; // 예약확정
         this.updatedAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
