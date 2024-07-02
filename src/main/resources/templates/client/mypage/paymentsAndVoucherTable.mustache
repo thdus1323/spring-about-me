@@ -96,7 +96,9 @@
                 .then(data => {
                     if (data.success) {
                         alert('결제가 성공적으로 취소되었습니다.');
-                        location.reload();
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
                     } else {
                         alert('결제 취소에 실패하였습니다: ' + data.message);
                     }

@@ -59,8 +59,8 @@ openai:
 
 port:
   api:
-    key: 2175014323317141
-    secret: YPmEkVDr9Kfo93SwHi3c3tOn6mJbNtkUIUazBd7hYSKK73B32sbcbjBvgSEf3JbVVYd9CurpuLLiLkY0
+    key: ${PORT_API_KEY}
+    secret: ${PORT_API_SECRET_KEY}
 
 review:
   summary:

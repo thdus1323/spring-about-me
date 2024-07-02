@@ -11,6 +11,7 @@ import com.example.aboutme.counsel.enums.CounselStatus;
 import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.PaymentRepository;
+import com.example.aboutme.payment.enums.PaymentStatus;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.reviewSummary.ReviewSummaryService;
@@ -206,6 +207,7 @@ public class UserService {
 
     private List<UserProfileDTO.PaymentDTO> getPayments(Integer clientId) {
         return paymentRepository.findByClientId(clientId).stream()
+                .filter(p -> p.getPaymentStatus() == PaymentStatus.COMPLETED)
                 .map(p -> UserProfileDTO.PaymentDTO.builder()
                         .id(p.getId())
                         .paymentMethod(p.getPaymentMethod().getKorean())

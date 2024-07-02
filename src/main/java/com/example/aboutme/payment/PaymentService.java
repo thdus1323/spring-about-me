@@ -44,23 +44,6 @@ public class PaymentService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-//    public void cancelPayment(String impUid, SessionUser sessionUser) {
-//        Payment payment = paymentRepository.findByImpUid(impUid);
-//        System.out.println("payment = " + payment);
-//
-//        if (payment.getImpUid().equals(impUid)) {
-//            String token = getToken();
-//            System.out.println("token = " + token);
-//            Map<String, Object> cancelResponse = cancelPayment(token, payment.getImpUid());
-//            System.out.println("결제 취소 응답 본문: " + cancelResponse);
-//            if (cancelResponse != null) {
-//                payment.setPaymentStatus(PaymentStatus.REFUNDED);
-//            }
-//
-//        } else {
-//            throw new RuntimeException("impUid 불일치");
-//        }
-//    }
 
     @Transactional
     public Map<String, Object> cancelPayment(String impUid, SessionUser sessionUser) {
