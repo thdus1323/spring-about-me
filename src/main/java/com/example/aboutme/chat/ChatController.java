@@ -39,7 +39,7 @@ public class ChatController {
 
         switch (sessionUser.getUserRole()) {
             case EXPERT:
-                return "redirect:/expert/mypage";
+                return "redirect:/schedule";
             default:
                 return "redirect:/client/mypage";
         }
