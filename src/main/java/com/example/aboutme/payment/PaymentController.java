@@ -50,7 +50,6 @@ public class PaymentController {
     public ResponseEntity<String> completePayment(CompletePaymentAndCounselReqDTO reqDTO) {
         log.info("결제완료됨 {}", reqDTO);
         SessionUser sessionUser = redisUtil.getSessionUser();
-
         paymentService.completePayment(reqDTO, sessionUser);
         return ResponseEntity.ok("/");
     }

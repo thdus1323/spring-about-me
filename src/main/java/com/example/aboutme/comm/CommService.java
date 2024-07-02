@@ -8,12 +8,17 @@ import com.example.aboutme.user.User;
 import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.user.enums.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -53,9 +58,42 @@ public class CommService {
 
 
     // 모든 글,댓글 가져오기
-    @Transactional
-    public List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReply() {
-        return commRepository.findAllCommWithReplies();
+//    @Transactional
+//    public List<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReply() {
+//        return commRepository.findAllCommWithRepliesPage();
+//    }
+
+//    @Transactional
+//    public Page<CommResponse.ALLCommWithRepliesDTO> findAllCommWithReply(int page, int size) {
+//        Page<Comm> commPage = commRepository.findAllCommWithRepliesPage(PageRequest.of(page, size));
+//        System.out.println("commPage = " + commPage);
+//
+//        List<CommResponse.ALLCommWithRepliesDTO> dtos = commPage.getContent().stream()
+//                .map(CommResponse.ALLCommWithRepliesDTO::new)
+//                .collect(Collectors.toList());
+//
+//        return new PageImpl<>(dtos, PageRequest.of(page, size), commPage.getTotalElements());
+//    }
+
+    @Transactional()
+    public CommResponse.ALLCommWithRepliesPageDTO findAllCommWithReply(Pageable pageable) {
+        Page<Comm> commPage = commRepository.findAllCommPage(pageable);
+        List<Integer> commIds = commPage.getContent().stream()
+                .map(Comm::getId)
+                .collect(Collectors.toList());
+
+        List<Reply> replies = commRepository.findRepliesByCommIds(commIds);
+
+        // 연관 데이터를 Comm 엔터티에 설정합니다.
+        commPage.getContent().forEach(comm -> {
+            comm.setReplies(
+                    replies.stream()
+                            .filter(reply -> reply.getComm().getId().equals(comm.getId()))
+                            .collect(Collectors.toList())
+            );
+        });
+
+        return new CommResponse.ALLCommWithRepliesPageDTO(commPage);
     }
 
     // 아이디로 검색해서 글,댓글 정보 받아오기
