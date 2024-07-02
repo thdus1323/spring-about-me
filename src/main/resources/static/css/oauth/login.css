@@ -51,6 +51,7 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
+    font-size: 13px;
 }
 
 .login-group input {
@@ -72,7 +73,7 @@
     border: none;
     border-radius: 5px;
     color: #fff;
-    font-size: 1rem;
+    font-size: 14px;
     cursor: pointer;
 }
 
@@ -86,7 +87,7 @@
     justify-content: space-between;
     margin-top: 1rem;
     border-top: 1px solid #ddd;
-    padding: 30px;
+    padding: 20px 30px;
 }
 
 .login-links a {
@@ -117,9 +118,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
 }
 .easy-login-wrapper a{
     display: flex;
@@ -132,6 +130,7 @@
     margin-top: 10px;
     align-items: center;
     justify-content: center;
+    font-size: 14px;
 }
 .easy-login-wrapper a.naver{
      background:#03c75a;
@@ -155,7 +154,7 @@
     margin: 50px 0;
 }
 .login-modal-body{
-    height: 500px;
+    height: 570px;
     width: 400px;
     border-radius: 15px;
     position: absolute;
@@ -196,27 +195,48 @@ h3{
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    flex-direction: column;
 }
 button.login-type{
-    width: calc(180px - 10px);
-    margin-right: 20px;
+    background: none;
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
     padding: 0;
     border-radius: 15px;
     border: none;
-    height: 170px;
+    height: 200px;
     color: #fff;
     transition: 0.3s ease;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #FD780F;
 }
+button.login-type span{
+    color:#000;
+}
+button.login-type span.head{
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffa75b;
+}
+button.login-type span.body{}
+
 .mid button.login-type:nth-child(2){
-    margin-right: 0;
+    margin-bottom: 0;
 }
 button.login-type:hover{
     background: #FD780F;
 }
+button.login-type:hover span{
+    color:#fff;
+}
 .right{}
 
 .login-type-head{
-    font-size: 18px;
     font-weight: 700;
     margin-bottom: 20px;
     color: #FD780F;
