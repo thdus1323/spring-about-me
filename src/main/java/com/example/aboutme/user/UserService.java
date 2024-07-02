@@ -349,6 +349,7 @@ public class UserService {
 
         user.setName(reqDTO.clientName());
         user.setGender(Gender.fromKorean(reqDTO.gender()));
+        user.setProfileImage(reqDTO.profileImage());
 
         // DB 저장
         userRepository.save(user);
@@ -518,7 +519,7 @@ public class UserService {
             averageScore = (averageScore != null) ? averageScore : 0.0;
             double reviewAge = Formatter.roundToOneDecimalPlace(averageScore);
             System.out.println("reviewAge = " + reviewAge);
-            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), totalReviews,reviewAge, voucherImageDTOs);
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), totalReviews, reviewAge, voucherImageDTOs);
         }).toList();
 
         return new FindWrapperRecord(expertInfos);
@@ -553,7 +554,7 @@ public class UserService {
             averageScore = (averageScore != null) ? averageScore : 0.0;
             double reviewAge = Formatter.roundToOneDecimalPlace(averageScore);
             System.out.println("reviewAge = " + reviewAge);
-            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(),totalReviews,reviewAge, voucherImageDTOs);
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), totalReviews, reviewAge, voucherImageDTOs);
         }).toList();
 
         return new FindWrapperRecord(expertInfos);
