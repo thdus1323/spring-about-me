@@ -12,6 +12,7 @@ import com.example.aboutme.counsel.enums.ReservationStatus;
 import com.example.aboutme.counsel.enums.ReviewState;
 import com.example.aboutme.payment.PaymentRepository;
 import com.example.aboutme.payment.enums.PaymentStatus;
+import com.example.aboutme.reply.Reply;
 import com.example.aboutme.reply.ReplyRepository;
 import com.example.aboutme.review.ReviewRepository;
 import com.example.aboutme.reviewSummary.ReviewSummaryService;
@@ -285,14 +286,18 @@ public class UserService {
     public Page<UserProfileDTO.Comm> getCommPosts(Integer userId, Integer page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return commRepository.findByUserId(userId, pageable)
-                .map(c -> UserProfileDTO.Comm.builder()
-                        .title(c.getTitle())
-                        .profileImage(c.getUser().getProfileImage())
-                        .name(c.getUser().getName())
-                        .content(c.getContent())
-                        .category(c.getCategory().getKorean())
-                        .id(c.getId())
-                        .build());
+                .map(c -> {
+                    Integer r = c.getReplies().size();
+                    return UserProfileDTO.Comm.builder()
+                            .title(c.getTitle())
+                            .profileImage(c.getUser().getProfileImage())
+                            .name(c.getUser().getName())
+                            .content(c.getContent())
+                            .category(c.getCategory().getKorean())
+                            .id(c.getId())
+                            .repliesSize(r)
+                            .build();
+                });
     }
 
     // 주석: 이 메서드는 특정 사용자 ID에 대한 답글 목록을 가져옵니다.
@@ -516,6 +521,7 @@ public class UserService {
             List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
                 return new VoucherImageRecord(voucher.getImagePath());
             }).toList();
+            System.out.println("user.getId() = " + user.getId());
             Double averageScore = reviewRepository.findAverageScoreByExpertId(user.getId());
             System.out.println("averageScore = " + averageScore);
             averageScore = (averageScore != null) ? averageScore : 0.0;

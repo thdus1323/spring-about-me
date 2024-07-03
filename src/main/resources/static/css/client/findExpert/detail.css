@@ -1,4 +1,12 @@
 /* Expert Card */
+.detal-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    font-size: 25px;
+    font-weight: bold;
+}
 .card-expert {
     width: 100%;
     background-color: white;
