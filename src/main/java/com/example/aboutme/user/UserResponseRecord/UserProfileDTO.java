@@ -112,7 +112,8 @@ public record UserProfileDTO(
             String content,
             String title,
             String category,
-            String profileImage
+            String profileImage,
+            Integer repliesSize
 
     ) {
     }
