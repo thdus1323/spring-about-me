@@ -88,16 +88,16 @@ public class UserController {
 
     @GetMapping("/oauth/callback/kakao")
     public String kakaoCallback(@RequestParam("code") String code) {
-        SessionUser sessionUser = userService.loginKakao(code, redisTemp);
-        redisTemp.opsForValue().set("sessionUser", sessionUser);
+        SessionUser sessionUser = userService.loginKakao(code);
+        redisUtil.saveSessionUser(sessionUser);
         return "redirect:/";
     }
 
 
     @GetMapping("/oauth/callback/naver")
     public String naverCallback(@RequestParam(value = "code") String code, @RequestParam("state") String state) {
-        SessionUser sessionUser = userService.loginNaver(code, state, redisTemp);
-        redisTemp.opsForValue().set("sessionUser", sessionUser);
+        SessionUser sessionUser = userService.loginNaver(code, state);
+        redisUtil.saveSessionUser(sessionUser);
         return "redirect:/";
     }
 

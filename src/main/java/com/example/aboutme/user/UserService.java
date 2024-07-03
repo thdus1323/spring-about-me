@@ -44,7 +44,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -84,15 +83,17 @@ public class UserService {
         User user = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다"));
 
+        String defaultProfileImage = "/images/counselor01.webp";
+
         ExpertUserProfileDTO.User userProfile = ExpertUserProfileDTO.User.builder()
                 .id(user.getId())
                 .userRole(user.getUserRole())
                 .name(user.getName())
                 .email(user.getEmail())
                 .birth(user.getBirth())
-                .gender(user.getGender().getKorean())
-                .profileImage(user.getProfileImage())
-                .expertLevel(user.getLevel().getKorean())
+                .gender(Optional.ofNullable(user.getGender()).map(Gender::getKorean).orElse(""))
+                .profileImage(Optional.ofNullable(user.getProfileImage()).filter(image -> !image.isEmpty()).orElse(defaultProfileImage))
+                .expertLevel(Optional.ofNullable(user.getLevel()).map(ExpertLevel::getKorean).orElse(""))
                 .build();
 
         List<ExpertUserProfileDTO.SpecDTO> spec = getExpertPageSpec(sessionUser.getId());
@@ -155,14 +156,15 @@ public class UserService {
         User user = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new Exception404("해당 정보를 찾을 수 없습니다."));
 
+        String defaultProfileImage = "/images/emotion04.webp";
         UserProfileDTO.User userProfile = UserProfileDTO.User.builder()
                 .id(user.getId())
                 .userRole(user.getUserRole())
                 .name(user.getName())
                 .email(user.getEmail())
                 .birth(user.getBirth())
-                .gender(user.getGender().getKorean())
-                .profileImage(user.getProfileImage())
+                .gender(Optional.ofNullable(user.getGender()).map(Gender::getKorean).orElse(""))
+                .profileImage(Optional.ofNullable(user.getProfileImage()).filter(image -> !image.isEmpty()).orElse(defaultProfileImage))
                 .build();
 
         return UserProfileDTO.builder()
@@ -349,6 +351,7 @@ public class UserService {
 
         user.setName(reqDTO.clientName());
         user.setGender(Gender.fromKorean(reqDTO.gender()));
+        user.setProfileImage(reqDTO.profileImage());
 
         // DB 저장
         userRepository.save(user);
@@ -405,13 +408,19 @@ public class UserService {
     //상담사 상세보기
     @Transactional
     public ExpertFindDetailDTO getFindExpertDetails(Integer expertId) {
-
+        System.out.println("expertId = " + expertId);
         log.info("상세보기서비스 {}", expertId);
         User user = userRepository.findById(expertId)
                 .orElseThrow(() -> new Exception403("유저정보를 찾을 수 없습니다."));
 
         // 총 리뷰 수 계산
-        Integer totalReviews = reviewRepository.countByExpertId(expertId);
+        Integer totalReviews = reviewRepository.countByExpertId(user.getId());
+        //평균점수
+        Double averageScore = reviewRepository.findAverageScoreByExpertId(user.getId());
+        System.out.println("averageScore = " + averageScore);
+        averageScore = (averageScore != null) ? averageScore : 0.0;
+        double reviewAge = Formatter.roundToOneDecimalPlace(averageScore);
+        System.out.println("reviewAge = " + reviewAge);
 
         ExpertFindDetailDTO.User userRecord = ExpertFindDetailDTO.User.builder()
                 .expertId(user.getId())
@@ -419,15 +428,17 @@ public class UserService {
                 .profileImage(user.getProfileImage())
                 .totalReviews(totalReviews)
                 .expertTitle(user.getExpertTitle())
+                .reviewAge(reviewAge)
                 .build();
 
+
         // price가 0일 때 0원을 반환하도록 로직 수정
-        Optional<Double> optionalPrice = voucherRepository.findLowestPriceByExpertId(expertId);
+        Optional<Double> optionalPrice = voucherRepository.findLowestPriceByExpertId(user.getId());
         double price = optionalPrice.orElse(0.0);
         String lowestPrice = Formatter.number((int) price); // 포맷터에서 가격을 포맷팅
         log.debug("최저 가격: {}", lowestPrice);
 
-        List<ExpertFindDetailDTO.Review> reviews = reviewRepository.findByExpertId(expertId).stream()
+        List<ExpertFindDetailDTO.Review> reviews = reviewRepository.findByExpertId(user.getId()).stream()
                 .map(review -> ExpertFindDetailDTO.Review.builder()
                         .reviewScore(review.getScore())
                         .reviewId(review.getId())
@@ -437,27 +448,32 @@ public class UserService {
                         .build())
                 .collect(Collectors.toList());
 
-        List<ExpertFindDetailDTO.PR> prs = prRepository.findByExpertId(expertId).stream()
+        reviews.forEach(reviewCount -> System.out.println("reviewCount = " + reviewCount));
+
+        List<ExpertFindDetailDTO.PR> prs = prRepository.findByExpertId(user.getId()).stream()
                 .map(pr -> new ExpertFindDetailDTO.PR(pr.getUser().getId(), pr.getIntro(), pr.getEffects(), pr.getMethods()))
                 .collect(Collectors.toList());
 
         // 학력과 경력을 각각 나눔
-        List<ExpertFindDetailDTO.Spec> careerSpecs = specRepository.findByExpertId(expertId).stream()
+        List<ExpertFindDetailDTO.Spec> careerSpecs = specRepository.findByExpertId(user.getId()).stream()
                 .filter(spec -> spec.getSpecType() == SpecType.CAREER)
                 .map(spec -> new ExpertFindDetailDTO.Spec(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
-        List<ExpertFindDetailDTO.Spec> educationSpecs = specRepository.findByExpertId(expertId).stream()
+        List<ExpertFindDetailDTO.Spec> educationSpecs = specRepository.findByExpertId(user.getId()).stream()
                 .filter(spec -> spec.getSpecType() == SpecType.EDUCATION)
                 .map(spec -> new ExpertFindDetailDTO.Spec(spec.getUser().getId(), spec.getSpecType(), spec.getDetails()))
                 .collect(Collectors.toList());
 
 
-        List<ExpertFindDetailDTO.ReviewCount> reviewCounts = reviewRepository.countReviewByScore(expertId).stream()
+        List<ExpertFindDetailDTO.ReviewCount> reviewCounts = reviewRepository.countReviewByScore(user.getId()).stream()
                 .map(review -> {
                     Integer score = (Integer) review[0];
+                    System.out.println("score = " + score);
                     Long count = ((Number) review[1]).longValue(); // 수정된 부분
+                    System.out.println("count = " + count);
                     Double percentage = (totalReviews > 0) ? (count.intValue() * 100.0 / totalReviews) : 0.0;
+                    System.out.println("percentage = " + percentage);
                     return ExpertFindDetailDTO.ReviewCount.builder()
                             .score(score)
                             .count(count)
@@ -465,14 +481,8 @@ public class UserService {
                             .build();
                 })
                 .collect(Collectors.toList());
-
-        //평균점수
-        Double averageScore = reviewRepository.findAverageScoreByExpertId(expertId);
-        averageScore = (averageScore != null) ? averageScore : 0.0;
-
         // 리뷰 요약 추가
-        String reviewSummary = reviewSummaryService.summarizeReviews(expertId);
-
+        String reviewSummary = reviewSummaryService.summarizeReviews(user.getId());
 
         return ExpertFindDetailDTO.builder()
                 .lowestPrice(lowestPrice)
@@ -482,7 +492,6 @@ public class UserService {
                 .prs(prs)
                 .careerSpecs(careerSpecs)
                 .educationSpecs(educationSpecs)
-                .averageScore(averageScore)
                 .reviewCounts(reviewCounts)
                 .build();
 
@@ -500,15 +509,19 @@ public class UserService {
 
         // 3.ExpertinfoDTO 생성
         List<ExpertInfoRecord> expertInfos = expertUsers.stream().map(user -> {
-
+            Integer totalReviews = reviewRepository.countByExpertId(user.getId());
             //4. voucher 이미지 찾기
             List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
 
             List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
                 return new VoucherImageRecord(voucher.getImagePath());
             }).toList();
-
-            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), voucherImageDTOs);
+            Double averageScore = reviewRepository.findAverageScoreByExpertId(user.getId());
+            System.out.println("averageScore = " + averageScore);
+            averageScore = (averageScore != null) ? averageScore : 0.0;
+            double reviewAge = Formatter.roundToOneDecimalPlace(averageScore);
+            System.out.println("reviewAge = " + reviewAge);
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), totalReviews, reviewAge, voucherImageDTOs);
         }).toList();
 
         return new FindWrapperRecord(expertInfos);
@@ -530,6 +543,7 @@ public class UserService {
 
         // 3.ExpertinfoDTO 생성
         List<ExpertInfoRecord> expertInfos = expertUsers.stream().map(user -> {
+            Integer totalReviews = reviewRepository.countByExpertId(user.getId());
 
             //4. voucher 이미지 찾기
             List<Voucher> vouchersImages = voucherRepository.findByExpertId(user.getId());
@@ -537,8 +551,12 @@ public class UserService {
             List<VoucherImageRecord> voucherImageDTOs = vouchersImages.stream().map(voucher -> {
                 return new VoucherImageRecord(voucher.getImagePath());
             }).toList();
-
-            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), voucherImageDTOs);
+            Double averageScore = reviewRepository.findAverageScoreByExpertId(user.getId());
+            System.out.println("averageScore = " + averageScore);
+            averageScore = (averageScore != null) ? averageScore : 0.0;
+            double reviewAge = Formatter.roundToOneDecimalPlace(averageScore);
+            System.out.println("reviewAge = " + reviewAge);
+            return new ExpertInfoRecord(user.getId(), user.getName(), user.getExpertTitle(), user.getProfileImage(), totalReviews, reviewAge, voucherImageDTOs);
         }).toList();
 
         return new FindWrapperRecord(expertInfos);
@@ -589,9 +607,15 @@ public class UserService {
 
     // 오어스 회원가입
     @Transactional
-    public SessionUser loginKakao(String code, RedisTemplate<String, Object> redisTemp) {
-        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
-        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+    public SessionUser loginKakao(String code) {
+        Object userRoleObj = redisUtil.getUserRole();
+        String userRoleStr = userRoleObj != null ? userRoleObj.toString().replaceAll("\"", "").trim() : "";
+        UserRole userRole;
+        try {
+            userRole = UserRole.valueOf(userRoleStr);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid user role: " + userRoleStr);
+        }
 
         RestTemplate restTemp = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -638,7 +662,9 @@ public class UserService {
 
         // 4. 있으면? - 조회된 유저정보 리턴
         if (userPS != null) {
-            return new SessionUser(userPS, accessToken);
+            SessionUser sessionUser = new SessionUser(userPS, accessToken);
+            redisUtil.saveSessionUser(sessionUser);
+            return sessionUser;
         } else {
             System.out.println("어? 유저가 없네? 강제회원가입 and 강제로그인 진행");
             // 5. 없으면? - 강제 회원가입
@@ -648,20 +674,27 @@ public class UserService {
                     .email(email != null ? email : "kakao_" + kakaoId + "@kakao.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-                    .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
+//                    .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
             User returnUser = userRepository.save(user);
-            return new SessionUser(returnUser, accessToken);
+            SessionUser sessionUser = new SessionUser(returnUser, accessToken);
+            redisUtil.saveSessionUser(sessionUser);
+            return sessionUser;
         }
     }
 
-
     @Transactional
-    public SessionUser loginNaver(String code, String state, RedisTemplate<String, Object> redisTemp) {
-        String userRoleStr = (String) redisTemp.opsForValue().get("userRole");
-        UserRole userRole = UserRole.valueOf(userRoleStr.toUpperCase());
+    public SessionUser loginNaver(String code, String state) {
+        Object userRoleObj = redisUtil.getUserRole();
+        String userRoleStr = userRoleObj != null ? userRoleObj.toString().replaceAll("\"", "").trim() : "";
+        UserRole userRole;
+        try {
+            userRole = UserRole.valueOf(userRoleStr);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid user role: " + userRoleStr);
+        }
 
         RestTemplate restTemp = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -701,7 +734,9 @@ public class UserService {
         }
 
         if (userPS != null) {
-            return new SessionUser(userPS, accessToken);
+            SessionUser sessionUser = new SessionUser(userPS, accessToken);
+            redisUtil.saveSessionUser(sessionUser);
+            return sessionUser;
         } else {
             User user = User.builder()
                     .name(nickname)
@@ -709,15 +744,16 @@ public class UserService {
                     .email(email != null ? email : "naver_" + naverId + "@naver.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-                    .profileImage(UserDefault.getDefaultProfileImage())
+//                    .profileImage(UserDefault.getDefaultProfileImage())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.NAVER)
                     .build();
             User returnUser = userRepository.save(user);
-            return new SessionUser(returnUser, accessToken);
+            SessionUser sessionUser = new SessionUser(returnUser, accessToken);
+            redisUtil.saveSessionUser(sessionUser);
+            return sessionUser;
         }
     }
-
 
     public boolean logoutKakao(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
@@ -749,7 +785,6 @@ public class UserService {
         }
     }
 
-
     public boolean logoutNaver(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -780,4 +815,3 @@ public class UserService {
         }
     }
 }
-

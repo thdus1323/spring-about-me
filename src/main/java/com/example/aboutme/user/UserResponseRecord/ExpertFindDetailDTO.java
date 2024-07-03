@@ -24,7 +24,8 @@ public record ExpertFindDetailDTO(
             String name,
             String profileImage,
             String expertTitle,
-            Integer totalReviews
+            Integer totalReviews,
+            double reviewAge
 
     ) {
     }

@@ -23,13 +23,13 @@
                     <div class="mb-4">
                         <div>
                             <i class="fa-regular fa-thumbs-up mt-5"></i>
-                            <h4 class="fw-bold border-bottom pb-2 mb-4">{{user.name}} 상담사님에 대한 104개의 후기</h4>
+                            <h4 class="fw-bold border-bottom pb-2 mb-4">{{user.name}} 상담사님에 대한 {{user.totalReviews}}개의 후기</h4>
                         </div>
 
                         <div class="review-rating">
                             <i class="fas fa-star" style="color: #f5c518;"></i>
                             <!-- TODO: averageScore다시 넣기 -->
-                            <span>4.95</span>
+                            <span>{{user.reviewAge}}</span>
                             <span style="font-size: large; font-weight: lighter;">/5</span>
                         </div>
 
@@ -206,7 +206,7 @@
                 <img src="{{user.profileImage}}" alt="상담사 사진">
                 <div class="card-body">
                     <!-- TODO: 4.95자리에 averageScore를 다시 넣기 -->
-                    <h2>{{user.name}} <span class="rating">★ 4.95</span> ({{user.totalReviews}})</h2>
+                    <h2>{{user.name}} <span class="rating">★ {{user.reviewAge}}</span> ({{user.totalReviews}})</h2>
                     <p>1회 최저 가격</p>
                     <p class="price">{{lowestPrice}}</p>
                     <a href="/client/findExpert/voucher/{{user.expertId}}" class="button-container">이용권 선택하기</a>
