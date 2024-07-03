@@ -674,7 +674,7 @@ public class UserService {
                     .email(email != null ? email : "kakao_" + kakaoId + "@kakao.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-//                    .profileImage(kakaoUser.getKakaoAccount().getProfile().toString())
+                    .profileImage(UserDefault.getDefaultProfileImage())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.KAKAO)
                     .build();
@@ -738,13 +738,14 @@ public class UserService {
             redisUtil.saveSessionUser(sessionUser);
             return sessionUser;
         } else {
+            String defaultProfileImage = "/images/counselor01.webp";
             User user = User.builder()
                     .name(nickname)
                     .password(UUID.randomUUID().toString())
                     .email(email != null ? email : "naver_" + naverId + "@naver.com")
                     .phone("000-0000-0000")
                     .userRole(userRole)
-//                    .profileImage(UserDefault.getDefaultProfileImage())
+                    .profileImage(UserDefault.getDefaultProfileImage())
                     .expertTitle(UserDefault.getDefaultExpertTitle())
                     .provider(OauthProvider.NAVER)
                     .build();
