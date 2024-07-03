@@ -1,6 +1,14 @@
 package com.example.aboutme._core.utils;
 
 
+import com.example.aboutme.schedule.Schedule;
+
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class TimeUtil {
 
 //    public static List<LocalTime> getUnavailableTimes(List<Schedule> schedules, List<Reservation> reservations) {
