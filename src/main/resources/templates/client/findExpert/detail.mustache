@@ -4,11 +4,11 @@
     <div class="d-flex container">
         <div class="content col-md-8">
 
-            <div class="header">{{user.expertTitle}}</div>
+            <div class="header">"{{user.expertTitle}}"</div>
 
             <div class="row mb-4">
                 <div class="col-lg-12">
-                    <div class="mb-4">
+                    <div class="mb-4 expert-detail">
                         <h2><img src="/images/icons8-bot-64.png"> AI가 요약한 후기</h2>
                         <div class="card mb-4">
                             <div class="card-body">
@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <div>
+                        <div class="expert-detail-title">
                             <i class="fa-regular fa-thumbs-up mt-5"></i>
                             <h4 class="fw-bold border-bottom pb-2 mb-4">{{user.name}} 상담사님에 대한 {{user.totalReviews}}개의 후기</h4>
                         </div>
@@ -38,9 +38,9 @@
                                 <div class="col-md-12">
                                     <div class="d-flex flex-column justify-content-center">
                                         {{#reviewCounts}}
-                                            <div class="d-flex align-items-center mb-2">
+                                            <div class="d-flex align-items-center mb-2" >
                                                 <span class="mr-2">{{score}}</span>
-                                                <div class="progress flex-grow-1 mx-2" style="height: 20px;">
+                                                <div class="progress flex-grow-1 mx-2" style="height: 20px" >
                                                     <div class="progress-bar"
                                                          style="width: {{percentage}}%; background-color: #ffa75b;"
                                                          aria-valuenow="{{percentage}}" aria-valuemin="0"
@@ -120,7 +120,7 @@
 
                 </div>
                 <div class="mb-4">
-                    <div>
+                    <div class="expert-detail-title mb-4">
                         <i class="fa-regular fa-thumbs-up mt-5"></i>
                         <h4 class="fw-bold border-bottom pb-2">{{user.name}} 상담사님의 간단한 소개</h4>
                     </div>
@@ -151,7 +151,7 @@
                 </div>
                 <!-- 상담사 질문 섹션 -->
                 <div class="mb-4">
-                    <div>
+                    <div class="expert-detail-title mb-4">
                         <i class="fa-regular fa-thumbs-up mt-5"></i>
                         <h4 class="fw-bold border-bottom pb-2">{{user.name}} 상담사님에게 여쭤봤어요</h4>
                     </div>
@@ -159,7 +159,7 @@
                         {{#prs}}
 
                             <div class="col-md-6">
-                                <h5 class="fw-bold">심리상담을 망설이는 분에게</h5>
+                                <h5 class="fw-bold mb-10">심리상담을 망설이는 분에게</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="content-container" id="content2">
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="fw-bold">상담사님의 심리상담 효과</h5>
+                                <h5 class="fw-bold mb-10">상담사님의 심리상담 효과</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="content-container" id="content3">
@@ -184,7 +184,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="fw-bold">상담사님의 심리상담 방식</h5>
+                                <h5 class="fw-bold mb-10">상담사님의 심리상담 방식</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="content-container" id="content4">
