@@ -79,7 +79,7 @@
 
 .user-mypage .tabs-container {
     background: white;
-    padding: 15px;
+    padding: 20px;
     margin-bottom: 20px;
 }
 
@@ -99,14 +99,12 @@
 }
 
 .user-mypage .tab.active {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #ffa75b;
 }
 
 .user-mypage .tab-content {
     display: none;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 0 0 8px 8px;
+
 }
 
 .user-mypage .tab-content.active {
