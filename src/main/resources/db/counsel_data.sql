@@ -38,13 +38,14 @@ VALUES
      'REVIEW_COMPLETED', NOW(), NOW()),
     (10, 21, 1, 5, 10, 'COUNSEL_COMPLETED', 'COUNSEL_COMPLETED', '2024-06-29', '18:00', '금', '상담결과 테스트용',
      'REVIEW_COMPLETED', NOW(), NOW()),
+
+
     -- 1번 클라이언트 상담 전 내역
     (1, 21, 1, 1, 1, 'RESERVATION_SCHEDULED', 'COUNSEL_PENDING', '2024-06-27', '09:00', '월', '상담결과 테스트용',
      'REVIEW_PENDING', NOW(), NOW()),
     (1, 21, 1, 1, 1, 'RESERVATION_SCHEDULED', 'COUNSEL_PENDING', '2024-07-04', '09:00', '월', '상담결과 테스트용',
      'REVIEW_PENDING', NOW(), NOW()),
-    (1, 21, 1, 1, 1, 'RESERVATION_SCHEDULED', 'COUNSEL_PENDING', '2024-07-11', '09:00', '월', '상담결과 테스트용',
-     'REVIEW_PENDING', NOW(), NOW()),
+
     -- 2번 클라이언트 상담 전 내역
     (2, 22, 1, 2, 2, 'RESERVATION_SCHEDULED', 'COUNSEL_PENDING', '2024-06-28', '10:00', '화', '상담결과 테스트용',
      'REVIEW_PENDING', NOW(), NOW()),
