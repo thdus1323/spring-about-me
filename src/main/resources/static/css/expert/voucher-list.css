@@ -4,17 +4,29 @@
     margin-left: 10px; /* Further reduced margin */
     text-decoration: none;
 }
-
+.page-content h1{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 50px;
+}
 .voucher-list {
-    padding: 10px; /* Further reduced padding */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 20px;
     background-color: white;
-    max-width: 1000px; /* Further reduced width */
-    margin: 0 auto; /* Center align */
+    width: 1164px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .voucher-list h1 {
-    font-size: 20px; /* Further reduced font size */
-    margin-bottom: 10px; /* Further reduced margin */
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .voucher-header {
@@ -25,20 +37,23 @@
 }
 
 .voucher-header span {
-    font-size: 14px; /* Further reduced font size */
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .voucher-header button {
-    padding: 6px 16px; /* Further reduced padding */
-    background-color: rgb(59, 172, 174);
+    width: 90px;
+    height: 40px;
     color: #fff;
     border: none;
     border-radius: 5px;
+    font-size: 14px;
     cursor: pointer;
+    transition: 0.3s ease;
 }
 
 .voucher-header button:hover {
-    background-color: #006f6b;
+    background: #FD780F;
 }
 
 .voucher-header button a{
@@ -46,10 +61,9 @@
 }
 
 .voucher-item {
-    background-color: #fff;
-    padding: 10px; /* Further reduced padding */
-    margin-bottom: 10px; /* Further reduced margin */
-    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin-bottom: 10px;
     border-radius: 5px;
 }
 
@@ -67,13 +81,17 @@
 .voucher-item table th,
 .voucher-item table td {
     border: 1px solid #ddd;
-    padding: 7px; /* Maintain padding for height */
+    padding: 10px; /* Maintain padding for height */
     text-align: center;
+    font-size: 14px;
     vertical-align: middle; /* Align text vertically in the middle of the cell */
     width: 33.33%;
 }
 
 
 .voucher-item table th {
-    background-color: #f1f1f1;
+    background: #FFA45B;
+    color: #fff;
+    border: none;
+    font-size: 14px;
 }

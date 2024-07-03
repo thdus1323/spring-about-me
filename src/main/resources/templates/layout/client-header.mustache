@@ -22,17 +22,17 @@
                         <li class="bell-dropdown">
                             <a href="#!" class="icon bell-icon"><i class="fa-regular fa-bell"></i></a>
                             <span class="alarm-count count-hidden" id="notification-count"></span>
-<!--                            <ul class="dropdown-menu">-->
-<!--                                <li>-->
-<!--                                    <a class="dropdown-item" type="button">Action</a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a class="dropdown-item" type="button">Another action</a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a class="dropdown-item" type="button">Something else here</a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
+                            <!--                            <ul class="dropdown-menu">-->
+                            <!--                                <li>-->
+                            <!--                                    <a class="dropdown-item" type="button">Action</a>-->
+                            <!--                                </li>-->
+                            <!--                                <li>-->
+                            <!--                                    <a class="dropdown-item" type="button">Another action</a>-->
+                            <!--                                </li>-->
+                            <!--                                <li>-->
+                            <!--                                    <a class="dropdown-item" type="button">Something else here</a>-->
+                            <!--                                </li>-->
+                            <!--                            </ul>-->
                         </li>
                         <li><a href="/client/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
@@ -51,13 +51,12 @@
     </div>
 </header>
 <!-- 모달 시작 -->
-<div id="modal" class="modal">
-    <div class="modal-content d-flex align-item-center">
-        <!--        <span class="close">&times;</span>-->
-        <p id="modalMessage">예약이 확정되었습니다.</p>
+<div id="clientModal" class="modal" style="width: 250px;">
+    <div class="modal-content d-flex align-items-center" style="border: none">
+        <p id="clientModalMessage" style="margin-bottom: 10px;">예약이 확정되었습니다.</p>
         <div class="modal-buttons">
-            <a href="/client/mypage" class="btn btn-outline-success btn-small" id="confirmButton">예약 보러 가기</a>
-            <a class="btn btn-outline-danger btn-small" id="closeButton">창 닫기</a>
+            <a href="/client/mypage" class="btn btn-outline-success btn-sm" id="clientConfirmButton">예약 보러 가기</a>
+            <a class="btn btn-outline-danger btn-sm" id="clientCloseButton">창 닫기</a>
         </div>
     </div>
 </div>
@@ -84,8 +83,8 @@
 
                 clientEventSource.onmessage = function (event) {
                     console.log("Event received:", event);
-                    $("#modalMessage").html("예약이 확정되었습니다.");
-                    $("#modal").css("display", "block");
+                    $("#clientModalMessage").html("예약이 확정되었습니다.");
+                    $("#clientModal").css("display", "block");
                 };
 
                 clientEventSource.onerror = function (error) {
@@ -104,19 +103,19 @@
         initializeClientEventSource();
 
         // 모달 제어
-        $(".close, #closeButton").on("click", function () {
-            $("#modal").css("display", "none");
+        $(".close, #clientCloseButton").on("click", function () {
+            $("#clientModal").css("display", "none");
             incrementNotificationCount(); // 알림 카운트 증가 함수 호출
         });
 
-        $("#confirmButton").on("click", function () {
-            window.location.href = "/your-confirmation-page"; // 예약 확인 페이지로 이동
+        $("#clientConfirmButton").on("click", function () {
+            window.location.href = "/client/mypage"; // 예약 확인 페이지로 이동
         });
 
         // 모달 창 외부 클릭 시 닫기
         $(window).on("click", function (event) {
-            if ($(event.target).is("#modal")) {
-                $("#modal").css("display", "none");
+            if ($(event.target).is("#clientModal")) {
+                $("#clientModal").css("display", "none");
                 incrementNotificationCount(); // 알림 카운트 증가 함수 호출
             }
         });

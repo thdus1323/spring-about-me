@@ -51,6 +51,7 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
+    font-size: 13px;
 }
 
 .login-group input {
@@ -72,7 +73,7 @@
     border: none;
     border-radius: 5px;
     color: #fff;
-    font-size: 1rem;
+    font-size: 14px;
     cursor: pointer;
 }
 
@@ -86,7 +87,7 @@
     justify-content: space-between;
     margin-top: 1rem;
     border-top: 1px solid #ddd;
-    padding: 30px;
+    padding: 20px 30px;
 }
 
 .login-links a {
@@ -113,15 +114,13 @@
 
 }
 
-.easy-login-wrapper{
+.easy-login-wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
 }
-.easy-login-wrapper a{
+
+.easy-login-wrapper a {
     display: flex;
     color: #fff;
     border-radius: 50px;
@@ -132,11 +131,14 @@
     margin-top: 10px;
     align-items: center;
     justify-content: center;
+    font-size: 14px;
 }
-.easy-login-wrapper a.naver{
-     background:#03c75a;
+
+.easy-login-wrapper a.naver {
+    background: #03c75a;
 }
-.easy-login-wrapper a img{
+
+.easy-login-wrapper a img {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -144,18 +146,20 @@
     height: 30px;
     object-fit: cover;
 }
-.easy-login-wrapper a.naver img{
+
+.easy-login-wrapper a.naver img {
 
 }
 
-.login-modal{
+.login-modal {
     position: relative;
     width: 100%;
     min-height: 70vh;
     margin: 50px 0;
 }
-.login-modal-body{
-    height: 500px;
+
+.login-modal-body {
+    height: 570px;
     width: 400px;
     border-radius: 15px;
     position: absolute;
@@ -167,22 +171,26 @@
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-h3{
+
+h3 {
     font-size: 18px;
     font-weight: 700;
     text-align: center;
 }
-.login-slide-wrapper{
+
+.login-slide-wrapper {
     position: relative;
     height: 100%;
     width: 100%;
 }
-.login-slide-content > div{
+
+.login-slide-content > div {
     width: 400px;
     padding: 20px;
     position: relative;
 }
-.login-slide-content{
+
+.login-slide-content {
     display: flex;
     position: absolute;
     top: 0;
@@ -191,38 +199,71 @@ h3{
     flex-direction: row;
     background: #fff;
 }
-.left{}
-.mid{
+
+.left {
+}
+
+.mid {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    flex-direction: column;
 }
-button.login-type{
-    width: calc(180px - 10px);
-    margin-right: 20px;
+
+button.login-type {
+    background: none;
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
     padding: 0;
     border-radius: 15px;
     border: none;
-    height: 170px;
+    height: 200px;
     color: #fff;
     transition: 0.3s ease;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #FD780F;
 }
-.mid button.login-type:nth-child(2){
-    margin-right: 0;
+
+button.login-type span {
+    color: #000;
 }
-button.login-type:hover{
+
+button.login-type span.head {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffa75b;
+}
+
+button.login-type span.body {
+}
+
+.mid button.login-type:nth-child(2) {
+    margin-bottom: 0;
+}
+
+button.login-type:hover {
     background: #FD780F;
 }
-.right{}
 
-.login-type-head{
-    font-size: 18px;
+button.login-type:hover span {
+    color: #fff;
+}
+
+.right {
+}
+
+.login-type-head {
     font-weight: 700;
     margin-bottom: 20px;
     color: #FD780F;
 }
 
-button.back{
+button.back {
     position: absolute;
     top: -40px;
     right: 20px;
@@ -233,18 +274,25 @@ button.back{
     transition: 0.2s ease;
     border-radius: 5px;
 }
-button.back.left-for-mid{}
-button.back.right-for-mid{
+
+button.back.left-for-mid {
+}
+
+button.back.right-for-mid {
     right: inherit;
 }
 
-button.back:hover{
+button.back:hover {
     background: #FD780F;
 }
-button.back:hover i{}
-button.back i{
+
+button.back:hover i {
+}
+
+button.back i {
     color: #fff;
 }
-button.back.right-for-mid i{
+
+button.back.right-for-mid i {
     transform: rotate(180deg);
 }

@@ -7,8 +7,8 @@
         <div id="chatModal" class="chat-modal mb-50 mt-50">
             <div class="modal-header">
                 <h5 class="modal-title">채팅 테라피</h5>
-                <button onclick="openChat()">채팅시작</button>
-                <button id="closeChatBtn" onclick="closeChat()" style="display: none">채팅 테라피 종료</button>
+                <button onclick="openChat()" style="display: none">채팅시작</button>
+                <button id="closeChatBtn" onclick="closeChat()">채팅 테라피 종료</button>
             </div>
             <div class="modal-body">
                 <div id="chatBox"></div>
@@ -25,9 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
 <script>
     var stompClient = null;
+
+    window.onload = function() {
+        connect();
+    }
 
     function connect() {
         var socket = new SockJS('/text-websocket');
@@ -48,9 +51,49 @@
                 console.log('Received message in browser:', message);
                 displayMessage(message);
             });
+
+            // Subscribe to the join topic
+            stompClient.subscribe('/topic/join/chat', function (messageOutput) {
+                var joinMessage = messageOutput.body;
+                displayJoinMessage(joinMessage);
+            });
+
+            displayWelcomeMessage(); // 웹소켓 연결 후 입장 메시지 표시
         }, function (error) {
             console.error('STOMP error:', error);
         });
+    }
+
+    function displayWelcomeMessage() {
+        fetch('/api/sessionUser', {
+            method: 'GET',
+            credentials: 'include' // 세션 쿠키 포함
+        })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((sessionUser) => {
+                    var chatBox = document.getElementById('chatBox');
+                    var welcomeMessage = document.createElement('div');
+                    welcomeMessage.className = 'welcome';
+                    welcomeMessage.textContent = `${sessionUser.name}님이 입장하셨습니다`;
+                    chatBox.appendChild(welcomeMessage);
+
+                    // Notify other users
+                    stompClient.send('/app/join/chat', {}, JSON.stringify(sessionUser.name + "님이 입장하셨습니다"));
+                })
+                .catch((error) => console.error('Error fetching session user:', error));
+    }
+
+    function displayJoinMessage(joinMessage) {
+        var chatBox = document.getElementById('chatBox');
+        var joinMessageElement = document.createElement('div');
+        joinMessageElement.className = 'join-message';
+        joinMessageElement.textContent = joinMessage;
+        chatBox.appendChild(joinMessageElement);
     }
 
     function sendMessage() {
@@ -102,6 +145,7 @@
                     return response.json();
                 })
                 .then((sessionUser) => {
+
                     var isOwner = message.sender === sessionUser.name;
                     messageElement.className = `message ${isOwner ? 'owner' : 'another'}`;
 
@@ -132,13 +176,6 @@
                     modalBody.scrollTop = modalBody.scrollHeight;
                 })
                 .catch((error) => console.error('Error fetching session user:', error));
-    }
-
-    function openChat() {
-        connect(); // WebSocket 연결
-
-        document.getElementById('startChatBtn').style.display = 'none';
-        document.getElementById('closeChatBtn').style.display = 'block';
     }
 
     function closeChat() {
@@ -183,5 +220,6 @@
         });
     });
 </script>
+
 
 {{> layout/footer}}

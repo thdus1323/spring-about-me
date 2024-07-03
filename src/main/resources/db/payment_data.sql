@@ -20,6 +20,7 @@ VALUES
     -- 1번 클라이언트가 텍스트 바우처 4회권을 구매하였다.
     (1, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_1234567891',
      'merchant_1234567891', NOW(), NOW()),
+
     -- 2번 클라이언트가 텍스트 바우처 4회권을 구매하였다.
     (2, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_1234567892',
      'merchant_1234567892', NOW(), NOW()),
@@ -45,6 +46,6 @@ VALUES
     (9, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_1234567899',
      'merchant_1234567899', NOW(), NOW()),
     -- 10번 클라이언트가 텍스트 바우처 4회권을 구매하였다.
-    (10, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_1234567810',
+    (10, 1, 21, 15000, 15000, 'TEXT_THERAPY', 4, 50, 'CREDIT_CARD', '2024-06-28', 'COMPLETED', 'imp_671776164136',
      'merchant_1234567810', NOW(), NOW());
 

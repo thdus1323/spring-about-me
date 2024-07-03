@@ -12,7 +12,7 @@
                     <div class="comm-nav">
                         <div class="navbar navbar-expand-lg navbar-light bg-light">
                             <div class="container-fluid">
-                                <a class="navbar-brand" href="/comm">모든 사연</a>
+                                <a class="navbar-brand" href=/comm>모든 사연</a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                                         aria-expanded="false"
@@ -22,26 +22,26 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/comm/category?category=GENERAL_CONCERNS">일반고민</a>
+                                            <a class="nav-link" href="#" data-category="GENERAL_CONCERNS">일반고민</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/comm/category?category=CAREER_JOBS">취업/진로</a>
+                                            <a class="nav-link" href="#" data-category="CAREER_JOBS">취업/진로</a>
                                         </li>
-<!--                                        <li class="nav-item">-->
-<!--                                            <a class="nav-link" href="/comm/category?category=WORK_LIFE">직장</a>-->
-<!--                                        </li>-->
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/comm/category?category=RELATIONSHIPS">연애</a>
+                                            <a class="nav-link" href="#" data-category="WORK_LIFE">직장</a>
                                         </li>
-<!--                                        <li class="nav-item">-->
-<!--                                            <a class="nav-link" href="/comm/category?category=SOCIAL_INTERACTIONS">대인관계</a>-->
-<!--                                        </li>-->
-<!--                                        <li class="nav-item">-->
-<!--                                            <a class="nav-link" href="/comm/category?category=ADDICTION_OBSESSION">중독/집착</a>-->
-<!--                                        </li>-->
-<!--                                        <li class="nav-item">-->
-<!--                                            <a class="nav-link" href="/comm/category?category=FINANCE_BUSINESS">금전/사업</a>-->
-<!--                                        </li>-->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-category="RELATIONSHIPS">연애</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-category="SOCIAL_INTERACTIONS">대인관계</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-category="ADDICTION_OBSESSION">중독/집착</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#" data-category="FINANCE_BUSINESS">금전/사업</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -52,12 +52,15 @@
                         <button class="active black-background">✨최신순</button>
                         <button>👩‍⚕️전문답변</button>
                         <button>😍공감순</button>
+                        {{#sessionUser}}
+                            <button id="writeButton" onclick="openWrite()">글쓰기</button>
+                        {{/sessionUser}}
                     </div>
                     <!--필터 끝-->
                     <!--컨텐츠 시작-->
-                    <div class="c-card">
-
-                        {{#allCommsWithReplyList}}
+                    <div class="c-card" id="comm-posts-container">
+                        {{!-- 초기 페이지 로드 --}}
+                        {{#allCommsWithReplyList.comms}}
                             <div class="c-card-body">
                                 <a href="/comm-detail/{{id}}">
                                     <h4 class="card-title mb-10">{{title}}</h4>
@@ -71,10 +74,8 @@
                                     <p class="card-text mb-20">{{content}}</p>
                                 </a>
                                 <div class="link-wrapper">
-                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>
                                     <a href="#" class="card-link reply">💌<em class="count">{{replies}}</em></a>
                                 </div>
-
                                 {{#expertReplies}}
                                     {{#userRole}}
                                         <div class="expert-reply">
@@ -90,39 +91,136 @@
                                     {{/userRole}}
                                 {{/expertReplies}}
                             </div>
-
-                        {{/allCommsWithReplyList}}
-
+                        {{/allCommsWithReplyList.comms}}
                     </div>
-
-                    <!--컨텐츠 끝-->
-
-                    <!--페이지네이션 시작-->
-                    <div class="comm-pagination">
-                        <nav aria-label="...">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <span class="page-link">Previous</span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active" aria-current="page">
-                                    <span class="page-link">2</span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <!--페이지네이션 끝-->
+                </div>
+                <div class="comm-pagination d-flex ">
+                    <ul class="pagination" id="pagination-container">
+                        {{#allCommsWithReplyList.hasPrevious}}
+                            <li class="page-item">
+                                <a class="page-link" href="#" data-page="{{allCommsWithReplyList.previousPage}}">Previous</a>
+                            </li>
+                        {{/allCommsWithReplyList.hasPrevious}}
+                        {{#eachPage}}
+                            <li class="page-item">
+                                <a class="page-link" href="#" data-page="{{this}}">{{this}}</a>
+                            </li>
+                        {{/eachPage}}
+                        {{#allCommsWithReplyList.hasNext}}
+                            <li class="page-item">
+                                <a class="page-link" href="#" data-page="{{allCommsWithReplyList.nextPage}}">Next</a>
+                            </li>
+                        {{/allCommsWithReplyList.hasNext}}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!--컨텐츠 끝-->
-</div>
-<!--커뮤니티 끝-->
-{{> layout/footer}}
 
+<script>
+    $(document).ready(function () {
+        function loadPage(page, size, category) {
+            $.ajax({
+                url: '/api/comm',
+                method: 'GET',
+                data: {
+                    page: page,
+                    size: size,
+                    category: category
+                },
+                success: function (data) {
+                    updatePageContent(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error('페이지 로드 중 오류 발생:', error);
+                }
+            });
+        }
+
+        function updatePageContent(data) {
+            const $commPostsContainer = $('#comm-posts-container');
+            $commPostsContainer.empty();
+            data.comms.forEach(comm => {
+                const commElement = `
+                    <div class="c-card-body">
+                        <a href="/comm-detail/${comm.id}">
+                            <h4 class="card-title mb-10">${comm.title}</h4>
+                            <div class="community-cartegory">
+                                <div class="category main-color">${comm.category}</div>
+                                <div class="user-info">
+                                    <figure><img src="${comm.writerImage}" alt="회원이미지"></figure>
+                                    <span>${comm.writerName}</span>
+                                </div>
+                            </div>
+                            <p class="card-text mb-20">${comm.content}</p>
+                        </a>
+                        <div class="link-wrapper">
+                            <span class="post-meta">
+                            <a href="#" class="card-link reply">💌<em class="count">${comm.replies}</em></a>
+                        </div>
+                        ${comm.expertReplies.map(reply => `
+                            ${reply.userRole ? `
+                                <div class="expert-reply">
+                                    <div class="expert-reply-info mb-10">
+                                        <figure><img src="/images/user.png" alt="${reply.profileImage}"></figure>
+                                        <span class="expert-reply-name active-color">${reply.expertName} 님의 전문답변</span>
+                                    </div>
+                                    <p class="reply-content">${reply.solution}</p>
+                                </div>
+                            ` : ''}
+                        `).join('')}
+                    </div>
+                `;
+                $commPostsContainer.append(commElement);
+            });
+
+            const $paginationContainer = $('#pagination-container');
+            $paginationContainer.empty();
+            if (data.hasPrevious) {
+                $paginationContainer.append(`
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="${data.previousPage}">Previous</a>
+                    </li>
+                `);
+            }
+            for (let i = data.startPage; i <= data.endPage; i++) {
+                $paginationContainer.append(`
+                    <li class="page-item ${i === data.currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" data-page="${i}">${i + 1}</a>
+                    </li>
+                `);
+            }
+            if (data.hasNext) {
+                $paginationContainer.append(`
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="${data.nextPage}">Next</a>
+                    </li>
+                `);
+            }
+        }
+
+        $(document).on('click', '.pagination a', function (e) {
+            e.preventDefault();
+            const page = $(this).data('page');
+            const category = $('.comm-nav .nav-link.active').data('category');
+            loadPage(page, 9, category);
+        });
+
+        $(document).on('click', '.comm-nav .nav-link', function (e) {
+            e.preventDefault();
+            $('.comm-nav .nav-link').removeClass('active');
+            $(this).addClass('active');
+            const category = $(this).data('category');
+            loadPage(0, 9, category);
+        });
+
+        loadPage(0, 9, null);
+    });
+
+    function openWrite() {
+        window.location.href = '/comm/write';
+    }
+</script>
+
+{{> layout/footer}}

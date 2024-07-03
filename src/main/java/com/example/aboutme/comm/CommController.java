@@ -4,9 +4,13 @@ import com.example.aboutme._core.utils.RedisUtil;
 import com.example.aboutme.comm.enums.CommCategory;
 import com.example.aboutme.user.SessionUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +42,6 @@ public class CommController {
     public ResponseEntity<?> communityUpdate(@RequestBody CommRequest.UpdateRequestCommDTO updatedPost) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         commService.updateComm(sessionUser.getId(), updatedPost);
-
         return ResponseEntity.ok("게시글 수정 완료");
     }
 
@@ -47,20 +50,14 @@ public class CommController {
     public ResponseEntity<?> communityWriteComplete(@RequestBody CommRequest.RequestCommDTO commRequest) {
         SessionUser sessionUser = redisUtil.getSessionUser();
         commService.saveComm(sessionUser.getId(), commRequest);
-
         return ResponseEntity.ok("게시글 등록 완료");
     }
 
     @GetMapping("/comm-detail/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) throws JsonProcessingException {
-
         CommResponse.CommDetailDTO comm = commService.getCommDetail(id);
 
-//        String json = new ObjectMapper().writeValueAsString(comm);
-//        log.info("디테일  {}", json);
-
         model.addAttribute("comm", comm);
-
         return "comm/comm-detail";
     }
 
@@ -73,19 +70,16 @@ public class CommController {
 
     // 메인 페이지
     @GetMapping("/comm")
-    public String community(HttpServletRequest request) {
+    public String community(@RequestParam(name = "page", defaultValue = "0") int page,
+                            @RequestParam(name = "size", defaultValue = "9") int size,
+                            @RequestParam(name = "category", required = false) CommCategory category,
+                            Model model) {
 
-        List<CommResponse.ALLCommWithRepliesDTO> allCommsWithReplyList = commService.findAllCommWithReply();
-        request.setAttribute("allCommsWithReplyList", allCommsWithReplyList);
-
-        return "/comm/comm-main";
-    }
-
-    @GetMapping("/comm/category")
-    public String communityByCategory(@RequestParam("category") CommCategory category, Model model) {
-        List<CommResponse.CommMainByCategory> allCommsWithReplyList = commService.getCommMainByCategory(category);
+        Pageable pageable = PageRequest.of(page, size);
+        CommResponse.ALLCommWithRepliesPageDTO allCommsWithReplyList = commService.findAllCommWithReply(pageable, category);
         model.addAttribute("allCommsWithReplyList", allCommsWithReplyList);
-
-        return "/comm/comm-main";
+        return "comm/comm-main";
     }
+
+
 }

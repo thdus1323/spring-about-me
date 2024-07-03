@@ -45,14 +45,19 @@ public class VoucherService {
 
         List<VoucherRecord> vouchers = voucherRepository.findByExpertId(expertId)
                 .stream()
-                .map(v -> new VoucherRecord(
-                        v.getVoucherType(),
-                        v.getId(),
-                        Formatter.number((int) v.getPrice()),
-                        v.getCount(),
-                        v.getDuration(),
-                        v.getImagePath()
-                ))
+                .map(v -> {
+                    String priceFormatted = Formatter.number((int) v.getPrice());
+                    String totalAmount = Formatter.number((int) (v.getPrice() * v.getCount()));
+                    return new VoucherRecord(
+                            v.getVoucherType(),
+                            v.getId(),
+                            Formatter.number((int) v.getPrice()),
+                            v.getCount(),
+                            v.getDuration(),
+                            v.getImagePath(),
+                            totalAmount
+                    );
+                })
                 .collect(Collectors.toList());
         System.out.println("vouchers = " + vouchers);
 

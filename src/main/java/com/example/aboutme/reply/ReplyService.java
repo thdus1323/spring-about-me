@@ -41,7 +41,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public void deleteReply(Integer replyId) {
-        replyRepository.deleteById(replyId);
+    public void deleteReply(Integer id) {
+        replyRepository.deleteById(id);
     }
 }

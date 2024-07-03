@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,10 +51,22 @@ public class PaymentController {
     public ResponseEntity<String> completePayment(CompletePaymentAndCounselReqDTO reqDTO) {
         log.info("결제완료됨 {}", reqDTO);
         SessionUser sessionUser = redisUtil.getSessionUser();
-
         paymentService.completePayment(reqDTO, sessionUser);
         return ResponseEntity.ok("/");
     }
+//
+//    @PostMapping("/client/mypage/cancelPayment")
+//    public String cancelPayment(@RequestParam("impUid") String impUid, Model model) {
+//        System.out.println("impUid = " + impUid);
+//        try {
+//            Map<String, Object> cancelResponse = paymentService.processCancellation(impUid);
+//            model.addAttribute("cancelResponse", cancelResponse);
+//            return "redirect:/client/mypage";  // 결제 취소 성공 페이지로 이동
+//        } catch (Exception e) {
+//            model.addAttribute("errorMessage", e.getMessage());
+//            return "redirect:/client/mypage";  // 결제 취소 실패 페이지로 이동
+//        }
+//    }
 
 
     @GetMapping("/list")

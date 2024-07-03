@@ -1,5 +1,7 @@
 package com.example.aboutme._core.utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -38,6 +40,12 @@ public class Formatter {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid number format: " + numberStr, e);
         }
+    }
+
+    public static double roundToOneDecimalPlace(double value) {
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(1, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
 

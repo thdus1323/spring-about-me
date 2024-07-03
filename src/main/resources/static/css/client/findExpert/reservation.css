@@ -107,7 +107,7 @@
 }
 
 .reservation-container .reservation-next-wrapper button {
-    width: calc(50% - 10px);
+    width: 100%;
     height: 40px;
     border: none;
     border-radius: 5px;

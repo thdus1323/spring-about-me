@@ -57,25 +57,43 @@
     background: #000;
 }
 
+.comm-filter #writeButton {
+    background-color: #ff9500;
+    color: white; /* 글자색을 흰색으로 설정 */
+    padding: 10px 20px; /* 적절한 패딩 값 설정 */
+    border: none; /* 기본 테두리 제거 */
+    cursor: pointer; /* 포인터 커서 설정 */
+    transition: background-color 0.3s; /* 배경색 변경 시 부드러운 전환 효과 설정 */
+    float: right;
+}
+
+.comm-filter #writeButton:hover {
+    background-color: #f47821; /* 호버 시 배경색을 밝은 주황색으로 변경 */
+}
+.c-card.comm-detail{
+    height: fit-content;
+}
 .c-card {
     border: none;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: 1000px;
     align-content: flex-start;
+    overflow: hidden;
+    height: 800px;
 }
 
 .c-card .c-card-body {
     width: calc((100% - 40px) / 3);
     margin-right: 20px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    height: -webkit-fill-available;
+    border-radius: 10px;
     margin-bottom: 20px;
     height: fit-content;
     padding: 20px;
     background: #fff;
+    break-inside: avoid;
+    min-height: 208px;
 }
 
 .c-card .c-card-body.comdetail {
@@ -101,7 +119,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.2;
+    line-height: 1.5;
     margin-bottom: 20px;
 }
 
@@ -170,7 +188,7 @@
 
 .community-cartegory {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     align-items: center;
 }
 
@@ -310,7 +328,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.2;
+    line-height: 1.5;
 }
 
 .community-cartegory .actions .right-actions a {

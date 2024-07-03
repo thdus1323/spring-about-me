@@ -21,7 +21,7 @@
                 {{#sessionUser}}
                     <ul>
                         <li><a href="/logout">로그아웃</a></li>
-                        <li><a href="#!" class="icon"><i class="fas fa-search"></i></a></li>
+                        <a href="#!" class="icon bell-icon"><i class="fa-regular fa-bell"></i></a>
                         <li><a href="/expert/mypage" class="icon"><i class="far fa-user"></i></a></li>
                     </ul>
                     <input type="hidden" id="sessionUserId" value="{{sessionUser.id}}">
@@ -40,13 +40,12 @@
     </div>
 </header>
 <!-- 모달 시작 -->
-<div id="expertModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p id="expertModalMessage">예약신청이 도착했습니다.</p>
+<div id="expertModal" class="modal" style="width: 250px;">
+    <div class="modal-content d-flex align-items-center" style="border: none">
+        <p id="expertModalMessage" style="margin-bottom: 10px;">예약신청이 도착했습니다.</p>
         <div class="modal-buttons">
-            <button id="expertConfirmButton">마이페이지로 이동</button>
-            <button id="expertCloseButton">창 닫기</button>
+            <a href="/schedule" class="btn btn-outline-success btn-sm" id="expertConfirmButton">상담일정 페이지로 가기</a>
+            <a class="btn btn-outline-danger btn-sm" id="expertCloseButton">창 닫기</a>
         </div>
     </div>
 </div>
@@ -67,17 +66,17 @@
                 const expertEventSource = new EventSource(`/sse/expert/${expertId}`);
                 console.log("EventSource created for expert");
 
-                expertEventSource.onopen = function(event) {
+                expertEventSource.onopen = function (event) {
                     console.log("Open:", event);
                 };
 
-                expertEventSource.onmessage = function(event) {
+                expertEventSource.onmessage = function (event) {
                     console.log("Event received:", event);
                     $("#expertModalMessage").html("예약신청이 도착했습니다.");
                     $("#expertModal").css("display", "block");
                 };
 
-                expertEventSource.onerror = function(error) {
+                expertEventSource.onerror = function (error) {
                     console.error("Error occurred:", error);
                     expertEventSource.close();
                     setTimeout(function () {
@@ -97,7 +96,7 @@
         });
 
         $("#expertConfirmButton").on("click", function () {
-            window.location.href = "/expert/mypage"; // 마이페이지로 이동
+            window.location.href = "/schedule"; // 스케쥴 확인 페이지로 이동
         });
 
         // 모달 창 외부 클릭 시 닫기

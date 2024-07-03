@@ -1,116 +1,76 @@
-<div class="card">
-    <div class="card-header">상담 및 예약 관리</div>
-    <div class="card-body tabs-container">
-        <div class="tabs">
-            <div class="tab active" data-tab="progress-reservation">상담 및 예약 일정</div>
-            <div class="tab" data-tab="completed-counsel">상담 내역</div>
-            <div class="tab" data-tab="consultation-journal">상담 일지</div>
-        </div>
-        <div class="tab-content active" id="progress-reservation">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>이용권</th>
-                        <th>시작 시간</th>
-                        <th>상담 날짜</th>
-                        <th>상태</th>
-                        <th>상담실</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#progressReservations}}
-                        <tr>
-                            <td>{{voucherType}}</td>
-                            <td>{{startTime}}</td>
-                            <td>{{reservationDate}}</td>
-                            <td>{{status}}</td>
-                            <td>
-                                <form action="/counsel" method="GET">
-                                    <input type="hidden" name="counselId" value="{{id}}">
-                                    <input type="hidden" name="userId" value="{{clientId}}">
-                                    <input type="hidden" name="voucherType" value="{{voucherType}}">
-                                    <input type="hidden" name="reservationDate" value="{{reservationDate}}">
-                                    <input type="hidden" name="startTime" value="{{startTime}}">
-                                    <button class="btn btn-outline-success btn-small"
-                                            onclick="cancelReservation({{id}})">상담하기
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    {{/progressReservations}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="tab-content" id="completed-counsel">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>이용권</th>
-                        <th>상담 날짜</th>
-                        <th>상태</th>
-                        <th>리뷰</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#completedCounsels}}
-                        <tr>
-                            <td>{{voucherType}}</td>
-                            <td>{{counselDate}}</td>
-                            <td>{{state}}</td>
-                            <td>
-                                <form action="/reviewForm" method="get">
-                                    <input type="hidden" name="expertId" value="{{expertId}}">
-                                    <input type="hidden" name="clientId" value="{{clientId}}">
-                                    <input type="hidden" name="counselId" value="{{id}}">
-                                    <input type="hidden" name="voucherType" value="{{voucherType}}">
-                                    <input type="hidden" name="counselDate" value="{{counselDate}}">
-                                    {{#isReview}}
-                                        <button class="btn btn-outline-success btn-small"
-                                                disabled>
-                                            리뷰 작성
-                                        </button>
-                                    {{/isReview}}
-                                    {{^isReview}}
-                                        <button class="btn btn-outline-success btn-small"
-                                                onclick="writeReview({{id}})">
-                                            리뷰 작성
-                                        </button>
-                                    {{/isReview}}
+<div class="mypage-wrap user-mypage" id="reservation-management">
+    <div class="mypage-title">상담 및 예약 관리</div>
+    <div class="mypage-toggle toggle-reservation">
+        <button class="active" data-tab="progress-reservation">상담 및 예약 일정</button>
+        <button data-tab="completed-counsel">상담 내역</button>
+    </div>
 
-
-                                </form>
-                            </td>
-                        </tr>
-                    {{/completedCounsels}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="tab-content" id="consultation-journal">
-            <div class="table-container">
-                <div class="user-mypage post" data-post-id="my-board">
-                    <div class="post-header">
-                                <span class="post-category">텍스트 테라피
-                                    <img src="/images/expert21.jpg" alt="Profile Picture" class="post-profile-image">
-                                    <span class="username">1급)</span>
-                                    <span class="username">전문가21</span>
-                                    <span class="username">상담날짜(시간) </span>
-                                    <span class="username">: 2024-06-28</span>
-                                    <span class="username">(09:00)</span>
-                                </span>
+    <div class="mypage-tab-content active" id="progress-reservation">
+        <div class="mypage-card-container">
+            {{#progressReservations}}
+                <div class="mypage-card">
+                    <div class="mypage-card-body">
+                        <h5 class="mypage-card-title">{{voucherType}}</h5>
+                        <p class="mypage-card-text mx-5">시작 시간: <span>{{startTime}}</span></p>
+                        <p class="mypage-card-text">상담 날짜: <span>{{reservationDate}}</span></p>
+                        <p class="mypage-card-text mx-5">상태: <span>{{status}}</span></p>
                     </div>
-                    <div class="post-body">
-                        <h5 class="post-title">AI 요약</h5>
-                        <p class="post-content">강하고 책임감이 강한사람입니다.</p>
-                    </div>
-                    <span class="username">더보기</span>
-                    <span class="username">상세내역</span>
+                    <form action="/counsel" method="GET">
+                        <input type="hidden" name="counselId" value="{{id}}">
+                        <input type="hidden" name="userId" value="{{clientId}}">
+                        <input type="hidden" name="voucherType" value="{{voucherType}}">
+                        <input type="hidden" name="reservationDate" value="{{reservationDate}}">
+                        <input type="hidden" name="startTime" value="{{startTime}}">
+                        <button class="btn btn-outline-success mypage-btn-small">상담하기</button>
+                    </form>
                 </div>
-            </div>
+            {{/progressReservations}}
+        </div>
+    </div>
+
+    <div class="mypage-tab-content" id="completed-counsel">
+        <div class="mypage-card-container">
+            {{#completedCounsels}}
+                <div class="mypage-card">
+                    <div class="mypage-card-body">
+                        <h5 class="mypage-card-title">{{voucherType}}</h5>
+                        <p class="mypage-card-text mx-5">상담 날짜: <span>{{counselDate}}</span></p>
+                        <p class="mypage-card-text">상태: <span>{{state}}</span></p>
+                    </div>
+                    <form action="/reviewForm" method="get">
+                        <input type="hidden" name="expertId" value="{{expertId}}">
+                        <input type="hidden" name="clientId" value="{{clientId}}">
+                        <input type="hidden" name="counselId" value="{{id}}">
+                        <input type="hidden" name="voucherType" value="{{voucherType}}">
+                        <input type="hidden" name="counselDate" value="{{counselDate}}">
+                        {{#isReview}}
+                            <button class="btn btn-outline-success mypage-btn-small" disabled>리뷰 작성</button>
+                        {{/isReview}}
+                        {{^isReview}}
+                            <button class="btn btn-outline-success mypage-btn-small">리뷰 작성</button>
+                        {{/isReview}}
+                    </form>
+                </div>
+
+            {{/completedCounsels}}
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.toggle-reservation button').forEach(button => {
+        button.addEventListener('click', () => {
+            const tab = button.getAttribute('data-tab');
+
+            document.querySelectorAll('.toggle-reservation button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            document.querySelectorAll('#reservation-management .mypage-tab-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.getAttribute('id') === tab) {
+                    content.classList.add('active');
+                }
+            });
+        });
+    });
+</script>

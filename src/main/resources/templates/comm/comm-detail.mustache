@@ -12,14 +12,14 @@
                 <!--커뮤니티 상세보기 시작-->
                 <div class="comm-detail">
                     <!--상세보기 info 시작-->
-                    <div class="c-card">
+                    <div class="c-card comm-detail">
                         <div class="c-card-body comdetail">
                             <!-- <h4 class="card-title">1</h4> -->
                             <div class="breadcrumb mb-20">
                                 <a href="/">홈화면</a> > <a href="/comm">커뮤니티</a> > <a href="#"
                                                                                     class="active main-color">{{comm.commDTO.category}}</a>
                             </div>
-                            <h4 class="card-title">{{comm.commDTO.title}}</h4>
+                            <h4 class="card-title mb-10">{{comm.commDTO.title}}</h4>
                             <div class="community-cartegory detail">
                                 <div class="user-info">
                                     <figure><img src="{{comm.commDTO.writerProfileImage}}" alt="회원이미지"></figure>
@@ -27,18 +27,22 @@
                                         class="time">{{comm.commDTO.timeAgo}}</span></div>
                                 <div class="actions">
                                     <div class="right-actions">
-                                        <button class=" defalut-btn" onclick="clip()"><i
-                                                class="fa-regular fa-share-nodes"></i><span>공유하기</span></button>
-                                        <div class="dropdown">
-                                            <button class="drop-toggle" id="updateButton"><i
-                                                    class="fa-regular fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="dropdown-item" onclick="openUpdateForm()">수정하기</button>
-                                                <button class="dropdown-item" onclick="deletePost()">삭제하기</button>
-
-                                            </div>
-                                        </div>
+                                        {{#sessionUser}}
+                                            <script>
+                                                if ({{sessionUser.id}} === {{comm.commDTO.writerId}})
+                                                {
+                                                    document.write(`
+                        <div class="dropdown">
+                            <button class="drop-toggle" id="updateButton"><i class="fa-regular fa-ellipsis-vertical"></i></button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item" onclick="openUpdateForm()">수정하기</button>
+                                <button class="dropdown-item" onclick="deletePost()">삭제하기</button>
+                            </div>
+                        </div>
+                    `);
+                                                }
+                                            </script>
+                                        {{/sessionUser}}
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +89,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="defalut-btn main-background active-background">상담 받아보기</button>
+                                    <button class="defalut-btn main-background active-background"
+                                            onclick="openExpert({{writerId}})">상담 받아보기
+                                    </button>
                                 </div>
                                 <div class="content">
                                     <br>
@@ -133,7 +139,7 @@
                                 <div class="c-card-body detail mb-20">
                                     <div class="community-cartegory">
                                         <div class="user-info">
-                                            <figure><img src="" alt="회원이미지">일반인 이미지</figure>
+                                            <figure><img src="{{profileImage}}" alt="회원이미지">일반인 이미지</figure>
                                             <span>{{name}}</span>
                                         </div>
                                     </div>
@@ -143,7 +149,7 @@
                                         {{#sessionUser}}
                                             <div class="click-wrapper">
                                                 <button id="replyDeleteButton"
-                                                        onclick="deleteReply({{writerId}}, {{id}})">
+                                                        onclick="deleteReply({{writerId}}, {{replyId}})">
                                                     삭제하기
                                                 </button>
                                             </div>
@@ -185,7 +191,7 @@
                     <h3 class="page-title mb-20">{{comm.commDTO.category}}의 다른 글 살펴보기</h3>
                     <!-- 다른 글 -->
                     {{#comm.relatedComms}}
-                        <div class="c-card">
+                        <div class="c-card comm-detail">
                             <div class="c-card-body detail">
                                 <a href="/comm-detail/{{id}}">
                                     <h4 class="card-title mb-10">{{title}}</h4>
@@ -199,7 +205,7 @@
                                     <p class="card-text mb-20">{{content}}</p>
                                 </a>
                                 <div class="link-wrapper">
-<!--                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>-->
+                                    <!--                                    <a href="#" class="card-link like">❤<em class="count">1</em></a>-->
                                     <a href="/comm-detail/{{id}}" class="card-link reply">💌<em class="count">2</em></a>
                                 </div>
                                 {{#expertReplies}}
@@ -248,6 +254,7 @@
             console.log(url);
         };
     });
+
 
     // 유저 아이디 검사해서 수정 삭제 버튼 숨기기
     $(document).ready(function () {
@@ -421,14 +428,30 @@
                             alert('댓글이 성공적으로 삭제되었습니다.');
                             window.location.reload(); // 페이지 새로고침
                         } else {
-                            alert('댓글 삭제 중 오류가 발생했습니다.');
+                            return response.text().then(errorMsg => {
+                                if (errorMsg === "로그인이 필요합니다.") {
+                                    alert(errorMsg); // 로그인 필요 메시지
+                                } else if (errorMsg === "자신이 작성한 댓글만 삭제할 수 있습니다.") {
+                                    alert(errorMsg); // 자신의 댓글이 아닌 경우 메시지
+                                } else {
+                                    alert(`댓글 삭제 실패: ${errorMsg}`); // 기타 실패 메시지
+                                }
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Error deleting reply:', error);
                         alert('댓글 삭제 중 오류가 발생했습니다.');
                     });
+        } else {
+            alert('댓글 삭제가 취소되었습니다.');
         }
+    }
+
+    // 상담 받아보기 버튼
+    function openExpert(writerId) {
+        const expertDetailUrl = `/client/findExpert/detail/${writerId}`;
+        window.location.href = expertDetailUrl;
     }
 
 </script>

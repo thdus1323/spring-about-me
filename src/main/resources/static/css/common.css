@@ -3,6 +3,7 @@
 /* 페이지 내용 */
 .page-content {
     min-height: calc(100vh - 270px);
+    position: relative;
 }
 
 /* 상세보기 */
@@ -301,7 +302,7 @@ nav {
     display: flex;
     margin: 0 auto;
     max-width: 1600px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 100px;
 }
@@ -602,4 +603,15 @@ body {
     margin-bottom: 10px;
     min-height: 300px;
     overflow: auto;
+}
+.welcome{
+    text-align: center;
+    padding: 10px 20px;
+    background: #FD780F;
+    width: fit-content;
+    border-radius: 50px;
+    font-size: 14px;
+    color: #fff;
+    margin: 0 auto;
+    margin-bottom: 20px;
 }

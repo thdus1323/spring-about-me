@@ -2,12 +2,35 @@
 /* 컨테이너 스타일링 */
 .container.mt-5 {
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 20px;
+    padding: 50px 20px;
     margin-top: 20px;
 }
+.user-mypage{
+    border: none;
+}
+.user-mypage h1{
+    font-size: 22px;
+    font-width: 700;
+}
+#profile-view-card{
+    border: none;
 
+}
+.user-mypage .card-header{
+    padding: 20px;
+    color: #fff;
+    background: #ffa75b;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.user-mypage .card-body{
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
 /* 제목 스타일링 */
 h2 {
     color: #333;

@@ -144,7 +144,6 @@
 }
 
 
-
 .expert-side {
     width: 250px;
     margin-right: 50px;
@@ -378,11 +377,16 @@ a.link {
     display: flex;
     justify-content: space-between;
 }
-a.link:hover .expert-info .expert-body span{
+
+a.link:hover .expert-info .expert-body span {
     border-bottom: 1px solid #009695;
 }
-a.link span{}
-a.link span i{}
+
+a.link span {
+}
+
+a.link span i {
+}
 
 .date .day {
     font-size: 16px;
@@ -559,9 +563,16 @@ a.link span i{}
     background-color: #00bbba;
     color: white;
 }
+
 .month-nav button {
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
+}
+
+/* 검색 버튼 display: none */
+
+.test-btn {
+    display: none;
 }

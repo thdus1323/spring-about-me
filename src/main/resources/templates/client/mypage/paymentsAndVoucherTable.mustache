@@ -1,78 +1,105 @@
-<div class="card mb-4">
-    <div class="card-header">내 이용권 및 결제 내역</div>
-    <div class="card-body tabs-container">
-        <div class="tabs">
-            <div class="tab active" data-tab="voucher-ticket">이용권</div>
-            <div class="tab" data-tab="progress-ticket">결제 내역</div>
-        </div>
+<div class="mypage-wrap user-mypage" id="payment-management">
+    <div class="mypage-title">내 이용권 및 결제 내역</div>
+    <div class="mypage-toggle toggle-payment">
+        <button class="active" data-tab="voucher-ticket">이용권</button>
+        <button data-tab="progress-ticket">결제 내역</button>
+    </div>
 
-        <div class="tab-content active" id="voucher-ticket">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>이용권</th>
-                        <th>예약 가능한 횟수</th>
-                        <th>상담한 횟수</th>
-                        <th>상담 예약</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#vouchers}}
-                        <tr>
-                            <td>{{voucherType}}</td>
-                            <td>{{remainingCount}}회</td>
-                            <td>{{counselCount}}회</td>
-                            <td>
-                                <form action="/client/mypage/reservation" method="GET">
-                                    <input type="hidden" name="expertId" value="{{expertId}}">
-                                    <input type="hidden" name="voucherId" value="{{voucherId}}">
-                                    <input type="hidden" name="paymentId" value="{{paymentId}}">
-                                    {{#isRemainingCount}}
-
-                                        <button class="btn btn-outline-success btn-small"
-                                                onclick="makeReservation({{id}})">예약하기
-                                        </button>
-                                    {{/isRemainingCount}}
-                                    {{^isRemainingCount}}
-                                        <button class="btn btn-outline-success btn-small" disabled>예약하기
-                                        </button>
-                                    {{/isRemainingCount}}
-                                </form>
-                            </td>
-                        </tr>
-                    {{/vouchers}}
-                    </tbody>
-                </table>
-            </div>
+    <div class="mypage-tab-content active" id="voucher-ticket">
+        <div class="mypage-card-container">
+            {{#vouchers}}
+                <div class="mypage-card">
+                    <div class="mypage-card-body">
+                        <h5 class="mypage-card-title">{{voucherType}}</h5>
+                        <p class="mypage-card-text mx-5">예약 가능한 횟수:
+                            <span style="">{{remainingCount}}회</span></p>
+                        <p class="mypage-card-text">상담한 횟수: <span>{{counselCount}}
+                            회</span></p>
+                    </div>
+                    <form action="/client/mypage/reservation" method="GET">
+                        <input type="hidden" name="expertId" value="{{expertId}}">
+                        <input type="hidden" name="voucherId" value="{{voucherId}}">
+                        <input type="hidden" name="paymentId" value="{{paymentId}}">
+                        {{#isRemainingCount}}
+                            <button class="btn btn-outline-success mypage-btn-small"
+                                    onclick="makeReservation({{id}})">
+                                예약하기
+                            </button>
+                        {{/isRemainingCount}}
+                        {{^isRemainingCount}}
+                            <button class="btn btn-outline-success mypage-btn-small" disabled>예약하기</button>
+                        {{/isRemainingCount}}
+                    </form>
+                </div>
+            {{/vouchers}}
         </div>
-        <div class="tab-content " id="progress-ticket">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>이용권</th>
-                        <th>횟수</th>
-                        <th>상담 시간</th>
-                        <th>결제 방법</th>
-                        <th>결제 금액</th>
-                        <th>결제 날짜</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#payments}}
-                        <tr>
-                            <td>{{voucherType}}</td>
-                            <td>{{voucherCount}}</td>
-                            <td>{{voucherDuration}}분</td>
-                            <td>{{paymentMethod}}</td>
-                            <td>{{amount}}</td>
-                            <td>{{paymentDate}}</td>
-                        </tr>
-                    {{/payments}}
-                    </tbody>
-                </table>
-            </div>
+    </div>
+
+    <div class="mypage-tab-content" id="progress-ticket">
+        <div class="mypage-card-container">
+            {{#payments}}
+                <div class="mypage-card">
+                    <div class="mypage-card-body">
+                        <h5 class="mypage-card-title">{{voucherType}}</h5>
+                        <p class="mypage-card-text mx-5">횟수: <span>{{voucherCount}}</span></p>
+                        <p class="mypage-card-text">상담 시간: <span>{{voucherDuration}}분</span></p>
+                        <p class="mypage-card-text mx-5">결제 방법: <span>{{paymentMethod}}
+                        </span></p>
+                        <p class="mypage-card-text">결제 금액: <span>{{amount}}</span></p>
+                        <p class="mypage-card-text ms-5">결제 날짜: <span>{{paymentDate}}</span></p>
+                    </div>
+                    <div class="mypage-btn-container">
+                        <button class="btn btn-outline-success mypage-btn-small" name="cancel"
+                                onclick="cancelPayment('{{impUid}}')">취소하기
+                        </button>
+                    </div>
+                </div>
+            {{/payments}}
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.toggle-payment button').forEach(button => {
+        button.addEventListener('click', () => {
+            const tab = button.getAttribute('data-tab');
+
+            document.querySelectorAll('.toggle-payment button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            document.querySelectorAll('#payment-management .mypage-tab-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.getAttribute('id') === tab) {
+                    content.classList.add('active');
+                }
+            });
+        });
+    });
+
+    function cancelPayment(impUid) {
+        if (!confirm("취소하시겠습니까?")) return;
+
+        fetch('/client/mypage/cancelPayment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({impUid: impUid})
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('결제가 성공적으로 취소되었습니다.');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        alert('결제 취소에 실패하였습니다: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('결제 취소 중 오류가 발생했습니다.');
+                });
+    }
+</script>
