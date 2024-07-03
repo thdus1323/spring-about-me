@@ -3,9 +3,7 @@
 {{#model}}
     <div class="d-flex container">
         <div class="content col-md-8">
-
-            <div class="header">"{{user.expertTitle}}"</div>
-
+            <div class="detal-header">{{user.expertTitle}}</div>
             <div class="row mb-4">
                 <div class="col-lg-12">
                     <div class="mb-4 expert-detail">
@@ -27,9 +25,8 @@
                         </div>
 
                         <div class="review-rating">
-                            <i class="fas fa-star" style="color: #f5c518;"></i>
-                            <!-- TODO: averageScore다시 넣기 -->
-                            <span>{{user.reviewAge}}</span>
+                            <i class="fas fa-star mb-3" style="color: #f5c518;"></i>
+                            <span class="mb-3 mx-2">{{user.reviewAge}}</span>
                             <span style="font-size: large; font-weight: lighter;">/5</span>
                         </div>
 
@@ -49,39 +46,6 @@
                                                 <span>{{count}}</span>
                                             </div>
                                         {{/reviewCounts}}
-                                        <!--                                        <div class="d-flex align-items-center mb-2">-->
-                                        <!--                                            <span class="mr-2">4</span>-->
-                                        <!--                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
-                                        <!--                                                <div class="progress-bar"-->
-                                        <!--                                                     style="width: 3%; background-color: #ffa75b;"-->
-                                        <!--                                                     aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <span>6</span>-->
-                                        <!--                                        </div>-->
-                                        <!--                                                                                <div class="d-flex align-items-center mb-2">-->
-                                        <!--                                                                                    <span class="mr-2">3</span>-->
-                                        <!--                                                                                    <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
-                                        <!--                                                                                        <div class="progress-bar" style="background-color: #ffa75b;"-->
-                                        <!--                                                                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>-->
-                                        <!--                                                                                    </div>-->
-                                        <!--                                                                                    <span>0</span>-->
-                                        <!--                                                                                </div>-->
-                                        <!--                                        <div class="d-flex align-items-center mb-2">-->
-                                        <!--                                            <span class="mr-2">2</span>-->
-                                        <!--                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
-                                        <!--                                                <div class="progress-bar" style="background-color: #ffa75b;"-->
-                                        <!--                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <span>0</span>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="d-flex align-items-center my-2">-->
-                                        <!--                                            <span class="mr-2">1</span>-->
-                                        <!--                                            <div class="progress flex-grow-1 mx-2" style="height: 20px;">-->
-                                        <!--                                                <div class="progress-bar" style="background-color: #ffa75b;"-->
-                                        <!--                                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <span>0</span>-->
-                                        <!--                                        </div>-->
                                     </div>
                                 </div>
 
@@ -146,7 +110,6 @@
                                 </ul>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- 상담사 질문 섹션 -->
@@ -155,11 +118,11 @@
                         <i class="fa-regular fa-thumbs-up mt-5"></i>
                         <h4 class="fw-bold border-bottom pb-2">{{user.name}} 상담사님에게 여쭤봤어요</h4>
                     </div>
-                    <div class="row experience">
+                    <div class="row experience mt-3">
                         {{#prs}}
 
                             <div class="col-md-6">
-                                <h5 class="fw-bold mb-10">심리상담을 망설이는 분에게</h5>
+                                <h5 class="fw-bold mb-3">심리상담을 망설이는 분에게</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="content-container" id="content2">
@@ -171,7 +134,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="fw-bold mb-10">상담사님의 심리상담 효과</h5>
+                                <h5 class="fw-bold mb-3">상담사님의 심리상담 효과</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="content-container" id="content3">
@@ -184,7 +147,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="fw-bold mb-10">상담사님의 심리상담 방식</h5>
+                                <h5 class="fw-bold mb-3">상담사님의 심리상담 방식</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="content-container" id="content4">
