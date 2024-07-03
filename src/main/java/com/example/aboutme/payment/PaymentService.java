@@ -1,6 +1,7 @@
 package com.example.aboutme.payment;
 
-import com.example.aboutme._core.utils.DayOfWeekConverter;
+import com.example.aboutme._core.config.PortOneConfig;
+import com.example.aboutme._core.error.exception.Exception404;
 import com.example.aboutme.counsel.Counsel;
 import com.example.aboutme.counsel.CounselRepository;
 import com.example.aboutme.counsel.CounselRequestRecord.CompletePaymentAndCounselReqDTO;
@@ -16,11 +17,19 @@ import com.example.aboutme.user.UserRepository;
 import com.example.aboutme.voucher.Voucher;
 import com.example.aboutme.voucher.VoucherRepository;
 import com.example.aboutme.voucher.enums.VoucherType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -31,6 +40,74 @@ public class PaymentService {
     private final UserRepository userRepository;
     private final VoucherRepository voucherRepository;
     private final CounselRepository counselRepository;
+    private final PortOneConfig portOneConfig;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+
+    @Transactional
+    public Map<String, Object> cancelPayment(String impUid, SessionUser sessionUser) {
+        Payment payment = paymentRepository.findByImpUid(impUid);
+
+
+        if (!payment.getClient().getId().equals(sessionUser.getId())) {
+            throw new RuntimeException("결제 취소 권한이 없습니다.");
+        }
+
+        String token = getAccessToken();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/json;charset=utf-8");
+        headers.add("Authorization", "Bearer " + token);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode body = mapper.createObjectNode();
+        body.put("imp_uid", impUid);
+
+        HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(
+                "https://api.iamport.kr/payments/cancel",
+                HttpMethod.POST,
+                request,
+                Map.class
+        );
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            payment.setPaymentStatus(PaymentStatus.REFUNDED);
+            paymentRepository.save(payment);
+            return (Map<String, Object>) response.getBody().get("response");
+        }
+
+        throw new RuntimeException("결제 취소 실패");
+    }
+
+    @Transactional
+    public String getAccessToken() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode body = mapper.createObjectNode();
+        body.put("imp_key", portOneConfig.getApiKey());
+        body.put("imp_secret", portOneConfig.getApiSecret());
+
+        HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(
+                "https://api.iamport.kr/users/getToken",
+                HttpMethod.POST,
+                request,
+                Map.class
+        );
+
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            Map<String, Object> responseBody = (Map<String, Object>) response.getBody().get("response");
+            return (String) responseBody.get("access_token");
+        }
+
+        throw new RuntimeException("토큰 발급 실패");
+    }
 
 
     //결제데이터 받아서 임시저장
@@ -85,17 +162,13 @@ public class PaymentService {
                 .orElseThrow(() -> new IllegalArgumentException("바우처를 찾을 수 없습니다."));
         Counsel counsel = counselRepository.findById(sessionUser.getId()).orElseThrow(() -> new IllegalArgumentException("해당 예약을 찾을 수 없습니다."));
 
-
         payment.setImpUid(reqDTO.impUid());
         payment.setPaymentStatus(PaymentStatus.COMPLETED);
         payment.setPaymentMethod(PaymentMethods.CREDIT_CARD);
         paymentRepository.save(payment);
         counsel.setCounselStatus(CounselStatus.COUNSEL_PENDING);
+        counsel.setReservationStatus(ReservationStatus.RESERVATION_SCHEDULED);
 
-        // 예약 상태를 변경하는 로직 추가
-        Counsel reservation = counselRepository.findById(reqDTO.reservationId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 주문 ID에 대한 예약 내역이 없습니다."));
-        reservation.setReservationStatus(ReservationStatus.RESERVATION_COMPLETED);
 
         return "Payment completed: " + payment.getId();
     }
@@ -115,5 +188,6 @@ public class PaymentService {
                 ))
                 .collect(Collectors.toList());
     }
+
 
 }

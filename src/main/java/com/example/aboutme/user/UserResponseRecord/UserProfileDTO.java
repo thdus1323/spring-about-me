@@ -41,7 +41,9 @@ public record UserProfileDTO(
             Integer voucherDuration,
             String voucherType,
             String createdAt,
-            String updatedAt
+            String updatedAt,
+            String impUid
+
     ) {
 
     }

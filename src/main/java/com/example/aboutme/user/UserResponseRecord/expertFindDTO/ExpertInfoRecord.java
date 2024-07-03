@@ -7,5 +7,7 @@ public record ExpertInfoRecord(
         String name,
         String title,
         String profileImage,
+        Integer reviewCount,
+        double reviewAge,
         List<VoucherImageRecord> images
 ) {}
