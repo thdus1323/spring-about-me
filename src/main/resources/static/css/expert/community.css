@@ -70,9 +70,34 @@
 .comm-filter #writeButton:hover {
     background-color: #f47821; /* 호버 시 배경색을 밝은 주황색으로 변경 */
 }
-.c-card.comm-detail{
+
+.c-card.comm-detail {
     height: fit-content;
 }
+
+.b-card {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow: hidden;
+    height: auto;
+}
+
+.b-card .b-card-body {
+    width: 100%;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    height: fit-content;
+    padding: 20px;
+    background: #fff;
+    break-inside: avoid;
+    min-height: 208px;
+}
+
 .c-card {
     border: none;
     display: flex;
