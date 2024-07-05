@@ -75,16 +75,14 @@
 ![aboutme_erd](https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/e7749da9-9148-4d40-9bf5-d5639602dbdb)
 
 # 📝 시나리오
-## 회원
 <table style="border: 2px;">
-  
 <tr>
   <td align=center>1. [클라이언트] 로그인 & 프로필 수정</td>
   <td align=center>2. [클라이언트] 커뮤니티</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/coderyu5523/project-spring-falling/assets/153602328/9da38517-db03-4dfb-bcd7-2f4d65e37f46"  width="400" height="300"/></td>
-<td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/af6181e6-2221-4a80-ac77-16e0f7f617f1"  width="400" height="300"/></tr>
+  <td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/eb9bfaa3-c35e-44ae-8042-a052ab6365f8"  width="400" height="300"/></td>
+<td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/267a6543-39b3-47ac-9f78-2cafb00fa102"  width="400" height="300"/></tr>
 </tr>
 
 <tr>
