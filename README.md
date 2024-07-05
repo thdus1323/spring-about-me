@@ -1,11 +1,11 @@
-# ABOUT ME
-kdit4-green Project Team 4
+# ❤️ ABOUT ME(심리 상담 플랫폼) ❤️
+![main_logo (1)](https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/7c809882-f5e3-4250-bba7-24f25e202100)
 
-# ABOUT ME Project
 
 # 📖 프로젝트 소개
-> 심리 상담 플랫폼인 '어바웃 미'는 익명 커뮤니티/비대면 상담을 제공해 심리 상담에 대한 접근성을 높이는 것을 목적으로 한다.
-> 전문가가 등록한 상담 바우처를 클라이언트가 비교하여 구매/예약하며 
+> 심리 상담 플랫폼인 '어바웃 미'는 익명 커뮤니티/비대면 상담을 제공하 심리 상담에 대한 접근성을 높이는 것을 목적으로 한다.
+> 전문가가 등록한 상담 바우처를 클라이언트가 비교하여 구매/예약하여 상담이 이뤄지며 
+> 
 # 📽️ 시연영상
 
 [시연영상](https://youtu.be/XAX68A7HomA)
@@ -16,25 +16,21 @@ kdit4-green Project Team 4
 
 # ⏰ 프로젝트 기간
 2024.06.12 ~ 2024.07.02
+
 # 👨‍👩‍👧‍👧 팀원 소개
-### Team-Leader
+### 팀장
+|                                                         이름                                                        |                     프로필 사진                     |       GitHub 주소        |
+|:---------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------:|:--------------------------:|
+|                                                        장현정(팀장)                                                    | <img src="https://https://avatars.githubusercontent.com/u/139729358?s=48&v=4" alt="profile" width="100" height="100"> | [@Hyeonjeong-JANG](https://github.com/Hyeonjeong-JANG) |
 
-|                                                        장현정                                                        |
-|:---------------------------------------------------------------------------------------------------------------------:|
-| <img src="https://avatars.githubusercontent.com/u/126438339?v=4" alt="profile" width="100" height="100"> | 
-|                                    [(@Hyeonjeong-JANG)](https://github.com/Hyeonjeong-JANG)                                 |
-
-
-|                                                   김주용                                                    |                                                   김주혁                                                    |
-|:--------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------:| 
-| <img src="https://avatars.githubusercontent.com/u/153582126?s=400&u=72dd9bfa0d3f017d2c237e4f8a58439e58d21930&v=4" alt="profile" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/129649095?v=4" alt="profile" width="100" height="100"> | 
-|                                    [(@zyong22)](https://github.com/zyong22)                                    |                              [(@kjh5848)](https://github.com/kjh5848)                              |
-
-
-|                                                   김지훈                                                   |                                                   이소연                                                    |
-|:-------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------:| 
-| <img src="https://avatars.githubusercontent.com/u/139729358?v=4" alt="profile" width="100" height="100"> | <img src="https://avatars.githubusercontent.com/u/153582301?v=4" alt="profile" width="100" height="100"> | 
-|                              [(@greenpig4b)](https://github.com/greenpig4b)                              |                               [(@thdus1323)](https://github.com/thdus1323)                               |
+### 팀원
+|                     이름                     |                     프로필 사진                     |       GitHub 주소        |
+|:-------------------------------------------:|:---------------------------------------------------:|:--------------------------:|
+|                     김주용                  | <img src="https://https://avatars.githubusercontent.com/u/118145437?v=4" alt="profile" width="100" height="100"> | [@zyong22](https://github.com/zyong22)  |
+|                     김주혁                  | <img src="https://https://avatars.githubusercontent.com/u/153582123?v=4" alt="profile" width="100" height="100"> | [@kjh5848](https://github.com/kjh5848)  |
+|                     김지훈                  | <img src="https://https://avatars.githubusercontent.com/u/78337301?v=4" alt="profile" width="100" height="100"> | [@greenpig4b](https://github.com/greenpig4b)  |
+|                     이소연                  | <img src="https://https://avatars.githubusercontent.com/u/153582422?v=4" alt="profile" width="100" height="100"> | [@thdus1323](https://github.com/thdus1323)  |
+                 |
 
 
 # ⚙️ 기술 스택
