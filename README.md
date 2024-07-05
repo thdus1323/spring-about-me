@@ -90,8 +90,8 @@
   <td align=center>4. [클라이언트] 바우처 결제 및 결제 내역 확인</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/c605daad-37d3-46e0-915f-ddded00207df"  width="400" height="300"/></td>
-<td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/388e903f-2682-4a8e-ab53-b7626b63b503"  width="400" height="300"/></tr>
+  <td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/556aacec-8726-456a-a0b4-cc902091acfb"  width="400" height="300"/></td>
+<td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/4e2e18c1-7edb-4b3c-aaa5-85fba7842f13"  width="400" height="300"/></tr>
 </tr>
 
 <tr>
