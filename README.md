@@ -5,6 +5,7 @@ kdit4-green Project Team 4
 
 # 📖 프로젝트 소개
 > 심리 상담 플랫폼인 '어바웃 미'는 익명 커뮤니티/비대면 상담을 제공해 심리 상담에 대한 접근성을 높이는 것을 목적으로 한다.
+> 전문가가 등록한 상담 바우처를 클라이언트가 비교하여 구매/예약하며 
 # 📽️ 시연영상
 
 [시연영상](https://youtu.be/XAX68A7HomA)
@@ -52,7 +53,8 @@ kdit4-green Project Team 4
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/Notioin-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
 
 ## ERD
-![66nRBpTgKcAaMdHiq](https://github.com/9oj0e/pathorder_app/assets/129649095/617089f0-a2b4-44a3-ae25-228c0ab848b7)
+![aboutme_erd](https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/e7749da9-9148-4d40-9bf5-d5639602dbdb)
+
 # 🛠️ 전략
 - 플러터에서 통신을 하면서 앱이 느려지는 경우가 발생을 해서 최대한 통신을 줄이기 위한 전략 적용.
 - 검색 기능 
