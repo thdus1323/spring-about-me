@@ -3,8 +3,8 @@
 
 
 # 📖 프로젝트 소개
-> 심리 상담 플랫폼인 '어바웃 미'는 익명 커뮤니티/비대면 상담을 제공하 심리 상담에 대한 접근성을 높이는 것을 목적으로 한다.
-> 전문가가 등록한 상담 바우처를 클라이언트가 비교하여 구매/예약하여 상담이 이뤄지며 
+> 심리 상담 플랫폼인 '어바웃 미'는 익명 커뮤니티/비대면 상담을 제공하 심리 상담에 대한 접근성을 높이는 것을 목적으로 합니다.
+> 전문가가 등록한 상담 바우처를 클라이언트가 쉽게 비교하여 구매/예약할 수 있으며 상담의 전과정을 비대면으로 진행할 수 있습니다.
 > 
 # 📽️ 시연영상
 
@@ -21,16 +21,16 @@
 ### 팀장
 |                                                         이름                                                        |                     프로필 사진                     |       GitHub 주소        |
 |:---------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------:|:--------------------------:|
-|                                                        장현정(팀장)                                                    | <img src="https://https://avatars.githubusercontent.com/u/139729358?s=48&v=4" alt="profile" width="100" height="100"> | [@Hyeonjeong-JANG](https://github.com/Hyeonjeong-JANG) |
+|                                                        장현정(팀장)                                                    | <img src="https://avatars.githubusercontent.com/u/139729358?s=48&v=4" alt="profile" width="100" height="100"> | [@Hyeonjeong-JANG](https://github.com/Hyeonjeong-JANG) |
 
 ### 팀원
 |                     이름                     |                     프로필 사진                     |       GitHub 주소        |
 |:-------------------------------------------:|:---------------------------------------------------:|:--------------------------:|
-|                     김주용                  | <img src="https://https://avatars.githubusercontent.com/u/118145437?v=4" alt="profile" width="100" height="100"> | [@zyong22](https://github.com/zyong22)  |
-|                     김주혁                  | <img src="https://https://avatars.githubusercontent.com/u/153582123?v=4" alt="profile" width="100" height="100"> | [@kjh5848](https://github.com/kjh5848)  |
-|                     김지훈                  | <img src="https://https://avatars.githubusercontent.com/u/78337301?v=4" alt="profile" width="100" height="100"> | [@greenpig4b](https://github.com/greenpig4b)  |
-|                     이소연                  | <img src="https://https://avatars.githubusercontent.com/u/153582422?v=4" alt="profile" width="100" height="100"> | [@thdus1323](https://github.com/thdus1323)  |
-                 |
+|                     김주용                  | <img src="https://avatars.githubusercontent.com/u/118145437?v=4" alt="profile" width="100" height="100"> | [@zyong22](https://github.com/zyong22)  |
+|                     김주혁                  | <img src="https://avatars.githubusercontent.com/u/153582123?v=4" alt="profile" width="100" height="100"> | [@kjh5848](https://github.com/kjh5848)  |
+|                     김지훈                  | <img src="https://avatars.githubusercontent.com/u/78337301?v=4" alt="profile" width="100" height="100"> | [@greenpig4b](https://github.com/greenpig4b)  |
+|                     이소연                  | <img src="https://avatars.githubusercontent.com/u/153582422?v=4" alt="profile" width="100" height="100"> | [@thdus1323](https://github.com/thdus1323)  |
+                 
 
 
 # ⚙️ 기술 스택
