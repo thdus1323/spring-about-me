@@ -99,8 +99,8 @@
   <td align=center>6. [익스퍼트] 마이페이지에서 예약 만들기</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/472393bd-f3ac-4b7b-b3de-12af4008a5d5"  width="400" height="300"/></td>
-<td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/1164cd3a-43ff-4d57-8dfe-949b9e6303bd"  width="400" height="300"/></tr>
+  <td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/3f741049-96dd-4375-8c02-d1b1750ddad5"  width="400" height="300"/></td>
+<td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/2b911f11-46be-4afd-9260-0e966b51c1e3"  width="400" height="300"/></tr>
 </tr>
 
 <tr>
@@ -108,8 +108,8 @@
   <td align=center>8. [클라이언트] 알림</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/50c448c4-f342-4ce3-ab93-d0a3c82d5ddf"  width="400" height="300"/></td>
-<td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/24262ddf-5831-4274-9921-2eaeb5d5d9a1"  width="400" height="300"/></tr>
+  <td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/6e38f788-9fe5-4efe-8067-58b3aeb97831"  width="400" height="300"/></td>
+<td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/f17bf6d6-0657-43c3-ab13-03389feaa93a"  width="400" height="300"/></tr>
 </tr>
 
 <tr>
@@ -117,7 +117,7 @@
   <td align=center>10. [클라이언트] 리뷰 작성</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/0c24559e-dfd0-4b5c-a3b9-6132d37e1624"  width="400" height="300"/></td>
-<td><img src="https://github.com/coderyu5523/project-final-flutter/assets/153602328/9c03a7ab-8bbd-48e9-a6a7-4ed55722ec7a"  width="400" height="300"/></tr>
+  <td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/c7941e23-331e-40c9-b76d-63bf49ade1af"  width="400" height="300"/></td>
+<td><img src="https://github.com/Hyeonjeong-JANG/spring-about-me/assets/139729358/3106ced0-39d8-41c3-b142-d7818a71ca16"  width="400" height="300"/></tr>
 </tr>
 </table>
